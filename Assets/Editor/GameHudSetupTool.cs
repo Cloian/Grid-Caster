@@ -1194,7 +1194,7 @@ public static class GameHudSetupTool
         CreateText(
             "QuitHint",
             panel.transform,
-            "REPLAY 버튼으로 다시 도전",
+            "ESC 전장 확인  ·  REPLAY 버튼으로 다시 도전",
             14,
             FontStyle.Bold,
             TextAnchor.MiddleCenter,
@@ -1203,7 +1203,7 @@ public static class GameHudSetupTool
             new Vector2(0.5f, 0f),
             new Vector2(0.5f, 0f),
             new Vector2(0f, 22f),
-            new Vector2(300f, 28f)
+            new Vector2(460f, 28f)
         );
 
         overlay.SetActive(false);

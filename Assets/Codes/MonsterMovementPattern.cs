@@ -1,5 +1,8 @@
 public enum MonsterMovementPattern
 {
     CardinalFour,
-    EightDirection
+    EightDirection,
+    Knight,
+    Bishop,
+    Rook
 }

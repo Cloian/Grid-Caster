@@ -34,6 +34,43 @@ public sealed class ProjectileManager : MonoBehaviour
 
     public bool IsTurnInProgress => projectilesStillMoving > 0;
 
+    public void SpawnEnemyProjectile(Vector3Int originCell, Vector3Int direction, Move player)
+    {
+        GameObject actor = new GameObject("RookProjectile");
+        actor.transform.SetParent(transform, false);
+        actor.transform.position = gridManager.GetCellCenterWorld(originCell);
+        actor.transform.rotation = Quaternion.Euler(0f, 0f,
+            Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg);
+        SpriteRenderer renderer = actor.AddComponent<SpriteRenderer>();
+        renderer.sprite = projectileSprite;
+        renderer.color = new Color(1f, 0.3f, 0.7f);
+        renderer.sortingOrder = sortingOrder;
+        // 적 탄의 프레임 애니메이션은 정지시켜 입력 대기 중에는 보드 전체가 멈춘다.
+        TurnProjectile projectile = actor.AddComponent<TurnProjectile>();
+        projectile.Initialize(gridManager, monsterSpawner, originCell, direction, moveSpeed, 1, null);
+        projectile.SetEnemyOwner(player);
+        activeProjectiles.Add(projectile);
+    }
+
+    public void TryHitPlayerEnteringCell(Vector3Int cell)
+    {
+        foreach (TurnProjectile projectile in activeProjectiles.ToArray())
+            if (projectile != null)
+                projectile.TryHitPlayerEnteringCell(cell);
+        RemoveFinishedProjectiles();
+    }
+
+    public void ClearProjectiles()
+    {
+        allProjectilesCompleted = null;
+        foreach (TurnProjectile projectile in activeProjectiles.ToArray())
+            if (projectile != null)
+                projectile.Cancel();
+        activeProjectiles.Clear();
+        turnProjectiles.Clear();
+        projectilesStillMoving = 0;
+    }
+
     public void Initialize(GridManager targetGridManager, MonsterSpawner targetMonsterSpawner)
     {
         gridManager = targetGridManager;

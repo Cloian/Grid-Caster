@@ -471,7 +471,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: f03c1a5ba08364fcb881e29c4f480d8c, type: 3}
+  m_Resource: {fileID: 8300000, guid: 61db4453d3d3c497091d8fa52fe891bd, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1
@@ -2144,6 +2144,14 @@ MonoBehaviour:
   batRatioWave4To5: 0.2
   batRatioWave6To8: 0.3
   batRatioWave9AndLater: 0.4
+  enableChessWaves: 1
+  chessMonsterSprite: {fileID: 6687599659494732175, guid: f8dccbf2331384711b8ba0dbd24d7c13, type: 3}
+  chessMonsterHealth: 3
+  knightActionInterval: 1
+  bishopMoveDistance: 2
+  bishopOrbitDistance: 3
+  bishopFireTurns: 3
+  bishopFireDamage: 1
 --- !u!4 &216182191
 Transform:
   m_ObjectHideFlags: 0
@@ -8430,6 +8438,7 @@ GameObject:
   - component: {fileID: 1479494360}
   - component: {fileID: 1479494361}
   - component: {fileID: 1479494362}
+  - component: {fileID: 1479494363}
   m_Layer: 0
   m_Name: player
   m_TagString: Untagged
@@ -8456,6 +8465,7 @@ MonoBehaviour:
   blockedMoveSoundVolume: 0.45
   actionIndicator: {fileID: 1479494360}
   worldCamera: {fileID: 519420031}
+  cardinalOnly: 0
 --- !u!212 &1479494354
 SpriteRenderer:
   serializedVersion: 2
@@ -8725,6 +8735,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2cf5fdfcf7514874b817c412efdcc06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerTraitSystem
+--- !u!114 &1479494363
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1479494352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5610bef5377a24080a62b2ab2d7ad37b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDeathMarker
+  graveSprite: {fileID: 8179912504859571379, guid: 64556b8f5b732470687cb3571148b9d2, type: 3}
+  hidePlayerVisual: 1
+  sortingOrderOffset: 1
 --- !u!1 &1480595146
 GameObject:
   m_ObjectHideFlags: 0
@@ -8914,7 +8939,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 22}
-  m_SizeDelta: {x: 300, y: 28}
+  m_SizeDelta: {x: 460, y: 28}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1508360554
 MonoBehaviour:
@@ -8949,7 +8974,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "REPLAY \uBC84\uD2BC\uC73C\uB85C \uB2E4\uC2DC \uB3C4\uC804"
+  m_Text: "ESC \uC804\uC7A5 \uD655\uC778  \xB7  REPLAY \uBC84\uD2BC\uC73C\uB85C \uB2E4\uC2DC
+    \uB3C4\uC804"
 --- !u!222 &1508360555
 CanvasRenderer:
   m_ObjectHideFlags: 0

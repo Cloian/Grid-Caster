@@ -21,10 +21,31 @@ public sealed class TurnProjectile : MonoBehaviour
     private MonsterMovement pendingHitTarget;
     private Action<MonsterMovement> hitConfirmed;
     private Action<TurnProjectile> turnCompleted;
+    private Move enemyTarget;
 
     public Vector3Int CurrentCell => currentCell;
     public Vector3Int Direction => direction;
     public bool IsFinished => finished;
+    public bool IsEnemyProjectile => enemyTarget != null;
+
+    public void SetEnemyOwner(Move targetPlayer) => enemyTarget = targetPlayer;
+    public void Cancel() => FinishTurn(true);
+
+    public bool TryHitPlayerEnteringCell(Vector3Int cell)
+    {
+        if (finished || enemyTarget == null || currentCell != cell)
+            return false;
+        ResolvePlayerHit();
+        return true;
+    }
+
+    private void ResolvePlayerHit()
+    {
+        // 피해 직전에 숨겨 적중한 탄이 한 프레임 더 보이지 않도록 한다.
+        GetComponent<SpriteRenderer>().enabled = false;
+        try { enemyTarget.TakeDamage(damage); }
+        finally { FinishTurn(true); }
+    }
 
     public void Initialize(
         GridManager targetGridManager,
@@ -115,8 +136,17 @@ public sealed class TurnProjectile : MonoBehaviour
 
         turnCompleted = onTurnCompleted;
 
+        if (enemyTarget != null && enemyTarget.CurrentHealth <= 0)
+        {
+            FinishTurn(false);
+            return;
+        }
+
         // 이전 턴에 몬스터가 투사체 타일로 들어온 경우 앞 칸으로 통과시키지 않는다.
-        if (monsterSpawner != null
+        if (enemyTarget != null && TryHitPlayerEnteringCell(enemyTarget.GridPosition))
+            return;
+
+        if (enemyTarget == null && monsterSpawner != null
             && monsterSpawner.TryGetMonsterAtCell(
                 currentCell,
                 out MonsterMovement overlappingMonster
@@ -146,7 +176,13 @@ public sealed class TurnProjectile : MonoBehaviour
         }
 
         // 적과 투사체가 같은 시점에 행동하므로, 턴 시작 시점의 적 위치로 충돌을 확정한다.
-        if (monsterSpawner != null
+        if (enemyTarget != null && destinationCell == enemyTarget.GridPosition)
+        {
+            ResolvePlayerHit();
+            return;
+        }
+
+        if (enemyTarget == null && monsterSpawner != null
             && monsterSpawner.TryGetMonsterAtCell(
                 destinationCell,
                 out MonsterMovement targetMonster
@@ -166,7 +202,7 @@ public sealed class TurnProjectile : MonoBehaviour
         Vector3Int enteringCell
     )
     {
-        if (travellingFullPath || !moving || finished
+        if (enemyTarget != null || travellingFullPath || !moving || finished
             || enteringMonster == null || enteringMonster.IsDead
             || destinationCell != enteringCell)
         {

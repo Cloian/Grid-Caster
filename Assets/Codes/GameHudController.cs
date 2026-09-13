@@ -87,10 +87,13 @@ public sealed class GameHudController : MonoBehaviour
     private bool healthSubscribed;
     private bool waveSubscribed;
     private bool cameraWasEnabledBeforePause;
+    private bool playerIsDead;
     private float elapsedPlayTime;
 
     public bool IsTraitSelectionOpen => selectionOverlay != null && selectionOverlay.activeSelf;
-    public bool IsGameOver => gameOverOverlay != null && gameOverOverlay.activeSelf;
+    public bool IsGameOver => playerIsDead;
+    public bool IsGameOverOverlayVisible => gameOverOverlay != null
+        && gameOverOverlay.activeSelf;
     public bool IsPauseMenuOpen => pauseMenuOverlay != null && pauseMenuOverlay.activeSelf;
     public int LayoutVersion => layoutVersion;
     public string SelectedTraitId => IsValidTraitIndex(selectedTraitIndex)
@@ -169,6 +172,12 @@ public sealed class GameHudController : MonoBehaviour
     {
         if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
         {
+            if (IsGameOver)
+            {
+                ToggleGameOverReview();
+                return;
+            }
+
             TogglePauseMenu();
             return;
         }
@@ -191,14 +200,16 @@ public sealed class GameHudController : MonoBehaviour
         UnsubscribeHealth();
         UnsubscribeWave();
 
-        if (IsPauseMenuOpen)
+        bool wasPauseMenuOpen = IsPauseMenuOpen;
+
+        if (wasPauseMenuOpen || IsGameOver)
         {
             Time.timeScale = 1f;
+        }
 
-            if (cameraController != null)
-            {
-                cameraController.enabled = cameraWasEnabledBeforePause;
-            }
+        if (wasPauseMenuOpen && cameraController != null)
+        {
+            cameraController.enabled = cameraWasEnabledBeforePause;
         }
     }
 
@@ -375,6 +386,20 @@ public sealed class GameHudController : MonoBehaviour
             return;
 
         SetPauseMenuOpen(!IsPauseMenuOpen);
+    }
+
+    private void ToggleGameOverReview()
+    {
+        if (!IsGameOver || gameOverOverlay == null)
+            return;
+
+        bool shouldShowOverlay = !gameOverOverlay.activeSelf;
+        gameOverOverlay.SetActive(shouldShowOverlay);
+
+        if (shouldShowOverlay)
+        {
+            gameOverOverlay.transform.SetAsLastSibling();
+        }
     }
 
     public void ContinueGame()
@@ -585,7 +610,13 @@ public sealed class GameHudController : MonoBehaviour
 
     private void HandlePlayerDied(CharacterHealth defeatedCharacter)
     {
+        playerIsDead = true;
         playerMovement?.SetInputEnabled(false);
+
+        if (IsPauseMenuOpen)
+        {
+            SetPauseMenuOpen(false);
+        }
 
         if (gameOverSummaryText != null)
         {
@@ -601,10 +632,8 @@ public sealed class GameHudController : MonoBehaviour
             gameOverOverlay.transform.SetAsLastSibling();
         }
 
-        if (IsPauseMenuOpen)
-        {
-            SetPauseMenuOpen(false);
-        }
+        // 사망 위치와 적 배치를 그대로 복기할 수 있도록 게임 규칙과 연출을 정지한다.
+        Time.timeScale = 0f;
     }
 
     private void HandleWaveStarted(int waveNumber)

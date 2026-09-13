@@ -11,6 +11,7 @@ public sealed class MonsterSpawner : MonoBehaviour
 {
     public event Action<int> WaveStarted;
     public event Action<int> WaveCleared;
+    public event Action WorldTurnCompleted;
 
     private const float WaveClearHealRatio = 0.2f;
 
@@ -31,12 +32,29 @@ public sealed class MonsterSpawner : MonoBehaviour
     [SerializeField, Range(0f, 1f)] private float batRatioWave6To8 = 0.3f;
     [SerializeField, Range(0f, 1f)] private float batRatioWave9AndLater = 0.4f;
 
+    [Header("체스 몬스터 웨이브")]
+    [SerializeField] private bool enableChessWaves;
+    [SerializeField] private Sprite chessMonsterSprite;
+    [SerializeField, Min(1)] private int chessMonsterHealth = 3;
+    [SerializeField, Min(1)] private int knightActionInterval = 1;
+    [SerializeField, Min(1)] private int bishopMoveDistance = 2;
+    [SerializeField, Min(1)] private int bishopOrbitDistance = 3;
+    [SerializeField, Min(1)] private int bishopFireTurns = 3;
+    [SerializeField, Min(1)] private int bishopFireDamage = 1;
+    public BishopFireTrail FireTrail { get; private set; }
+
+    private bool UsesChessTurns => chessPlaytest != null || enableChessWaves;
+    public bool ChessWavesEnabled => enableChessWaves;
+
     private readonly List<MonsterMovement> activeMonsters = new List<MonsterMovement>();
     private readonly List<Vector3Int> spawnCells = new List<Vector3Int>();
     private readonly List<MonsterMovementPattern> waveSpawnPlan =
         new List<MonsterMovementPattern>();
+    private readonly List<MonsterMovement> monsterTurnOrder =
+        new List<MonsterMovement>();
 
     private readonly HashSet<Vector3Int> blockedMonsterCells = new HashSet<Vector3Int>();
+    private readonly HashSet<Vector3Int> reservedTransitCells = new HashSet<Vector3Int>();
 
     private float nextWaveTime;
     private int nextPrefabIndex;
@@ -51,11 +69,17 @@ public sealed class MonsterSpawner : MonoBehaviour
     private bool worldTurnInProgress;
     private bool monsterTurnCompleted;
     private bool projectileTurnCompleted;
+    private bool planningMonsterTurn;
+    private bool projectileTurnStarted;
+    private ChessPlaytest chessPlaytest;
 
     public int CurrentWave => currentWave;
+    public bool IsWorldTurnInProgress => worldTurnInProgress;
+    public IReadOnlyList<MonsterMovement> ActiveMonsters => activeMonsters;
 
     private void Awake()
     {
+        chessPlaytest = GetComponent<ChessPlaytest>();
         if (mapTilemap == null)
         {
             mapTilemap = FindAnyObjectByType<Tilemap>();
@@ -88,14 +112,32 @@ public sealed class MonsterSpawner : MonoBehaviour
             return;
         }
 
+        if (UsesChessTurns)
+        {
+            FireTrail = gameObject.AddComponent<BishopFireTrail>();
+            ConfigureFire(bishopFireTurns, bishopFireDamage);
+        }
         playerMovement.MoveCompleted += BeginMonsterTurn;
 
+        if (chessPlaytest != null)
+        {
+            chessPlaytest.Initialize(this, playerMovement, gridManager, projectileManager);
+            return;
+        }
+
+        if (enableChessWaves)
+        {
+            ChessWaveDisplay display = gameObject.AddComponent<ChessWaveDisplay>();
+            display.Initialize(this, gridManager, playerMovement);
+        }
         BuildSpawnCells();
         SpawnNextWave();
     }
 
     private void Update()
     {
+        if (chessPlaytest != null)
+            return;
         if (playerHealth != null && playerHealth.IsDead)
             return;
 
@@ -173,13 +215,23 @@ public sealed class MonsterSpawner : MonoBehaviour
             return false;
         }
 
-        if (monsterPrefabs == null || monsterPrefabs.Length == 0)
+        if (chessPlaytest == null && (monsterPrefabs == null || monsterPrefabs.Length == 0))
         {
             Debug.LogError("MonsterSpawner에 몬스터 프리팹이 필요합니다.", this);
             return false;
         }
 
+        if (enableChessWaves && chessMonsterSprite == null)
+        {
+            Debug.LogError("체스 웨이브의 독립 Sprite를 연결하세요.", this);
+            return false;
+        }
         return true;
+    }
+
+    public void ConfigureFire(int turns, int damage)
+    {
+        FireTrail.Initialize(gridManager, playerMovement, turns, damage);
     }
 
     private void BeginMonsterTurn()
@@ -187,21 +239,39 @@ public sealed class MonsterSpawner : MonoBehaviour
         worldTurnInProgress = true;
         monsterTurnCompleted = false;
         projectileTurnCompleted = false;
+        projectileTurnStarted = false;
+        planningMonsterTurn = true;
+        if (playerMovement.CurrentHealth > 0) FireTrail?.AdvanceTurn();
+
+        if (UsesChessTurns)
+            projectileManager.TryHitPlayerEnteringCell(playerMovement.GridPosition);
 
         // 플레이어 기본 투사체는 이 시점 전에 전체 경로 처리가 끝난다.
         // 여기서는 보드에 남는 적/특수 투사체의 한 칸 행동만 처리한다.
         // 투사체 목적지와 피격을 먼저 확정한 뒤 살아남은 적만 행동한다.
         // 시각 이동은 같은 프레임 안에서 이어서 시작하므로 화면에서는 동시에 움직인다.
-        projectileManager.TakeTurn(OnProjectileTurnCompleted);
+        if (!UsesChessTurns)
+        {
+            projectileTurnStarted = true;
+            projectileManager.TakeTurn(OnProjectileTurnCompleted);
+        }
 
         activeMonsters.RemoveAll(monster => monster == null || monster.IsDead);
         monstersStillMoving = activeMonsters.Count;
         blockedMonsterCells.Clear();
+        reservedTransitCells.Clear();
+        monsterTurnOrder.Clear();
+        monsterTurnOrder.AddRange(activeMonsters);
 
         foreach (MonsterMovement monster in activeMonsters)
         {
-            blockedMonsterCells.Add(mapTilemap.WorldToCell(monster.transform.position));
+            blockedMonsterCells.Add(monster.GridPosition);
         }
+
+        Vector3Int playerCell = playerMovement.GridPosition;
+        monsterTurnOrder.Sort(
+            (first, second) => CompareMonsterTurnOrder(first, second, playerCell)
+        );
 
         if (monstersStillMoving == 0)
         {
@@ -209,35 +279,106 @@ public sealed class MonsterSpawner : MonoBehaviour
         }
         else
         {
-            // 적과 투사체는 같은 프레임에 각각 한 타일 행동을 시작한다.
-            foreach (MonsterMovement monster in activeMonsters)
+            // 가까운 적부터 경로와 목적지를 예약하지만 이동 연출은 다음 Update에 함께 시작한다.
+            foreach (MonsterMovement monster in monsterTurnOrder)
             {
+                if (UsesChessTurns && playerHealth.IsDead)
+                {
+                    OnMonsterMoveCompleted();
+                    continue;
+                }
                 monster.TakeTurn(
                     OnMonsterMoveCompleted,
-                    destinationCell => TryReserveMonsterCell(monster, destinationCell)
+                    (currentCell, destinationCell) =>
+                        TryReserveMonsterCell(monster, currentCell, destinationCell),
+                    destinationCell => blockedMonsterCells.Contains(destinationCell)
+                        || reservedTransitCells.Contains(destinationCell)
                 );
             }
         }
 
+        planningMonsterTurn = false;
         TryCompleteWorldTurn();
     }
 
     private bool TryReserveMonsterCell(
         MonsterMovement movingMonster,
+        Vector3Int currentCell,
         Vector3Int destinationCell
     )
     {
         // 현재 다른 몬스터가 있거나 이번 턴에 이미 예약된 타일은 사용할 수 없다.
-        if (blockedMonsterCells.Contains(destinationCell))
+        if (blockedMonsterCells.Contains(destinationCell) || reservedTransitCells.Contains(destinationCell))
             return false;
+
+        Vector3Int step = Vector3Int.zero;
+        if (movingMonster.MovementPattern == MonsterMovementPattern.Bishop)
+        {
+            Vector3Int delta = destinationCell - currentCell;
+            if (Mathf.Abs(delta.x) != Mathf.Abs(delta.y) || delta == Vector3Int.zero) return false;
+            step = new Vector3Int(Math.Sign(delta.x), Math.Sign(delta.y), 0);
+            for (Vector3Int cell = currentCell + step; cell != destinationCell; cell += step)
+                if (blockedMonsterCells.Contains(cell) || reservedTransitCells.Contains(cell)) return false;
+        }
 
         // 몬스터가 투사체의 도착 타일로 들어오면 실제 이동 전에 피격을 먼저 확정한다.
         projectileManager.TryHitMonsterEnteringCell(movingMonster, destinationCell);
 
         if (movingMonster == null || movingMonster.IsDead)
+        {
+            blockedMonsterCells.Remove(currentCell);
             return true;
+        }
 
-        return blockedMonsterCells.Add(destinationCell);
+        // 앞 몬스터가 비운 칸을 뒤 몬스터가 같은 턴에 예약할 수 있게 즉시 점유를 갱신한다.
+        blockedMonsterCells.Remove(currentCell);
+
+        if (blockedMonsterCells.Add(destinationCell))
+        {
+            // 비숍의 통과 칸도 이번 계획 동안 예약한다. 출발 칸은 뒤 적이 사용할 수 있다.
+            if (step != Vector3Int.zero)
+                for (Vector3Int cell = currentCell + step; cell != destinationCell; cell += step)
+                    reservedTransitCells.Add(cell);
+            return true;
+        }
+
+        blockedMonsterCells.Add(currentCell);
+        return false;
+    }
+
+    private int CompareMonsterTurnOrder(
+        MonsterMovement first,
+        MonsterMovement second,
+        Vector3Int playerCell
+    )
+    {
+        int firstDistance = GetMonsterDistanceToPlayer(first, playerCell);
+        int secondDistance = GetMonsterDistanceToPlayer(second, playerCell);
+        int distanceComparison = firstDistance.CompareTo(secondDistance);
+
+        if (distanceComparison != 0)
+            return distanceComparison;
+
+        // 일반 몬스터도 생성 순서를 부여한다. 동일 거리의 예약 순서를 고정한다.
+        int order = first.SpawnOrder.CompareTo(second.SpawnOrder);
+        return order != 0 ? order : first.GetInstanceID().CompareTo(second.GetInstanceID());
+    }
+
+    private int GetMonsterDistanceToPlayer(
+        MonsterMovement monster,
+        Vector3Int playerCell
+    )
+    {
+        if (monster == null)
+            return int.MaxValue;
+
+        Vector3Int monsterCell = monster.GridPosition;
+        int horizontalDistance = Mathf.Abs(playerCell.x - monsterCell.x);
+        int verticalDistance = Mathf.Abs(playerCell.y - monsterCell.y);
+
+        return monster.MovementPattern == MonsterMovementPattern.EightDirection
+            ? Mathf.Max(horizontalDistance, verticalDistance)
+            : horizontalDistance + verticalDistance;
     }
 
     public bool TryGetMonsterAtCell(Vector3Int cell, out MonsterMovement targetMonster)
@@ -246,7 +387,7 @@ public sealed class MonsterSpawner : MonoBehaviour
 
         foreach (MonsterMovement monster in activeMonsters)
         {
-            if (gridManager.WorldToCell(monster.transform.position) == cell)
+            if (monster.GridPosition == cell)
             {
                 targetMonster = monster;
                 return true;
@@ -274,14 +415,14 @@ public sealed class MonsterSpawner : MonoBehaviour
         if (normalizedDirection == Vector3Int.zero)
             return false;
 
-        Vector3Int currentCell = gridManager.WorldToCell(targetMonster.transform.position);
+        Vector3Int currentCell = targetMonster.GridPosition;
         Vector3Int destinationCell = currentCell + normalizedDirection;
 
         if (!gridManager.IsWalkableCell(destinationCell))
             return false;
 
         if (player != null
-            && gridManager.WorldToCell(player.position) == destinationCell)
+            && playerMovement.GridPosition == destinationCell)
         {
             return false;
         }
@@ -292,6 +433,10 @@ public sealed class MonsterSpawner : MonoBehaviour
             return false;
         }
 
+        // 룩은 넉백으로도 테두리 밖에 놓이지 않게 한다.
+        if (targetMonster.MovementPattern == MonsterMovementPattern.Rook
+            && targetMonster.TryGetComponent(out ChessMonsterBehaviour rook)
+            && !rook.IsRookBoundaryCell(destinationCell)) return false;
         return targetMonster.ApplyKnockback(destinationCell);
     }
 
@@ -315,11 +460,70 @@ public sealed class MonsterSpawner : MonoBehaviour
 
     private void TryCompleteWorldTurn()
     {
-        if (!worldTurnInProgress || !monsterTurnCompleted || !projectileTurnCompleted)
+        if (!worldTurnInProgress || planningMonsterTurn || !monsterTurnCompleted)
+            return;
+
+        if (!projectileTurnStarted)
+        {
+            // 체스 전투에서는 모든 적의 이동이 끝난 뒤 새로 발사된 탄까지 한 칸씩 처리한다.
+            projectileTurnStarted = true;
+            if (playerHealth.IsDead)
+                projectileTurnCompleted = true;
+            else
+            {
+                projectileManager.TakeTurn(OnProjectileTurnCompleted);
+                return;
+            }
+        }
+        if (!projectileTurnCompleted)
             return;
 
         worldTurnInProgress = false;
         playerMovement.CompleteMonsterTurn();
+        WorldTurnCompleted?.Invoke();
+    }
+
+    public void ResetPlaytestEncounter()
+    {
+        worldTurnInProgress = false;
+        activeMonsters.RemoveAll(monster => monster == null);
+        foreach (MonsterMovement monster in activeMonsters)
+        {
+            monster.gameObject.SetActive(false);
+            Destroy(monster.gameObject);
+        }
+        activeMonsters.Clear();
+        blockedMonsterCells.Clear();
+        reservedTransitCells.Clear();
+        monstersStillMoving = 0;
+        projectileManager.ClearProjectiles();
+        FireTrail?.Clear();
+    }
+
+    public MonsterMovement SpawnPlaytestMonster(
+        MonsterMovementPattern pattern, Vector3Int cell, Sprite sprite, Color color,
+        int health, int order, int knightInterval, int bishopTravel, int bishopOrbit)
+    {
+        if (!gridManager.IsWalkableCell(cell) || cell == playerMovement.GridPosition
+            || TryGetMonsterAtCell(cell, out _))
+            throw new InvalidOperationException($"테스트 스폰 타일이 막혀 있습니다: {cell}");
+
+        // 새 몬스터는 프리팹 없이 독립 Sprite와 행동 컴포넌트로 구성한다.
+        GameObject actor = new GameObject(pattern.ToString());
+        actor.transform.SetParent(transform, false);
+        actor.transform.position = gridManager.GetCellCenterWorld(cell);
+        SpriteRenderer renderer = actor.AddComponent<SpriteRenderer>();
+        renderer.sprite = sprite;
+        renderer.color = color;
+        renderer.sortingOrder = 10;
+        MonsterMovement monster = actor.AddComponent<MonsterMovement>();
+        ChessMonsterBehaviour behaviour = actor.AddComponent<ChessMonsterBehaviour>();
+        monster.Initialize(player, gridManager);
+        monster.ConfigurePlaytest(pattern, health, order);
+        behaviour.Initialize(monster, gridManager, projectileManager, playerMovement,
+            knightInterval, bishopTravel, bishopOrbit, FireTrail);
+        activeMonsters.Add(monster);
+        return monster;
     }
 
     private void BuildSpawnCells()
@@ -374,8 +578,25 @@ public sealed class MonsterSpawner : MonoBehaviour
             + (currentWave - 1) * monsterIncreasePerWave;
         int plannedBatCount = CalculateBatCount(currentWave, requestedCount);
         BuildWaveSpawnPlan(requestedCount, plannedBatCount);
+        if (enableChessWaves)
+        {
+            // 총 마릿수를 유지하며 해금된 패턴을 한 마리씩 우선 배치한다.
+            List<MonsterMovementPattern> unlocked = new List<MonsterMovementPattern>();
+            if (currentWave >= 3) unlocked.Add(MonsterMovementPattern.Knight);
+            if (currentWave >= 5)
+            {
+                unlocked.Add(MonsterMovementPattern.Bishop);
+                unlocked.Add(MonsterMovementPattern.Rook);
+            }
+            foreach (MonsterMovementPattern pattern in unlocked)
+            {
+                int index = waveSpawnPlan.LastIndexOf(MonsterMovementPattern.CardinalFour);
+                if (index < 0) index = waveSpawnPlan.LastIndexOf(MonsterMovementPattern.EightDirection);
+                if (index >= 0) waveSpawnPlan.RemoveAt(index);
+            }
+            waveSpawnPlan.InsertRange(0, unlocked);
+        }
         int spawnedCount = 0;
-        int spawnedBatCount = 0;
 
         foreach (MonsterMovementPattern movementPattern in waveSpawnPlan)
         {
@@ -383,21 +604,12 @@ public sealed class MonsterSpawner : MonoBehaviour
             {
                 spawnedCount++;
 
-                if (movementPattern == MonsterMovementPattern.EightDirection)
-                {
-                    spawnedBatCount++;
-                }
             }
         }
 
         waveActive = spawnedCount > 0;
 
-        int spawnedSnakeCount = spawnedCount - spawnedBatCount;
-        Debug.Log(
-            $"웨이브 {currentWave}: Snake {spawnedSnakeCount} / Bat {spawnedBatCount} "
-            + $"(총 {spawnedCount}마리)",
-            this
-        );
+        Debug.Log($"웨이브 {currentWave}: 총 {spawnedCount}마리 (체스 패턴 포함: {enableChessWaves})", this);
         WaveStarted?.Invoke(currentWave);
 
         if (!waveActive)
@@ -409,6 +621,11 @@ public sealed class MonsterSpawner : MonoBehaviour
     private void CompleteCurrentWave()
     {
         waveActive = false;
+        if (enableChessWaves)
+        {
+            projectileManager.ClearProjectiles();
+            FireTrail?.Clear();
+        }
 
         int requestedHeal = playerHealth == null
             ? 0
@@ -479,6 +696,14 @@ public sealed class MonsterSpawner : MonoBehaviour
 
     private bool SpawnMonster(MonsterMovementPattern movementPattern)
     {
+        if (enableChessWaves && movementPattern >= MonsterMovementPattern.Knight)
+        {
+            if (!TryGetSpawnCell(out Vector3Int chessCell)) return false;
+            MonsterMovement chessMonster = SpawnPlaytestMonster(movementPattern, chessCell,
+                chessMonsterSprite, ChessWaveDisplay.ColorFor(movementPattern), chessMonsterHealth,
+                ++spawnSerial, knightActionInterval, bishopMoveDistance, bishopOrbitDistance);
+            return true;
+        }
         MonsterMovement prefab = GetNextPrefab(movementPattern);
 
         if (prefab == null || !TryGetSpawnCell(out Vector3Int spawnCell))
@@ -489,7 +714,7 @@ public sealed class MonsterSpawner : MonoBehaviour
 
         spawnSerial++;
         monster.name = $"{prefab.name}_{spawnSerial:00}";
-        monster.Initialize(player, gridManager);
+        monster.Initialize(player, gridManager, spawnSerial);
         activeMonsters.Add(monster);
         return true;
     }
@@ -516,7 +741,7 @@ public sealed class MonsterSpawner : MonoBehaviour
         if (spawnCells.Count == 0)
             return false;
 
-        Vector3Int playerCell = mapTilemap.WorldToCell(player.position);
+        Vector3Int playerCell = playerMovement.GridPosition;
         int startIndex = Random.Range(0, spawnCells.Count);
 
         for (int i = 0; i < spawnCells.Count; i++)
@@ -537,13 +762,13 @@ public sealed class MonsterSpawner : MonoBehaviour
         return false;
     }
 
-    private bool IsOccupied(Vector3Int cell)
+    public bool IsOccupied(Vector3Int cell)
     {
         foreach (MonsterMovement monster in activeMonsters)
         {
             if (monster != null
                 && !monster.IsDead
-                && mapTilemap.WorldToCell(monster.transform.position) == cell)
+                && monster.GridPosition == cell)
                 return true;
         }
 

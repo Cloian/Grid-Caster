@@ -30,6 +30,7 @@ public class Move : MonoBehaviour
     [Header("행동 선택 표시")]
     [SerializeField] private DirectionalActionIndicator actionIndicator;
     [SerializeField] private Camera worldCamera;
+    [SerializeField] private bool cardinalOnly;
 
     private static readonly int IsMoving = Animator.StringToHash("IsMoving");
     private const int FeedbackSampleRate = 22050;
@@ -71,9 +72,13 @@ public class Move : MonoBehaviour
     private int remainingAttackCasts;
     private bool activeAttackKnockback;
     private bool attackHitReported;
+    private Vector3Int gridPosition;
+    private bool gridPositionReady;
 
     public int CurrentHealth => characterHealth != null ? characterHealth.CurrentHealth : 0;
     public PlayerActionSelectionMode SelectionMode => selectionMode;
+    public Vector3Int GridPosition { get { ResolveReferences(); return gridPosition; } }
+    public bool CanAct => enabled && inputEnabled && !moving && !waitingForMonsters;
 
     private void Awake()
     {
@@ -118,33 +123,29 @@ public class Move : MonoBehaviour
         }
 
         Keyboard keyboard = Keyboard.current;
-
-        if (keyboard != null && keyboard.aKey.wasPressedThisFrame)
-        {
-            ToggleSelectionMode(PlayerActionSelectionMode.Attack);
-            return;
-        }
-
-        if (keyboard != null && keyboard.sKey.wasPressedThisFrame)
-        {
-            ToggleSelectionMode(PlayerActionSelectionMode.Move);
-            return;
-        }
-
         Mouse mouse = Mouse.current;
+        ProcessInputFrame(
+            keyboard != null && keyboard.aKey.wasPressedThisFrame,
+            keyboard != null && keyboard.sKey.wasPressedThisFrame,
+            mouse != null && mouse.leftButton.wasPressedThisFrame,
+            mouse != null && mouse.rightButton.wasPressedThisFrame,
+            mouse != null ? mouse.position.ReadValue() : Vector2.zero);
+    }
 
-        if (mouse != null && mouse.rightButton.wasPressedThisFrame)
+    // 키 선택과 클릭을 한 프레임에 처리한다. 자동 검증도 이 입력 경로를 사용한다.
+    public void ProcessInputFrame(bool attackPressed, bool movePressed,
+        bool confirmPressed, bool cancelPressed, Vector2 pointerScreenPosition)
+    {
+        if (!CanAct) return;
+        if (attackPressed) ToggleSelectionMode(PlayerActionSelectionMode.Attack);
+        if (movePressed) ToggleSelectionMode(PlayerActionSelectionMode.Move);
+        if (cancelPressed)
         {
             CancelSelection();
             return;
         }
-
-        if (selectionMode != PlayerActionSelectionMode.None
-            && mouse != null
-            && mouse.leftButton.wasPressedThisFrame)
-        {
-            TryConfirmSelectedCell(mouse.position.ReadValue());
-        }
+        if (confirmPressed && selectionMode != PlayerActionSelectionMode.None)
+            TryConfirmSelectedCell(pointerScreenPosition);
     }
 
     public void SelectAttackMode()
@@ -216,10 +217,13 @@ public class Move : MonoBehaviour
         selectableWorldPositions.Clear();
         emphasizedChoices.Clear();
 
-        Vector3Int currentCell = gridManager.WorldToCell(transform.position);
+        Vector3Int currentCell = GridPosition;
 
         foreach (Vector2Int direction in EightDirections)
         {
+            if (cardinalOnly && direction.x != 0 && direction.y != 0)
+                continue;
+
             Vector3Int destinationCell = currentCell
                 + new Vector3Int(direction.x, direction.y, 0);
 
@@ -245,23 +249,31 @@ public class Move : MonoBehaviour
         }
     }
 
-    private void TryConfirmSelectedCell(Vector2 pointerScreenPosition)
+    public bool TryConfirmSelectedCell(Vector2 pointerScreenPosition)
     {
+        if (!CanAct || selectionMode == PlayerActionSelectionMode.None)
+            return false;
         if (EventSystem.current != null && EventSystem.current.IsPointerOverGameObject())
-            return;
+            return false;
 
         ResolveReferences();
 
         if (worldCamera == null || gridManager == null || !gridManager.IsReady)
-            return;
+            return false;
 
-        Vector3 pointerWorldPosition = worldCamera.ScreenToWorldPoint(
-            new Vector3(pointerScreenPosition.x, pointerScreenPosition.y, 0f)
-        );
+        if (!worldCamera.pixelRect.Contains(pointerScreenPosition))
+            return false;
+        // 화면에서 타일맵 평면으로 광선을 투영한다. 카메라 깊이/뷰포트 크기에 의존하지 않는다.
+        Ray ray = worldCamera.ScreenPointToRay(pointerScreenPosition);
+        Plane plane = new Plane(gridManager.GroundTilemap.transform.forward,
+            gridManager.GetCellCenterWorld(GridPosition));
+        if (!plane.Raycast(ray, out float distance))
+            return false;
+        Vector3 pointerWorldPosition = ray.GetPoint(distance);
         Vector3Int selectedCell = gridManager.WorldToCell(pointerWorldPosition);
 
         if (!selectableCells.Contains(selectedCell))
-            return;
+            return false;
 
         if (selectionMode == PlayerActionSelectionMode.Move)
         {
@@ -271,6 +283,7 @@ public class Move : MonoBehaviour
         {
             ExecuteAttack(selectedCell);
         }
+        return true;
     }
 
     private void TryBeginMove(Vector3Int destinationCell)
@@ -289,12 +302,13 @@ public class Move : MonoBehaviour
             return;
         }
 
-        Vector3Int currentCell = gridManager.WorldToCell(transform.position);
+        Vector3Int currentCell = GridPosition;
         Vector3Int difference = destinationCell - currentCell;
         UpdateFacing(new Vector2Int(difference.x, difference.y));
 
         targetPosition = gridManager.GetCellCenterWorld(destinationCell);
         targetPosition.z = transform.position.z;
+        gridPosition = destinationCell;
 
         CancelSelection();
         SetMoving(true);
@@ -302,7 +316,7 @@ public class Move : MonoBehaviour
 
     private void ExecuteAttack(Vector3Int attackCell)
     {
-        Vector3Int currentCell = gridManager.WorldToCell(transform.position);
+        Vector3Int currentCell = GridPosition;
         Vector3Int difference = attackCell - currentCell;
         UpdateFacing(new Vector2Int(difference.x, difference.y));
 
@@ -477,6 +491,42 @@ public class Move : MonoBehaviour
         }
     }
 
+    // UI와 자동 검증 모두 실제 이동/공격 진입점을 사용한다.
+    public bool TryPerformAction(PlayerActionSelectionMode mode, Vector3Int direction)
+    {
+        if (!CanAct || mode == PlayerActionSelectionMode.None)
+            return false;
+        SetSelectionMode(mode);
+        Vector3Int destination = GridPosition + direction;
+        if (!selectableCells.Contains(destination))
+            return false;
+        if (mode == PlayerActionSelectionMode.Move)
+            TryBeginMove(destination);
+        else
+            ExecuteAttack(destination);
+        return true;
+    }
+
+    public void ResetPlaytest(Vector3Int startCell)
+    {
+        cardinalOnly = false;
+        ResolveReferences();
+        moving = false;
+        waitingForMonsters = false;
+        inputEnabled = true;
+        enabled = true;
+        gridPosition = startCell;
+        gridPositionReady = true;
+        targetPosition = gridManager.GetCellCenterWorld(startCell);
+        transform.position = targetPosition;
+        characterHealth.Initialize(maxHealth);
+        GetComponent<PlayerDeathMarker>()?.ResetMarker();
+        playerSprite.enabled = true;
+        playerAnimator.enabled = true;
+        SetMoving(false);
+        CancelSelection();
+    }
+
     private void BeginMonsterTurn()
     {
         if (MoveCompleted == null)
@@ -543,6 +593,11 @@ public class Move : MonoBehaviour
             {
                 worldCamera = FindAnyObjectByType<Camera>();
             }
+        }
+        if (!gridPositionReady && gridManager != null && gridManager.IsReady)
+        {
+            gridPosition = gridManager.WorldToCell(transform.position);
+            gridPositionReady = true;
         }
     }
 
