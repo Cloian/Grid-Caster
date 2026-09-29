@@ -7,6 +7,8 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterHealth))]
 public sealed class MonsterMovement : MonoBehaviour
 {
+    public event Action<MonsterMovement, Vector3Int> Defeated;
+
     private static readonly Vector3Int[] CardinalDirections =
     {
         Vector3Int.right,
@@ -48,11 +50,13 @@ public sealed class MonsterMovement : MonoBehaviour
     private Action landingAction;
     private Func<Vector3Int, Vector3Int, bool> tryReserveCell;
     private Func<Vector3Int, bool> isCellBlocked;
+    private Func<Vector3Int, bool> isPreferredCell;
     private Vector3Int gridPosition;
     private Vector3Int lastStep;
     private ChessMonsterBehaviour chessBehaviour;
     private Vector3 jumpOrigin;
     private float jumpProgress;
+    private int skippedTurns;
     private const float KnightJumpSeconds = 0.24f;
 
     public bool IsDead => characterHealth != null && characterHealth.IsDead;
@@ -115,7 +119,8 @@ public sealed class MonsterMovement : MonoBehaviour
     public void TakeTurn(
         Action onMoveCompleted,
         Func<Vector3Int, Vector3Int, bool> reserveDestination,
-        Func<Vector3Int, bool> checkCellBlocked
+        Func<Vector3Int, bool> checkCellBlocked,
+        Func<Vector3Int, bool> checkPreferredCell = null
     )
     {
         if (moving)
@@ -126,6 +131,14 @@ public sealed class MonsterMovement : MonoBehaviour
         moveCompleted = onMoveCompleted;
         tryReserveCell = reserveDestination;
         isCellBlocked = checkCellBlocked;
+        isPreferredCell = checkPreferredCell;
+
+        if (skippedTurns > 0)
+        {
+            skippedTurns--;
+            FinishTurn();
+            return;
+        }
 
         if (IsDead || playerMovement == null || gridManager == null || !gridManager.IsReady)
         {
@@ -222,12 +235,28 @@ public sealed class MonsterMovement : MonoBehaviour
         Vector3Int[] directions = movementPattern == MonsterMovementPattern.EightDirection
             ? (Vector3Int[])EightDirections.Clone()
             : (Vector3Int[])CardinalDirections.Clone();
-        // BFS의 최단 거리 보장은 유지하고, 같은 길이일 때만 진행 방향을 유지한다.
+        // BFS의 최단 거리 보장은 유지한다. 박쥐는 직선/대각선이 똑같이
+        // 가까워지는 상황에서 직선을 택해, 정렬 순서 때문에 대각선만 반복하지 않는다.
         Array.Sort(directions, (a, b) =>
         {
             int comparison = PathDistance(startCell + a, playerCell)
                 .CompareTo(PathDistance(startCell + b, playerCell));
             if (comparison != 0) return comparison;
+            if (movementPattern == MonsterMovementPattern.CardinalFour
+                && isPreferredCell != null)
+            {
+                // 같은 최단 경로라면 방금 앞 적이 죽어 비워진 칸을 먼저 메운다.
+                int aPreference = isPreferredCell(startCell + a) ? 0 : 1;
+                int bPreference = isPreferredCell(startCell + b) ? 0 : 1;
+                comparison = aPreference.CompareTo(bPreference);
+                if (comparison != 0) return comparison;
+            }
+            if (movementPattern == MonsterMovementPattern.EightDirection)
+            {
+                comparison = (a.x != 0 && a.y != 0)
+                    .CompareTo(b.x != 0 && b.y != 0);
+                if (comparison != 0) return comparison;
+            }
             comparison = (b == lastStep).CompareTo(a == lastStep);
             if (comparison != 0) return comparison;
             comparison = a.x.CompareTo(b.x);
@@ -356,7 +385,8 @@ public sealed class MonsterMovement : MonoBehaviour
 
     private void UpdateFacingToPlayer()
     {
-        if (player == null || monsterSprite == null)
+        if (player == null || monsterSprite == null
+            || movementPattern == MonsterMovementPattern.Rook)
             return;
 
         float horizontalDifference = player.position.x - transform.position.x;
@@ -379,9 +409,18 @@ public sealed class MonsterMovement : MonoBehaviour
         characterHealth.TakeDamage(damage);
     }
 
+    public void SkipNextTurn()
+    {
+        skippedTurns = Mathf.Max(skippedTurns, 1);
+    }
+
     public bool ApplyKnockback(Vector3Int destinationCell)
     {
         if (IsDead || moving || gridManager == null)
+            return false;
+
+        if (movementPattern == MonsterMovementPattern.Rook
+            && !gridManager.IsTopBoundaryWallCell(destinationCell))
             return false;
 
         // 점유 검사가 끝난 타일을 즉시 논리 위치와 화면 위치에 함께 반영한다.
@@ -392,6 +431,32 @@ public sealed class MonsterMovement : MonoBehaviour
         targetPosition = gridManager.GetCellCenterWorld(destinationCell);
         targetPosition.z = transform.position.z;
         transform.position = targetPosition;
+        return true;
+    }
+
+    internal bool TryBeginMountedMove(
+        Vector3Int currentCell,
+        Vector3Int destinationCell,
+        Action onLanding = null
+    )
+    {
+        if (movementPattern != MonsterMovementPattern.Rook
+            || !gridManager.IsTopBoundaryWallCell(currentCell)
+            || !gridManager.IsTopBoundaryWallCell(destinationCell))
+            return false;
+
+        if (destinationCell == currentCell)
+            return false;
+
+        if (tryReserveCell == null || !tryReserveCell(currentCell, destinationCell))
+            return false;
+
+        gridPosition = destinationCell;
+        jumpOrigin = transform.position;
+        targetPosition = gridManager.GetCellCenterWorld(destinationCell);
+        targetPosition.z = transform.position.z;
+        landingAction = onLanding;
+        moving = true;
         return true;
     }
 
@@ -429,6 +494,7 @@ public sealed class MonsterMovement : MonoBehaviour
         moveCompleted = null;
         tryReserveCell = null;
         isCellBlocked = null;
+        isPreferredCell = null;
         callback?.Invoke();
     }
 
@@ -441,6 +507,7 @@ public sealed class MonsterMovement : MonoBehaviour
 
     private void HandleDeath(CharacterHealth defeatedCharacter)
     {
+        Defeated?.Invoke(this, gridPosition);
         moving = false;
         FinishTurn();
         Destroy(gameObject);

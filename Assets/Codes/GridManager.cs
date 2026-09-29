@@ -52,6 +52,18 @@ public sealed class GridManager : MonoBehaviour
         return groundTilemap != null && groundTilemap.HasTile(cellPosition);
     }
 
+    public bool IsTopBoundaryWallCell(Vector3Int cellPosition)
+    {
+        if (groundTilemap == null || !groundTilemap.HasTile(cellPosition))
+            return false;
+
+        BoundsInt bounds = groundTilemap.cellBounds;
+        int innerWallY = bounds.yMax - boundaryThickness;
+        return cellPosition.y == innerWallY
+            && cellPosition.x >= bounds.xMin + boundaryThickness
+            && cellPosition.x < bounds.xMax - boundaryThickness;
+    }
+
     private void OnValidate()
     {
         boundaryThickness = Mathf.Max(1, boundaryThickness);

@@ -12,9 +12,10 @@ using UnityEngine.UI;
 public static class GameHudSetupTool
 {
     private const string ScenePath = "Assets/Scenes/SampleScene.unity";
-    private const int CurrentLayoutVersion = 9;
+    private const int CurrentLayoutVersion = 11;
+    private const int CurrentTypographyVersion = 2;
     private const int MinimumPixelFontSize = 16;
-    private const string UiFontPath = "Assets/Undead Survivor/Fonts/neodgm.ttf";
+    private const string UiFontPath = "Assets/UI/Fonts/Galmuri/Galmuri11.ttf";
     private const string AsepriteSourcePath = "Assets/UI/Icons/yosulbong.aseprite";
     private const string IconSheetPath = "Assets/UI/Icons/yosulbong-Sheet.png";
     private const string BasicAttackIconPath = "Assets/UI/Icons/Actions/BasicAttack.png";
@@ -132,15 +133,13 @@ public static class GameHudSetupTool
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
         scaler.referenceResolution = new Vector2(1920f, 1080f);
         scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
-        // 카메라가 세로 전체를 사용하는 4:5 영역이므로 세로 크기를 기준으로 맞춘다.
+        // 전체 화면 보드 카메라와 같은 세로 기준으로 HUD 크기를 맞춘다.
         scaler.matchWidthOrHeight = 1f;
 
         RectTransform viewportRoot = CreateViewportHudRoot(hudObject.transform);
 
         BuildTimeHud(viewportRoot, out Text elapsedTime);
         BuildWaveHud(viewportRoot, out Text currentWave);
-        BuildMinimapPlaceholder(viewportRoot);
-        BuildCameraControlHud(viewportRoot, out Image cameraFrame, out Text cameraMode);
         BuildUltimateHud(
             viewportRoot,
             out Image ultimateIcon,
@@ -239,8 +238,6 @@ public static class GameHudSetupTool
             movePlaceholder,
             actionMode,
             actionGuide,
-            cameraFrame,
-            cameraMode,
             elapsedTime,
             currentWave,
             healthFill,
@@ -287,7 +284,7 @@ public static class GameHudSetupTool
             root,
             new Vector2(0f, 1f),
             new Vector2(0f, 1f),
-            new Vector2(18f, -18f),
+            new Vector2(424f, -60f),
             new Vector2(174f, 58f),
             BorderColor
         );
@@ -330,7 +327,7 @@ public static class GameHudSetupTool
             root,
             new Vector2(0f, 1f),
             new Vector2(0f, 1f),
-            new Vector2(200f, -18f),
+            new Vector2(266f, -60f),
             new Vector2(150f, 58f),
             GoldColor
         );
@@ -481,7 +478,7 @@ public static class GameHudSetupTool
             new Vector2(0f, 0f),
             new Vector2(0f, 0f),
             new Vector2(0f, 0f),
-            new Vector2(14f, 14f),
+            new Vector2(66f, 22f),
             new Vector2(104f, 104f),
             new Color32(255, 205, 75, 70)
         );
@@ -492,7 +489,7 @@ public static class GameHudSetupTool
             root,
             Vector2.zero,
             Vector2.zero,
-            new Vector2(18f, 18f),
+            new Vector2(70f, 26f),
             new Vector2(96f, 96f),
             BorderColor
         );
@@ -515,6 +512,24 @@ public static class GameHudSetupTool
             "ULT",
             20,
             GoldColor
+        );
+
+        Image shortcutBadge = CreateImage(
+            "UltimateShortcutBadge",
+            ultimateFrame.transform,
+            new Vector2(0f, 1f),
+            new Vector2(0f, 1f),
+            new Vector2(0.5f, 0.5f),
+            new Vector2(15f, -15f),
+            new Vector2(28f, 28f),
+            GoldColor
+        );
+        CreateCenteredText(
+            "UltimateShortcutKey",
+            shortcutBadge.transform,
+            "F",
+            14,
+            new Color32(12, 18, 34, 255)
         );
 
         Image gaugeBackground = CreateImage(
@@ -570,7 +585,7 @@ public static class GameHudSetupTool
             root,
             Vector2.zero,
             Vector2.zero,
-            new Vector2(122f, 18f),
+            new Vector2(174f, 26f),
             new Vector2(320f, 64f),
             new Color32(77, 189, 121, 255)
         );
@@ -653,7 +668,7 @@ public static class GameHudSetupTool
             root,
             Vector2.zero,
             Vector2.zero,
-            new Vector2(450f, 18f),
+            new Vector2(502f, 26f),
             new Vector2(92f, 96f),
             BorderColor
         );
@@ -725,7 +740,7 @@ public static class GameHudSetupTool
         attackButton = BuildActionCard(
             root,
             "AttackAction",
-            new Vector2(550f, 18f),
+            new Vector2(602f, 26f),
             "A",
             "기본공격",
             "ATK",
@@ -736,7 +751,7 @@ public static class GameHudSetupTool
         moveButton = BuildActionCard(
             root,
             "MoveAction",
-            new Vector2(650f, 18f),
+            new Vector2(702f, 26f),
             "S",
             "이동",
             "MOVE",
@@ -750,7 +765,7 @@ public static class GameHudSetupTool
             root,
             Vector2.zero,
             Vector2.zero,
-            new Vector2(550f, 122f),
+            new Vector2(600f, 130f),
             new Vector2(196f, 30f),
             BorderColor
         );
@@ -941,7 +956,7 @@ public static class GameHudSetupTool
         string[] defaultNames = { "더블 캐스트", "관통", "데미지 강화", "넉백" };
         string[] defaultDescriptions =
         {
-            "20% · 기본 공격을 한 번 더\n연속으로 시전",
+            "20% · 기본 공격을\n한 번 더 연속 시전",
             "33% · 첫 대상을 넘어\n다음 대상 1명까지 관통",
             "25% · 이번 기본공격의\n피해량을 1 증가",
             "25% · 살아남은 적을\n한 타일 밀어냄"
@@ -1379,8 +1394,6 @@ public static class GameHudSetupTool
         Text movePlaceholder,
         Text actionMode,
         Text actionGuide,
-        Image cameraFrame,
-        Text cameraMode,
         Text elapsedTime,
         Text currentWave,
         Image healthFill,
@@ -1418,6 +1431,7 @@ public static class GameHudSetupTool
         serializedController.FindProperty("moveIcon").objectReferenceValue = moveSprite;
         serializedController.FindProperty("ultimateIcon").objectReferenceValue = ultimateSprite;
         serializedController.FindProperty("layoutVersion").intValue = CurrentLayoutVersion;
+        serializedController.FindProperty("typographyVersion").intValue = CurrentTypographyVersion;
         serializedController.FindProperty("selectionOverlay").objectReferenceValue = selectionOverlay;
         serializedController.FindProperty("selectedTraitIconImage").objectReferenceValue = selectedTraitIcon;
         serializedController.FindProperty("selectedTraitPlaceholderText").objectReferenceValue = selectedTraitPlaceholder;
@@ -1440,8 +1454,6 @@ public static class GameHudSetupTool
         serializedController.FindProperty("moveActionPlaceholderText").objectReferenceValue = movePlaceholder;
         serializedController.FindProperty("actionModeText").objectReferenceValue = actionMode;
         serializedController.FindProperty("actionGuideText").objectReferenceValue = actionGuide;
-        serializedController.FindProperty("cameraModeFrameImage").objectReferenceValue = cameraFrame;
-        serializedController.FindProperty("cameraModeText").objectReferenceValue = cameraMode;
         serializedController.FindProperty("elapsedTimeText").objectReferenceValue = elapsedTime;
         serializedController.FindProperty("currentWaveText").objectReferenceValue = currentWave;
         serializedController.FindProperty("healthFillImage").objectReferenceValue = healthFill;
@@ -1462,7 +1474,7 @@ public static class GameHudSetupTool
 
         SerializedProperty traits = serializedController.FindProperty("traitOptions");
         traits.arraySize = 4;
-        SetTrait(traits.GetArrayElementAtIndex(0), "double_cast", "더블 캐스트", "20% · 기본 공격을 한 번 더\n연속으로 시전", "×2", traitSprites[0], 5);
+        SetTrait(traits.GetArrayElementAtIndex(0), "double_cast", "더블 캐스트", "20% · 기본 공격을\n한 번 더 연속 시전", "×2", traitSprites[0], 5);
         SetTrait(traits.GetArrayElementAtIndex(1), "pierce", "관통", "33% · 첫 대상을 넘어\n다음 대상 1명까지 관통", "P", traitSprites[1], 3);
         SetTrait(traits.GetArrayElementAtIndex(2), "damage_boost", "데미지 강화", "25% · 이번 기본공격의\n피해량을 1 증가", "DMG", traitSprites[2], 4);
         SetTrait(traits.GetArrayElementAtIndex(3), "knockback", "넉백", "25% · 살아남은 적을\n한 타일 밀어냄", "KB", traitSprites[3], 4);
@@ -1647,7 +1659,7 @@ public static class GameHudSetupTool
         if (AssetImporter.GetAtPath(UiFontPath) is not TrueTypeFontImporter importer)
             throw new InvalidOperationException($"UI 폰트를 불러올 수 없습니다: {UiFontPath}");
 
-        bool changed = importer.fontRenderingMode != FontRenderingMode.HintedRaster
+        bool changed = importer.fontRenderingMode != FontRenderingMode.HintedSmooth
             || importer.fontSize != MinimumPixelFontSize
             || importer.characterPadding != 1
             || !importer.shouldRoundAdvanceValue;
@@ -1655,8 +1667,8 @@ public static class GameHudSetupTool
         if (!changed)
             return;
 
-        // 안티앨리어싱 없이 힌팅된 픽셀 경계로 렌더링해 작은 한글도 선명하게 유지한다.
-        importer.fontRenderingMode = FontRenderingMode.HintedRaster;
+        // 화면 비율에 따라 달라지는 Canvas 배율에서도 작은 한글 획을 보존한다.
+        importer.fontRenderingMode = FontRenderingMode.HintedSmooth;
         importer.fontSize = MinimumPixelFontSize;
         importer.characterPadding = 1;
         importer.shouldRoundAdvanceValue = true;
@@ -1848,7 +1860,7 @@ public static class GameHudSetupTool
         text.font = uiFont;
         text.text = value;
         text.fontSize = Mathf.Max(MinimumPixelFontSize, fontSize);
-        // Neo둥근모는 Regular 단일 스타일이므로 합성 Bold를 사용하지 않는다.
+        // 픽셀 서체의 작은 속공간이 막히지 않도록 합성 Bold를 사용하지 않는다.
         text.fontStyle = FontStyle.Normal;
         text.alignment = alignment;
         text.color = color;
@@ -1885,14 +1897,15 @@ public static class GameHudSetupTool
         {
             foreach (Text text in rootObject.GetComponentsInChildren<Text>(true))
             {
-                if (text.font == uiFont && text.fontStyle == FontStyle.Normal)
-                    continue;
-
                 if (recordSceneChange)
+                {
                     Undo.RecordObject(text, "UI 폰트 적용");
+                    Undo.RecordObject(text.rectTransform, "UI 글자 간격 조정");
+                }
 
                 text.font = uiFont;
                 text.fontStyle = FontStyle.Normal;
+                ConfigureTextTypography(text);
 
                 if (recordSceneChange)
                     EditorUtility.SetDirty(text);
@@ -1965,7 +1978,10 @@ public static class GameHudSetupTool
         GameHudController controller = FindComponentInScene<GameHudController>(scene);
 
         if (controller != null && controller.LayoutVersion >= CurrentLayoutVersion)
+        {
+            UpgradeTypography(scene, controller);
             return;
+        }
 
         try
         {
@@ -1974,6 +1990,50 @@ public static class GameHudSetupTool
         catch (Exception exception)
         {
             Debug.LogException(exception);
+        }
+    }
+
+    private static void UpgradeTypography(Scene scene, GameHudController controller)
+    {
+        Font font = AssetDatabase.LoadAssetAtPath<Font>(UiFontPath);
+        if (font == null) return;
+        SerializedObject settings = new SerializedObject(controller);
+        if (settings.FindProperty("uiFont").objectReferenceValue == font
+            && settings.FindProperty("typographyVersion").intValue >= CurrentTypographyVersion) return;
+
+        // 기존 버튼, 이벤트와 에셋 참조를 유지하며 글자만 교체한다.
+        ConfigureUiFontImporter();
+        uiFont = font;
+        Undo.RecordObject(controller, "게임 UI 갈무리 폰트 적용");
+        settings.FindProperty("uiFont").objectReferenceValue = font;
+        settings.FindProperty("typographyVersion").intValue = CurrentTypographyVersion;
+        SerializedProperty options = settings.FindProperty("traitOptions");
+        for (int i = 0; i < options.arraySize; i++)
+        {
+            SerializedProperty description = options.GetArrayElementAtIndex(i).FindPropertyRelative("description");
+            if (description.stringValue == "20% · 기본 공격을 한 번 더\n연속으로 시전")
+                description.stringValue = "20% · 기본 공격을\n한 번 더 연속 시전";
+        }
+        settings.ApplyModifiedProperties();
+        ApplyUiFontToScene(scene);
+        EditorSceneManager.MarkSceneDirty(scene);
+        EditorSceneManager.SaveScene(scene);
+        Debug.Log("GAME_HUD_TYPOGRAPHY_APPLIED: Galmuri11 / HintedSmooth", controller);
+    }
+
+    private static void ConfigureTextTypography(Text text)
+    {
+        text.resizeTextForBestFit = false;
+        if (text.name == "TraitDescription")
+        {
+            if (text.text == "20% · 기본 공격을 한 번 더\n연속으로 시전")
+                text.text = "20% · 기본 공격을\n한 번 더 연속 시전";
+            // 제목 아래에서 시작하도록 위쪽 피벗을 사용한다. 기존 중앙 피벗은 제목과 겹쳤다.
+            text.rectTransform.pivot = new Vector2(0f, 1f);
+            text.rectTransform.anchoredPosition = new Vector2(138f, 8f);
+            text.rectTransform.sizeDelta = new Vector2(186f, 110f);
+            text.fontSize = 18;
+            text.lineSpacing = 1.15f;
         }
     }
 }

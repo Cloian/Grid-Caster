@@ -7,6 +7,7 @@ using UnityEngine.UI;
 [DisallowMultipleComponent]
 public sealed class GameHudController : MonoBehaviour
 {
+    private const float BoardEdgeHudReservation = 96f;
     public static event Action QuitRequested;
     public event Action<string> TraitSelected;
 
@@ -25,7 +26,7 @@ public sealed class GameHudController : MonoBehaviour
     [SerializeField] private Sprite basicAttackIcon;
     [Tooltip("S 이동 명령에 표시할 아이콘 Sprite를 넣습니다.")]
     [SerializeField] private Sprite moveIcon;
-    [Tooltip("제작한 필살기 아이콘 Sprite를 넣습니다.")]
+    [Tooltip("제작한 이동술 아이콘 Sprite를 넣습니다.")]
     [SerializeField] private Sprite ultimateIcon;
 
     [Header("UI 참조")]
@@ -57,8 +58,6 @@ public sealed class GameHudController : MonoBehaviour
     [SerializeField, HideInInspector] private Text moveActionPlaceholderText;
     [SerializeField, HideInInspector] private Text actionModeText;
     [SerializeField, HideInInspector] private Text actionGuideText;
-    [SerializeField, HideInInspector] private Image cameraModeFrameImage;
-    [SerializeField, HideInInspector] private Text cameraModeText;
     [SerializeField, HideInInspector] private Text elapsedTimeText;
     [SerializeField, HideInInspector] private Text currentWaveText;
     [SerializeField, HideInInspector] private Image healthFillImage;
@@ -71,6 +70,7 @@ public sealed class GameHudController : MonoBehaviour
     [SerializeField, HideInInspector] private Button pauseRestartButton;
     [SerializeField, HideInInspector] private Button pauseQuitButton;
     [SerializeField, HideInInspector] private int layoutVersion;
+    [SerializeField, HideInInspector] private int typographyVersion;
 
     private static readonly Color GaugeEmptyColor = new Color32(49, 105, 183, 255);
     private static readonly Color GaugeFullColor = new Color32(255, 201, 84, 255);
@@ -83,12 +83,14 @@ public sealed class GameHudController : MonoBehaviour
     private int selectedTraitIndex = -1;
     private bool gaugeSubscribed;
     private bool playerMovementSubscribed;
-    private bool cameraSubscribed;
     private bool healthSubscribed;
     private bool waveSubscribed;
     private bool cameraWasEnabledBeforePause;
     private bool playerIsDead;
+    private Button ultimateActionButton;
     private float elapsedPlayTime;
+    private RunProgressionUiController runProgressionUi;
+    private RunProgressionSystem progressionSystem;
 
     public bool IsTraitSelectionOpen => selectionOverlay != null && selectionOverlay.activeSelf;
     public bool IsGameOver => playerIsDead;
@@ -104,6 +106,7 @@ public sealed class GameHudController : MonoBehaviour
     {
         ApplyUiFont();
         ResolveGameplayReferences();
+        cameraController?.SetVerticalHudReservation(BoardEdgeHudReservation);
         ConfigureTraitChoices();
         ConfigureActionButtons();
         ConfigureSessionButtons();
@@ -119,7 +122,7 @@ public sealed class GameHudController : MonoBehaviour
         foreach (Text text in GetComponentsInChildren<Text>(true))
         {
             text.font = uiFont;
-            // Neo둥근모는 Regular 단일 스타일이므로 합성 Bold를 끄고 원본 픽셀 형태를 사용한다.
+            // 픽셀 서체의 작은 속공간이 막히지 않도록 합성 Bold를 사용하지 않는다.
             text.fontStyle = FontStyle.Normal;
         }
     }
@@ -127,9 +130,15 @@ public sealed class GameHudController : MonoBehaviour
     private void OnEnable()
     {
         ResolveGameplayReferences();
+        progressionSystem = playerMovement != null
+            ? playerMovement.GetComponent<RunProgressionSystem>() : null;
+        if (progressionSystem != null)
+        {
+            progressionSystem.MovementArtChanged -= HandleMovementArtChanged;
+            progressionSystem.MovementArtChanged += HandleMovementArtChanged;
+        }
         SubscribeGauge();
         SubscribePlayerMovement();
-        SubscribeCamera();
         SubscribeHealth();
         SubscribeWave();
     }
@@ -141,10 +150,20 @@ public sealed class GameHudController : MonoBehaviour
         RefreshActionMode(playerMovement != null
             ? playerMovement.SelectionMode
             : PlayerActionSelectionMode.None);
-        RefreshCameraMode(cameraController == null || cameraController.IsFollowingPlayer);
         RefreshElapsedTime();
         RefreshWave();
         RefreshHealth();
+
+        RunProgressionSystem progression = playerMovement != null
+            ? playerMovement.GetComponent<RunProgressionSystem>() : null;
+        if (progression != null)
+        {
+            progressionSystem = progression;
+            runProgressionUi = GetComponent<RunProgressionUiController>();
+            if (runProgressionUi == null)
+                runProgressionUi = gameObject.AddComponent<RunProgressionUiController>();
+            runProgressionUi.Initialize(progression, cameraController);
+        }
 
         if (gameOverOverlay != null)
         {
@@ -172,6 +191,8 @@ public sealed class GameHudController : MonoBehaviour
     {
         if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
         {
+            if (runProgressionUi != null && runProgressionUi.IsModalOpen)
+                return;
             if (IsGameOver)
             {
                 ToggleGameOverReview();
@@ -188,15 +209,17 @@ public sealed class GameHudController : MonoBehaviour
         }
 
         AnimateReadyGlow();
+        RefreshUltimateButton();
         UpdateElapsedTime();
         RefreshHealth();
     }
 
     private void OnDisable()
     {
+        if (progressionSystem != null)
+            progressionSystem.MovementArtChanged -= HandleMovementArtChanged;
         UnsubscribeGauge();
         UnsubscribePlayerMovement();
-        UnsubscribeCamera();
         UnsubscribeHealth();
         UnsubscribeWave();
 
@@ -354,6 +377,17 @@ public sealed class GameHudController : MonoBehaviour
         if (moveActionButton != null)
         {
             moveActionButton.onClick.AddListener(playerMovement.SelectMoveMode);
+        }
+
+        // 기존 필살기 프레임을 버튼으로 사용해 씬의 UI 배치를 바꾸지 않는다.
+        if (ultimateFrameImage != null)
+        {
+            ultimateActionButton = ultimateFrameImage.GetComponent<Button>();
+            if (ultimateActionButton == null)
+                ultimateActionButton = ultimateFrameImage.gameObject.AddComponent<Button>();
+            ultimateActionButton.transition = Selectable.Transition.None;
+            ultimateActionButton.onClick.AddListener(playerMovement.SelectMovementArtMode);
+            RefreshUltimateButton();
         }
     }
 
@@ -554,24 +588,6 @@ public sealed class GameHudController : MonoBehaviour
         playerMovementSubscribed = false;
     }
 
-    private void SubscribeCamera()
-    {
-        if (cameraSubscribed || cameraController == null)
-            return;
-
-        cameraController.FollowModeChanged += RefreshCameraMode;
-        cameraSubscribed = true;
-    }
-
-    private void UnsubscribeCamera()
-    {
-        if (!cameraSubscribed || cameraController == null)
-            return;
-
-        cameraController.FollowModeChanged -= RefreshCameraMode;
-        cameraSubscribed = false;
-    }
-
     private void SubscribeHealth()
     {
         if (healthSubscribed || playerHealth == null)
@@ -655,7 +671,7 @@ public sealed class GameHudController : MonoBehaviour
     {
         if (actionGuideText != null)
         {
-            actionGuideText.text = "A / S 키 또는 아이콘 클릭  ·  우클릭 취소  ·  Esc 메뉴";
+            actionGuideText.text = "A 공격 · S 이동 · F 이동술 · 아이콘 클릭 가능 · 우클릭 취소 · Esc 메뉴";
         }
 
         SetActionCardColors(mode);
@@ -675,6 +691,12 @@ public sealed class GameHudController : MonoBehaviour
                 actionModeText.text = "이동할 타일을 선택하세요";
                 actionModeText.color = MoveModeColor;
                 SetActionFrameColor(MoveModeColor);
+                break;
+
+            case PlayerActionSelectionMode.MovementArt:
+                actionModeText.text = $"{MovementArtDisplayName()}의 착지 칸을 선택하세요";
+                actionModeText.color = GaugeFullColor;
+                SetActionFrameColor(GaugeFullColor);
                 break;
 
             default:
@@ -710,29 +732,12 @@ public sealed class GameHudController : MonoBehaviour
         }
     }
 
-    private void RefreshCameraMode(bool isFollowingPlayer)
-    {
-        if (cameraModeText != null)
-        {
-            cameraModeText.text = isFollowingPlayer
-                ? "플레이어 고정"
-                : "자유 시점";
-            cameraModeText.color = isFollowingPlayer ? MainTextColor : MoveModeColor;
-        }
-
-        if (cameraModeFrameImage != null)
-        {
-            cameraModeFrameImage.color = isFollowingPlayer
-                ? FrameNormalColor
-                : MoveModeColor;
-        }
-    }
-
     private void UpdateElapsedTime()
     {
         // 시작 특성을 고르는 동안과 사망 후에는 생존 시간이 흐르지 않는다.
         if (!IsTraitSelectionOpen
             && !IsPauseMenuOpen
+            && (runProgressionUi == null || !runProgressionUi.IsModalOpen)
             && (playerHealth == null || !playerHealth.IsDead))
         {
             elapsedPlayTime += Time.unscaledDeltaTime;
@@ -814,7 +819,8 @@ public sealed class GameHudController : MonoBehaviour
             return;
 
         float normalized = ultimateGauge.NormalizedGauge;
-        bool isReady = ultimateGauge.IsReady;
+        bool hasMovementArt = progressionSystem != null && progressionSystem.HasMovementArt;
+        bool isReady = hasMovementArt && ultimateGauge.IsReady;
 
         if (ultimateGaugeFillImage != null)
         {
@@ -828,15 +834,16 @@ public sealed class GameHudController : MonoBehaviour
 
         if (ultimateGaugeValueText != null)
         {
-            ultimateGaugeValueText.text = isReady
-                ? "100%"
-                : $"{ultimateGauge.CurrentGauge} / {ultimateGauge.MaxGauge}";
+            ultimateGaugeValueText.text = !hasMovementArt
+                ? "이동술 미보유"
+                : isReady ? "100%" : $"{ultimateGauge.CurrentGauge} / {ultimateGauge.MaxGauge}";
         }
 
         if (ultimateStateText != null)
         {
-            ultimateStateText.text = isReady
-                ? "READY · 필살기 사용 가능"
+            ultimateStateText.text = !hasMovementArt
+                ? "유물 웨이브 보상에서 이동술을 습득하세요"
+                : isReady ? $"READY · {MovementArtDisplayName()} 사용 가능"
                 : $"충전 중 · 이동 +{ultimateGauge.MoveGain} / 적중 +{ultimateGauge.AttackHitGain}";
             ultimateStateText.color = isReady
                 ? GaugeFullColor
@@ -852,6 +859,19 @@ public sealed class GameHudController : MonoBehaviour
         {
             ultimateReadyGlowImage.gameObject.SetActive(isReady);
         }
+
+        RefreshUltimateButton();
+    }
+
+    private void RefreshUltimateButton()
+    {
+        if (ultimateActionButton == null) return;
+        bool canTeleport = ultimateGauge != null && ultimateGauge.IsReady
+            && progressionSystem != null && progressionSystem.HasMovementArt
+            && playerMovement != null && playerMovement.CanAct
+            && !IsTraitSelectionOpen && !IsPauseMenuOpen && !IsGameOver;
+        if (ultimateActionButton.interactable != canTeleport)
+            ultimateActionButton.interactable = canTeleport;
     }
 
     private void AnimateReadyGlow()
@@ -862,6 +882,20 @@ public sealed class GameHudController : MonoBehaviour
         Color glowColor = ultimateReadyGlowImage.color;
         glowColor.a = Mathf.Lerp(0.12f, 0.42f, (Mathf.Sin(Time.unscaledTime * 4f) + 1f) * 0.5f);
         ultimateReadyGlowImage.color = glowColor;
+    }
+
+    private void HandleMovementArtChanged(PlayerMovementArt movementArt, int level)
+    {
+        RefreshGauge();
+        RefreshActionMode(playerMovement != null
+            ? playerMovement.SelectionMode : PlayerActionSelectionMode.None);
+    }
+
+    private string MovementArtDisplayName()
+    {
+        if (progressionSystem == null && playerMovement != null)
+            progressionSystem = playerMovement.GetComponent<RunProgressionSystem>();
+        return progressionSystem != null ? progressionSystem.MovementArtName : "이동술";
     }
 
     private bool IsValidTraitIndex(int index)

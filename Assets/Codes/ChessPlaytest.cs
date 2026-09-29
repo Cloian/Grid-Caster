@@ -12,7 +12,7 @@ public sealed class ChessPlaytest : MonoBehaviour
     private static readonly Vector3Int PlayerStart = new Vector3Int(5, 5, 0);
     private static readonly Vector3Int[] EnemyStarts =
     {
-        new Vector3Int(3, 6, 0), new Vector3Int(2, 2, 0), new Vector3Int(5, 10, 0)
+        new Vector3Int(3, 6, 0), new Vector3Int(2, 2, 0), new Vector3Int(5, 11, 0)
     };
     private static readonly Color[] EnemyColors =
     {
@@ -22,8 +22,8 @@ public sealed class ChessPlaytest : MonoBehaviour
     [Header("두 판 모두 같은 값으로 고정됩니다 (Play 전에 조절)")]
     [SerializeField, Range(2, 6)] private int monsterHealth = 3;
     [SerializeField, Range(1, 3)] private int knightActionInterval = 1;
-    [SerializeField, Range(1, 4)] private int bishopMoveDistance = 2;
-    [SerializeField, Range(1, 5)] private int bishopOrbitDistance = 3;
+    [SerializeField, Range(1, 4)] private int bishopMoveDistance = 4;
+    [SerializeField, Range(1, 5)] private int bishopOrbitDistance = 2;
     [SerializeField, Range(1, 6)] private int bishopFireTurns = 3;
     [SerializeField, Min(1)] private int bishopFireDamage = 1;
     [Header("독립 Sprite 참조")]
@@ -34,7 +34,6 @@ public sealed class ChessPlaytest : MonoBehaviour
     private GridManager grid;
     private ProjectileManager projectiles;
     private readonly List<MonsterMovement> encounter = new List<MonsterMovement>();
-    private readonly List<SpriteRenderer> markers = new List<SpriteRenderer>();
     private readonly string[] summaries = new string[2];
     private readonly int[] exposure = new int[3];
     private int sessionHealth;
@@ -51,8 +50,6 @@ public sealed class ChessPlaytest : MonoBehaviour
     private string unexpected = "";
     private string participantQuote = "";
     private string nextChange = "";
-    private Sprite markerSprite;
-    private Texture2D markerTexture;
     private Font uiFont;
     private bool previousRunInBackground;
 
@@ -73,8 +70,8 @@ public sealed class ChessPlaytest : MonoBehaviour
         Application.runInBackground = true;
         sessionHealth = monsterHealth;
         sessionKnightInterval = knightActionInterval;
-        sessionBishopTravel = bishopMoveDistance;
-        sessionBishopOrbit = bishopOrbitDistance;
+        sessionBishopTravel = Mathf.Max(4, bishopMoveDistance);
+        sessionBishopOrbit = 2;
         spawner.ConfigureFire(bishopFireTurns, bishopFireDamage);
         uiFont = Font.CreateDynamicFontFromOSFont(new[] { "Apple SD Gothic Neo", "Malgun Gothic", "Arial" }, 17);
         // 기존 Tile 에셋의 색 잠금은 씬 로드 시 복구되므로 테스트 맵에서만 해제한다.
@@ -85,7 +82,6 @@ public sealed class ChessPlaytest : MonoBehaviour
             grid.GroundTilemap.SetColor(cell, wall ? new Color(0.18f, 0.2f, 0.25f) :
                 (cell.x + cell.y) % 2 == 0 ? Color.white : new Color(0.8f, 0.85f, 0.9f));
         }
-        CreateMarkerSprite();
         spawner.WorldTurnCompleted += OnWorldTurnCompleted;
         PrepareRound();
     }
@@ -109,7 +105,6 @@ public sealed class ChessPlaytest : MonoBehaviour
         running = false;
         result = null;
         showResult = true;
-        RefreshMarkers();
     }
 
     public void StartRound()
@@ -155,7 +150,6 @@ public sealed class ChessPlaytest : MonoBehaviour
         else if (alive == 0) EndRound("모든 몬스터 처치");
         else if (TurnCount >= TurnLimit) EndRound("20턴 종료");
         else if (Time.unscaledTime - startTime >= RoundSeconds) EndRound("3분 종료");
-        RefreshMarkers();
     }
 
     private void EndRound(string reason)
@@ -166,47 +160,6 @@ public sealed class ChessPlaytest : MonoBehaviour
         summaries[RoundNumber - 1] = $"{RoundNumber}회차: {reason}, {TurnCount}턴, 체력 {player.CurrentHealth}/10"
             + $" / 패턴 실행 N {exposure[0]}, B {exposure[1]}, R {exposure[2]}";
         Debug.Log("CHESS_PLAYTEST_ROUND: " + summaries[RoundNumber - 1]);
-    }
-
-    private void CreateMarkerSprite()
-    {
-        markerTexture = new Texture2D(32, 32) { filterMode = FilterMode.Point, name = "ChessThreatOutline" };
-        Color[] pixels = new Color[32 * 32];
-        for (int y = 0; y < 32; y++)
-            for (int x = 0; x < 32; x++)
-                pixels[y * 32 + x] = x < 2 || x > 29 || y < 2 || y > 29 ? Color.white : Color.clear;
-        markerTexture.SetPixels(pixels);
-        markerTexture.Apply();
-        markerSprite = Sprite.Create(markerTexture, new Rect(0, 0, 32, 32), Vector2.one * 0.5f, 32f);
-    }
-
-    private void RefreshMarkers()
-    {
-        int index = 0;
-        for (int i = 0; i < encounter.Count; i++)
-        {
-            MonsterMovement monster = encounter[i];
-            if (monster == null || monster.IsDead) continue;
-            ChessMonsterBehaviour behaviour = monster.GetComponent<ChessMonsterBehaviour>();
-            foreach (Vector3Int cell in behaviour.GetThreatCells(spawner.IsOccupied))
-            {
-                if (index == markers.Count)
-                {
-                    GameObject marker = new GameObject("ThreatTile");
-                    marker.transform.SetParent(transform, false);
-                    SpriteRenderer renderer = marker.AddComponent<SpriteRenderer>();
-                    renderer.sprite = markerSprite;
-                    renderer.sortingOrder = 4;
-                    markers.Add(renderer);
-                }
-                markers[index].gameObject.SetActive(true);
-                markers[index].transform.position = grid.GetCellCenterWorld(cell);
-                markers[index].transform.localScale = Vector3.one * (0.96f - i * 0.1f);
-                markers[index].color = EnemyColors[i];
-                index++;
-            }
-        }
-        for (; index < markers.Count; index++) markers[index].gameObject.SetActive(false);
     }
 
     private string FacingArrow(MonsterMovement monster)
@@ -230,14 +183,26 @@ public sealed class ChessPlaytest : MonoBehaviour
         GUIStyle button = new GUIStyle(GUI.skin.button) { font = uiFont, fontSize = 17, wordWrap = true };
         GUIStyle field = new GUIStyle(GUI.skin.textArea) { font = uiFont, fontSize = 15, wordWrap = true };
         Camera camera = Camera.main;
-        for (int i = 0; i < encounter.Count; i++)
+        if (camera != null)
         {
-            MonsterMovement monster = encounter[i];
-            if (monster == null || monster.IsDead || camera == null) continue;
-            Vector3 point = camera.WorldToScreenPoint(monster.transform.position);
-            GUI.color = EnemyColors[i];
-            GUI.Label(new Rect(point.x * 1280f / Screen.width - 28, (Screen.height - point.y) * 800f / Screen.height - 48, 95, 30),
-                $"{new[] { "N", "B", "R" }[i]} {FacingArrow(monster)} {monster.GetComponent<CharacterHealth>().CurrentHealth}", title);
+            Rect viewport = camera.pixelRect;
+            float xScale = 1280f / Screen.width;
+            float yScale = 800f / Screen.height;
+            GUI.BeginGroup(new Rect(viewport.xMin * xScale,
+                (Screen.height - viewport.yMax) * yScale,
+                viewport.width * xScale, viewport.height * yScale));
+            for (int i = 0; i < encounter.Count; i++)
+            {
+                MonsterMovement monster = encounter[i];
+                if (monster == null || monster.IsDead) continue;
+                Vector3 point = camera.WorldToScreenPoint(monster.transform.position);
+                if (point.z <= 0) continue;
+                GUI.color = EnemyColors[i];
+                GUI.Label(new Rect((point.x - viewport.xMin) * xScale - 28,
+                        (viewport.yMax - point.y) * yScale - 48, 95, 30),
+                    $"{new[] { "N", "B", "R" }[i]} {FacingArrow(monster)} {monster.GetComponent<CharacterHealth>().CurrentHealth}", title);
+            }
+            GUI.EndGroup();
         }
         GUI.color = Color.white;
         GUILayout.BeginArea(new Rect(936, 16, 328, 768), GUI.skin.box);
@@ -249,7 +214,7 @@ public sealed class ChessPlaytest : MonoBehaviour
             GUILayout.Space(8);
             GUILayout.Label("S 이동 / A 공격 → 화살표 타일 클릭\n우클릭 취소 · 대각선 포함 8방향", text);
             GUILayout.Space(8);
-            GUILayout.Label("하늘색 N: 착지 십자 공격\n노란색 B: 대각선 이동·불길\n분홍색 R: 추적 이동 + 사격\n테두리는 현재 위치 기준 예상\n불길: 진입 피해 / 숫자는 남은 턴", text);
+            GUILayout.Label("하늘색 N: 착지 십자 공격\n노란색 B: 대각선 이동·불길\n분홍색 R: 상단 성벽 장전 → 다음 행동 즉시 사격\n다음 이동 예고 없음 · 불길은 진입 피해", text);
             for (int i = 0; i < encounter.Count; i++)
             {
                 if (encounter[i] != null && !encounter[i].IsDead)
@@ -297,7 +262,7 @@ public sealed class ChessPlaytest : MonoBehaviour
 
     public string BuildRecord()
     {
-        return $"Grid-Caster 체스 패턴 테스트\n고정 배치 P(5,5), N(3,6), B(2,2), R(5,10)"
+        return $"Grid-Caster 체스 패턴 테스트\n고정 배치 P(5,5), N(3,6), B(2,2), R(5,11 상단벽)"
             + $"\n설정: 적 HP {sessionHealth}, N 간격 {sessionKnightInterval}, B 이동 {sessionBishopTravel}, B 거리 {sessionBishopOrbit}, 불길 {bishopFireTurns}턴/피해 {bishopFireDamage}"
             + $"\n{summaries[0]}\n{summaries[1]}\n선택1: {momentOne}\n선택2: {momentTwo}"
             + $"\n예상과 다른 장면: {unexpected}\n참가자 표현: {participantQuote}\n다음 변경/보류: {nextChange}";
@@ -307,8 +272,6 @@ public sealed class ChessPlaytest : MonoBehaviour
     {
         Application.runInBackground = previousRunInBackground;
         if (spawner != null) spawner.WorldTurnCompleted -= OnWorldTurnCompleted;
-        if (markerSprite != null) Destroy(markerSprite);
-        if (markerTexture != null) Destroy(markerTexture);
         if (uiFont != null) Destroy(uiFont);
     }
 }

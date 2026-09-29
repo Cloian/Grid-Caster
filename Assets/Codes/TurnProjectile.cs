@@ -14,12 +14,14 @@ public sealed class TurnProjectile : MonoBehaviour
     private Vector3 targetPosition;
     private float moveSpeed;
     private int damage;
+    private int tilesPerTurn = 1;
     private bool moving;
     private bool travellingFullPath;
     private bool destroyAfterMove;
     private bool finished;
     private MonsterMovement pendingHitTarget;
     private Action<MonsterMovement> hitConfirmed;
+    private Action<Vector3Int> pathCellEntered;
     private Action<TurnProjectile> turnCompleted;
     private Move enemyTarget;
 
@@ -54,7 +56,9 @@ public sealed class TurnProjectile : MonoBehaviour
         Vector3Int moveDirection,
         float visualMoveSpeed,
         int projectileDamage,
-        Action<MonsterMovement> onHitConfirmed
+        Action<MonsterMovement> onHitConfirmed,
+        int turnMoveDistance = 1,
+        Action<Vector3Int> onPathCellEntered = null
     )
     {
         gridManager = targetGridManager;
@@ -67,7 +71,9 @@ public sealed class TurnProjectile : MonoBehaviour
         );
         moveSpeed = Mathf.Max(0.01f, visualMoveSpeed);
         damage = Mathf.Max(1, projectileDamage);
+        tilesPerTurn = Mathf.Max(1, turnMoveDistance);
         hitConfirmed = onHitConfirmed;
+        pathCellEntered = onPathCellEntered;
         targetPosition = transform.position;
     }
 
@@ -99,21 +105,26 @@ public sealed class TurnProjectile : MonoBehaviour
 
             destinationCell = nextCell;
 
+            // 성벽 장착형 룩은 비보행 벽 셀을 점유하므로 벽 충돌보다 먼저 대상을 확인한다.
+            if (monsterSpawner != null
+                && monsterSpawner.TryGetMonsterAtCell(
+                    destinationCell,
+                    out MonsterMovement wallMountedTarget
+                ))
+            {
+                pendingHitTarget = wallMountedTarget;
+                break;
+            }
+
             // 바깥 경계 벽 타일을 목적지에 포함해 벽에 닿는 연출 뒤 제거한다.
             if (!gridManager.IsWalkableCell(destinationCell))
             {
                 break;
             }
 
-            if (monsterSpawner != null
-                && monsterSpawner.TryGetMonsterAtCell(
-                    destinationCell,
-                    out MonsterMovement targetMonster
-                ))
-            {
-                pendingHitTarget = targetMonster;
-                break;
-            }
+            // 기본공격이 실제로 통과하는 모든 바닥 칸에 경로 효과를 즉시 적용한다.
+            pathCellEntered?.Invoke(destinationCell);
+
         }
 
         if (destinationCell == currentCell)
@@ -156,40 +167,45 @@ public sealed class TurnProjectile : MonoBehaviour
             return;
         }
 
-        destinationCell = currentCell + direction;
+        destinationCell = currentCell;
 
-        if (direction == Vector3Int.zero || gridManager == null
-            || !gridManager.IsInsideMapCell(destinationCell))
+        if (direction == Vector3Int.zero || gridManager == null)
         {
             FinishTurn(true);
             return;
         }
 
-        if (!gridManager.IsWalkableCell(destinationCell))
+        for (int step = 0; step < tilesPerTurn; step++)
         {
-            // 보드에 남는 투사체도 경계 벽까지 이동한 뒤 제거한다.
-            targetPosition = gridManager.GetCellCenterWorld(destinationCell);
-            targetPosition.z = transform.position.z;
-            destroyAfterMove = true;
-            moving = true;
-            return;
-        }
+            Vector3Int nextCell = destinationCell + direction;
+            if (!gridManager.IsInsideMapCell(nextCell))
+            {
+                FinishTurn(true);
+                return;
+            }
 
-        // 적과 투사체가 같은 시점에 행동하므로, 턴 시작 시점의 적 위치로 충돌을 확정한다.
-        if (enemyTarget != null && destinationCell == enemyTarget.GridPosition)
-        {
-            ResolvePlayerHit();
-            return;
-        }
+            destinationCell = nextCell;
+            if (!gridManager.IsWalkableCell(destinationCell))
+            {
+                // 보드에 남는 투사체도 경계 벽까지 이동한 뒤 제거한다.
+                destroyAfterMove = true;
+                break;
+            }
 
-        if (enemyTarget == null && monsterSpawner != null
-            && monsterSpawner.TryGetMonsterAtCell(
-                destinationCell,
-                out MonsterMovement targetMonster
-            ))
-        {
-            ResolveHit(targetMonster);
-            return;
+            // 한 턴에 여러 칸 움직이는 적 탄도 중간 칸의 플레이어를 건너뛰지 않는다.
+            if (enemyTarget != null && destinationCell == enemyTarget.GridPosition)
+            {
+                ResolvePlayerHit();
+                return;
+            }
+
+            if (enemyTarget == null && monsterSpawner != null
+                && monsterSpawner.TryGetMonsterAtCell(destinationCell,
+                    out MonsterMovement targetMonster))
+            {
+                ResolveHit(targetMonster);
+                return;
+            }
         }
 
         targetPosition = gridManager.GetCellCenterWorld(destinationCell);

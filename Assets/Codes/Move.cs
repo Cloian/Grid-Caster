@@ -35,7 +35,6 @@ public class Move : MonoBehaviour
     private static readonly int IsMoving = Animator.StringToHash("IsMoving");
     private const int FeedbackSampleRate = 22050;
     private const float BlockedSoundDuration = 0.12f;
-
     private static readonly Vector2Int[] EightDirections =
     {
         Vector2Int.up,
@@ -48,6 +47,25 @@ public class Move : MonoBehaviour
         new Vector2Int(-1, 1)
     };
 
+    private static readonly Vector3Int[] KnightOffsets =
+    {
+        new Vector3Int(1, 2, 0), new Vector3Int(2, 1, 0),
+        new Vector3Int(2, -1, 0), new Vector3Int(1, -2, 0),
+        new Vector3Int(-1, -2, 0), new Vector3Int(-2, -1, 0),
+        new Vector3Int(-2, 1, 0), new Vector3Int(-1, 2, 0)
+    };
+
+    private static readonly Vector3Int[] DiagonalDirections =
+    {
+        new Vector3Int(1, 1, 0), new Vector3Int(1, -1, 0),
+        new Vector3Int(-1, -1, 0), new Vector3Int(-1, 1, 0)
+    };
+
+    private static readonly Vector3Int[] CardinalDirections =
+    {
+        Vector3Int.up, Vector3Int.right, Vector3Int.down, Vector3Int.left
+    };
+
     private Animator playerAnimator;
     private SpriteRenderer playerSprite;
     private CharacterHealth characterHealth;
@@ -57,10 +75,14 @@ public class Move : MonoBehaviour
     private MonsterSpawner monsterSpawner;
     private ProjectileManager projectileManager;
     private PlayerTraitSystem playerTraitSystem;
+    private UltimateGauge ultimateGauge;
+    private RunProgressionSystem progressionSystem;
     private readonly List<Vector3Int> selectableCells = new List<Vector3Int>(8);
     private readonly List<Vector3> selectableWorldPositions = new List<Vector3>(8);
     private readonly List<bool> emphasizedChoices = new List<bool>(8);
+    private readonly List<Vector3> attackPathWorldPositions = new List<Vector3>(16);
     private Vector3 targetPosition;
+    private Vector3Int hoveredAttackCell = new Vector3Int(int.MinValue, int.MinValue, 0);
     private PlayerActionSelectionMode selectionMode;
     private bool moving;
     private bool waitingForMonsters;
@@ -72,6 +94,11 @@ public class Move : MonoBehaviour
     private int remainingAttackCasts;
     private bool activeAttackKnockback;
     private bool attackHitReported;
+    private PlayerAttackTraitRoll activeTraitRoll;
+    private int activeAttackCastIndex;
+    private int activeAttackHitIndex;
+    private bool choosingEchoDirection;
+    private bool kingsFreeMove;
     private Vector3Int gridPosition;
     private bool gridPositionReady;
 
@@ -88,6 +115,11 @@ public class Move : MonoBehaviour
         characterHealth = GetComponent<CharacterHealth>();
         feedbackAudioSource = GetComponent<AudioSource>();
         actionIndicator = GetComponent<DirectionalActionIndicator>();
+        progressionSystem = GetComponent<RunProgressionSystem>();
+        if (progressionSystem == null)
+        {
+            progressionSystem = gameObject.AddComponent<RunProgressionSystem>();
+        }
 
         if (characterHealth == null)
         {
@@ -129,18 +161,41 @@ public class Move : MonoBehaviour
             keyboard != null && keyboard.sKey.wasPressedThisFrame,
             mouse != null && mouse.leftButton.wasPressedThisFrame,
             mouse != null && mouse.rightButton.wasPressedThisFrame,
-            mouse != null ? mouse.position.ReadValue() : Vector2.zero);
+            mouse != null ? mouse.position.ReadValue() : Vector2.zero,
+            keyboard != null && keyboard.fKey.wasPressedThisFrame);
+
+        if (mouse != null)
+        {
+            RefreshAttackPathPreview(mouse.position.ReadValue());
+        }
+        else
+        {
+            ClearAttackPathPreview();
+        }
     }
 
     // 키 선택과 클릭을 한 프레임에 처리한다. 자동 검증도 이 입력 경로를 사용한다.
     public void ProcessInputFrame(bool attackPressed, bool movePressed,
-        bool confirmPressed, bool cancelPressed, Vector2 pointerScreenPosition)
+        bool confirmPressed, bool cancelPressed, Vector2 pointerScreenPosition,
+        bool movementArtPressed = false)
     {
         if (!CanAct) return;
+
+        // 회전 거울의 추가 공격 방향을 고르는 동안에는 다른 행동으로 전환할 수 없다.
+        // 첫 공격의 원래 발사 위치를 보존해야 하므로 이동·이동술·취소 입력을 모두 무시한다.
+        if (choosingEchoDirection)
+        {
+            if (confirmPressed && selectionMode == PlayerActionSelectionMode.Attack)
+                TryConfirmSelectedCell(pointerScreenPosition);
+            return;
+        }
+
         if (attackPressed) ToggleSelectionMode(PlayerActionSelectionMode.Attack);
         if (movePressed) ToggleSelectionMode(PlayerActionSelectionMode.Move);
+        if (movementArtPressed) ToggleSelectionMode(PlayerActionSelectionMode.MovementArt);
         if (cancelPressed)
         {
+            if (choosingEchoDirection || kingsFreeMove) return;
             CancelSelection();
             return;
         }
@@ -158,6 +213,11 @@ public class Move : MonoBehaviour
         SetSelectionMode(PlayerActionSelectionMode.Move);
     }
 
+    public void SelectMovementArtMode()
+    {
+        SetSelectionMode(PlayerActionSelectionMode.MovementArt);
+    }
+
     public void CancelSelection()
     {
         if (selectionMode == PlayerActionSelectionMode.None)
@@ -168,6 +228,7 @@ public class Move : MonoBehaviour
         selectableWorldPositions.Clear();
         emphasizedChoices.Clear();
         actionIndicator?.ClearChoices();
+        hoveredAttackCell = new Vector3Int(int.MinValue, int.MinValue, 0);
         SelectionModeChanged?.Invoke(selectionMode);
     }
 
@@ -189,6 +250,14 @@ public class Move : MonoBehaviour
         if (!inputEnabled || waitingForMonsters || moving)
             return;
 
+        if (choosingEchoDirection && requestedMode != PlayerActionSelectionMode.Attack)
+            return;
+
+        if (requestedMode == PlayerActionSelectionMode.MovementArt
+            && (progressionSystem == null || !progressionSystem.HasMovementArt
+                || ultimateGauge == null || !ultimateGauge.IsReady))
+            return;
+
         if (gridManager == null || !gridManager.IsReady
             || monsterSpawner == null || projectileManager == null
             || actionIndicator == null)
@@ -208,7 +277,97 @@ public class Move : MonoBehaviour
             selectionMode,
             emphasizedChoices
         );
+        hoveredAttackCell = new Vector3Int(int.MinValue, int.MinValue, 0);
+        actionIndicator.ClearAttackPath();
         SelectionModeChanged?.Invoke(selectionMode);
+    }
+
+    private void RefreshAttackPathPreview(Vector2 pointerScreenPosition)
+    {
+        if (selectionMode != PlayerActionSelectionMode.Attack
+            || worldCamera == null
+            || gridManager == null
+            || !gridManager.IsReady
+            || actionIndicator == null
+            || !worldCamera.pixelRect.Contains(pointerScreenPosition))
+        {
+            ClearAttackPathPreview();
+            return;
+        }
+
+        // 카메라 깊이와 무관하게 실제 타일맵 평면 위의 커서 셀을 구한다.
+        Ray ray = worldCamera.ScreenPointToRay(pointerScreenPosition);
+        Plane plane = new Plane(
+            gridManager.GroundTilemap.transform.forward,
+            gridManager.GetCellCenterWorld(GridPosition)
+        );
+
+        if (!plane.Raycast(ray, out float distance))
+        {
+            ClearAttackPathPreview();
+            return;
+        }
+
+        Vector3Int hoveredCell = gridManager.WorldToCell(ray.GetPoint(distance));
+
+        if (!selectableCells.Contains(hoveredCell))
+        {
+            ClearAttackPathPreview();
+            return;
+        }
+
+        if (hoveredCell == hoveredAttackCell)
+            return;
+
+        hoveredAttackCell = hoveredCell;
+        ShowAttackPathPreview(hoveredCell);
+    }
+
+    private void ShowAttackPathPreview(Vector3Int directionCell)
+    {
+        attackPathWorldPositions.Clear();
+
+        Vector3Int currentCell = GridPosition;
+        Vector3Int direction = directionCell - currentCell;
+        int emphasizedCellIndex = -1;
+
+        // 첫 몬스터까지 표시하되, 공격이 소멸하는 바깥 경계 벽 칸은 미리보기에서 제외한다.
+        while (true)
+        {
+            Vector3Int nextCell = currentCell + direction;
+
+            if (!gridManager.IsInsideMapCell(nextCell))
+                break;
+
+            if (!gridManager.IsWalkableCell(nextCell))
+            {
+                // 벽 셀의 쇠뇌 룩은 노란 바닥 점유에서 제외하고 마지막 바닥 칸만 강조한다.
+                if (monsterSpawner.TryGetMonsterAtCell(nextCell, out _)
+                    && attackPathWorldPositions.Count > 0)
+                    emphasizedCellIndex = attackPathWorldPositions.Count - 1;
+                break;
+            }
+
+            currentCell = nextCell;
+            attackPathWorldPositions.Add(gridManager.GetCellCenterWorld(currentCell));
+
+            if (monsterSpawner.TryGetMonsterAtCell(currentCell, out _))
+            {
+                emphasizedCellIndex = attackPathWorldPositions.Count - 1;
+                break;
+            }
+        }
+
+        actionIndicator.ShowAttackPath(
+            attackPathWorldPositions,
+            emphasizedCellIndex
+        );
+    }
+
+    private void ClearAttackPathPreview()
+    {
+        actionIndicator?.ClearAttackPath();
+        hoveredAttackCell = new Vector3Int(int.MinValue, int.MinValue, 0);
     }
 
     private void BuildSelectableCells()
@@ -218,6 +377,12 @@ public class Move : MonoBehaviour
         emphasizedChoices.Clear();
 
         Vector3Int currentCell = GridPosition;
+
+        if (selectionMode == PlayerActionSelectionMode.MovementArt)
+        {
+            BuildMovementArtCells(currentCell);
+            return;
+        }
 
         foreach (Vector2Int direction in EightDirections)
         {
@@ -279,11 +444,136 @@ public class Move : MonoBehaviour
         {
             TryBeginMove(selectedCell);
         }
+        else if (selectionMode == PlayerActionSelectionMode.MovementArt)
+        {
+            return TryUseMovementArtAtCell(selectedCell);
+        }
         else if (selectionMode == PlayerActionSelectionMode.Attack)
         {
-            ExecuteAttack(selectedCell);
+            if (choosingEchoDirection)
+            {
+                activeAttackDirection = selectedCell - GridPosition;
+                choosingEchoDirection = false;
+                CancelSelection();
+                waitingForMonsters = true;
+                LaunchNextAttackCast();
+            }
+            else
+            {
+                ExecuteAttack(selectedCell);
+            }
         }
         return true;
+    }
+
+    private void BuildMovementArtCells(Vector3Int origin)
+    {
+        if (progressionSystem == null) return;
+
+        switch (progressionSystem.ActiveMovementArt)
+        {
+            case PlayerMovementArt.Knight:
+                foreach (Vector3Int offset in KnightOffsets)
+                    AddMovementArtCell(origin + offset);
+                break;
+
+            case PlayerMovementArt.Bishop:
+                BuildSlidingMovementArtCells(origin, DiagonalDirections,
+                    2 + progressionSystem.MovementArtLevel);
+                break;
+
+            case PlayerMovementArt.Rook:
+                BuildSlidingMovementArtCells(origin, CardinalDirections,
+                    3 + progressionSystem.MovementArtLevel);
+                break;
+        }
+    }
+
+    private void BuildSlidingMovementArtCells(Vector3Int origin,
+        IReadOnlyList<Vector3Int> directions, int maximumDistance)
+    {
+        foreach (Vector3Int direction in directions)
+        {
+            for (int distance = 1; distance <= maximumDistance; distance++)
+            {
+                Vector3Int cell = origin + direction * distance;
+                if (!gridManager.IsWalkableCell(cell)
+                    || monsterSpawner.TryGetMonsterAtCell(cell, out _)) break;
+                AddMovementArtCell(cell);
+            }
+        }
+    }
+
+    private void AddMovementArtCell(Vector3Int cell)
+    {
+        if (!gridManager.IsWalkableCell(cell)
+            || monsterSpawner.TryGetMonsterAtCell(cell, out _)) return;
+        selectableCells.Add(cell);
+        selectableWorldPositions.Add(gridManager.GetCellCenterWorld(cell));
+        emphasizedChoices.Add(false);
+    }
+
+    public bool TryUseMovementArtAtCell(Vector3Int destinationCell)
+    {
+        ResolveReferences();
+        if (!CanAct || selectionMode != PlayerActionSelectionMode.MovementArt
+            || !selectableCells.Contains(destinationCell)
+            || destinationCell == GridPosition
+            || !gridManager.IsWalkableCell(destinationCell)
+            || monsterSpawner.TryGetMonsterAtCell(destinationCell, out _)
+            || ultimateGauge == null
+            || progressionSystem == null
+            || !progressionSystem.HasMovementArt
+            || !ultimateGauge.IsReady)
+            return false;
+
+        Vector3Int originCell = gridPosition;
+        Vector3Int difference = destinationCell - gridPosition;
+        UpdateFacing(new Vector2Int(difference.x, difference.y));
+        gridPosition = destinationCell;
+        targetPosition = gridManager.GetCellCenterWorld(destinationCell);
+        targetPosition.z = transform.position.z;
+        // 이동술은 즉시 착지하지만 반드시 플레이어 행동 하나를 소비한다.
+        transform.position = targetPosition;
+        ClearMovementArtFire(originCell, destinationCell);
+        CancelSelection();
+        PlayerMoved?.Invoke();
+        ultimateGauge.TryConsumeFullGauge();
+        progressionSystem.NotifyMovementArtUsed();
+        waitingForMonsters = true;
+        // 이동 제단과 동일하게 이동술 착지 즉시 유물을 획득한다.
+        // 슬롯 교체 UI가 열리면 선택 완료 후 아래 콜백으로 턴을 재개한다.
+        if (progressionSystem != null
+            && progressionSystem.TryHandleAltarAtCell(GridPosition, CompleteMovementArtAction))
+            return true;
+        CompleteMovementArtAction();
+        return true;
+    }
+
+    private void ClearMovementArtFire(Vector3Int origin, Vector3Int destination)
+    {
+        BishopFireTrail fireTrail = monsterSpawner != null ? monsterSpawner.FireTrail : null;
+        if (fireTrail == null) return;
+
+        if (progressionSystem.ActiveMovementArt == PlayerMovementArt.Bishop)
+        {
+            Vector3Int delta = destination - origin;
+            Vector3Int step = new Vector3Int(Math.Sign(delta.x), Math.Sign(delta.y), 0);
+            for (Vector3Int cell = origin + step; cell != destination + step; cell += step)
+                fireTrail.RemoveFire(cell);
+        }
+        else if (progressionSystem.ActiveMovementArt == PlayerMovementArt.Knight
+            && progressionSystem.MovementArtLevel >= 2)
+        {
+            fireTrail.RemoveFire(destination);
+            foreach (Vector3Int direction in CardinalDirections)
+                fireTrail.RemoveFire(destination + direction);
+        }
+    }
+
+    private void CompleteMovementArtAction()
+    {
+        BeginMonsterTurn();
     }
 
     private void TryBeginMove(Vector3Int destinationCell)
@@ -310,6 +600,11 @@ public class Move : MonoBehaviour
         targetPosition.z = transform.position.z;
         gridPosition = destinationCell;
 
+        if (!kingsFreeMove)
+        {
+            progressionSystem?.NotifyMoveAction();
+        }
+
         CancelSelection();
         SetMoving(true);
     }
@@ -324,13 +619,20 @@ public class Move : MonoBehaviour
             ? playerTraitSystem.RollBasicAttack()
             : default;
 
+        progressionSystem?.BeginAttack(traitRoll);
+        activeTraitRoll = traitRoll;
         activeAttackOriginCell = currentCell;
         activeAttackDirection = difference;
-        activeAttackDamage = attackDamage + (traitRoll.DamageBoost ? 1 : 0);
-        activeAttackPenetrations = traitRoll.Pierce ? 1 : 0;
-        remainingAttackCasts = traitRoll.DoubleCast ? 2 : 1;
+        activeAttackDamage = attackDamage;
+        activeAttackPenetrations = progressionSystem != null
+            ? progressionSystem.ModifyPenetrations(traitRoll)
+            : traitRoll.Pierce ? 1 : 0;
+        remainingAttackCasts = progressionSystem != null
+            ? progressionSystem.AttackCastCount(traitRoll)
+            : traitRoll.DoubleCast ? 2 : 1;
         activeAttackKnockback = traitRoll.Knockback;
         attackHitReported = false;
+        activeAttackCastIndex = -1;
 
         CancelSelection();
         // 플레이어 투사체의 전체 경로 비행이 끝날 때까지 추가 입력과 적 턴을 막는다.
@@ -348,14 +650,26 @@ public class Move : MonoBehaviour
         }
 
         remainingAttackCasts--;
+        activeAttackCastIndex++;
+        activeAttackHitIndex = 0;
+        int castDamage = progressionSystem != null
+            ? progressionSystem.ModifyAttackDamage(
+                activeAttackDamage, activeTraitRoll, activeAttackCastIndex)
+            : activeAttackDamage + (activeTraitRoll.DamageBoost ? 1 : 0);
+        int castPenetrations = activeAttackPenetrations;
+        if (activeAttackCastIndex > 0 && progressionSystem != null)
+            castPenetrations += progressionSystem.Stack("echo_warhead");
 
         bool projectileCreated = projectileManager.SpawnPlayerProjectile(
             activeAttackOriginCell,
             activeAttackDirection,
-            activeAttackDamage,
-            activeAttackPenetrations,
+            castDamage,
+            castPenetrations,
             HandleProjectileHit,
-            HandleAttackCastCompleted
+            HandleAttackCastCompleted,
+            hitIndex => progressionSystem != null
+                ? progressionSystem.ModifyPenetrationDamage(castDamage, activeTraitRoll, hitIndex)
+                : castDamage
         );
 
         if (!projectileCreated)
@@ -370,10 +684,26 @@ public class Move : MonoBehaviour
     {
         if (remainingAttackCasts > 0)
         {
+            if (progressionSystem != null && progressionSystem.HasRotatingMirror
+                && activeTraitRoll.DoubleCast)
+            {
+                waitingForMonsters = false;
+                choosingEchoDirection = true;
+                SetSelectionMode(PlayerActionSelectionMode.Attack);
+                return;
+            }
             LaunchNextAttackCast();
             return;
         }
 
+        if (progressionSystem != null && progressionSystem.CompleteAttack(activeTraitRoll))
+        {
+            waitingForMonsters = false;
+            kingsFreeMove = true;
+            SetSelectionMode(PlayerActionSelectionMode.Move);
+            if (selectableCells.Count > 0) return;
+            kingsFreeMove = false;
+        }
         BeginMonsterTurn();
     }
 
@@ -386,9 +716,26 @@ public class Move : MonoBehaviour
             AttackHit?.Invoke();
         }
 
+        progressionSystem?.NotifyAttackHit(
+            targetMonster, activeTraitRoll, activeAttackCastIndex, activeAttackHitIndex);
+        activeAttackHitIndex++;
+
         if (activeAttackKnockback && targetMonster != null && !targetMonster.IsDead)
         {
-            monsterSpawner.TryKnockbackMonster(targetMonster, activeAttackDirection);
+            int distance = progressionSystem != null ? progressionSystem.KnockbackDistance : 1;
+            bool moved = monsterSpawner.TryKnockbackMonster(
+                targetMonster, activeAttackDirection, distance, out MonsterMovement collision);
+            if (moved) progressionSystem?.NotifyKnockbackSuccess();
+            if (!moved && progressionSystem != null && progressionSystem.HasRelic("iron_nail"))
+                targetMonster.TakeDamage(1);
+            if (collision != null && progressionSystem != null
+                && progressionSystem.HasRelic("domino_crest"))
+            {
+                targetMonster.TakeDamage(1);
+                collision.TakeDamage(1);
+            }
+            if (collision != null && progressionSystem != null
+                && progressionSystem.HasRelic("battering_ram")) collision.SkipNextTurn();
         }
     }
 
@@ -476,7 +823,11 @@ public class Move : MonoBehaviour
         {
             transform.position = targetPosition;
             SetMoving(false);
-            PlayerMoved?.Invoke();
+            if (!kingsFreeMove) PlayerMoved?.Invoke();
+            kingsFreeMove = false;
+            waitingForMonsters = true;
+            if (progressionSystem != null
+                && progressionSystem.TryHandleAltarAtCell(GridPosition, BeginMonsterTurn)) return;
             BeginMonsterTurn();
         }
     }
@@ -497,11 +848,22 @@ public class Move : MonoBehaviour
         if (!CanAct || mode == PlayerActionSelectionMode.None)
             return false;
         SetSelectionMode(mode);
+        if (selectionMode != mode) return false;
         Vector3Int destination = GridPosition + direction;
         if (!selectableCells.Contains(destination))
             return false;
         if (mode == PlayerActionSelectionMode.Move)
             TryBeginMove(destination);
+        else if (mode == PlayerActionSelectionMode.MovementArt)
+            return TryUseMovementArtAtCell(destination);
+        else if (choosingEchoDirection)
+        {
+            activeAttackDirection = direction;
+            choosingEchoDirection = false;
+            CancelSelection();
+            waitingForMonsters = true;
+            LaunchNextAttackCast();
+        }
         else
             ExecuteAttack(destination);
         return true;
@@ -539,8 +901,10 @@ public class Move : MonoBehaviour
         MoveCompleted.Invoke();
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, PlayerDamageKind kind = PlayerDamageKind.Normal)
     {
+        if (progressionSystem != null)
+            damage = progressionSystem.ModifyIncomingDamage(damage, kind);
         characterHealth.TakeDamage(damage);
     }
 
@@ -578,6 +942,16 @@ public class Move : MonoBehaviour
         if (playerTraitSystem == null)
         {
             playerTraitSystem = GetComponent<PlayerTraitSystem>();
+        }
+
+        if (ultimateGauge == null)
+        {
+            ultimateGauge = GetComponent<UltimateGauge>();
+        }
+
+        if (progressionSystem == null)
+        {
+            progressionSystem = GetComponent<RunProgressionSystem>();
         }
 
         if (actionIndicator == null)

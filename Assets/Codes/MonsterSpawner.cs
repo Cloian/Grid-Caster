@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using Random = UnityEngine.Random;
 
 [DisallowMultipleComponent]
 [RequireComponent(typeof(GridManager))]
@@ -13,32 +12,28 @@ public sealed class MonsterSpawner : MonoBehaviour
     public event Action<int> WaveCleared;
     public event Action WorldTurnCompleted;
 
-    private const float WaveClearHealRatio = 0.2f;
-
     [Header("참조")]
     [SerializeField] private MonsterMovement[] monsterPrefabs;
     [SerializeField] private Transform player;
     [SerializeField] private Tilemap mapTilemap;
 
     [Header("스폰 설정")]
-    [SerializeField] private int firstWaveMonsterCount = 4;
-    [SerializeField] private int monsterIncreasePerWave = 1;
-    [SerializeField] private float nextWaveDelay = 1f;
     [SerializeField] private int edgeInsetTiles = 1;
     [SerializeField] private int minimumPlayerDistance = 4;
-
-    [Header("웨이브 몬스터 구성")]
-    [SerializeField, Range(0f, 1f)] private float batRatioWave4To5 = 0.2f;
-    [SerializeField, Range(0f, 1f)] private float batRatioWave6To8 = 0.3f;
-    [SerializeField, Range(0f, 1f)] private float batRatioWave9AndLater = 0.4f;
 
     [Header("체스 몬스터 웨이브")]
     [SerializeField] private bool enableChessWaves;
     [SerializeField] private Sprite chessMonsterSprite;
+    [Tooltip("비숍 전용 외형입니다. 비워 두면 기존 체스 몬스터 Sprite를 사용합니다.")]
+    [SerializeField] private Sprite bishopMonsterSprite;
+    [Tooltip("비숍 전용 반복 애니메이션입니다.")]
+    [SerializeField] private RuntimeAnimatorController bishopMonsterAnimatorController;
+    [Tooltip("비워 두면 기존 체스 몬스터 스프라이트를 임시로 사용합니다.")]
+    [SerializeField] private Sprite rookMonsterSprite;
     [SerializeField, Min(1)] private int chessMonsterHealth = 3;
     [SerializeField, Min(1)] private int knightActionInterval = 1;
-    [SerializeField, Min(1)] private int bishopMoveDistance = 2;
-    [SerializeField, Min(1)] private int bishopOrbitDistance = 3;
+    [SerializeField, Min(1)] private int bishopMoveDistance = 4;
+    [SerializeField, Min(1)] private int bishopOrbitDistance = 2;
     [SerializeField, Min(1)] private int bishopFireTurns = 3;
     [SerializeField, Min(1)] private int bishopFireDamage = 1;
     public BishopFireTrail FireTrail { get; private set; }
@@ -48,6 +43,7 @@ public sealed class MonsterSpawner : MonoBehaviour
 
     private readonly List<MonsterMovement> activeMonsters = new List<MonsterMovement>();
     private readonly List<Vector3Int> spawnCells = new List<Vector3Int>();
+    private readonly List<Vector3Int> rookWallSpawnCells = new List<Vector3Int>();
     private readonly List<MonsterMovementPattern> waveSpawnPlan =
         new List<MonsterMovementPattern>();
     private readonly List<MonsterMovement> monsterTurnOrder =
@@ -55,10 +51,14 @@ public sealed class MonsterSpawner : MonoBehaviour
 
     private readonly HashSet<Vector3Int> blockedMonsterCells = new HashSet<Vector3Int>();
     private readonly HashSet<Vector3Int> reservedTransitCells = new HashSet<Vector3Int>();
+    private readonly HashSet<Vector3Int> recentlyDefeatedCells = new HashSet<Vector3Int>();
 
-    private float nextWaveTime;
     private int nextPrefabIndex;
     private int spawnSerial;
+    private int waveSpawnCellCursor;
+    private int waveSpawnStride = 1;
+    private int rookSpawnCellCursor;
+    private int rookSpawnStride = 1;
     private GridManager gridManager;
     private ProjectileManager projectileManager;
     private Move playerMovement;
@@ -72,14 +72,25 @@ public sealed class MonsterSpawner : MonoBehaviour
     private bool planningMonsterTurn;
     private bool projectileTurnStarted;
     private ChessPlaytest chessPlaytest;
+    private StageFlowManager stageFlowManager;
 
     public int CurrentWave => currentWave;
+    public WaveTemplate CurrentWaveTemplate { get; private set; }
+    public StageFlowManager StageFlow => stageFlowManager;
     public bool IsWorldTurnInProgress => worldTurnInProgress;
     public IReadOnlyList<MonsterMovement> ActiveMonsters => activeMonsters;
 
     private void Awake()
     {
         chessPlaytest = GetComponent<ChessPlaytest>();
+        if (chessPlaytest == null)
+        {
+            stageFlowManager = GetComponent<StageFlowManager>();
+            if (stageFlowManager == null)
+            {
+                stageFlowManager = gameObject.AddComponent<StageFlowManager>();
+            }
+        }
         if (mapTilemap == null)
         {
             mapTilemap = FindAnyObjectByType<Tilemap>();
@@ -128,10 +139,11 @@ public sealed class MonsterSpawner : MonoBehaviour
         if (enableChessWaves)
         {
             ChessWaveDisplay display = gameObject.AddComponent<ChessWaveDisplay>();
-            display.Initialize(this, gridManager, playerMovement);
+            display.Initialize(this, playerMovement);
         }
         BuildSpawnCells();
-        SpawnNextWave();
+        stageFlowManager.Initialize(this, playerMovement, playerHealth);
+        stageFlowManager.BeginRun();
     }
 
     private void Update()
@@ -149,10 +161,6 @@ public sealed class MonsterSpawner : MonoBehaviour
             CompleteCurrentWave();
         }
 
-        if (!waveActive && Time.time >= nextWaveTime)
-        {
-            SpawnNextWave();
-        }
     }
 
     private void ResolveReferences()
@@ -292,11 +300,16 @@ public sealed class MonsterSpawner : MonoBehaviour
                     (currentCell, destinationCell) =>
                         TryReserveMonsterCell(monster, currentCell, destinationCell),
                     destinationCell => blockedMonsterCells.Contains(destinationCell)
-                        || reservedTransitCells.Contains(destinationCell)
+                        || reservedTransitCells.Contains(destinationCell),
+                    destinationCell => monster.MovementPattern
+                            == MonsterMovementPattern.CardinalFour
+                        && recentlyDefeatedCells.Contains(destinationCell)
                 );
             }
         }
 
+        // 사망 칸 우선권은 바로 다음 적 행동 계획에서만 사용한다.
+        recentlyDefeatedCells.Clear();
         planningMonsterTurn = false;
         TryCompleteWorldTurn();
     }
@@ -403,7 +416,22 @@ public sealed class MonsterSpawner : MonoBehaviour
         Vector3Int attackDirection
     )
     {
+        return TryKnockbackMonster(targetMonster, attackDirection, 1, out _);
+    }
+
+    public bool TryKnockbackMonster(
+        MonsterMovement targetMonster,
+        Vector3Int attackDirection,
+        int distance,
+        out MonsterMovement collisionMonster
+    )
+    {
+        collisionMonster = null;
         if (targetMonster == null || targetMonster.IsDead || gridManager == null)
+            return false;
+
+        // 성벽에 고정된 쇠뇌 룩은 지상 넉백의 대상이 아니다.
+        if (targetMonster.MovementPattern == MonsterMovementPattern.Rook)
             return false;
 
         Vector3Int normalizedDirection = new Vector3Int(
@@ -415,29 +443,23 @@ public sealed class MonsterSpawner : MonoBehaviour
         if (normalizedDirection == Vector3Int.zero)
             return false;
 
-        Vector3Int currentCell = targetMonster.GridPosition;
-        Vector3Int destinationCell = currentCell + normalizedDirection;
-
-        if (!gridManager.IsWalkableCell(destinationCell))
-            return false;
-
-        if (player != null
-            && playerMovement.GridPosition == destinationCell)
+        Vector3Int originCell = targetMonster.GridPosition;
+        Vector3Int destinationCell = originCell;
+        int steps = Mathf.Max(1, distance);
+        for (int step = 0; step < steps; step++)
         {
-            return false;
+            Vector3Int candidate = destinationCell + normalizedDirection;
+            if (!gridManager.IsWalkableCell(candidate)
+                || (player != null && playerMovement.GridPosition == candidate)) break;
+            if (TryGetMonsterAtCell(candidate, out MonsterMovement occupyingMonster)
+                && occupyingMonster != targetMonster)
+            {
+                collisionMonster = occupyingMonster;
+                break;
+            }
+            destinationCell = candidate;
         }
-
-        if (TryGetMonsterAtCell(destinationCell, out MonsterMovement occupyingMonster)
-            && occupyingMonster != targetMonster)
-        {
-            return false;
-        }
-
-        // 룩은 넉백으로도 테두리 밖에 놓이지 않게 한다.
-        if (targetMonster.MovementPattern == MonsterMovementPattern.Rook
-            && targetMonster.TryGetComponent(out ChessMonsterBehaviour rook)
-            && !rook.IsRookBoundaryCell(destinationCell)) return false;
-        return targetMonster.ApplyKnockback(destinationCell);
+        return destinationCell != originCell && targetMonster.ApplyKnockback(destinationCell);
     }
 
     private void OnMonsterMoveCompleted()
@@ -495,6 +517,7 @@ public sealed class MonsterSpawner : MonoBehaviour
         activeMonsters.Clear();
         blockedMonsterCells.Clear();
         reservedTransitCells.Clear();
+        recentlyDefeatedCells.Clear();
         monstersStillMoving = 0;
         projectileManager.ClearProjectiles();
         FireTrail?.Clear();
@@ -504,9 +527,19 @@ public sealed class MonsterSpawner : MonoBehaviour
         MonsterMovementPattern pattern, Vector3Int cell, Sprite sprite, Color color,
         int health, int order, int knightInterval, int bishopTravel, int bishopOrbit)
     {
-        if (!gridManager.IsWalkableCell(cell) || cell == playerMovement.GridPosition
+        bool wallMountedRook = pattern == MonsterMovementPattern.Rook
+            && gridManager.IsTopBoundaryWallCell(cell);
+        if ((!gridManager.IsWalkableCell(cell) && !wallMountedRook)
+            || cell == playerMovement.GridPosition
             || TryGetMonsterAtCell(cell, out _))
             throw new InvalidOperationException($"테스트 스폰 타일이 막혀 있습니다: {cell}");
+
+        bool usesBishopVisual = pattern == MonsterMovementPattern.Bishop
+            && bishopMonsterSprite != null;
+        if (usesBishopVisual)
+        {
+            sprite = bishopMonsterSprite;
+        }
 
         // 새 몬스터는 프리팹 없이 독립 Sprite와 행동 컴포넌트로 구성한다.
         GameObject actor = new GameObject(pattern.ToString());
@@ -514,21 +547,65 @@ public sealed class MonsterSpawner : MonoBehaviour
         actor.transform.position = gridManager.GetCellCenterWorld(cell);
         SpriteRenderer renderer = actor.AddComponent<SpriteRenderer>();
         renderer.sprite = sprite;
-        renderer.color = color;
+        renderer.color = usesBishopVisual ? Color.white : color;
         renderer.sortingOrder = 10;
+        if (usesBishopVisual)
+        {
+            FitSpriteInsideTile(actor.transform, sprite);
+            if (bishopMonsterAnimatorController != null)
+            {
+                Animator animator = actor.AddComponent<Animator>();
+                animator.runtimeAnimatorController = bishopMonsterAnimatorController;
+                animator.applyRootMotion = false;
+                animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+            }
+        }
         MonsterMovement monster = actor.AddComponent<MonsterMovement>();
         ChessMonsterBehaviour behaviour = actor.AddComponent<ChessMonsterBehaviour>();
         monster.Initialize(player, gridManager);
         monster.ConfigurePlaytest(pattern, health, order);
         behaviour.Initialize(monster, gridManager, projectileManager, playerMovement,
             knightInterval, bishopTravel, bishopOrbit, FireTrail);
-        activeMonsters.Add(monster);
+        RegisterActiveMonster(monster);
         return monster;
+    }
+
+    private void RegisterActiveMonster(MonsterMovement monster)
+    {
+        if (monster == null)
+            return;
+
+        monster.Defeated -= HandleMonsterDefeated;
+        monster.Defeated += HandleMonsterDefeated;
+        activeMonsters.Add(monster);
+    }
+
+    private void HandleMonsterDefeated(MonsterMovement monster, Vector3Int defeatedCell)
+    {
+        // 플레이어 행동 중 앞 적이 죽어 생긴 빈칸을 다음 뱀이 자연스럽게 메우도록 기억한다.
+        if (gridManager != null && gridManager.IsWalkableCell(defeatedCell))
+            recentlyDefeatedCells.Add(defeatedCell);
+        blockedMonsterCells.Remove(defeatedCell);
+    }
+
+    private static void FitSpriteInsideTile(Transform visualTransform, Sprite sprite)
+    {
+        if (visualTransform == null || sprite == null)
+            return;
+
+        const float MaximumTileSpan = 0.95f;
+        float largestDimension = Mathf.Max(sprite.bounds.size.x, sprite.bounds.size.y);
+        if (largestDimension <= MaximumTileSpan)
+            return;
+
+        float scale = MaximumTileSpan / largestDimension;
+        visualTransform.localScale = new Vector3(scale, scale, 1f);
     }
 
     private void BuildSpawnCells()
     {
         spawnCells.Clear();
+        rookWallSpawnCells.Clear();
 
         BoundsInt bounds = mapTilemap.cellBounds;
         int minimumX = bounds.xMin + edgeInsetTiles;
@@ -561,6 +638,15 @@ public sealed class MonsterSpawner : MonoBehaviour
                 AddSpawnCellIfWalkable(new Vector3Int(maximumX, y, 0));
             }
         }
+
+        // 룩은 지상 외곽이 아니라 실제 상단 경계 벽의 안쪽 면에만 장착한다.
+        int topWallY = bounds.yMax - edgeInsetTiles;
+        for (int x = minimumX; x <= maximumX; x++)
+        {
+            Vector3Int wallCell = new Vector3Int(x, topWallY, 0);
+            if (gridManager.IsTopBoundaryWallCell(wallCell))
+                rookWallSpawnCells.Add(wallCell);
+        }
     }
 
     private void AddSpawnCellIfWalkable(Vector3Int cell)
@@ -571,31 +657,32 @@ public sealed class MonsterSpawner : MonoBehaviour
         }
     }
 
-    private void SpawnNextWave()
+    public bool StartWave(int waveNumber)
     {
-        currentWave++;
-        int requestedCount = firstWaveMonsterCount
-            + (currentWave - 1) * monsterIncreasePerWave;
-        int plannedBatCount = CalculateBatCount(currentWave, requestedCount);
-        BuildWaveSpawnPlan(requestedCount, plannedBatCount);
-        if (enableChessWaves)
-        {
-            // 총 마릿수를 유지하며 해금된 패턴을 한 마리씩 우선 배치한다.
-            List<MonsterMovementPattern> unlocked = new List<MonsterMovementPattern>();
-            if (currentWave >= 3) unlocked.Add(MonsterMovementPattern.Knight);
-            if (currentWave >= 5)
-            {
-                unlocked.Add(MonsterMovementPattern.Bishop);
-                unlocked.Add(MonsterMovementPattern.Rook);
-            }
-            foreach (MonsterMovementPattern pattern in unlocked)
-            {
-                int index = waveSpawnPlan.LastIndexOf(MonsterMovementPattern.CardinalFour);
-                if (index < 0) index = waveSpawnPlan.LastIndexOf(MonsterMovementPattern.EightDirection);
-                if (index >= 0) waveSpawnPlan.RemoveAt(index);
-            }
-            waveSpawnPlan.InsertRange(0, unlocked);
-        }
+        if (chessPlaytest != null || waveActive || worldTurnInProgress)
+            return false;
+
+        currentWave = Mathf.Max(1, waveNumber);
+        recentlyDefeatedCells.Clear();
+        CurrentWaveTemplate = WaveTemplateCatalog.Get(currentWave);
+        BuildWaveSpawnPlan(CurrentWaveTemplate);
+        // 같은 웨이브는 같은 외곽 배치 순서에서 시작한다. 플레이어와 점유 상태 때문에
+        // 사용할 수 없는 칸만 순서대로 건너뛴다.
+        waveSpawnCellCursor = spawnCells.Count > 0
+            ? (currentWave * 7) % spawnCells.Count
+            : 0;
+        waveSpawnStride = spawnCells.Count > 0
+            ? Mathf.Max(1, spawnCells.Count / Mathf.Max(1, waveSpawnPlan.Count))
+            : 1;
+        int rookCount = 0;
+        foreach (MonsterMovementPattern pattern in waveSpawnPlan)
+            if (pattern == MonsterMovementPattern.Rook) rookCount++;
+        rookSpawnCellCursor = rookWallSpawnCells.Count > 0
+            ? (currentWave * 3) % rookWallSpawnCells.Count
+            : 0;
+        rookSpawnStride = rookWallSpawnCells.Count > 0
+            ? Mathf.Max(1, rookWallSpawnCells.Count / Mathf.Max(1, rookCount))
+            : 1;
         int spawnedCount = 0;
 
         foreach (MonsterMovementPattern movementPattern in waveSpawnPlan)
@@ -609,13 +696,16 @@ public sealed class MonsterSpawner : MonoBehaviour
 
         waveActive = spawnedCount > 0;
 
-        Debug.Log($"웨이브 {currentWave}: 총 {spawnedCount}마리 (체스 패턴 포함: {enableChessWaves})", this);
+        Debug.Log(
+            $"웨이브 {currentWave} · {CurrentWaveTemplate.DisplayName}: "
+            + $"난이도 {CurrentWaveTemplate.DifficultyTier}단계, 총 {spawnedCount}마리 "
+            + $"(특수: {CurrentWaveTemplate.IsSpecialWave}, 유물: {CurrentWaveTemplate.IsRelicWave}, "
+            + $"중간보스: {CurrentWaveTemplate.IsMidBossWave})",
+            this
+        );
         WaveStarted?.Invoke(currentWave);
 
-        if (!waveActive)
-        {
-            nextWaveTime = Time.time + nextWaveDelay;
-        }
+        return waveActive;
     }
 
     private void CompleteCurrentWave()
@@ -627,80 +717,30 @@ public sealed class MonsterSpawner : MonoBehaviour
             FireTrail?.Clear();
         }
 
-        int requestedHeal = playerHealth == null
-            ? 0
-            : Mathf.Max(1, Mathf.CeilToInt(playerHealth.MaxHealth * WaveClearHealRatio));
-        int healedAmount = playerHealth != null ? playerHealth.Heal(requestedHeal) : 0;
-
-        Debug.Log(
-            $"웨이브 {currentWave} 클리어: 최대 체력의 20% 회복 "
-            + $"({healedAmount}/{requestedHeal})",
-            this
-        );
         WaveCleared?.Invoke(currentWave);
-        nextWaveTime = Time.time + nextWaveDelay;
     }
 
-    public float GetBatRatioForWave(int waveNumber)
-    {
-        if (waveNumber <= 3)
-            return 0f;
-
-        if (waveNumber <= 5)
-            return batRatioWave4To5;
-
-        if (waveNumber <= 8)
-            return batRatioWave6To8;
-
-        return batRatioWave9AndLater;
-    }
-
-    private int CalculateBatCount(int waveNumber, int totalMonsterCount)
-    {
-        float batRatio = GetBatRatioForWave(waveNumber);
-
-        if (batRatio <= 0f || totalMonsterCount <= 0)
-            return 0;
-
-        // 박쥐가 해금된 웨이브에는 최소 한 마리가 등장하도록 보장한다.
-        return Mathf.Clamp(
-            Mathf.Max(1, Mathf.RoundToInt(totalMonsterCount * batRatio)),
-            0,
-            totalMonsterCount
-        );
-    }
-
-    private void BuildWaveSpawnPlan(int totalMonsterCount, int batCount)
+    private void BuildWaveSpawnPlan(WaveTemplate template)
     {
         waveSpawnPlan.Clear();
-
-        for (int i = 0; i < batCount; i++)
-        {
-            waveSpawnPlan.Add(MonsterMovementPattern.EightDirection);
-        }
-
-        for (int i = batCount; i < totalMonsterCount; i++)
-        {
-            waveSpawnPlan.Add(MonsterMovementPattern.CardinalFour);
-        }
-
-        // 목표 마릿수는 유지하면서 스폰 순서만 섞는다.
-        for (int i = waveSpawnPlan.Count - 1; i > 0; i--)
-        {
-            int swapIndex = Random.Range(0, i + 1);
-            MonsterMovementPattern temporary = waveSpawnPlan[i];
-            waveSpawnPlan[i] = waveSpawnPlan[swapIndex];
-            waveSpawnPlan[swapIndex] = temporary;
-        }
+        waveSpawnPlan.AddRange(template.Monsters);
     }
 
     private bool SpawnMonster(MonsterMovementPattern movementPattern)
     {
         if (enableChessWaves && movementPattern >= MonsterMovementPattern.Knight)
         {
-            if (!TryGetSpawnCell(out Vector3Int chessCell)) return false;
+            Vector3Int chessCell;
+            bool foundCell = movementPattern == MonsterMovementPattern.Rook
+                ? TryGetRookWallSpawnCell(out chessCell)
+                : TryGetSpawnCell(out chessCell);
+            if (!foundCell) return false;
+            Sprite monsterSprite = movementPattern == MonsterMovementPattern.Rook
+                && rookMonsterSprite != null
+                ? rookMonsterSprite
+                : chessMonsterSprite;
             MonsterMovement chessMonster = SpawnPlaytestMonster(movementPattern, chessCell,
-                chessMonsterSprite, ChessWaveDisplay.ColorFor(movementPattern), chessMonsterHealth,
+                monsterSprite, ChessWaveDisplay.ColorFor(movementPattern), chessMonsterHealth,
                 ++spawnSerial, knightActionInterval, bishopMoveDistance, bishopOrbitDistance);
             return true;
         }
@@ -715,7 +755,7 @@ public sealed class MonsterSpawner : MonoBehaviour
         spawnSerial++;
         monster.name = $"{prefab.name}_{spawnSerial:00}";
         monster.Initialize(player, gridManager, spawnSerial);
-        activeMonsters.Add(monster);
+        RegisterActiveMonster(monster);
         return true;
     }
 
@@ -742,11 +782,12 @@ public sealed class MonsterSpawner : MonoBehaviour
             return false;
 
         Vector3Int playerCell = playerMovement.GridPosition;
-        int startIndex = Random.Range(0, spawnCells.Count);
+        int startIndex = waveSpawnCellCursor % spawnCells.Count;
 
         for (int i = 0; i < spawnCells.Count; i++)
         {
-            Vector3Int candidate = spawnCells[(startIndex + i) % spawnCells.Count];
+            int candidateIndex = (startIndex + i) % spawnCells.Count;
+            Vector3Int candidate = spawnCells[candidateIndex];
             int distanceFromPlayer = Mathf.Abs(candidate.x - playerCell.x)
                 + Mathf.Abs(candidate.y - playerCell.y);
 
@@ -756,6 +797,28 @@ public sealed class MonsterSpawner : MonoBehaviour
                 continue;
 
             spawnCell = candidate;
+            waveSpawnCellCursor = (candidateIndex + waveSpawnStride) % spawnCells.Count;
+            return true;
+        }
+
+        return false;
+    }
+
+    private bool TryGetRookWallSpawnCell(out Vector3Int spawnCell)
+    {
+        spawnCell = default;
+        if (rookWallSpawnCells.Count == 0)
+            return false;
+
+        int startIndex = rookSpawnCellCursor % rookWallSpawnCells.Count;
+        for (int i = 0; i < rookWallSpawnCells.Count; i++)
+        {
+            int candidateIndex = (startIndex + i) % rookWallSpawnCells.Count;
+            Vector3Int candidate = rookWallSpawnCells[candidateIndex];
+            if (IsOccupied(candidate)) continue;
+
+            spawnCell = candidate;
+            rookSpawnCellCursor = (candidateIndex + rookSpawnStride) % rookWallSpawnCells.Count;
             return true;
         }
 
@@ -777,14 +840,8 @@ public sealed class MonsterSpawner : MonoBehaviour
 
     private void OnValidate()
     {
-        firstWaveMonsterCount = Mathf.Max(1, firstWaveMonsterCount);
-        monsterIncreasePerWave = Mathf.Max(1, monsterIncreasePerWave);
-        nextWaveDelay = Mathf.Max(0f, nextWaveDelay);
         edgeInsetTiles = Mathf.Max(1, edgeInsetTiles);
         minimumPlayerDistance = Mathf.Max(0, minimumPlayerDistance);
-        batRatioWave4To5 = Mathf.Clamp01(batRatioWave4To5);
-        batRatioWave6To8 = Mathf.Clamp01(batRatioWave6To8);
-        batRatioWave9AndLater = Mathf.Clamp01(batRatioWave9AndLater);
 
         if (Application.isPlaying && gridManager != null)
         {
@@ -794,6 +851,10 @@ public sealed class MonsterSpawner : MonoBehaviour
 
     private void OnDestroy()
     {
+        foreach (MonsterMovement monster in activeMonsters)
+            if (monster != null)
+                monster.Defeated -= HandleMonsterDefeated;
+
         if (playerMovement != null)
         {
             playerMovement.MoveCompleted -= BeginMonsterTurn;

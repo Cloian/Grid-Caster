@@ -15,8 +15,6 @@ public static class EnemyWaveSetupTool
     {
         ConfigureExistingPrefab(BatPrefabPath, MonsterMovementPattern.EightDirection);
         ConfigureExistingPrefab(SnakePrefabPath, MonsterMovementPattern.CardinalFour);
-        ConfigureSceneWaveRatios();
-
         AssetDatabase.SaveAssets();
         AssetDatabase.Refresh();
         ValidateSetup();
@@ -50,42 +48,6 @@ public static class EnemyWaveSetupTool
         }
     }
 
-    private static void ConfigureSceneWaveRatios()
-    {
-        Scene scene = SceneManager.GetSceneByPath(ScenePath);
-        bool openedForSetup = !scene.IsValid() || !scene.isLoaded;
-
-        if (openedForSetup)
-        {
-            scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Additive);
-        }
-
-        try
-        {
-            MonsterSpawner spawner = FindComponentInScene<MonsterSpawner>(scene);
-
-            if (spawner == null)
-                throw new InvalidOperationException("SampleScene에서 MonsterSpawner를 찾을 수 없습니다.");
-
-            SerializedObject serializedSpawner = new SerializedObject(spawner);
-            serializedSpawner.FindProperty("batRatioWave4To5").floatValue = 0.2f;
-            serializedSpawner.FindProperty("batRatioWave6To8").floatValue = 0.3f;
-            serializedSpawner.FindProperty("batRatioWave9AndLater").floatValue = 0.4f;
-            serializedSpawner.ApplyModifiedPropertiesWithoutUndo();
-
-            EditorUtility.SetDirty(spawner);
-            EditorSceneManager.MarkSceneDirty(scene);
-            EditorSceneManager.SaveScene(scene);
-        }
-        finally
-        {
-            if (openedForSetup)
-            {
-                EditorSceneManager.CloseScene(scene, true);
-            }
-        }
-    }
-
     private static void ValidateSetup()
     {
         MonsterMovement bat = AssetDatabase.LoadAssetAtPath<GameObject>(BatPrefabPath)
@@ -110,14 +72,15 @@ public static class EnemyWaveSetupTool
         try
         {
             MonsterSpawner spawner = FindComponentInScene<MonsterSpawner>(scene);
+            WaveTemplate firstWave = WaveTemplateCatalog.Get(1);
+            WaveTemplate midBossWave = WaveTemplateCatalog.Get(10);
+            WaveTemplate bossWave = WaveTemplateCatalog.Get(WaveTemplateCatalog.FinalWave);
 
-            if (spawner == null
-                || !Mathf.Approximately(spawner.GetBatRatioForWave(1), 0f)
-                || !Mathf.Approximately(spawner.GetBatRatioForWave(4), 0.2f)
-                || !Mathf.Approximately(spawner.GetBatRatioForWave(6), 0.3f)
-                || !Mathf.Approximately(spawner.GetBatRatioForWave(9), 0.4f))
+            if (spawner == null || firstWave.Monsters.Count != 4
+                || !midBossWave.IsMidBossWave || bossWave.Monsters.Count != 25
+                || !bossWave.IsSpecialWave)
             {
-                throw new InvalidOperationException("웨이브별 Bat 비율 설정이 올바르지 않습니다.");
+                throw new InvalidOperationException("고정 웨이브 조합 데이터가 올바르지 않습니다.");
             }
         }
         finally

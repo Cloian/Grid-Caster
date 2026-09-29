@@ -2,5 +2,14 @@ public enum PlayerActionSelectionMode
 {
     None,
     Attack,
-    Move
+    Move,
+    MovementArt
+}
+
+public enum PlayerMovementArt
+{
+    None,
+    Knight,
+    Bishop,
+    Rook
 }

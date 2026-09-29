@@ -120,14 +120,24 @@ public static class MonsterSetupTool
         prefabsProperty.GetArrayElementAtIndex(1).objectReferenceValue = snakePrefab;
         serializedSpawner.FindProperty("player").objectReferenceValue = playerMovement.transform;
         serializedSpawner.FindProperty("mapTilemap").objectReferenceValue = mapTilemap;
-        serializedSpawner.FindProperty("firstWaveMonsterCount").intValue = 4;
-        serializedSpawner.FindProperty("monsterIncreasePerWave").intValue = 1;
-        serializedSpawner.FindProperty("nextWaveDelay").floatValue = 1f;
         serializedSpawner.FindProperty("edgeInsetTiles").intValue = 1;
         serializedSpawner.FindProperty("minimumPlayerDistance").intValue = 4;
         serializedSpawner.ApplyModifiedPropertiesWithoutUndo();
 
+        StageFlowManager stageFlow = spawner.GetComponent<StageFlowManager>();
+        if (stageFlow == null)
+        {
+            stageFlow = spawner.gameObject.AddComponent<StageFlowManager>();
+        }
+
+        SerializedObject serializedStageFlow = new SerializedObject(stageFlow);
+        serializedStageFlow.FindProperty("finalWave").intValue = WaveTemplateCatalog.FinalWave;
+        serializedStageFlow.FindProperty("fallbackAdvanceDelay").floatValue = 1f;
+        serializedStageFlow.FindProperty("waveClearHealRatio").floatValue = 0.1f;
+        serializedStageFlow.ApplyModifiedPropertiesWithoutUndo();
+
         EditorUtility.SetDirty(spawner);
+        EditorUtility.SetDirty(stageFlow);
         EditorSceneManager.MarkSceneDirty(scene);
         EditorSceneManager.SaveScene(scene);
 

@@ -34,9 +34,15 @@ public sealed class BishopFireTrail : MonoBehaviour
         if (grid.IsWalkableCell(cell)) expiryTurns[cell] = turn + lifetime;
     }
 
+    public bool RemoveFire(Vector3Int cell)
+    {
+        return expiryTurns.Remove(cell);
+    }
+
     private void OnPlayerMoved()
     {
-        if (player.CurrentHealth > 0 && HasFire(player.GridPosition)) player.TakeDamage(damage);
+        if (player.CurrentHealth > 0 && HasFire(player.GridPosition))
+            player.TakeDamage(damage, PlayerDamageKind.Hazard);
     }
 
     public void AdvanceTurn()
@@ -57,6 +63,9 @@ public sealed class BishopFireTrail : MonoBehaviour
     {
         Camera camera = Camera.main;
         if (camera == null || grid == null) return;
+        Rect viewport = camera.pixelRect;
+        GUI.BeginGroup(new Rect(viewport.xMin, Screen.height - viewport.yMax,
+            viewport.width, viewport.height));
         GUIStyle style = new GUIStyle(GUI.skin.label)
         {
             font = font, fontSize = 16, alignment = TextAnchor.MiddleCenter
@@ -66,8 +75,9 @@ public sealed class BishopFireTrail : MonoBehaviour
         {
             Vector3 point = camera.WorldToScreenPoint(grid.GetCellCenterWorld(fire.Key));
             if (point.z <= 0) continue;
-            GUI.Label(new Rect(point.x - 40, Screen.height - point.y - 12, 80, 24), $"불길 {fire.Value - turn}", style);
+            GUI.Label(new Rect(point.x - viewport.xMin - 40, viewport.yMax - point.y - 12, 80, 24), $"불길 {fire.Value - turn}", style);
         }
+        GUI.EndGroup();
     }
 
     private void OnDestroy()

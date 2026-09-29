@@ -31,6 +31,24 @@ public sealed class CharacterHealth : MonoBehaviour
         currentHealth = maxHealth;
     }
 
+    public void IncreaseMaxHealth(int amount, bool healSameAmount)
+    {
+        if (amount <= 0)
+            return;
+
+        maxHealth += amount;
+        if (healSameAmount && !IsDead)
+        {
+            currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
+        }
+    }
+
+    public void AdjustMaxHealth(int amount)
+    {
+        maxHealth = Mathf.Max(1, maxHealth + amount);
+        currentHealth = Mathf.Min(currentHealth, maxHealth);
+    }
+
     public void TakeDamage(int damage)
     {
         if (IsDead || damage <= 0)

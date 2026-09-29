@@ -24,6 +24,7 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
     private const int OrbitRadiusWeight = 20;
     private const int OrbitDirectionPenalty = 40;
     private const int BacktrackPenalty = 30;
+    private const int RookFireDamage = 2;
     private MonsterMovement monster;
     private GridManager grid;
     private ProjectileManager projectiles;
@@ -36,15 +37,23 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
     private Vector3Int previousBishopCell;
     private readonly Queue<Vector3Int> recentBishopCells = new Queue<Vector3Int>();
     private Vector3Int previousKnightCell;
-    private Vector3Int lastRookStep;
+    private bool rookCharged;
+    private int rookTargetColumn;
+    private float rookShotFlashUntil;
     private bool showCross;
     private Vector3Int lastCrossCenter;
 
     public int PatternExecutions { get; private set; }
+    public bool IsRookCharged => monster != null
+        && monster.MovementPattern == MonsterMovementPattern.Rook && rookCharged;
+    public int RookTargetColumn => rookTargetColumn;
     public string StatusText => monster.MovementPattern == MonsterMovementPattern.Knight
         ? "N · L자 착지 후 상하좌우 공격"
         : monster.MovementPattern == MonsterMovementPattern.Bishop
-            ? "B · 대각선 이동 / 불길 남김" : "R · 테두리 추적 이동 + 사격";
+            ? "B · 대각선 이동 / 불길 남김"
+            : rookCharged
+                ? $"R · 성벽 쇠뇌 / {rookTargetColumn}열 발사 준비"
+                : "R · 성벽 쇠뇌 / 다음 행동에 장전";
 
     public void Initialize(MonsterMovement owner, GridManager map, ProjectileManager manager,
         Move target, int knightTurns, int travelDistance, int orbitDistance, BishopFireTrail trail)
@@ -55,12 +64,15 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
         player = target;
         fire = trail;
         knightInterval = Mathf.Max(1, knightTurns);
-        bishopMoveDistance = Mathf.Max(1, travelDistance);
-        bishopOrbitDistance = Mathf.Max(1, orbitDistance);
+        // 비숍은 짧게 왕복하지 않고 보드를 가로지르며 플레이어 근처를 압박한다.
+        bishopMoveDistance = Mathf.Max(4, travelDistance);
+        bishopOrbitDistance = 2;
         previousBishopCell = monster.GridPosition;
         previousKnightCell = monster.GridPosition;
         recentBishopCells.Clear();
-        lastRookStep = Vector3Int.zero;
+        rookCharged = false;
+        rookTargetColumn = monster.GridPosition.x;
+        rookShotFlashUntil = 0f;
     }
 
     public void TakeTurn(Vector3Int playerCell, Func<Vector3Int, bool> blocked)
@@ -199,110 +211,135 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
         if (recentBishopCells.Count > 4) recentBishopCells.Dequeue();
         fire.AddFire(origin);
         foreach (Vector3Int cell in path) fire.AddFire(cell);
+        AddBishopOrbitFire(playerCell, path[path.Count - 1]);
         PatternExecutions++;
     }
 
-    public bool IsRookBoundaryCell(Vector3Int cell)
+    private void AddBishopOrbitFire(Vector3Int playerCell, Vector3Int bishopCell)
     {
-        BoundsInt b = grid.GroundTilemap.cellBounds;
-        return grid.IsWalkableCell(cell) && (cell.x == b.xMin + 1 || cell.x == b.xMax - 2
-            || cell.y == b.yMin + 1 || cell.y == b.yMax - 2);
+        int x = Math.Sign(bishopCell.x - playerCell.x);
+        int y = Math.Sign(bishopCell.y - playerCell.y);
+        if (x == 0) x = bishopCell.x <= playerCell.x ? -1 : 1;
+        if (y == 0) y = bishopCell.y <= playerCell.y ? -1 : 1;
+        Vector3Int cutoffCell = playerCell + new Vector3Int(x, y, 0);
+        if (cutoffCell != playerCell && grid.IsWalkableCell(cutoffCell))
+            fire.AddFire(cutoffCell);
     }
 
-    private Vector3Int RookNextCell(Vector3Int playerCell, Func<Vector3Int, bool> blocked)
+    public bool IsRookWallCell(Vector3Int cell)
+    {
+        return grid != null && grid.IsTopBoundaryWallCell(cell);
+    }
+
+    private Vector3Int RookAimCell(Vector3Int playerCell, Func<Vector3Int, bool> blocked)
     {
         Vector3Int origin = monster.GridPosition;
         Vector3Int result = origin;
-        int bestDistance = Distance(origin, playerCell);
-        int bestLength = 0;
-        Queue<Vector3Int> queue = new Queue<Vector3Int>();
-        Dictionary<Vector3Int, Vector3Int> firstSteps = new Dictionary<Vector3Int, Vector3Int> { [origin] = origin };
-        Dictionary<Vector3Int, int> lengths = new Dictionary<Vector3Int, int> { [origin] = 0 };
-        queue.Enqueue(origin);
-        // 점유를 고려한 테두리 경로 중 플레이어에 가까운 위치까지의 첫 한 칸을 선택한다.
-        while (queue.Count > 0)
+        int bestPlayerDistance = Mathf.Abs(origin.x - playerCell.x);
+        int bestTravelDistance = 0;
+        BoundsInt bounds = grid.GroundTilemap.cellBounds;
+        for (int x = bounds.xMin; x < bounds.xMax; x++)
         {
-            Vector3Int cell = queue.Dequeue();
-            foreach (Vector3Int direction in Cardinals)
+            Vector3Int candidate = new Vector3Int(x, origin.y, 0);
+            if (!IsRookWallCell(candidate)
+                || (candidate != origin && blocked(candidate))) continue;
+
+            int playerDistance = Mathf.Abs(candidate.x - playerCell.x);
+            int travelDistance = Mathf.Abs(candidate.x - origin.x);
+            if (playerDistance < bestPlayerDistance
+                || (playerDistance == bestPlayerDistance
+                    && travelDistance < bestTravelDistance))
             {
-                Vector3Int next = cell + direction;
-                if (!IsRookBoundaryCell(next) || next == playerCell || blocked(next) || firstSteps.ContainsKey(next)) continue;
-                firstSteps[next] = cell == origin ? next : firstSteps[cell];
-                lengths[next] = lengths[cell] + 1;
-                queue.Enqueue(next);
-                int distance = Distance(next, playerCell);
-                int length = lengths[next];
-                // 거리와 경로 길이를 별도로 비교해 맵 크기에 따라 우선순위가 뒤집히지 않게 한다.
-                // 완전히 동률인 경우에만 이전 진행 방향을 유지한다.
-                if (distance < bestDistance || (distance == bestDistance && length < bestLength)
-                    || (distance == bestDistance && length == bestLength
-                        && firstSteps[next] - origin == lastRookStep))
-                {
-                    bestDistance = distance;
-                    bestLength = length;
-                    result = firstSteps[next];
-                }
+                bestPlayerDistance = playerDistance;
+                bestTravelDistance = travelDistance;
+                result = candidate;
             }
         }
         return result;
     }
 
-    private Vector3Int RookShotDirection(Vector3Int cell, Vector3Int playerCell)
+    private void ChargeRook(Vector3Int playerCell, Func<Vector3Int, bool> blocked)
     {
-        if (cell.x == playerCell.x) return playerCell.y > cell.y ? Vector3Int.up : Vector3Int.down;
-        if (cell.y == playerCell.y) return playerCell.x > cell.x ? Vector3Int.right : Vector3Int.left;
-        BoundsInt b = grid.GroundTilemap.cellBounds;
-        if (cell.y == b.yMax - 2) return Vector3Int.down;
-        if (cell.y == b.yMin + 1) return Vector3Int.up;
-        return cell.x == b.xMin + 1 ? Vector3Int.right : Vector3Int.left;
+        Vector3Int origin = monster.GridPosition;
+        Vector3Int aimCell = RookAimCell(playerCell, blocked);
+        rookTargetColumn = aimCell.x;
+        rookCharged = true;
+
+        // 성벽 레일 위에서 목표 열까지 이동하며 장전한다. 지상 점유에는 참여하지 않는다.
+        if (aimCell != origin && monster.TryBeginMountedMove(origin, aimCell))
+            return;
+
+        monster.FinishTurn();
+    }
+
+    private void FireRook()
+    {
+        rookCharged = false;
+        rookShotFlashUntil = Time.unscaledTime + 0.16f;
+        // 장전 때 고정한 세로 열을 즉시 관통 사격한다. 발사 순간 플레이어를 재조준하지 않는다.
+        if (player.CurrentHealth > 0 && player.GridPosition.x == rookTargetColumn)
+            player.TakeDamage(RookFireDamage);
+        PatternExecutions++;
+        monster.FinishTurn();
     }
 
     private void TakeRookTurn(Vector3Int playerCell, Func<Vector3Int, bool> blocked)
     {
-        Vector3Int origin = monster.GridPosition;
-        Vector3Int next = RookNextCell(playerCell, blocked);
-        bool moving = monster.TryBeginMove(origin, next);
-        if (monster.IsDead) return;
-        if (moving) lastRookStep = next - origin;
-        projectiles.SpawnEnemyProjectile(monster.GridPosition, RookShotDirection(monster.GridPosition, playerCell), player);
-        PatternExecutions++;
-        if (!moving) monster.FinishTurn();
-    }
-
-    public List<Vector3Int> GetThreatCells(Func<Vector3Int, bool> blocked)
-    {
-        List<Vector3Int> cells = new List<Vector3Int>();
-        if (monster.MovementPattern == MonsterMovementPattern.Knight && actionIndex % knightInterval == 0)
-        {
-            Vector3Int landing = KnightLanding(player.GridPosition, blocked);
-            if (landing != monster.GridPosition)
-                foreach (Vector3Int direction in Cardinals)
-                    if (grid.IsWalkableCell(landing + direction)) cells.Add(landing + direction);
-        }
-        else if (monster.MovementPattern == MonsterMovementPattern.Bishop)
-            cells.AddRange(BishopPath(player.GridPosition, blocked));
-        else if (monster.MovementPattern == MonsterMovementPattern.Rook)
-        {
-            Vector3Int next = RookNextCell(player.GridPosition, blocked);
-            cells.Add(next);
-            cells.Add(next + RookShotDirection(next, player.GridPosition));
-        }
-        return cells;
+        if (rookCharged)
+            FireRook();
+        else
+            ChargeRook(playerCell, blocked);
     }
 
     private void OnGUI()
     {
         Camera camera = Camera.main;
-        if (!showCross || camera == null || fire == null) return;
-        GUIStyle style = new GUIStyle(GUI.skin.label) { font = fire.LabelFont, fontSize = 16, alignment = TextAnchor.MiddleCenter };
-        style.normal.textColor = Color.cyan;
-        foreach (Vector3Int direction in Cardinals)
+        bool showRookLane = monster != null
+            && monster.MovementPattern == MonsterMovementPattern.Rook
+            && (rookCharged || Time.unscaledTime < rookShotFlashUntil);
+        if ((!showCross && !showRookLane) || camera == null || grid == null) return;
+        Rect viewport = camera.pixelRect;
+        GUI.BeginGroup(new Rect(viewport.xMin, Screen.height - viewport.yMax,
+            viewport.width, viewport.height));
+        if (showRookLane)
         {
-            Vector3Int cell = lastCrossCenter + direction;
-            if (!grid.IsWalkableCell(cell)) continue;
-            Vector3 point = camera.WorldToScreenPoint(grid.GetCellCenterWorld(cell));
-            GUI.Label(new Rect(point.x - 30, Screen.height - point.y - 24, 60, 24), "십자", style);
+            bool firing = !rookCharged;
+            Color previous = GUI.color;
+            GUI.color = firing
+                ? new Color(1f, 0.8f, 0.25f, 0.78f)
+                : new Color(1f, 0.12f, 0.12f, 0.28f);
+            foreach (Vector3Int cell in grid.GroundTilemap.cellBounds.allPositionsWithin)
+            {
+                if (cell.x != rookTargetColumn || !grid.IsWalkableCell(cell)) continue;
+                Vector3 center = grid.GetCellCenterWorld(cell);
+                Vector3 minimum = camera.WorldToScreenPoint(center + new Vector3(-0.46f, -0.46f));
+                Vector3 maximum = camera.WorldToScreenPoint(center + new Vector3(0.46f, 0.46f));
+                if (center.z < camera.transform.position.z) continue;
+                Rect cellRect = new Rect(
+                    minimum.x - viewport.xMin,
+                    viewport.yMax - maximum.y,
+                    maximum.x - minimum.x,
+                    maximum.y - minimum.y);
+                GUI.DrawTexture(cellRect, Texture2D.whiteTexture);
+            }
+            GUI.color = previous;
         }
+
+        if (showCross && fire != null)
+        {
+            GUIStyle style = new GUIStyle(GUI.skin.label)
+                { font = fire.LabelFont, fontSize = 16, alignment = TextAnchor.MiddleCenter };
+            style.normal.textColor = Color.cyan;
+            foreach (Vector3Int direction in Cardinals)
+            {
+                Vector3Int cell = lastCrossCenter + direction;
+                if (!grid.IsWalkableCell(cell)) continue;
+                Vector3 point = camera.WorldToScreenPoint(grid.GetCellCenterWorld(cell));
+                if (point.z <= 0) continue;
+                GUI.Label(new Rect(point.x - viewport.xMin - 30, viewport.yMax - point.y - 24, 60, 24), "십자", style);
+            }
+        }
+        GUI.EndGroup();
     }
 
     private static int Distance(Vector3Int first, Vector3Int second) =>

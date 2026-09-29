@@ -34,9 +34,10 @@ public sealed class ProjectileManager : MonoBehaviour
 
     public bool IsTurnInProgress => projectilesStillMoving > 0;
 
-    public void SpawnEnemyProjectile(Vector3Int originCell, Vector3Int direction, Move player)
+    public void SpawnEnemyProjectile(Vector3Int originCell, Vector3Int direction, Move player,
+        int tilesPerTurn = 1)
     {
-        GameObject actor = new GameObject("RookProjectile");
+        GameObject actor = new GameObject("EnemyProjectile");
         actor.transform.SetParent(transform, false);
         actor.transform.position = gridManager.GetCellCenterWorld(originCell);
         actor.transform.rotation = Quaternion.Euler(0f, 0f,
@@ -47,7 +48,8 @@ public sealed class ProjectileManager : MonoBehaviour
         renderer.sortingOrder = sortingOrder;
         // 적 탄의 프레임 애니메이션은 정지시켜 입력 대기 중에는 보드 전체가 멈춘다.
         TurnProjectile projectile = actor.AddComponent<TurnProjectile>();
-        projectile.Initialize(gridManager, monsterSpawner, originCell, direction, moveSpeed, 1, null);
+        projectile.Initialize(gridManager, monsterSpawner, originCell, direction, moveSpeed, 1,
+            null, tilesPerTurn);
         projectile.SetEnemyOwner(player);
         activeProjectiles.Add(projectile);
     }
@@ -83,7 +85,8 @@ public sealed class ProjectileManager : MonoBehaviour
         int damage,
         int penetrationCount,
         Action<MonsterMovement> onHitConfirmed,
-        Action onTravelCompleted
+        Action onTravelCompleted,
+        Func<int, int> damageForHitIndex = null
     )
     {
         ResolveReferences();
@@ -109,8 +112,10 @@ public sealed class ProjectileManager : MonoBehaviour
             normalizedDirection,
             damage,
             Mathf.Max(0, penetrationCount),
+            0,
             onHitConfirmed,
-            onTravelCompleted
+            onTravelCompleted,
+            damageForHitIndex
         );
     }
 
@@ -119,8 +124,10 @@ public sealed class ProjectileManager : MonoBehaviour
         Vector3Int normalizedDirection,
         int damage,
         int remainingPenetrations,
+        int hitIndex,
         Action<MonsterMovement> onHitConfirmed,
-        Action onTravelCompleted
+        Action onTravelCompleted,
+        Func<int, int> damageForHitIndex
     )
     {
         GameObject projectileObject = new GameObject("PlayerProjectile");
@@ -153,12 +160,13 @@ public sealed class ProjectileManager : MonoBehaviour
             originCell,
             normalizedDirection,
             moveSpeed,
-            damage,
+            damageForHitIndex != null ? Mathf.Max(1, damageForHitIndex(hitIndex)) : damage,
             targetMonster =>
             {
                 hitMonster = targetMonster;
                 onHitConfirmed?.Invoke(targetMonster);
-            }
+            },
+            onPathCellEntered: cell => monsterSpawner.FireTrail?.RemoveFire(cell)
         );
 
         projectileSerial++;
@@ -177,8 +185,10 @@ public sealed class ProjectileManager : MonoBehaviour
                     normalizedDirection,
                     damage,
                     remainingPenetrations - 1,
+                    hitIndex + 1,
                     onHitConfirmed,
-                    onTravelCompleted
+                    onTravelCompleted,
+                    damageForHitIndex
                 );
 
                 if (continuationCreated)

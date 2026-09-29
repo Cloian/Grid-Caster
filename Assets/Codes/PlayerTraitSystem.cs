@@ -12,6 +12,7 @@ public sealed class PlayerTraitSystem : MonoBehaviour
     private int nextBagIndex;
 
     public event Action<string> TraitActivated;
+    public event Action<string> TraitSelected;
 
     public string SelectedTraitId => selectedTraitId;
 
@@ -19,6 +20,13 @@ public sealed class PlayerTraitSystem : MonoBehaviour
     {
         selectedTraitId = traitId ?? string.Empty;
         selectedBagSize = Mathf.Max(1, activationBagSize);
+        RefillActivationBag();
+        TraitSelected?.Invoke(selectedTraitId);
+    }
+
+    public void SetActivationBagSize(int bagSize)
+    {
+        selectedBagSize = Mathf.Max(1, bagSize);
         RefillActivationBag();
     }
 
