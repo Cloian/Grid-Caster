@@ -411,15 +411,24 @@ public static class ChessPlaytestValidation
         Check(GameObject.Find("MinimapHud") == null
             && GameObject.Find("CameraControlHud") == null,
             "미니맵과 플레이어 고정 UI 제거");
+        RunProgressionSystem progression = player.GetComponent<RunProgressionSystem>();
         hud.SelectTrait(0);
-        Check(player.CanAct && normalSpawner.CurrentWave == 1, "SampleScene 특성 선택과 첫 웨이브");
+        Check(!player.CanAct && normalSpawner.CurrentWave == 1
+            && progression.IsStarterUpgradeSelection
+            && progression.CurrentUpgradeOptions.Count == 3
+            && progression.CurrentUpgradeOptions.All(item => item.RequiredTrait == "double_cast"),
+            "시작 특성 선택 직후 전용 강화 3택1");
+        string starterUpgradeId = progression.CurrentUpgradeOptions[0].Id;
+        GameObject.Find("UpgradeChoice_1").GetComponent<Button>().onClick.Invoke();
+        Check(player.CanAct && progression.Stack(starterUpgradeId) == 1,
+            "시작 강화 선택 후 첫 웨이브 입력 허용");
         Check(normalSpawner.StageFlow != null
             && normalSpawner.StageFlow.State == StageFlowState.Combat
             && normalSpawner.StageFlow.FinalWave == WaveTemplateCatalog.FinalWave,
             "20웨이브 스테이지 흐름과 전투 상태");
         int[] expectedWaveCounts =
         {
-            4, 5, 6, 7, 8, 9, 10, 11, 12, 14,
+            3, 4, 5, 6, 8, 9, 10, 11, 12, 14,
             13, 15, 16, 17, 18, 20, 21, 22, 23, 25
         };
         int[] relicWaves = { 4, 8, 12, 16 };
@@ -456,11 +465,10 @@ public static class ChessPlaytestValidation
         for (int wave = 1; wave < WaveTemplateCatalog.FinalWave; wave++)
             Check(RunProgressionCatalog.IsStandardUpgradeWave(wave)
                 == standardRewardWaves.Contains(wave), $"웨이브 {wave} 일반 강화 보상 간격");
-        RunProgressionSystem progression = player.GetComponent<RunProgressionSystem>();
-        Check(progression != null && RunProgressionCatalog.Upgrades.Count == 16
+        Check(progression != null && RunProgressionCatalog.Upgrades.Count == 17
             && RunProgressionCatalog.AdvancedUpgrades.Count == 12
             && RunProgressionCatalog.Relics.Count == 21,
-            "일반 강화 16종·상급 강화 12종·유물 21종 카탈로그");
+            "일반 강화 17종·상급 강화 12종·유물 21종 카탈로그");
         for (int tier = 1; tier <= 4; tier++)
             Check(RunProgressionCatalog.AdvancedUpgrades.Count(item => item.RewardTier == tier) == 3,
                 $"유물 {tier}단계 상급 강화 3종");
@@ -698,6 +706,7 @@ public static class ChessPlaytestValidation
         Check(player.GridPosition == nearbyTeleport && completedTurns == 4
             && !normalSpawner.FireTrail.HasFire(nearbyTeleport),
             "비숍 이동술은 대각선 착지와 경로 불길 제거 후 적 한 턴 처리");
+        progression.SetMovementArtForPlaytest(PlayerMovementArt.None);
         if (normalSpawner.ChessWavesEnabled)
         {
             player.GetComponent<CharacterHealth>().Initialize(1000);
@@ -780,9 +789,8 @@ public static class ChessPlaytestValidation
                 foreach (MonsterMovement enemy in enemies) if (enemy != null && !enemy.IsDead) enemy.TakeDamage(10000);
                 if (wave < 13)
                 {
-                    bool relicReward = (wave == 4 || wave == 8);
-                    bool expectsSelection = RunProgressionCatalog.IsStandardUpgradeWave(wave)
-                        || relicReward;
+                    bool advancedReward = (wave == 4 || wave == 8);
+                    bool expectsSelection = wave % 2 == 0;
                     if (expectsSelection)
                     {
                         while (!normalSpawner.StageFlow.IsWaitingForUpgrade) yield return null;
@@ -790,9 +798,12 @@ public static class ChessPlaytestValidation
                             Check(player.CurrentHealth == 1000, "웨이브 회복은 최대 체력을 넘지 않음");
                         Check(progression.CurrentUpgradeOptions.Count == 3,
                             $"웨이브 {wave} 강화 3개 제시");
-                        Check(progression.CurrentUpgradeOptions.All(item => item.IsAdvanced == relicReward),
+                        if (wave == 2)
+                            Check(progression.CurrentUpgradeOptions.Any(item => item.Id == "movement_knight"),
+                                "2웨이브 보상에 첫 이동술 선택지 보장");
+                        Check(progression.CurrentUpgradeOptions.All(item => item.IsAdvanced == advancedReward),
                             $"웨이브 {wave} 일반/상급 강화 종류 분리");
-                        if (relicReward)
+                        if (advancedReward)
                             Check(progression.CurrentUpgradeOptions.All(item => item.RewardTier == wave / 4),
                                 $"웨이브 {wave} 유물 단계에 맞는 상급 강화");
                         GameObject upgradePanel = GameObject.Find("UpgradeSelectionPanel");

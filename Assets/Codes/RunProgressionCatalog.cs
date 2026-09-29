@@ -78,6 +78,7 @@ public static class RunProgressionCatalog
         new UpgradeDefinition("mana_circulation", "마력 순환", "이동 게이지 +1 · 적중 게이지 +2", 3),
         new UpgradeDefinition("movement_breath", "이동술 호흡", "이동술 사용 후 게이지 +5", 2),
         new UpgradeDefinition("healing_breath", "회복 호흡", "웨이브 회복량 +5%p", 2),
+        new UpgradeDefinition("movement_knight", "나이트 도약", "나이트의 L자 이동술을 습득", 1),
         new UpgradeDefinition("quick_cast", "빠른 영창", "발동 백 크기 5→4→3", 2, "double_cast"),
         new UpgradeDefinition("echo_warhead", "메아리 탄두", "추가 공격 관통 +1", 2, "double_cast"),
         new UpgradeDefinition("echo_recovery", "반향 회수", "발동 공격 적중 시 게이지 +5", 2, "double_cast"),
@@ -120,7 +121,7 @@ public static class RunProgressionCatalog
     // 유물 웨이브를 실제 유물과 함께 클리어했을 때만 단계별 세 개를 모두 제시한다.
     public static readonly IReadOnlyList<UpgradeDefinition> AdvancedUpgrades = new[]
     {
-        new UpgradeDefinition("movement_knight", "나이트 도약", "나이트의 L자 이동술을 습득", 1,
+        new UpgradeDefinition("movement_training_1", "이동술 연마 I", "현재 이동술 강화 · 미보유 시 나이트 도약 습득", 1,
             isAdvanced: true, rewardTier: 1),
         new UpgradeDefinition("rapid_cycle", "고속 순환", "이동 게이지 +2 · 적중 게이지 +5", 1,
             isAdvanced: true, rewardTier: 1),

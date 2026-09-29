@@ -71,6 +71,7 @@ public sealed class RunProgressionSystem : MonoBehaviour
     private bool attackKilledAny;
     private bool recoveryGranted;
     private bool relicAcquiredThisWave;
+    private bool starterSelectionPending;
     private int attackHitCount;
     private bool initialized;
 
@@ -89,6 +90,7 @@ public sealed class RunProgressionSystem : MonoBehaviour
     public IReadOnlyList<RelicDefinition> Relics => relics;
     public IReadOnlyList<RelicOffer> ActiveAltars => activeAltars;
     public IReadOnlyList<UpgradeDefinition> CurrentUpgradeOptions => currentUpgradeOptions;
+    public bool IsStarterUpgradeSelection => starterSelectionPending;
     public int MoveGaugeBonus => Stack("mana_circulation")
         + (Stack("rapid_cycle") > 0 ? 2 : 0);
     public int HitGaugeBonus => Stack("mana_circulation") * 2
@@ -144,16 +146,14 @@ public sealed class RunProgressionSystem : MonoBehaviour
         WaveTemplate clearedTemplate = WaveTemplateCatalog.Get(clearedWave);
         if (clearedTemplate.IsRelicWave)
         {
-            if (!relicAcquiredThisWave)
-            {
-                StartCoroutine(AdvanceWithoutReward());
-                return;
-            }
-            BuildAdvancedUpgradeOptions(clearedWave / 4);
+            if (relicAcquiredThisWave)
+                BuildAdvancedUpgradeOptions(clearedWave / 4);
+            else
+                BuildUpgradeOptions(clearedWave);
         }
         else if (RunProgressionCatalog.IsStandardUpgradeWave(clearedWave))
         {
-            BuildUpgradeOptions();
+            BuildUpgradeOptions(clearedWave);
         }
         else
         {
@@ -169,7 +169,7 @@ public sealed class RunProgressionSystem : MonoBehaviour
         UpgradeOptionsReady.Invoke(currentUpgradeOptions);
     }
 
-    private void BuildUpgradeOptions()
+    private void BuildUpgradeOptions(int clearedWave)
     {
         currentUpgradeOptions.Clear();
         string traitId = traitSystem != null ? traitSystem.SelectedTraitId : string.Empty;
@@ -179,6 +179,18 @@ public sealed class RunProgressionSystem : MonoBehaviour
             .ToList();
         List<UpgradeDefinition> traitEligible = eligible
             .Where(item => item.RequiredTrait == traitId).ToList();
+
+        if (clearedWave == 2 && !HasMovementArt)
+        {
+            // 첫 특수 웨이브 전에 이동 선택지가 생기도록 2웨이브에서 반드시 제시한다.
+            UpgradeDefinition movementUnlock = eligible
+                .FirstOrDefault(item => item.Id == "movement_knight");
+            if (movementUnlock != null)
+            {
+                currentUpgradeOptions.Add(movementUnlock);
+                eligible.Remove(movementUnlock);
+            }
+        }
 
         if (traitEligible.Count > 0)
         {
@@ -218,7 +230,8 @@ public sealed class RunProgressionSystem : MonoBehaviour
 
     public bool SelectUpgrade(int index)
     {
-        if (stageFlow == null || !stageFlow.IsWaitingForUpgrade
+        bool isWaveReward = stageFlow != null && stageFlow.IsWaitingForUpgrade;
+        if ((!starterSelectionPending && !isWaveReward)
             || index < 0 || index >= currentUpgradeOptions.Count)
             return false;
 
@@ -227,6 +240,14 @@ public sealed class RunProgressionSystem : MonoBehaviour
         ApplyImmediateUpgrade(selected.Id);
         UpgradesChanged?.Invoke();
         currentUpgradeOptions.Clear();
+
+        if (starterSelectionPending)
+        {
+            starterSelectionPending = false;
+            playerMovement.SetInputEnabled(true);
+            return true;
+        }
+
         return stageFlow.CompleteUpgradeSelection();
     }
 
@@ -243,6 +264,10 @@ public sealed class RunProgressionSystem : MonoBehaviour
         else if (upgradeId == "movement_rook")
         {
             SetMovementArt(PlayerMovementArt.Rook);
+        }
+        else if (upgradeId == "movement_training_1")
+        {
+            TrainMovementArt(PlayerMovementArt.Knight);
         }
         else if (upgradeId == "movement_training_2")
         {
@@ -306,6 +331,24 @@ public sealed class RunProgressionSystem : MonoBehaviour
     private void HandleTraitSelected(string traitId)
     {
         ApplyTraitBagSize();
+
+        currentUpgradeOptions.Clear();
+        currentUpgradeOptions.AddRange(RunProgressionCatalog.Upgrades
+            .Where(item => item.RequiredTrait == traitId && Stack(item.Id) < item.MaxStacks)
+            .Take(3));
+
+        if (currentUpgradeOptions.Count == 0)
+            return;
+
+        // 첫 행동 전에 선택한 특성의 방향을 한 번 더 구체화한다.
+        starterSelectionPending = true;
+        playerMovement.SetInputEnabled(false);
+        if (UpgradeOptionsReady == null)
+        {
+            SelectUpgrade(0);
+            return;
+        }
+        UpgradeOptionsReady.Invoke(currentUpgradeOptions);
     }
 
     private void ApplyTraitBagSize()

@@ -29,14 +29,13 @@ public static class WaveTemplateCatalog
 
     private static readonly WaveTemplate[] Templates =
     {
-        Build(1, "추적의 시작", false, (MonsterMovementPattern.CardinalFour, 3),
-            (MonsterMovementPattern.EightDirection, 1)),
+        Build(1, "추적의 시작", false, (MonsterMovementPattern.CardinalFour, 3)),
         Build(2, "엇갈린 추격", false, (MonsterMovementPattern.CardinalFour, 3),
-            (MonsterMovementPattern.EightDirection, 2)),
+            (MonsterMovementPattern.EightDirection, 1)),
         Build(3, "박쥐 무리", false, (MonsterMovementPattern.CardinalFour, 3),
-            (MonsterMovementPattern.EightDirection, 3)),
+            (MonsterMovementPattern.EightDirection, 2)),
         Build(4, "나이트 첫 등장", true, (MonsterMovementPattern.CardinalFour, 3),
-            (MonsterMovementPattern.EightDirection, 2), (MonsterMovementPattern.Knight, 2)),
+            (MonsterMovementPattern.EightDirection, 2), (MonsterMovementPattern.Knight, 1)),
         Build(5, "도약 추격", false, (MonsterMovementPattern.CardinalFour, 3),
             (MonsterMovementPattern.EightDirection, 3), (MonsterMovementPattern.Knight, 2)),
         Build(6, "엇갈린 도약", false, (MonsterMovementPattern.CardinalFour, 4),

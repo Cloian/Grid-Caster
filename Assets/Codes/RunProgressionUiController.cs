@@ -121,7 +121,7 @@ public sealed class RunProgressionUiController : MonoBehaviour
         leftPanel = CreatePanel("BuildHudPanel", transform, false);
         CreateText("BuildTitle", leftPanel, "강화 빌드", 22, TextAnchor.MiddleLeft,
             TextColor, new Vector2(18f, -18f), new Vector2(-36f, 40f));
-        CreateText("BuildSubtitle", leftPanel, "웨이브 보상 · 최대 중첩 포함", 12,
+        CreateText("BuildSubtitle", leftPanel, "짝수 웨이브 강화 · 홀수 웨이브 회복", 12,
             TextAnchor.MiddleLeft, MutedColor, new Vector2(18f, -56f), new Vector2(-36f, 26f));
         emptyBuildText = CreateText("EmptyBuild", leftPanel, "아직 획득한 강화가 없습니다", 13,
             TextAnchor.MiddleCenter, MutedColor, new Vector2(18f, -110f), new Vector2(-36f, 48f));
@@ -346,7 +346,9 @@ public sealed class RunProgressionUiController : MonoBehaviour
             if (!available) continue;
             UpgradeDefinition item = options[i];
             int nextStack = progression.Stack(item.Id) + 1;
-            string grade = item.IsAdvanced ? "[상급 강화] " : string.Empty;
+            string grade = progression.IsStarterUpgradeSelection
+                ? "[시작 강화] "
+                : item.IsAdvanced ? "[상급 강화] " : string.Empty;
             upgradeTexts[i].text = $"{i + 1}. {grade}{item.Name}  {nextStack}/{item.MaxStacks}\n\n{item.Description}";
             ApplyIcon(upgradeIcons[i], item.Id, item.Name);
         }
