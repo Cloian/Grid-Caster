@@ -53,7 +53,8 @@ public sealed class DirectionalActionIndicator : MonoBehaviour
     {
         for (int i = 0; i < activeChoiceCount; i++)
         {
-            if (activeMode == PlayerActionSelectionMode.MovementArt) continue;
+            if (activeMode == PlayerActionSelectionMode.Move
+                || activeMode == PlayerActionSelectionMode.MovementArt) continue;
             float phase = Time.unscaledTime * pulseSpeed + i * 0.45f;
             float pulse = 1f + Mathf.Sin(phase) * pulseAmount;
             markerPool[i].Root.transform.localScale = Vector3.one * markerScale * pulse;
@@ -68,7 +69,9 @@ public sealed class DirectionalActionIndicator : MonoBehaviour
     )
     {
         EnsureArrowSprite();
-        if (mode == PlayerActionSelectionMode.MovementArt) EnsureTileSprite();
+        bool useTileMarker = mode == PlayerActionSelectionMode.Move
+            || mode == PlayerActionSelectionMode.MovementArt;
+        if (useTileMarker) EnsureTileSprite();
         EnsurePoolSize(targetWorldPositions.Count);
         activeChoiceCount = targetWorldPositions.Count;
         activeMode = mode;
@@ -84,7 +87,7 @@ public sealed class DirectionalActionIndicator : MonoBehaviour
 
             Vector3 targetPosition = targetWorldPositions[i];
             targetPosition.z = transform.position.z;
-            bool teleport = mode == PlayerActionSelectionMode.MovementArt;
+            bool teleport = useTileMarker;
             Vector2 direction = targetPosition - originWorldPosition;
             float angle = teleport ? 0f : Vector2.SignedAngle(Vector2.up, direction.normalized);
             bool isEmphasized = emphasizedChoices != null
@@ -221,7 +224,8 @@ public sealed class DirectionalActionIndicator : MonoBehaviour
             return isEmphasized ? attackTargetColor : attackColor;
         }
 
-        if (mode == PlayerActionSelectionMode.MovementArt)
+        if (mode == PlayerActionSelectionMode.Move
+            || mode == PlayerActionSelectionMode.MovementArt)
             return teleportColor;
 
         return moveColor;

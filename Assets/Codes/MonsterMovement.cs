@@ -63,6 +63,8 @@ public sealed class MonsterMovement : MonoBehaviour
     public MonsterMovementPattern MovementPattern => movementPattern;
     public Vector3Int GridPosition => gridPosition;
     public int SpawnOrder { get; private set; }
+    public bool IsActionBlocked => skippedTurns > 0;
+    public int LastDamageOverflow { get; private set; }
 
     private void Awake()
     {
@@ -406,6 +408,7 @@ public sealed class MonsterMovement : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        LastDamageOverflow = Mathf.Max(0, damage - characterHealth.CurrentHealth);
         characterHealth.TakeDamage(damage);
     }
 

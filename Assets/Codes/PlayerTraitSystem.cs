@@ -15,6 +15,7 @@ public sealed class PlayerTraitSystem : MonoBehaviour
     public event Action<string> TraitSelected;
 
     public string SelectedTraitId => selectedTraitId;
+    public int ActivationBagSize => selectedBagSize;
 
     public void SelectTrait(string traitId, int activationBagSize)
     {
@@ -26,8 +27,12 @@ public sealed class PlayerTraitSystem : MonoBehaviour
 
     public void SetActivationBagSize(int bagSize)
     {
-        selectedBagSize = Mathf.Max(1, bagSize);
-        RefillActivationBag();
+        int requestedSize = Mathf.Max(1, bagSize);
+        if (selectedBagSize == requestedSize) return;
+        selectedBagSize = requestedSize;
+        // 이미 소비한 백은 보존한다. 주기 변경은 다음 백부터 적용한다.
+        // 첫 행동 전의 시작 강화만 미사용 백에 즉시 반영한다.
+        if (nextBagIndex == 0) RefillActivationBag();
     }
 
     public PlayerAttackTraitRoll RollBasicAttack()

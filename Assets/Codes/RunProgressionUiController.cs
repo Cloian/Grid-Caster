@@ -40,6 +40,16 @@ public sealed class RunProgressionUiController : MonoBehaviour
     private RectTransform rightPanel;
     private RectTransform upgradePanel;
     private RectTransform replacementPanel;
+    private RectTransform detailPanel;
+    private RectTransform detailCard;
+    private UnityEngine.UI.Text detailTitle;
+    private UnityEngine.UI.Text detailText;
+    private UnityEngine.UI.Text movementSummary;
+    private UnityEngine.UI.Text upgradeTitle;
+    private UnityEngine.UI.Text upgradeGuide;
+    private readonly string[] buildUpgradeIds = new string[MaximumBuildRows];
+    private readonly UnityEngine.UI.Button[] buildButtons = new UnityEngine.UI.Button[MaximumBuildRows];
+    private readonly UnityEngine.UI.Button[] relicButtons = new UnityEngine.UI.Button[RunProgressionSystem.MaxRelicSlots];
     private readonly GameObject[] buildRows = new GameObject[MaximumBuildRows];
     private readonly IconView[] buildIcons = new IconView[MaximumBuildRows];
     private readonly UnityEngine.UI.Text[] buildTexts = new UnityEngine.UI.Text[MaximumBuildRows];
@@ -50,17 +60,21 @@ public sealed class RunProgressionUiController : MonoBehaviour
     private readonly UnityEngine.UI.Button[] upgradeButtons = new UnityEngine.UI.Button[3];
     private readonly UnityEngine.UI.Text[] upgradeTexts = new UnityEngine.UI.Text[3];
     private readonly IconView[] upgradeIcons = new IconView[3];
+    private readonly UpgradeDefinition[] displayedUpgrades = new UpgradeDefinition[3];
     private readonly UnityEngine.UI.Button[] replacementButtons = new UnityEngine.UI.Button[5];
     private readonly UnityEngine.UI.Text[] replacementTexts = new UnityEngine.UI.Text[5];
     private readonly IconView[] replacementIcons = new IconView[4];
     private UnityEngine.UI.Text emptyBuildText;
     private UnityEngine.UI.Text supplyText;
     private UnityEngine.UI.Text altarEmptyText;
+    private RelicDefinition incomingRelicDetails;
     private bool initialized;
     private Vector2Int lastScreenSize;
 
     public bool IsModalOpen => (upgradePanel != null && upgradePanel.gameObject.activeSelf)
-        || (replacementPanel != null && replacementPanel.gameObject.activeSelf);
+        || (replacementPanel != null && replacementPanel.gameObject.activeSelf)
+        || IsDetailOpen;
+    public bool IsDetailOpen => detailPanel != null && detailPanel.gameObject.activeSelf;
 
     public void Initialize(RunProgressionSystem target, CameraController cameraController)
     {
@@ -79,12 +93,14 @@ public sealed class RunProgressionUiController : MonoBehaviour
         BuildRightPanel();
         BuildUpgradePanel();
         BuildReplacementPanel();
+        BuildDetailPanel();
 
         progression.UpgradeOptionsReady += ShowUpgradeOptions;
         progression.UpgradesChanged += RefreshBuild;
         progression.RelicsChanged += RefreshRelics;
         progression.AltarsChanged += RefreshAltars;
         progression.RelicReplacementRequested += ShowReplacement;
+        progression.MovementArtChanged += RefreshMovementSummary;
 
         LayoutPanels();
         RefreshBuild();
@@ -100,6 +116,7 @@ public sealed class RunProgressionUiController : MonoBehaviour
 
         Keyboard keyboard = Keyboard.current;
         if (keyboard == null) return;
+        if (IsDetailOpen) return;
         if (upgradePanel != null && upgradePanel.gameObject.activeSelf)
         {
             if (keyboard.digit1Key.wasPressedThisFrame) SelectUpgrade(0);
@@ -121,15 +138,22 @@ public sealed class RunProgressionUiController : MonoBehaviour
         leftPanel = CreatePanel("BuildHudPanel", transform, false);
         CreateText("BuildTitle", leftPanel, "강화 빌드", 22, TextAnchor.MiddleLeft,
             TextColor, new Vector2(18f, -18f), new Vector2(-36f, 40f));
-        CreateText("BuildSubtitle", leftPanel, "짝수 웨이브 강화 · 홀수 웨이브 회복", 12,
+        CreateText("BuildSubtitle", leftPanel, "보유 항목을 클릭하면 상세 설명", 12,
             TextAnchor.MiddleLeft, MutedColor, new Vector2(18f, -56f), new Vector2(-36f, 26f));
+        RectTransform movementRow = CreateCard("MovementArtDetails", leftPanel,
+            new Vector2(14f, -90f), new Vector2(-28f, 48f), LegendaryColor);
+        AddDetailButton(movementRow, ShowMovementDetails);
+        movementSummary = CreateText("Label", movementRow, string.Empty, 13,
+            TextAnchor.MiddleLeft, TextColor, new Vector2(10f, -4f), new Vector2(-20f, 40f));
         emptyBuildText = CreateText("EmptyBuild", leftPanel, "아직 획득한 강화가 없습니다", 13,
-            TextAnchor.MiddleCenter, MutedColor, new Vector2(18f, -110f), new Vector2(-36f, 48f));
+            TextAnchor.MiddleCenter, MutedColor, new Vector2(18f, -150f), new Vector2(-36f, 48f));
 
         for (int i = 0; i < MaximumBuildRows; i++)
         {
             RectTransform row = CreateCard($"BuildRow_{i + 1}", leftPanel,
-                new Vector2(14f, -94f - i * 48f), new Vector2(-28f, 42f), BorderColor);
+                new Vector2(14f, -148f - i * 46f), new Vector2(-28f, 42f), BorderColor);
+            int captured = i;
+            buildButtons[i] = AddDetailButton(row, () => ShowUpgradeDetails(buildUpgradeIds[captured]));
             buildRows[i] = row.gameObject;
             buildIcons[i] = CreateIcon("Icon", row, new Vector2(7f, -5f), new Vector2(32f, 32f));
             buildTexts[i] = CreateText("Label", row, string.Empty, 13, TextAnchor.MiddleLeft,
@@ -149,6 +173,8 @@ public sealed class RunProgressionUiController : MonoBehaviour
         {
             RectTransform row = CreateCard($"RelicSlot_{i + 1}", rightPanel,
                 new Vector2(14f, -72f - i * 92f), new Vector2(-28f, 82f), BorderColor);
+            int captured = i;
+            relicButtons[i] = AddDetailButton(row, () => ShowRelicDetails(captured));
             relicIcons[i] = CreateIcon("Icon", row, new Vector2(9f, -11f), new Vector2(58f, 58f));
             relicTexts[i] = CreateText("Label", row, $"슬롯 {i + 1}  비어 있음", 12,
                 TextAnchor.MiddleLeft, MutedColor, new Vector2(78f, -6f), new Vector2(-86f, 70f));
@@ -163,6 +189,8 @@ public sealed class RunProgressionUiController : MonoBehaviour
             Color border = i == 0 ? SafeColor : RiskyColor;
             RectTransform row = CreateCard(i == 0 ? "SafeAltarOffer" : "RiskyAltarOffer",
                 rightPanel, new Vector2(14f, -496f - i * 126f), new Vector2(-28f, 114f), border);
+            int captured = i;
+            AddDetailButton(row, () => ShowAltarDetails(captured));
             altarIcons[i] = CreateIcon("Icon", row, new Vector2(9f, -26f), new Vector2(58f, 58f));
             altarTexts[i] = CreateText("Label", row, string.Empty, 12, TextAnchor.MiddleLeft,
                 TextColor, new Vector2(78f, -7f), new Vector2(-86f, 100f));
@@ -173,29 +201,140 @@ public sealed class RunProgressionUiController : MonoBehaviour
     private void BuildUpgradePanel()
     {
         upgradePanel = CreateCenterOverlay("UpgradeSelectionPanel", transform);
-        UnityEngine.UI.Text title = CreateText("Title", upgradePanel, "웨이브 강화 선택", 30,
+        upgradeTitle = CreateText("Title", upgradePanel, "웨이브 강화 선택", 30,
             TextAnchor.MiddleCenter, TextColor, Vector2.zero, new Vector2(900f, 60f));
-        SetCentered(title.rectTransform, new Vector2(0f, 265f), new Vector2(900f, 60f));
-        UnityEngine.UI.Text guide = CreateText("Guide", upgradePanel,
+        SetCentered(upgradeTitle.rectTransform, new Vector2(0f, 310f), new Vector2(1000f, 60f));
+        upgradeGuide = CreateText("Guide", upgradePanel,
             "하나를 선택하면 다음 웨이브가 바로 시작됩니다  ·  클릭 또는 1 · 2 · 3", 14,
             TextAnchor.MiddleCenter, MutedColor, Vector2.zero, new Vector2(900f, 34f));
-        SetCentered(guide.rectTransform, new Vector2(0f, 218f), new Vector2(900f, 34f));
+        SetCentered(upgradeGuide.rectTransform, new Vector2(0f, 266f), new Vector2(1000f, 34f));
         for (int i = 0; i < 3; i++)
         {
             int captured = i;
             RectTransform card = CreateFixedCard($"UpgradeChoice_{i + 1}", upgradePanel,
-                new Vector2((i - 1) * 286f, -10f), new Vector2(258f, 390f), BorderColor);
+                new Vector2((i - 1) * 326f, -10f), new Vector2(306f, 470f), BorderColor);
             UnityEngine.UI.Button button = card.gameObject.AddComponent<UnityEngine.UI.Button>();
             UnityEngine.UI.Image cardImage = card.GetComponent<UnityEngine.UI.Image>();
             cardImage.raycastTarget = true;
             button.targetGraphic = cardImage;
             button.onClick.AddListener(() => SelectUpgrade(captured));
             upgradeButtons[i] = button;
-            upgradeIcons[i] = CreateIcon("Icon", card, new Vector2(89f, -30f), new Vector2(80f, 80f));
-            upgradeTexts[i] = CreateText("Label", card, string.Empty, 14, TextAnchor.UpperCenter,
-                TextColor, new Vector2(18f, -128f), new Vector2(-36f, 232f));
+            upgradeIcons[i] = CreateIcon("Icon", card, new Vector2(121f, -20f), new Vector2(64f, 64f));
+            RectTransform details = CreateCard("Details", card, new Vector2(214f, -24f), new Vector2(74f, 32f), BorderColor);
+            details.anchorMin = details.anchorMax = new Vector2(0f, 1f);
+            details.sizeDelta = new Vector2(74f, 32f);
+            AddDetailButton(details, () =>
+            {
+                UpgradeDefinition item = displayedUpgrades[captured];
+                if (item != null) OpenDetails(RunProgressionDescriptions.ChoiceName(item, progression),
+                    RunProgressionDescriptions.ChoiceDetails(item, progression));
+            });
+            CreateText("Label", details, "상세", 13, TextAnchor.MiddleCenter,
+                TextColor, new Vector2(4f, -2f), new Vector2(-8f, 28f));
+            upgradeTexts[i] = CreateText("Label", card, string.Empty, 18, TextAnchor.UpperCenter,
+                TextColor, new Vector2(18f, -96f), new Vector2(-36f, 354f));
         }
         upgradePanel.gameObject.SetActive(false);
+    }
+
+    private void BuildDetailPanel()
+    {
+        detailPanel = CreateCenterOverlay("ProgressionDetailOverlay", transform);
+        UnityEngine.UI.Button backdrop = detailPanel.gameObject.AddComponent<UnityEngine.UI.Button>();
+        backdrop.targetGraphic = detailPanel.GetComponent<UnityEngine.UI.Image>();
+        backdrop.transition = UnityEngine.UI.Selectable.Transition.None;
+        backdrop.onClick.AddListener(CloseDetails);
+        detailCard = CreateFixedCard("ProgressionDetailCard", detailPanel,
+            Vector2.zero, new Vector2(660f, 590f), BorderColor);
+        detailCard.GetComponent<UnityEngine.UI.Image>().raycastTarget = true;
+        detailTitle = CreateText("Title", detailCard, string.Empty, 24,
+            TextAnchor.MiddleLeft, TextColor, new Vector2(28f, -24f), new Vector2(-56f, 64f));
+        detailText = CreateText("Description", detailCard, string.Empty, 18,
+            TextAnchor.UpperLeft, TextColor, new Vector2(28f, -102f), new Vector2(-56f, 386f));
+        RectTransform close = CreateFixedCard("CloseDetails", detailCard,
+            new Vector2(0f, -248f), new Vector2(270f, 48f), BorderColor);
+        AddDetailButton(close, CloseDetails);
+        UnityEngine.UI.Text label = CreateText("Label", close, "닫기 · Esc / 바깥 클릭", 16,
+            TextAnchor.MiddleCenter, TextColor, Vector2.zero, Vector2.zero);
+        label.rectTransform.anchorMin = Vector2.zero;
+        label.rectTransform.anchorMax = Vector2.one;
+        label.rectTransform.sizeDelta = Vector2.zero;
+        detailPanel.gameObject.SetActive(false);
+    }
+
+    private UnityEngine.UI.Button AddDetailButton(RectTransform card, UnityEngine.Events.UnityAction action)
+    {
+        UnityEngine.UI.Image image = card.GetComponent<UnityEngine.UI.Image>();
+        image.raycastTarget = true;
+        UnityEngine.UI.Button button = card.gameObject.AddComponent<UnityEngine.UI.Button>();
+        button.targetGraphic = image;
+        button.onClick.AddListener(action);
+        return button;
+    }
+
+    private void OpenDetails(string title, string description)
+    {
+        if (detailPanel == null) return;
+        Move player = progression.GetComponent<Move>();
+        if (player.IsActionInProgress && !player.IsChoosingEchoDirection && !player.IsChoosingFreeMove
+            && !replacementPanel.gameObject.activeSelf && !upgradePanel.gameObject.activeSelf) return;
+        detailTitle.text = title;
+        detailText.text = description;
+        player.SetInspectionOpen(true);
+        detailPanel.gameObject.SetActive(true);
+        detailPanel.SetAsLastSibling();
+    }
+
+    public void CloseDetails()
+    {
+        if (detailPanel != null) detailPanel.gameObject.SetActive(false);
+        if (progression != null) progression.GetComponent<Move>().SetInspectionOpen(false);
+    }
+
+    public void ShowUpgradeDetails(string id)
+    {
+        if (string.IsNullOrEmpty(id) || progression.Stack(id) == 0) return;
+        UpgradeDefinition item = RunProgressionCatalog.Upgrade(id);
+        OpenDetails(item.Name, RunProgressionDescriptions.OwnedDescription(item, progression));
+    }
+
+    public void ShowMovementDetails()
+    {
+        string level = progression.HasMovementArt ? $" · 현재 Lv.{progression.MovementArtLevel} / 최대 Lv.3" : "";
+        OpenDetails(progression.MovementArtName + level,
+            RunProgressionDescriptions.MovementEffect(progression.ActiveMovementArt, progression.MovementArtLevel));
+    }
+
+    public void ShowTraitDetails()
+    {
+        if (string.IsNullOrEmpty(progression.SelectedTraitId)) return;
+        OpenDetails("시작 특성 · 평균 발동 확률 " + RunProgressionDescriptions.Chance(progression.TraitActivationInterval),
+            RunProgressionDescriptions.TraitEffect(progression.SelectedTraitId)
+            + $"\n\n평균 발동 확률: {RunProgressionDescriptions.Chance(progression.TraitActivationInterval)}\n매 공격마다 독립 추첨하는 방식이 아니라, 공격 {progression.TraitActivationInterval}회 묶음 안에서 한 번 발동을 보장합니다. 빈도 강화를 얻으면 진행 중인 묶음 이후에 적용됩니다.");
+    }
+
+    private void ShowRelicDetails(int index)
+    {
+        if (index < 0 || index >= progression.Relics.Count) return;
+        RelicDefinition relic = progression.Relics[index];
+        OpenDetails(RarityName(relic.Rarity) + " 유물 · " + relic.Name, relic.Description);
+    }
+
+    private void ShowAltarDetails(int index)
+    {
+        if (index < 0 || index >= progression.ActiveAltars.Count) return;
+        RelicOffer offer = progression.ActiveAltars[index];
+        OpenDetails((offer.IsRisky ? "위험" : "안전") + " 제단 · " + offer.Relic.Name,
+            RarityName(offer.Relic.Rarity) + " 유물\n\n" + offer.Relic.Description
+            + "\n\n제단 칸으로 이동하면 즉시 획득하고 적 턴이 진행됩니다. 하나를 획득하면 다른 제단은 사라집니다.\n위험 제단은 안전 제단보다 높은 등급을 우선 보장하며, 상위 후보가 소진되면 같은 등급을 제공합니다.");
+    }
+
+    private void RefreshMovementSummary(PlayerMovementArt art, int level)
+    {
+        if (movementSummary != null)
+            movementSummary.text = progression.HasMovementArt
+                ? $"{progression.MovementArtName} · 현재 Lv.{level}" + (level == RunProgressionSystem.MaxMovementArtLevel ? " (최대)" : "")
+                : "이동술 미보유 · 클릭하여 설명";
     }
 
     private void BuildReplacementPanel()
@@ -224,7 +363,17 @@ public sealed class RunProgressionUiController : MonoBehaviour
             }
             replacementTexts[i] = CreateText("Label", card, string.Empty, 12,
                 TextAnchor.MiddleLeft, TextColor, new Vector2(i < 4 ? 80f : 18f, -7f),
-                new Vector2(i < 4 ? -92f : -36f, 102f));
+                new Vector2(i < 4 ? -92f : -36f, 68f));
+            RectTransform details = CreateCard("Details", card,
+                new Vector2(80f, -80f), new Vector2(-92f, 28f), BorderColor);
+            AddDetailButton(details, () =>
+            {
+                if (captured < 4) ShowRelicDetails(captured);
+                else if (incomingRelicDetails != null)
+                    OpenDetails("새 유물 · " + incomingRelicDetails.Name, incomingRelicDetails.Description);
+            });
+            CreateText("Label", details, "효과·조건 상세", 12, TextAnchor.MiddleCenter,
+                TextColor, new Vector2(4f, -2f), new Vector2(-8f, 24f));
         }
         replacementPanel.gameObject.SetActive(false);
     }
@@ -261,6 +410,11 @@ public sealed class RunProgressionUiController : MonoBehaviour
         LayoutSidePanel(rightPanel, true, innerEdge, panelScale);
         LayoutSidePanel(replacementPanel, true, innerEdge, panelScale);
         LayoutBoardEdgeHud();
+        if (detailCard != null)
+        {
+            float scale = Mathf.Min(1f, (canvasWidth - 36f) / 660f, (canvasHeight - 36f) / 590f);
+            detailCard.localScale = Vector3.one * Mathf.Max(0.1f, scale);
+        }
         lastScreenSize = new Vector2Int(Screen.width, Screen.height);
     }
 
@@ -339,17 +493,23 @@ public sealed class RunProgressionUiController : MonoBehaviour
 
     private void ShowUpgradeOptions(IReadOnlyList<UpgradeDefinition> options)
     {
+        CloseDetails();
+        upgradeTitle.text = progression.IsStarterUpgradeSelection ? "시작 증강 선택" : "웨이브 증강 선택";
+        upgradeGuide.text = progression.IsStarterUpgradeSelection
+            ? "현재 → 선택 후를 비교하세요 · 하나를 고르면 전투 시작 · 클릭 또는 1 · 2 · 3"
+            : "현재 → 선택 후를 비교하세요 · 하나를 고르면 다음 웨이브 · 클릭 또는 1 · 2 · 3";
         for (int i = 0; i < upgradeButtons.Length; i++)
         {
             bool available = i < options.Count;
+            displayedUpgrades[i] = available ? options[i] : null;
             upgradeButtons[i].gameObject.SetActive(available);
             if (!available) continue;
             UpgradeDefinition item = options[i];
-            int nextStack = progression.Stack(item.Id) + 1;
             string grade = progression.IsStarterUpgradeSelection
                 ? "[시작 강화] "
                 : item.IsAdvanced ? "[상급 강화] " : string.Empty;
-            upgradeTexts[i].text = $"{i + 1}. {grade}{item.Name}  {nextStack}/{item.MaxStacks}\n\n{item.Description}";
+            upgradeTexts[i].text = $"{i + 1}. {grade}{RunProgressionDescriptions.ChoiceName(item, progression)}\n\n{RunProgressionDescriptions.ChoiceSummary(item, progression)}";
+            upgradeButtons[i].interactable = progression.CanSelectUpgrade(item);
             ApplyIcon(upgradeIcons[i], item.Id, item.Name);
         }
         SetRightMode(upgradePanel);
@@ -357,12 +517,14 @@ public sealed class RunProgressionUiController : MonoBehaviour
 
     private void SelectUpgrade(int index)
     {
+        if (IsDetailOpen) return;
         if (!progression.SelectUpgrade(index)) return;
         SetRightMode(rightPanel);
     }
 
     private void RefreshBuild()
     {
+        RefreshMovementSummary(progression.ActiveMovementArt, progression.MovementArtLevel);
         List<UpgradeDefinition> acquired = RunProgressionCatalog.AllUpgrades
             .Where(item => progression.Stack(item.Id) > 0).ToList();
         emptyBuildText.gameObject.SetActive(acquired.Count == 0);
@@ -373,7 +535,10 @@ public sealed class RunProgressionUiController : MonoBehaviour
             if (!visible) continue;
             UpgradeDefinition item = acquired[i];
             int stack = progression.Stack(item.Id);
-            buildTexts[i].text = $"{item.Name}   {stack}/{item.MaxStacks}";
+            buildUpgradeIds[i] = item.Id;
+            buildTexts[i].text = RunProgressionDescriptions.IsMovementUpgrade(item.Id)
+                ? item.Name + " · 적용 완료"
+                : item.Name + $" · 현재 Lv.{stack}" + (stack == item.MaxStacks ? " (최대)" : "");
             ApplyIcon(buildIcons[i], item.Id, item.Name);
         }
     }
@@ -385,13 +550,15 @@ public sealed class RunProgressionUiController : MonoBehaviour
         {
             if (i >= relics.Count)
             {
+                relicButtons[i].interactable = false;
                 relicTexts[i].text = $"슬롯 {i + 1}  비어 있음";
                 relicTexts[i].color = MutedColor;
                 ApplyIcon(relicIcons[i], string.Empty, "+");
                 continue;
             }
             RelicDefinition relic = relics[i];
-            relicTexts[i].text = $"{RarityName(relic.Rarity)} · {relic.Name}\n{relic.Description}";
+            relicButtons[i].interactable = true;
+            relicTexts[i].text = $"{RarityName(relic.Rarity)} · {relic.Name}\n클릭하여 효과·조건 확인";
             relicTexts[i].color = RarityColor(relic.Rarity);
             ApplyIcon(relicIcons[i], relic.Id, relic.Name);
         }
@@ -407,7 +574,7 @@ public sealed class RunProgressionUiController : MonoBehaviour
             if (!visible) continue;
             RelicOffer offer = offers[i];
             string danger = offer.IsRisky ? "위험" : "안전";
-            altarTexts[i].text = $"{danger} · {RarityName(offer.Relic.Rarity)}\n{offer.Relic.Name}\n{offer.Relic.Description}";
+            altarTexts[i].text = $"{danger} · {RarityName(offer.Relic.Rarity)}\n{offer.Relic.Name}\n클릭하여 효과 확인";
             altarTexts[i].color = offer.IsRisky ? RiskyColor : SafeColor;
             ApplyIcon(altarIcons[i], offer.Relic.Id, offer.Relic.Name);
         }
@@ -416,18 +583,21 @@ public sealed class RunProgressionUiController : MonoBehaviour
     private void ShowReplacement(RelicDefinition incoming,
         IReadOnlyList<RelicDefinition> equipped)
     {
+        CloseDetails();
+        incomingRelicDetails = incoming;
         for (int i = 0; i < 4; i++)
         {
             RelicDefinition relic = equipped[i];
-            replacementTexts[i].text = $"{i + 1}. {relic.Name} 교체\n{relic.Description}";
+            replacementTexts[i].text = $"{i + 1}. {relic.Name} 교체\n{RarityName(relic.Rarity)} · 이 유물 대신\n{incoming.Name} 획득";
             ApplyIcon(replacementIcons[i], relic.Id, relic.Name);
         }
-        replacementTexts[4].text = $"5. 새 유물 해체 → 보급 +1\n{incoming.Name} · {incoming.Description}";
+        replacementTexts[4].text = $"5. 새 유물 해체 → 보급 +1\n{RarityName(incoming.Rarity)} · {incoming.Name}\n현재 유물은 모두 유지";
         SetRightMode(replacementPanel);
     }
 
     private void ResolveRelic(int replaceIndex)
     {
+        if (IsDetailOpen) return;
         if (!progression.ResolvePendingRelic(replaceIndex)) return;
         SetRightMode(rightPanel);
     }
@@ -568,13 +738,45 @@ public sealed class RunProgressionUiController : MonoBehaviour
     private void ApplyIcon(IconView view, string id, string displayName)
     {
         if (view == null) return;
+        string resourceName = ProgressionIconResourceName(id);
         Sprite sprite = string.IsNullOrEmpty(id)
-            ? null : Resources.Load<Sprite>($"UI/ProgressionIcons/{id}");
+            ? null : Resources.Load<Sprite>($"UI/ProgressionIcons/{resourceName}");
         view.Image.sprite = sprite;
         view.Image.color = sprite != null ? Color.white : new Color32(29, 53, 83, 255);
         view.Placeholder.gameObject.SetActive(sprite == null);
         view.Placeholder.text = string.IsNullOrEmpty(displayName)
             ? "+" : displayName.Substring(0, 1);
+    }
+
+    private string ProgressionIconResourceName(string id)
+    {
+        switch (id)
+        {
+            case "movement_knight":
+            case "movement_training_1":
+            case "movement_training_2":
+                return "KnightMove";
+            case "movement_bishop":
+            case "movement_training_3":
+                return "BishopMove";
+            case "movement_rook":
+            case "movement_training_4":
+                return "RookMove";
+            case "mana_circulation":
+            case "pierce_recovery":
+            case "alternating_overload":
+            case "blast_core":
+                return "ChainBurst";
+            case "echo_recovery":
+                return "EchoPressure";
+            case "movement_breath":
+            case "afterglow_recovery":
+            case "impact_recovery":
+            case "hot_afterglow":
+                return "BindingLanding";
+            default:
+                return id;
+        }
     }
 
     private static string RarityName(RelicRarity rarity)
@@ -591,6 +793,7 @@ public sealed class RunProgressionUiController : MonoBehaviour
 
     private void OnDestroy()
     {
+        CloseDetails();
         boardCamera?.SetSideHudReservation(0f);
         if (progression == null) return;
         progression.UpgradeOptionsReady -= ShowUpgradeOptions;
@@ -598,5 +801,6 @@ public sealed class RunProgressionUiController : MonoBehaviour
         progression.RelicsChanged -= RefreshRelics;
         progression.AltarsChanged -= RefreshAltars;
         progression.RelicReplacementRequested -= ShowReplacement;
+        progression.MovementArtChanged -= RefreshMovementSummary;
     }
 }
