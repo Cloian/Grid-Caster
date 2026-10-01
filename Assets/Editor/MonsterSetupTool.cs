@@ -133,7 +133,7 @@ public static class MonsterSetupTool
         SerializedObject serializedStageFlow = new SerializedObject(stageFlow);
         serializedStageFlow.FindProperty("finalWave").intValue = WaveTemplateCatalog.FinalWave;
         serializedStageFlow.FindProperty("fallbackAdvanceDelay").floatValue = 1f;
-        serializedStageFlow.FindProperty("waveClearHealRatio").floatValue = 0.1f;
+        serializedStageFlow.FindProperty("waveClearHealRatio").floatValue = 0.3f;
         serializedStageFlow.ApplyModifiedPropertiesWithoutUndo();
 
         EditorUtility.SetDirty(spawner);
