@@ -1,0 +1,628 @@
+{
+    "label": "tuning-01",
+    "policy": "heuristic-v1; public board, no hidden activation/RNG inspection",
+    "unityVersion": "6000.4.0f1",
+    "sourceHash": "19a3328499681f6db98a9efabf68914a1977d7af8e83d7e9fde70ceb2b7a7f67",
+    "allowRelics": true,
+    "complete": true,
+    "error": "",
+    "checks": [],
+    "runs": [
+        {
+            "trait": "double_cast",
+            "seed": 1000,
+            "won": false,
+            "ending": "turn_limit",
+            "clearedWave": 0,
+            "health": 10,
+            "actions": 200,
+            "upgrades": [
+                "echo_recovery"
+            ],
+            "relics": [],
+            "waveActions": [],
+            "waveHealth": []
+        },
+        {
+            "trait": "double_cast",
+            "seed": 1001,
+            "won": false,
+            "ending": "turn_limit",
+            "clearedWave": 0,
+            "health": 10,
+            "actions": 200,
+            "upgrades": [
+                "echo_recovery"
+            ],
+            "relics": [],
+            "waveActions": [],
+            "waveHealth": []
+        },
+        {
+            "trait": "double_cast",
+            "seed": 1002,
+            "won": false,
+            "ending": "turn_limit",
+            "clearedWave": 0,
+            "health": 10,
+            "actions": 200,
+            "upgrades": [
+                "echo_recovery"
+            ],
+            "relics": [],
+            "waveActions": [],
+            "waveHealth": []
+        },
+        {
+            "trait": "double_cast",
+            "seed": 1003,
+            "won": false,
+            "ending": "turn_limit",
+            "clearedWave": 0,
+            "health": 10,
+            "actions": 200,
+            "upgrades": [
+                "echo_recovery"
+            ],
+            "relics": [],
+            "waveActions": [],
+            "waveHealth": []
+        },
+        {
+            "trait": "double_cast",
+            "seed": 1004,
+            "won": false,
+            "ending": "turn_limit",
+            "clearedWave": 0,
+            "health": 10,
+            "actions": 200,
+            "upgrades": [
+                "echo_recovery"
+            ],
+            "relics": [],
+            "waveActions": [],
+            "waveHealth": []
+        },
+        {
+            "trait": "double_cast",
+            "seed": 1005,
+            "won": false,
+            "ending": "turn_limit",
+            "clearedWave": 0,
+            "health": 10,
+            "actions": 200,
+            "upgrades": [
+                "echo_recovery"
+            ],
+            "relics": [],
+            "waveActions": [],
+            "waveHealth": []
+        },
+        {
+            "trait": "double_cast",
+            "seed": 1006,
+            "won": false,
+            "ending": "turn_limit",
+            "clearedWave": 0,
+            "health": 10,
+            "actions": 200,
+            "upgrades": [
+                "echo_recovery"
+            ],
+            "relics": [],
+            "waveActions": [],
+            "waveHealth": []
+        },
+        {
+            "trait": "double_cast",
+            "seed": 1007,
+            "won": false,
+            "ending": "turn_limit",
+            "clearedWave": 0,
+            "health": 10,
+            "actions": 200,
+            "upgrades": [
+                "echo_recovery"
+            ],
+            "relics": [],
+            "waveActions": [],
+            "waveHealth": []
+        },
+        {
+            "trait": "pierce",
+            "seed": 1000,
+            "won": false,
+            "ending": "turn_limit",
+            "clearedWave": 1,
+            "health": 10,
+            "actions": 232,
+            "upgrades": [
+                "thin_reload"
+            ],
+            "relics": [],
+            "waveActions": [
+                32
+            ],
+            "waveHealth": [
+                10
+            ]
+        },
+        {
+            "trait": "pierce",
+            "seed": 1001,
+            "won": false,
+            "ending": "turn_limit",
+            "clearedWave": 1,
+            "health": 5,
+            "actions": 231,
+            "upgrades": [
+                "thin_reload"
+            ],
+            "relics": [],
+            "waveActions": [
+                31
+            ],
+            "waveHealth": [
+                10
+            ]
+        },
+        {
+            "trait": "pierce",
+            "seed": 1002,
+            "won": false,
+            "ending": "turn_limit",
+            "clearedWave": 1,
+            "health": 5,
+            "actions": 231,
+            "upgrades": [
+                "thin_reload"
+            ],
+            "relics": [],
+            "waveActions": [
+                31
+            ],
+            "waveHealth": [
+                10
+            ]
+        },
+        {
+            "trait": "pierce",
+            "seed": 1003,
+            "won": false,
+            "ending": "turn_limit",
+            "clearedWave": 1,
+            "health": 10,
+            "actions": 232,
+            "upgrades": [
+                "thin_reload"
+            ],
+            "relics": [],
+            "waveActions": [
+                32
+            ],
+            "waveHealth": [
+                10
+            ]
+        },
+        {
+            "trait": "pierce",
+            "seed": 1004,
+            "won": false,
+            "ending": "turn_limit",
+            "clearedWave": 1,
+            "health": 10,
+            "actions": 232,
+            "upgrades": [
+                "thin_reload"
+            ],
+            "relics": [],
+            "waveActions": [
+                32
+            ],
+            "waveHealth": [
+                10
+            ]
+        },
+        {
+            "trait": "pierce",
+            "seed": 1005,
+            "won": false,
+            "ending": "turn_limit",
+            "clearedWave": 1,
+            "health": 5,
+            "actions": 231,
+            "upgrades": [
+                "thin_reload"
+            ],
+            "relics": [],
+            "waveActions": [
+                31
+            ],
+            "waveHealth": [
+                10
+            ]
+        },
+        {
+            "trait": "pierce",
+            "seed": 1006,
+            "won": false,
+            "ending": "turn_limit",
+            "clearedWave": 1,
+            "health": 5,
+            "actions": 231,
+            "upgrades": [
+                "thin_reload"
+            ],
+            "relics": [],
+            "waveActions": [
+                31
+            ],
+            "waveHealth": [
+                10
+            ]
+        },
+        {
+            "trait": "pierce",
+            "seed": 1007,
+            "won": false,
+            "ending": "turn_limit",
+            "clearedWave": 1,
+            "health": 5,
+            "actions": 231,
+            "upgrades": [
+                "thin_reload"
+            ],
+            "relics": [],
+            "waveActions": [
+                31
+            ],
+            "waveHealth": [
+                10
+            ]
+        },
+        {
+            "trait": "damage_boost",
+            "seed": 1000,
+            "won": false,
+            "ending": "turn_limit",
+            "clearedWave": 0,
+            "health": 10,
+            "actions": 200,
+            "upgrades": [
+                "overcharge"
+            ],
+            "relics": [],
+            "waveActions": [],
+            "waveHealth": []
+        },
+        {
+            "trait": "damage_boost",
+            "seed": 1001,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 5,
+            "health": 0,
+            "actions": 119,
+            "upgrades": [
+                "overcharge",
+                "movement_knight",
+                "rapid_cycle"
+            ],
+            "relics": [
+                "blood_knot"
+            ],
+            "waveActions": [
+                8,
+                15,
+                11,
+                11,
+                57
+            ],
+            "waveHealth": [
+                10,
+                10,
+                10,
+                10,
+                8
+            ]
+        },
+        {
+            "trait": "damage_boost",
+            "seed": 1002,
+            "won": false,
+            "ending": "turn_limit",
+            "clearedWave": 0,
+            "health": 10,
+            "actions": 200,
+            "upgrades": [
+                "overcharge"
+            ],
+            "relics": [],
+            "waveActions": [],
+            "waveHealth": []
+        },
+        {
+            "trait": "damage_boost",
+            "seed": 1003,
+            "won": false,
+            "ending": "turn_limit",
+            "clearedWave": 2,
+            "health": 10,
+            "actions": 227,
+            "upgrades": [
+                "overcharge",
+                "movement_knight"
+            ],
+            "relics": [],
+            "waveActions": [
+                18,
+                9
+            ],
+            "waveHealth": [
+                10,
+                10
+            ]
+        },
+        {
+            "trait": "damage_boost",
+            "seed": 1004,
+            "won": false,
+            "ending": "turn_limit",
+            "clearedWave": 0,
+            "health": 10,
+            "actions": 200,
+            "upgrades": [
+                "overcharge"
+            ],
+            "relics": [],
+            "waveActions": [],
+            "waveHealth": []
+        },
+        {
+            "trait": "damage_boost",
+            "seed": 1005,
+            "won": false,
+            "ending": "turn_limit",
+            "clearedWave": 0,
+            "health": 10,
+            "actions": 200,
+            "upgrades": [
+                "overcharge"
+            ],
+            "relics": [],
+            "waveActions": [],
+            "waveHealth": []
+        },
+        {
+            "trait": "damage_boost",
+            "seed": 1006,
+            "won": false,
+            "ending": "turn_limit",
+            "clearedWave": 0,
+            "health": 10,
+            "actions": 200,
+            "upgrades": [
+                "overcharge"
+            ],
+            "relics": [],
+            "waveActions": [],
+            "waveHealth": []
+        },
+        {
+            "trait": "damage_boost",
+            "seed": 1007,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 5,
+            "health": 0,
+            "actions": 110,
+            "upgrades": [
+                "overcharge",
+                "movement_knight",
+                "rapid_cycle"
+            ],
+            "relics": [
+                "vanguard_shield"
+            ],
+            "waveActions": [
+                8,
+                15,
+                12,
+                32,
+                35
+            ],
+            "waveHealth": [
+                10,
+                10,
+                10,
+                8,
+                2
+            ]
+        },
+        {
+            "trait": "knockback",
+            "seed": 1000,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 5,
+            "health": 0,
+            "actions": 169,
+            "upgrades": [
+                "impact_recovery",
+                "movement_knight",
+                "rapid_cycle"
+            ],
+            "relics": [
+                "domino_crest"
+            ],
+            "waveActions": [
+                23,
+                10,
+                34,
+                37,
+                48
+            ],
+            "waveHealth": [
+                10,
+                10,
+                9,
+                6,
+                7
+            ]
+        },
+        {
+            "trait": "knockback",
+            "seed": 1001,
+            "won": false,
+            "ending": "turn_limit",
+            "clearedWave": 0,
+            "health": 10,
+            "actions": 200,
+            "upgrades": [
+                "impact_recovery"
+            ],
+            "relics": [],
+            "waveActions": [],
+            "waveHealth": []
+        },
+        {
+            "trait": "knockback",
+            "seed": 1002,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 3,
+            "health": 0,
+            "actions": 72,
+            "upgrades": [
+                "impact_recovery",
+                "movement_knight"
+            ],
+            "relics": [
+                "alternating_gear"
+            ],
+            "waveActions": [
+                23,
+                13,
+                14
+            ],
+            "waveHealth": [
+                10,
+                10,
+                10
+            ]
+        },
+        {
+            "trait": "knockback",
+            "seed": 1003,
+            "won": false,
+            "ending": "turn_limit",
+            "clearedWave": 1,
+            "health": 5,
+            "actions": 222,
+            "upgrades": [
+                "impact_recovery"
+            ],
+            "relics": [],
+            "waveActions": [
+                22
+            ],
+            "waveHealth": [
+                10
+            ]
+        },
+        {
+            "trait": "knockback",
+            "seed": 1004,
+            "won": false,
+            "ending": "turn_limit",
+            "clearedWave": 2,
+            "health": 10,
+            "actions": 236,
+            "upgrades": [
+                "impact_recovery",
+                "movement_knight"
+            ],
+            "relics": [],
+            "waveActions": [
+                23,
+                13
+            ],
+            "waveHealth": [
+                10,
+                10
+            ]
+        },
+        {
+            "trait": "knockback",
+            "seed": 1005,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 5,
+            "health": 0,
+            "actions": 272,
+            "upgrades": [
+                "impact_recovery",
+                "movement_knight",
+                "rapid_cycle"
+            ],
+            "relics": [
+                "alternating_gear"
+            ],
+            "waveActions": [
+                23,
+                11,
+                30,
+                158,
+                42
+            ],
+            "waveHealth": [
+                10,
+                10,
+                10,
+                5,
+                4
+            ]
+        },
+        {
+            "trait": "knockback",
+            "seed": 1006,
+            "won": false,
+            "ending": "turn_limit",
+            "clearedWave": 3,
+            "health": 5,
+            "actions": 264,
+            "upgrades": [
+                "impact_recovery",
+                "movement_knight"
+            ],
+            "relics": [
+                "vanguard_shield"
+            ],
+            "waveActions": [
+                23,
+                11,
+                30
+            ],
+            "waveHealth": [
+                10,
+                10,
+                10
+            ]
+        },
+        {
+            "trait": "knockback",
+            "seed": 1007,
+            "won": false,
+            "ending": "turn_limit",
+            "clearedWave": 0,
+            "health": 10,
+            "actions": 200,
+            "upgrades": [
+                "impact_recovery"
+            ],
+            "relics": [],
+            "waveActions": [],
+            "waveHealth": []
+        }
+    ]
+}

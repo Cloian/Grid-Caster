@@ -1,0 +1,1556 @@
+{
+    "label": "tuning-04",
+    "policy": "heuristic-v4; public board/two-step chase prediction/knight intent, no hidden activation/RNG inspection",
+    "policyHash": "25f3e56b6650b502d435c6bcdc12068e8d67d47e50a6a117976bc5d33595ae71",
+    "unityVersion": "6000.4.0f1",
+    "sourceHash": "d05584e55da7efdceebf43e612a568d3670a80d323b89a4587dd94dbf501a732",
+    "allowRelics": true,
+    "complete": true,
+    "error": "",
+    "checks": [],
+    "runs": [
+        {
+            "trait": "double_cast",
+            "seed": 1000,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 10,
+            "health": 0,
+            "actions": 238,
+            "worldTurns": 213,
+            "trace": [
+                "0 w=1 hp=10 pos=(-1, -1, 0) Move (0, 1, 0) enemies=CardinalFour:(-4, 5, 0):3;CardinalFour:(4, 5, 0):3;CardinalFour:(5, 0, 0):3",
+                "1 w=1 hp=10 pos=(-1, 0, 0) Attack (1, 0, 0) enemies=CardinalFour:(-4, 4, 0):3;CardinalFour:(3, 5, 0):3;CardinalFour:(4, 0, 0):3",
+                "2 w=1 hp=10 pos=(-1, 0, 0) Attack (1, 0, 0) enemies=CardinalFour:(-4, 3, 0):3;CardinalFour:(2, 5, 0):3;CardinalFour:(3, 0, 0):2",
+                "3 w=1 hp=10 pos=(-1, 0, 0) Attack (1, 0, 0) enemies=CardinalFour:(-4, 2, 0):3;CardinalFour:(1, 5, 0):3;CardinalFour:(2, 0, 0):1",
+                "4 w=1 hp=10 pos=(-1, 0, 0) Move (1, 1, 0) enemies=CardinalFour:(-4, 1, 0):3;CardinalFour:(0, 5, 0):3",
+                "5 w=1 hp=10 pos=(0, 1, 0) Attack (0, 1, 0) enemies=CardinalFour:(-3, 1, 0):3;CardinalFour:(0, 4, 0):3",
+                "6 w=1 hp=10 pos=(0, 1, 0) Attack (0, 1, 0) enemies=CardinalFour:(-2, 1, 0):3;CardinalFour:(0, 3, 0):1",
+                "7 w=1 hp=10 pos=(0, 1, 0) Move (1, 1, 0) enemies=CardinalFour:(-1, 1, 0):3",
+                "8 w=1 hp=10 pos=(1, 2, 0) Attack (-1, -1, 0) enemies=CardinalFour:(0, 1, 0):3",
+                "9 w=1 hp=10 pos=(1, 2, 0) Move (1, 1, 0) enemies=CardinalFour:(1, 1, 0):2",
+                "10 w=1 hp=10 pos=(2, 3, 0) Attack (0, -1, 0) enemies=CardinalFour:(2, 1, 0):2",
+                "11 w=2 hp=10 pos=(2, 3, 0) Move (0, 1, 0) enemies=CardinalFour:(0, -7, 0):3;CardinalFour:(-7, -4, 0):3;EightDirection:(-7, 4, 0):3",
+                "12 w=2 hp=10 pos=(2, 4, 0) Attack (-1, 0, 0) enemies=CardinalFour:(0, -6, 0):3;CardinalFour:(-7, -3, 0):3;EightDirection:(-6, 4, 0):3",
+                "13 w=2 hp=10 pos=(2, 4, 0) Attack (-1, 0, 0) enemies=CardinalFour:(0, -5, 0):3;CardinalFour:(-7, -2, 0):3;EightDirection:(-5, 4, 0):2",
+                "14 w=2 hp=10 pos=(2, 4, 0) Attack (-1, 0, 0) enemies=CardinalFour:(0, -4, 0):3;CardinalFour:(-7, -1, 0):3;EightDirection:(-4, 4, 0):1",
+                "15 w=2 hp=10 pos=(2, 4, 0) Move (0, 1, 0) enemies=CardinalFour:(0, -3, 0):3;CardinalFour:(-7, 0, 0):3",
+                "16 w=2 hp=10 pos=(2, 5, 0) Move (1, 0, 0) enemies=CardinalFour:(0, -2, 0):3;CardinalFour:(-7, 1, 0):3",
+                "17 w=2 hp=10 pos=(3, 5, 0) Move (1, -1, 0) enemies=CardinalFour:(0, -1, 0):3;CardinalFour:(-7, 2, 0):3",
+                "18 w=2 hp=10 pos=(4, 4, 0) Attack (-1, -1, 0) enemies=CardinalFour:(0, 0, 0):3;CardinalFour:(-7, 3, 0):3",
+                "19 w=2 hp=10 pos=(4, 4, 0) Attack (-1, 0, 0) enemies=CardinalFour:(0, 1, 0):2;CardinalFour:(-7, 4, 0):3",
+                "20 w=2 hp=10 pos=(4, 4, 0) Attack (-1, 0, 0) enemies=CardinalFour:(0, 2, 0):2;CardinalFour:(-6, 4, 0):2",
+                "21 w=2 hp=10 pos=(4, 4, 0) Attack (-1, 0, 0) enemies=CardinalFour:(0, 3, 0):2;CardinalFour:(-5, 4, 0):1",
+                "22 w=2 hp=10 pos=(4, 4, 0) Attack (-1, 0, 0) enemies=CardinalFour:(0, 4, 0):2",
+                "23 w=2 hp=10 pos=(4, 4, 0) Attack (-1, 0, 0) enemies=CardinalFour:(1, 4, 0):1"
+            ],
+            "upgrades": [
+                "echo_recovery",
+                "movement_knight",
+                "rapid_cycle",
+                "mana_circulation",
+                "movement_training_2",
+                "quick_cast"
+            ],
+            "relics": [
+                "rotating_mirror",
+                "blood_knot"
+            ],
+            "waveActions": [
+                11,
+                13,
+                11,
+                16,
+                20,
+                22,
+                21,
+                29,
+                32,
+                26
+            ],
+            "waveHealth": [
+                10,
+                10,
+                10,
+                9,
+                10,
+                8,
+                8,
+                2,
+                3,
+                4
+            ]
+        },
+        {
+            "trait": "double_cast",
+            "seed": 1001,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 7,
+            "health": 0,
+            "actions": 138,
+            "worldTurns": 137,
+            "trace": [],
+            "upgrades": [
+                "echo_recovery",
+                "movement_knight",
+                "rapid_cycle",
+                "echo_warhead"
+            ],
+            "relics": [
+                "vanguard_shield",
+                "rotating_mirror"
+            ],
+            "waveActions": [
+                12,
+                13,
+                12,
+                21,
+                19,
+                20,
+                21
+            ],
+            "waveHealth": [
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                6
+            ]
+        },
+        {
+            "trait": "double_cast",
+            "seed": 1002,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 9,
+            "health": 0,
+            "actions": 166,
+            "worldTurns": 166,
+            "trace": [],
+            "upgrades": [
+                "echo_recovery",
+                "movement_knight",
+                "rapid_cycle",
+                "echo_warhead",
+                "movement_training_2"
+            ],
+            "relics": [
+                "alternating_gear",
+                "vanguard_shield"
+            ],
+            "waveActions": [
+                10,
+                7,
+                17,
+                14,
+                13,
+                18,
+                24,
+                29,
+                21
+            ],
+            "waveHealth": [
+                10,
+                10,
+                9,
+                9,
+                10,
+                10,
+                10,
+                7,
+                3
+            ]
+        },
+        {
+            "trait": "double_cast",
+            "seed": 1003,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 6,
+            "health": 0,
+            "actions": 99,
+            "worldTurns": 99,
+            "trace": [],
+            "upgrades": [
+                "echo_recovery",
+                "movement_knight",
+                "rapid_cycle",
+                "quick_cast"
+            ],
+            "relics": [
+                "alternating_gear"
+            ],
+            "waveActions": [
+                9,
+                8,
+                17,
+                14,
+                14,
+                23
+            ],
+            "waveHealth": [
+                10,
+                10,
+                7,
+                7,
+                6,
+                4
+            ]
+        },
+        {
+            "trait": "double_cast",
+            "seed": 1004,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 11,
+            "health": 0,
+            "actions": 212,
+            "worldTurns": 212,
+            "trace": [],
+            "upgrades": [
+                "echo_recovery",
+                "movement_knight",
+                "rapid_cycle",
+                "echo_warhead",
+                "movement_training_2",
+                "mana_circulation"
+            ],
+            "relics": [
+                "blood_knot",
+                "hunters_mark",
+                "landing_ward"
+            ],
+            "waveActions": [
+                10,
+                7,
+                15,
+                15,
+                14,
+                18,
+                20,
+                22,
+                23,
+                33,
+                16
+            ],
+            "waveHealth": [
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                7,
+                3,
+                4,
+                3,
+                5
+            ]
+        },
+        {
+            "trait": "double_cast",
+            "seed": 1005,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 9,
+            "health": 0,
+            "actions": 171,
+            "worldTurns": 171,
+            "trace": [],
+            "upgrades": [
+                "echo_recovery",
+                "movement_knight",
+                "rapid_cycle",
+                "echo_warhead",
+                "movement_training_2"
+            ],
+            "relics": [
+                "vanguard_shield",
+                "ash_boots"
+            ],
+            "waveActions": [
+                10,
+                7,
+                15,
+                15,
+                14,
+                20,
+                25,
+                32,
+                21
+            ],
+            "waveHealth": [
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                7,
+                7,
+                2
+            ]
+        },
+        {
+            "trait": "double_cast",
+            "seed": 1006,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 11,
+            "health": 0,
+            "actions": 205,
+            "worldTurns": 205,
+            "trace": [],
+            "upgrades": [
+                "echo_recovery",
+                "movement_knight",
+                "rapid_cycle",
+                "echo_warhead",
+                "movement_training_2",
+                "quick_cast"
+            ],
+            "relics": [
+                "alternating_gear",
+                "landing_ward",
+                "glass_heart"
+            ],
+            "waveActions": [
+                10,
+                9,
+                16,
+                14,
+                13,
+                19,
+                21,
+                25,
+                19,
+                26,
+                29
+            ],
+            "waveHealth": [
+                10,
+                9,
+                9,
+                6,
+                7,
+                8,
+                6,
+                5,
+                6,
+                4,
+                3
+            ]
+        },
+        {
+            "trait": "double_cast",
+            "seed": 1007,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 6,
+            "health": 0,
+            "actions": 100,
+            "worldTurns": 100,
+            "trace": [],
+            "upgrades": [
+                "echo_recovery",
+                "movement_knight",
+                "rapid_cycle",
+                "echo_warhead"
+            ],
+            "relics": [
+                "alternating_gear"
+            ],
+            "waveActions": [
+                9,
+                9,
+                16,
+                18,
+                15,
+                21
+            ],
+            "waveHealth": [
+                10,
+                9,
+                8,
+                5,
+                3,
+                2
+            ]
+        },
+        {
+            "trait": "pierce",
+            "seed": 1000,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 11,
+            "health": 0,
+            "actions": 230,
+            "worldTurns": 230,
+            "trace": [
+                "0 w=1 hp=10 pos=(-1, -1, 0) Move (0, 1, 0) enemies=CardinalFour:(-4, 5, 0):3;CardinalFour:(4, 5, 0):3;CardinalFour:(5, 0, 0):3",
+                "1 w=1 hp=10 pos=(-1, 0, 0) Attack (1, 0, 0) enemies=CardinalFour:(-4, 4, 0):3;CardinalFour:(3, 5, 0):3;CardinalFour:(4, 0, 0):3",
+                "2 w=1 hp=10 pos=(-1, 0, 0) Attack (1, 0, 0) enemies=CardinalFour:(-4, 3, 0):3;CardinalFour:(2, 5, 0):3;CardinalFour:(3, 0, 0):2",
+                "3 w=1 hp=10 pos=(-1, 0, 0) Attack (1, 0, 0) enemies=CardinalFour:(-4, 2, 0):3;CardinalFour:(1, 5, 0):3;CardinalFour:(2, 0, 0):1",
+                "4 w=1 hp=10 pos=(-1, 0, 0) Move (1, 1, 0) enemies=CardinalFour:(-4, 1, 0):3;CardinalFour:(0, 5, 0):3",
+                "5 w=1 hp=10 pos=(0, 1, 0) Attack (0, 1, 0) enemies=CardinalFour:(-3, 1, 0):3;CardinalFour:(0, 4, 0):3",
+                "6 w=1 hp=10 pos=(0, 1, 0) Attack (0, 1, 0) enemies=CardinalFour:(-2, 1, 0):3;CardinalFour:(0, 3, 0):2",
+                "7 w=1 hp=10 pos=(0, 1, 0) Attack (0, 1, 0) enemies=CardinalFour:(-1, 1, 0):3;CardinalFour:(0, 2, 0):1",
+                "8 w=1 hp=9 pos=(0, 1, 0) Move (1, 1, 0) enemies=CardinalFour:(-1, 1, 0):3",
+                "9 w=1 hp=9 pos=(1, 2, 0) Attack (-1, -1, 0) enemies=CardinalFour:(0, 1, 0):3",
+                "10 w=1 hp=9 pos=(1, 2, 0) Move (1, 1, 0) enemies=CardinalFour:(1, 1, 0):2",
+                "11 w=1 hp=9 pos=(2, 3, 0) Attack (0, -1, 0) enemies=CardinalFour:(2, 1, 0):2",
+                "12 w=1 hp=9 pos=(2, 3, 0) Attack (0, -1, 0) enemies=CardinalFour:(2, 2, 0):1",
+                "13 w=2 hp=10 pos=(2, 3, 0) Move (0, 1, 0) enemies=CardinalFour:(0, -7, 0):3;CardinalFour:(-7, -4, 0):3;EightDirection:(-7, 4, 0):3",
+                "14 w=2 hp=10 pos=(2, 4, 0) Attack (-1, 0, 0) enemies=CardinalFour:(0, -6, 0):3;CardinalFour:(-7, -3, 0):3;EightDirection:(-6, 4, 0):3",
+                "15 w=2 hp=10 pos=(2, 4, 0) Attack (-1, 0, 0) enemies=CardinalFour:(0, -5, 0):3;CardinalFour:(-7, -2, 0):3;EightDirection:(-5, 4, 0):2",
+                "16 w=2 hp=10 pos=(2, 4, 0) Attack (-1, 0, 0) enemies=CardinalFour:(0, -4, 0):3;CardinalFour:(-7, -1, 0):3;EightDirection:(-4, 4, 0):1",
+                "17 w=2 hp=10 pos=(2, 4, 0) Move (0, 1, 0) enemies=CardinalFour:(0, -3, 0):3;CardinalFour:(-7, 0, 0):3",
+                "18 w=2 hp=10 pos=(2, 5, 0) Move (1, 0, 0) enemies=CardinalFour:(0, -2, 0):3;CardinalFour:(-7, 1, 0):3",
+                "19 w=2 hp=10 pos=(3, 5, 0) Move (1, -1, 0) enemies=CardinalFour:(0, -1, 0):3;CardinalFour:(-7, 2, 0):3",
+                "20 w=2 hp=10 pos=(4, 4, 0) Attack (-1, -1, 0) enemies=CardinalFour:(0, 0, 0):3;CardinalFour:(-7, 3, 0):3",
+                "21 w=2 hp=10 pos=(4, 4, 0) Attack (-1, 0, 0) enemies=CardinalFour:(0, 1, 0):2;CardinalFour:(-7, 4, 0):3",
+                "22 w=2 hp=10 pos=(4, 4, 0) Attack (-1, 0, 0) enemies=CardinalFour:(0, 2, 0):2;CardinalFour:(-6, 4, 0):2",
+                "23 w=2 hp=10 pos=(4, 4, 0) Attack (-1, 0, 0) enemies=CardinalFour:(0, 3, 0):2;CardinalFour:(-5, 4, 0):1"
+            ],
+            "upgrades": [
+                "thin_reload",
+                "movement_knight",
+                "rapid_cycle",
+                "mana_circulation",
+                "movement_training_2",
+                "long_needle"
+            ],
+            "relics": [
+                "blood_knot",
+                "alternating_gear",
+                "ambush_crest"
+            ],
+            "waveActions": [
+                13,
+                13,
+                12,
+                18,
+                14,
+                19,
+                25,
+                21,
+                23,
+                23,
+                29
+            ],
+            "waveHealth": [
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                6,
+                7,
+                10,
+                10,
+                8
+            ]
+        },
+        {
+            "trait": "pierce",
+            "seed": 1001,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 8,
+            "health": 0,
+            "actions": 152,
+            "worldTurns": 152,
+            "trace": [],
+            "upgrades": [
+                "thin_reload",
+                "movement_knight",
+                "rapid_cycle",
+                "long_needle",
+                "movement_training_2"
+            ],
+            "relics": [
+                "vanguard_shield",
+                "thorn_needle"
+            ],
+            "waveActions": [
+                13,
+                13,
+                12,
+                18,
+                14,
+                20,
+                15,
+                26
+            ],
+            "waveHealth": [
+                10,
+                10,
+                10,
+                9,
+                10,
+                10,
+                7,
+                6
+            ]
+        },
+        {
+            "trait": "pierce",
+            "seed": 1002,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 9,
+            "health": 0,
+            "actions": 170,
+            "worldTurns": 170,
+            "trace": [],
+            "upgrades": [
+                "thin_reload",
+                "movement_knight",
+                "rapid_cycle",
+                "pierce_recovery",
+                "movement_training_2"
+            ],
+            "relics": [
+                "alternating_gear",
+                "thorn_needle"
+            ],
+            "waveActions": [
+                13,
+                13,
+                12,
+                18,
+                14,
+                21,
+                29,
+                21,
+                18
+            ],
+            "waveHealth": [
+                10,
+                10,
+                10,
+                8,
+                8,
+                8,
+                7,
+                7,
+                3
+            ]
+        },
+        {
+            "trait": "pierce",
+            "seed": 1003,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 11,
+            "health": 0,
+            "actions": 201,
+            "worldTurns": 201,
+            "trace": [],
+            "upgrades": [
+                "thin_reload",
+                "movement_knight",
+                "rapid_cycle",
+                "mana_circulation",
+                "movement_training_2",
+                "long_needle"
+            ],
+            "relics": [
+                "thorn_needle",
+                "blood_knot",
+                "suture_needle"
+            ],
+            "waveActions": [
+                13,
+                13,
+                12,
+                18,
+                17,
+                22,
+                12,
+                21,
+                18,
+                19,
+                20
+            ],
+            "waveHealth": [
+                10,
+                10,
+                10,
+                8,
+                9,
+                8,
+                8,
+                5,
+                7,
+                4,
+                6
+            ]
+        },
+        {
+            "trait": "pierce",
+            "seed": 1004,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 8,
+            "health": 0,
+            "actions": 159,
+            "worldTurns": 159,
+            "trace": [],
+            "upgrades": [
+                "thin_reload",
+                "movement_knight",
+                "rapid_cycle",
+                "pierce_recovery",
+                "movement_training_2"
+            ],
+            "relics": [
+                "thorn_needle",
+                "vanguard_shield"
+            ],
+            "waveActions": [
+                13,
+                13,
+                12,
+                16,
+                17,
+                22,
+                24,
+                31
+            ],
+            "waveHealth": [
+                10,
+                10,
+                10,
+                8,
+                9,
+                8,
+                7,
+                2
+            ]
+        },
+        {
+            "trait": "pierce",
+            "seed": 1005,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 8,
+            "health": 0,
+            "actions": 142,
+            "worldTurns": 142,
+            "trace": [],
+            "upgrades": [
+                "thin_reload",
+                "movement_knight",
+                "rapid_cycle",
+                "pierce_recovery",
+                "movement_training_2"
+            ],
+            "relics": [
+                "vanguard_shield",
+                "ash_boots"
+            ],
+            "waveActions": [
+                13,
+                13,
+                12,
+                17,
+                15,
+                19,
+                23,
+                20
+            ],
+            "waveHealth": [
+                10,
+                10,
+                10,
+                9,
+                10,
+                10,
+                5,
+                3
+            ]
+        },
+        {
+            "trait": "pierce",
+            "seed": 1006,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 11,
+            "health": 0,
+            "actions": 204,
+            "worldTurns": 204,
+            "trace": [],
+            "upgrades": [
+                "thin_reload",
+                "movement_knight",
+                "rapid_cycle",
+                "mana_circulation",
+                "movement_training_2",
+                "pierce_recovery"
+            ],
+            "relics": [
+                "thorn_needle",
+                "hunters_mark",
+                "vanguard_shield"
+            ],
+            "waveActions": [
+                13,
+                13,
+                12,
+                18,
+                17,
+                22,
+                13,
+                21,
+                17,
+                24,
+                19
+            ],
+            "waveHealth": [
+                10,
+                10,
+                10,
+                8,
+                9,
+                8,
+                8,
+                6,
+                6,
+                5,
+                3
+            ]
+        },
+        {
+            "trait": "pierce",
+            "seed": 1007,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 11,
+            "health": 0,
+            "actions": 226,
+            "worldTurns": 226,
+            "trace": [],
+            "upgrades": [
+                "thin_reload",
+                "movement_knight",
+                "rapid_cycle",
+                "mana_circulation",
+                "movement_training_2",
+                "pierce_recovery"
+            ],
+            "relics": [
+                "vanguard_shield",
+                "blood_knot",
+                "hunters_mark"
+            ],
+            "waveActions": [
+                13,
+                13,
+                12,
+                17,
+                14,
+                19,
+                24,
+                16,
+                27,
+                28,
+                21
+            ],
+            "waveHealth": [
+                10,
+                10,
+                10,
+                9,
+                10,
+                10,
+                3,
+                2,
+                5,
+                3,
+                5
+            ]
+        },
+        {
+            "trait": "damage_boost",
+            "seed": 1000,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 9,
+            "health": 0,
+            "actions": 175,
+            "worldTurns": 175,
+            "trace": [
+                "0 w=1 hp=10 pos=(-1, -1, 0) Move (0, 1, 0) enemies=CardinalFour:(-4, 5, 0):3;CardinalFour:(4, 5, 0):3;CardinalFour:(5, 0, 0):3",
+                "1 w=1 hp=10 pos=(-1, 0, 0) Attack (1, 0, 0) enemies=CardinalFour:(-4, 4, 0):3;CardinalFour:(3, 5, 0):3;CardinalFour:(4, 0, 0):3",
+                "2 w=1 hp=10 pos=(-1, 0, 0) Attack (1, 0, 0) enemies=CardinalFour:(-4, 3, 0):3;CardinalFour:(2, 5, 0):3;CardinalFour:(3, 0, 0):2",
+                "3 w=1 hp=10 pos=(-1, 0, 0) Attack (1, 0, 0) enemies=CardinalFour:(-4, 2, 0):3;CardinalFour:(1, 5, 0):3;CardinalFour:(2, 0, 0):1",
+                "4 w=1 hp=10 pos=(-1, 0, 0) Move (1, 1, 0) enemies=CardinalFour:(-4, 1, 0):3;CardinalFour:(0, 5, 0):3",
+                "5 w=1 hp=10 pos=(0, 1, 0) Attack (0, 1, 0) enemies=CardinalFour:(-3, 1, 0):3;CardinalFour:(0, 4, 0):3",
+                "6 w=1 hp=10 pos=(0, 1, 0) Attack (0, 1, 0) enemies=CardinalFour:(-2, 1, 0):3;CardinalFour:(0, 3, 0):2",
+                "7 w=1 hp=10 pos=(0, 1, 0) Attack (0, 1, 0) enemies=CardinalFour:(-1, 1, 0):3;CardinalFour:(0, 2, 0):1",
+                "8 w=1 hp=9 pos=(0, 1, 0) Move (1, 1, 0) enemies=CardinalFour:(-1, 1, 0):3",
+                "9 w=1 hp=9 pos=(1, 2, 0) Attack (-1, -1, 0) enemies=CardinalFour:(0, 1, 0):3",
+                "10 w=2 hp=10 pos=(1, 2, 0) Move (-1, -1, 0) enemies=CardinalFour:(0, -7, 0):3;CardinalFour:(-7, -4, 0):3;EightDirection:(-7, 4, 0):3",
+                "11 w=2 hp=10 pos=(0, 1, 0) Attack (0, -1, 0) enemies=CardinalFour:(0, -6, 0):3;CardinalFour:(-7, -3, 0):3;EightDirection:(-6, 4, 0):3",
+                "12 w=2 hp=10 pos=(0, 1, 0) Attack (0, -1, 0) enemies=CardinalFour:(0, -5, 0):2;CardinalFour:(-7, -2, 0):3;EightDirection:(-5, 4, 0):3",
+                "13 w=2 hp=10 pos=(0, 1, 0) Attack (0, -1, 0) enemies=CardinalFour:(0, -4, 0):1;CardinalFour:(-7, -1, 0):3;EightDirection:(-4, 4, 0):3",
+                "14 w=2 hp=10 pos=(0, 1, 0) Attack (-1, 1, 0) enemies=CardinalFour:(-7, 0, 0):3;EightDirection:(-3, 4, 0):3",
+                "15 w=2 hp=10 pos=(0, 1, 0) Attack (-1, 0, 0) enemies=CardinalFour:(-7, 1, 0):3;EightDirection:(-2, 3, 0):2",
+                "16 w=2 hp=10 pos=(0, 1, 0) Attack (-1, 1, 0) enemies=EightDirection:(-1, 2, 0):2",
+                "17 w=2 hp=9 pos=(0, 1, 0) Attack (-1, 1, 0) enemies=EightDirection:(-1, 2, 0):1",
+                "18 w=3 hp=10 pos=(0, 1, 0) Move (1, 0, 0) enemies=CardinalFour:(3, 5, 0):3;CardinalFour:(5, -3, 0):3;EightDirection:(5, 3, 0):3;EightDirection:(-3, 5, 0):3",
+                "19 w=3 hp=10 pos=(1, 1, 0) Attack (-1, 1, 0) enemies=CardinalFour:(2, 5, 0):3;CardinalFour:(4, -3, 0):3;EightDirection:(4, 3, 0):3;EightDirection:(-2, 4, 0):3",
+                "20 w=3 hp=10 pos=(1, 1, 0) Attack (0, 1, 0) enemies=CardinalFour:(1, 5, 0):3;CardinalFour:(3, -3, 0):3;EightDirection:(3, 3, 0):3;EightDirection:(-1, 3, 0):2",
+                "21 w=3 hp=10 pos=(1, 1, 0) Move (-1, -2, 0) enemies=CardinalFour:(2, -3, 0):3;EightDirection:(2, 2, 0):3;EightDirection:(0, 2, 0):2",
+                "22 w=3 hp=10 pos=(0, -1, 0) Attack (0, 1, 0) enemies=CardinalFour:(1, -3, 0):3;EightDirection:(2, 1, 0):3;EightDirection:(0, 1, 0):2",
+                "23 w=3 hp=10 pos=(0, -1, 0) Attack (0, 1, 0) enemies=CardinalFour:(0, -3, 0):3;EightDirection:(1, 0, 0):3;EightDirection:(0, 0, 0):1"
+            ],
+            "upgrades": [
+                "overcharge",
+                "movement_knight",
+                "rapid_cycle",
+                "dense_mana",
+                "movement_training_2"
+            ],
+            "relics": [
+                "hot_afterglow",
+                "excess_reservoir"
+            ],
+            "waveActions": [
+                10,
+                8,
+                13,
+                19,
+                16,
+                18,
+                21,
+                25,
+                31
+            ],
+            "waveHealth": [
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                5,
+                3
+            ]
+        },
+        {
+            "trait": "damage_boost",
+            "seed": 1001,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 9,
+            "health": 0,
+            "actions": 170,
+            "worldTurns": 170,
+            "trace": [],
+            "upgrades": [
+                "overcharge",
+                "movement_knight",
+                "rapid_cycle",
+                "dense_mana",
+                "movement_training_2"
+            ],
+            "relics": [
+                "hunters_mark",
+                "hot_afterglow"
+            ],
+            "waveActions": [
+                7,
+                11,
+                13,
+                22,
+                14,
+                18,
+                16,
+                22,
+                22
+            ],
+            "waveHealth": [
+                10,
+                9,
+                9,
+                9,
+                9,
+                10,
+                9,
+                5,
+                3
+            ]
+        },
+        {
+            "trait": "damage_boost",
+            "seed": 1002,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 7,
+            "health": 0,
+            "actions": 138,
+            "worldTurns": 138,
+            "trace": [],
+            "upgrades": [
+                "overcharge",
+                "movement_knight",
+                "rapid_cycle",
+                "afterglow_recovery"
+            ],
+            "relics": [
+                "hot_afterglow",
+                "ash_boots"
+            ],
+            "waveActions": [
+                10,
+                10,
+                19,
+                20,
+                14,
+                21,
+                25
+            ],
+            "waveHealth": [
+                10,
+                10,
+                9,
+                8,
+                6,
+                6,
+                2
+            ]
+        },
+        {
+            "trait": "damage_boost",
+            "seed": 1003,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 8,
+            "health": 0,
+            "actions": 156,
+            "worldTurns": 156,
+            "trace": [],
+            "upgrades": [
+                "overcharge",
+                "movement_knight",
+                "rapid_cycle",
+                "mana_circulation",
+                "movement_training_2"
+            ],
+            "relics": [
+                "hot_afterglow",
+                "excess_reservoir"
+            ],
+            "waveActions": [
+                13,
+                12,
+                14,
+                16,
+                20,
+                18,
+                18,
+                30
+            ],
+            "waveHealth": [
+                10,
+                10,
+                8,
+                9,
+                8,
+                9,
+                8,
+                5
+            ]
+        },
+        {
+            "trait": "damage_boost",
+            "seed": 1004,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 14,
+            "health": 0,
+            "actions": 279,
+            "worldTurns": 279,
+            "trace": [],
+            "upgrades": [
+                "overcharge",
+                "movement_knight",
+                "rapid_cycle",
+                "mana_circulation",
+                "movement_training_2",
+                "afterglow_recovery",
+                "alternating_overload",
+                "dense_mana"
+            ],
+            "relics": [
+                "landing_ward",
+                "alternating_gear",
+                "hot_afterglow"
+            ],
+            "waveActions": [
+                9,
+                10,
+                16,
+                20,
+                13,
+                13,
+                16,
+                18,
+                27,
+                30,
+                19,
+                25,
+                22,
+                21
+            ],
+            "waveHealth": [
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                4,
+                5,
+                5
+            ]
+        },
+        {
+            "trait": "damage_boost",
+            "seed": 1005,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 8,
+            "health": 0,
+            "actions": 135,
+            "worldTurns": 135,
+            "trace": [],
+            "upgrades": [
+                "overcharge",
+                "movement_knight",
+                "rapid_cycle",
+                "mana_circulation",
+                "movement_training_2"
+            ],
+            "relics": [
+                "alternating_gear",
+                "ash_boots"
+            ],
+            "waveActions": [
+                9,
+                8,
+                15,
+                15,
+                14,
+                27,
+                14,
+                20
+            ],
+            "waveHealth": [
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                7,
+                5
+            ]
+        },
+        {
+            "trait": "damage_boost",
+            "seed": 1006,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 14,
+            "health": 0,
+            "actions": 306,
+            "worldTurns": 306,
+            "trace": [],
+            "upgrades": [
+                "overcharge",
+                "movement_knight",
+                "rapid_cycle",
+                "mana_circulation",
+                "movement_training_2",
+                "afterglow_recovery",
+                "alternating_overload",
+                "dense_mana"
+            ],
+            "relics": [
+                "vanguard_shield",
+                "alternating_gear",
+                "blood_knot"
+            ],
+            "waveActions": [
+                12,
+                14,
+                11,
+                20,
+                16,
+                19,
+                22,
+                19,
+                20,
+                26,
+                20,
+                48,
+                22,
+                21
+            ],
+            "waveHealth": [
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                10,
+                8,
+                8,
+                6,
+                3,
+                3,
+                3,
+                4
+            ]
+        },
+        {
+            "trait": "damage_boost",
+            "seed": 1007,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 10,
+            "health": 0,
+            "actions": 186,
+            "worldTurns": 186,
+            "trace": [],
+            "upgrades": [
+                "overcharge",
+                "movement_knight",
+                "rapid_cycle",
+                "afterglow_recovery",
+                "movement_training_2",
+                "life_tempering"
+            ],
+            "relics": [
+                "vanguard_shield",
+                "excess_reservoir"
+            ],
+            "waveActions": [
+                7,
+                11,
+                13,
+                16,
+                17,
+                22,
+                25,
+                18,
+                23,
+                23
+            ],
+            "waveHealth": [
+                10,
+                9,
+                9,
+                10,
+                10,
+                10,
+                8,
+                5,
+                4,
+                3
+            ]
+        },
+        {
+            "trait": "knockback",
+            "seed": 1000,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 9,
+            "health": 0,
+            "actions": 206,
+            "worldTurns": 206,
+            "trace": [
+                "0 w=1 hp=10 pos=(-1, -1, 0) Move (0, 1, 0) enemies=CardinalFour:(-4, 5, 0):3;CardinalFour:(4, 5, 0):3;CardinalFour:(5, 0, 0):3",
+                "1 w=1 hp=10 pos=(-1, 0, 0) Attack (1, 0, 0) enemies=CardinalFour:(-4, 4, 0):3;CardinalFour:(3, 5, 0):3;CardinalFour:(4, 0, 0):3",
+                "2 w=1 hp=10 pos=(-1, 0, 0) Attack (1, 0, 0) enemies=CardinalFour:(-4, 3, 0):3;CardinalFour:(2, 5, 0):3;CardinalFour:(3, 0, 0):2",
+                "3 w=1 hp=10 pos=(-1, 0, 0) Attack (1, 0, 0) enemies=CardinalFour:(-4, 2, 0):3;CardinalFour:(1, 5, 0):3;CardinalFour:(2, 0, 0):1",
+                "4 w=1 hp=10 pos=(-1, 0, 0) Move (1, 1, 0) enemies=CardinalFour:(-4, 1, 0):3;CardinalFour:(0, 5, 0):3",
+                "5 w=1 hp=10 pos=(0, 1, 0) Attack (0, 1, 0) enemies=CardinalFour:(-3, 1, 0):3;CardinalFour:(0, 4, 0):3",
+                "6 w=1 hp=10 pos=(0, 1, 0) Attack (0, 1, 0) enemies=CardinalFour:(-2, 1, 0):3;CardinalFour:(0, 3, 0):2",
+                "7 w=1 hp=10 pos=(0, 1, 0) Attack (0, 1, 0) enemies=CardinalFour:(-1, 1, 0):3;CardinalFour:(0, 2, 0):1",
+                "8 w=1 hp=9 pos=(0, 1, 0) Move (1, 1, 0) enemies=CardinalFour:(-1, 1, 0):3",
+                "9 w=1 hp=9 pos=(1, 2, 0) Attack (-1, -1, 0) enemies=CardinalFour:(0, 1, 0):3",
+                "10 w=1 hp=9 pos=(1, 2, 0) Attack (-1, -1, 0) enemies=CardinalFour:(-1, 0, 0):2",
+                "11 w=1 hp=9 pos=(1, 2, 0) Move (1, 0, 0) enemies=CardinalFour:(-1, 1, 0):1",
+                "12 w=1 hp=9 pos=(2, 2, 0) Attack (-1, 0, 0) enemies=CardinalFour:(-1, 2, 0):1",
+                "13 w=2 hp=10 pos=(2, 2, 0) Move (0, 1, 0) enemies=CardinalFour:(0, -7, 0):3;CardinalFour:(-7, -4, 0):3;EightDirection:(-7, 4, 0):3",
+                "14 w=2 hp=10 pos=(2, 3, 0) Move (0, 1, 0) enemies=CardinalFour:(0, -6, 0):3;CardinalFour:(-7, -3, 0):3;EightDirection:(-6, 4, 0):3",
+                "15 w=2 hp=10 pos=(2, 4, 0) Attack (-1, 0, 0) enemies=CardinalFour:(0, -5, 0):3;CardinalFour:(-7, -2, 0):3;EightDirection:(-5, 4, 0):3",
+                "16 w=2 hp=10 pos=(2, 4, 0) Attack (-1, 0, 0) enemies=CardinalFour:(0, -4, 0):3;CardinalFour:(-7, -1, 0):3;EightDirection:(-4, 4, 0):2",
+                "17 w=2 hp=10 pos=(2, 4, 0) Attack (-1, 0, 0) enemies=CardinalFour:(0, -3, 0):3;CardinalFour:(-7, 0, 0):3;EightDirection:(-3, 4, 0):1",
+                "18 w=2 hp=10 pos=(2, 4, 0) Move (0, 1, 0) enemies=CardinalFour:(0, -2, 0):3;CardinalFour:(-7, 1, 0):3",
+                "19 w=2 hp=10 pos=(2, 5, 0) Move (1, 0, 0) enemies=CardinalFour:(0, -1, 0):3;CardinalFour:(-7, 2, 0):3",
+                "20 w=2 hp=10 pos=(3, 5, 0) Move (1, 0, 0) enemies=CardinalFour:(0, 0, 0):3;CardinalFour:(-7, 3, 0):3",
+                "21 w=2 hp=10 pos=(4, 5, 0) Attack (-1, -1, 0) enemies=CardinalFour:(0, 1, 0):3;CardinalFour:(-7, 4, 0):3",
+                "22 w=2 hp=10 pos=(4, 5, 0) Attack (-1, 0, 0) enemies=CardinalFour:(0, 2, 0):2;CardinalFour:(-7, 5, 0):3",
+                "23 w=2 hp=10 pos=(4, 5, 0) Attack (-1, 0, 0) enemies=CardinalFour:(0, 3, 0):2;CardinalFour:(-6, 5, 0):2"
+            ],
+            "upgrades": [
+                "impact_recovery",
+                "movement_knight",
+                "rapid_cycle",
+                "long_impact",
+                "movement_training_2"
+            ],
+            "relics": [
+                "domino_crest",
+                "alternating_gear"
+            ],
+            "waveActions": [
+                13,
+                14,
+                15,
+                21,
+                24,
+                24,
+                31,
+                27,
+                25
+            ],
+            "waveHealth": [
+                10,
+                10,
+                10,
+                9,
+                9,
+                9,
+                9,
+                8,
+                3
+            ]
+        },
+        {
+            "trait": "knockback",
+            "seed": 1001,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 9,
+            "health": 0,
+            "actions": 207,
+            "worldTurns": 207,
+            "trace": [],
+            "upgrades": [
+                "impact_recovery",
+                "movement_knight",
+                "rapid_cycle",
+                "long_impact",
+                "movement_training_2"
+            ],
+            "relics": [
+                "vanguard_shield",
+                "blood_knot"
+            ],
+            "waveActions": [
+                13,
+                13,
+                12,
+                18,
+                18,
+                21,
+                23,
+                36,
+                38
+            ],
+            "waveHealth": [
+                10,
+                10,
+                10,
+                8,
+                9,
+                10,
+                10,
+                7,
+                3
+            ]
+        },
+        {
+            "trait": "knockback",
+            "seed": 1002,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 10,
+            "health": 0,
+            "actions": 206,
+            "worldTurns": 206,
+            "trace": [],
+            "upgrades": [
+                "impact_recovery",
+                "movement_knight",
+                "rapid_cycle",
+                "mana_circulation",
+                "movement_training_2",
+                "compressed_impact"
+            ],
+            "relics": [
+                "alternating_gear",
+                "ash_boots"
+            ],
+            "waveActions": [
+                13,
+                14,
+                13,
+                21,
+                14,
+                24,
+                20,
+                27,
+                28,
+                25
+            ],
+            "waveHealth": [
+                10,
+                10,
+                10,
+                9,
+                10,
+                9,
+                10,
+                9,
+                7,
+                2
+            ]
+        },
+        {
+            "trait": "knockback",
+            "seed": 1003,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 11,
+            "health": 0,
+            "actions": 239,
+            "worldTurns": 239,
+            "trace": [],
+            "upgrades": [
+                "impact_recovery",
+                "movement_knight",
+                "rapid_cycle",
+                "compressed_impact",
+                "movement_training_2",
+                "mana_circulation"
+            ],
+            "relics": [
+                "alternating_gear",
+                "vanguard_shield"
+            ],
+            "waveActions": [
+                13,
+                13,
+                12,
+                18,
+                15,
+                21,
+                17,
+                29,
+                28,
+                36,
+                26
+            ],
+            "waveHealth": [
+                10,
+                10,
+                10,
+                7,
+                8,
+                9,
+                7,
+                7,
+                7,
+                2,
+                3
+            ]
+        },
+        {
+            "trait": "knockback",
+            "seed": 1004,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 7,
+            "health": 0,
+            "actions": 143,
+            "worldTurns": 142,
+            "trace": [],
+            "upgrades": [
+                "impact_recovery",
+                "movement_knight",
+                "rapid_cycle",
+                "compressed_impact"
+            ],
+            "relics": [
+                "iron_nail",
+                "kings_turn"
+            ],
+            "waveActions": [
+                13,
+                13,
+                12,
+                18,
+                18,
+                23,
+                26
+            ],
+            "waveHealth": [
+                10,
+                10,
+                10,
+                8,
+                8,
+                7,
+                4
+            ]
+        },
+        {
+            "trait": "knockback",
+            "seed": 1005,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 9,
+            "health": 0,
+            "actions": 189,
+            "worldTurns": 189,
+            "trace": [],
+            "upgrades": [
+                "impact_recovery",
+                "movement_knight",
+                "rapid_cycle",
+                "mana_circulation",
+                "movement_training_2"
+            ],
+            "relics": [
+                "alternating_gear",
+                "iron_nail"
+            ],
+            "waveActions": [
+                13,
+                14,
+                15,
+                28,
+                14,
+                22,
+                29,
+                20,
+                22
+            ],
+            "waveHealth": [
+                10,
+                10,
+                10,
+                9,
+                8,
+                7,
+                8,
+                5,
+                6
+            ]
+        },
+        {
+            "trait": "knockback",
+            "seed": 1006,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 8,
+            "health": 0,
+            "actions": 160,
+            "worldTurns": 160,
+            "trace": [],
+            "upgrades": [
+                "impact_recovery",
+                "movement_knight",
+                "rapid_cycle",
+                "compressed_impact",
+                "movement_training_2"
+            ],
+            "relics": [
+                "vanguard_shield",
+                "hunters_mark"
+            ],
+            "waveActions": [
+                13,
+                13,
+                12,
+                18,
+                16,
+                20,
+                23,
+                25
+            ],
+            "waveHealth": [
+                10,
+                10,
+                10,
+                9,
+                10,
+                10,
+                10,
+                2
+            ]
+        },
+        {
+            "trait": "knockback",
+            "seed": 1007,
+            "won": false,
+            "ending": "death",
+            "clearedWave": 9,
+            "health": 0,
+            "actions": 204,
+            "worldTurns": 204,
+            "trace": [],
+            "upgrades": [
+                "impact_recovery",
+                "movement_knight",
+                "rapid_cycle",
+                "compressed_impact",
+                "movement_training_2"
+            ],
+            "relics": [
+                "alternating_gear",
+                "vanguard_shield"
+            ],
+            "waveActions": [
+                13,
+                13,
+                12,
+                18,
+                18,
+                19,
+                25,
+                34,
+                25
+            ],
+            "waveHealth": [
+                10,
+                10,
+                10,
+                7,
+                8,
+                9,
+                7,
+                4,
+                5
+            ]
+        }
+    ]
+}

@@ -1,0 +1,23 @@
+{
+    "label": "mechanics-initial",
+    "policy": "heuristic-v1; public board, no hidden activation/RNG inspection",
+    "unityVersion": "6000.4.0f1",
+    "sourceHash": "19a3328499681f6db98a9efabf68914a1977d7af8e83d7e9fde70ceb2b7a7f67",
+    "allowRelics": true,
+    "complete": true,
+    "error": "",
+    "checks": [
+        "pipeline detection: UnityEngine.Rendering.Universal.UniversalRenderPipelineAsset (rendering unchanged)",
+        "armadillo remains 32 PPU / Point",
+        "unrelated upgrade preserves partially consumed activation bag",
+        "frequency upgrade preserves current bag until next refill",
+        "movement replacement preserves mastery",
+        "maxed movement training replaced with applicable card",
+        "damage mastery uses area damage rather than redundant bag reduction",
+        "overcharge second stack keeps direct damage 3 and adds area effect",
+        "both healing stacks have integer marginal value",
+        "overlapping pierce-wave centers damage the same target only once",
+        "one-shot knockback keeps adjacent control"
+    ],
+    "runs": []
+}

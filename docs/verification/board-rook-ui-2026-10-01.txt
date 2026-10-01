@@ -1,0 +1,1001 @@
+REWARD_USABILITY_PASS
+PASS 첫 Play 화면 바닥 체크무늬: (-7, -7, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-6, -7, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-5, -7, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-4, -7, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-3, -7, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-2, -7, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-1, -7, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (0, -7, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (1, -7, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (2, -7, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (3, -7, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (4, -7, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (5, -7, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-7, -6, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-6, -6, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-5, -6, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-4, -6, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-3, -6, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-2, -6, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-1, -6, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (0, -6, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (1, -6, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (2, -6, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (3, -6, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (4, -6, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (5, -6, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-7, -5, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-6, -5, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-5, -5, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-4, -5, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-3, -5, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-2, -5, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-1, -5, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (0, -5, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (1, -5, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (2, -5, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (3, -5, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (4, -5, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (5, -5, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-7, -4, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-6, -4, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-5, -4, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-4, -4, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-3, -4, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-2, -4, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-1, -4, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (0, -4, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (1, -4, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (2, -4, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (3, -4, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (4, -4, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (5, -4, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-7, -3, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-6, -3, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-5, -3, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-4, -3, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-3, -3, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-2, -3, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-1, -3, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (0, -3, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (1, -3, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (2, -3, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (3, -3, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (4, -3, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (5, -3, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-7, -2, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-6, -2, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-5, -2, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-4, -2, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-3, -2, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-2, -2, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-1, -2, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (0, -2, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (1, -2, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (2, -2, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (3, -2, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (4, -2, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (5, -2, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-7, -1, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-6, -1, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-5, -1, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-4, -1, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-3, -1, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-2, -1, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-1, -1, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (0, -1, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (1, -1, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (2, -1, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (3, -1, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (4, -1, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (5, -1, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-7, 0, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-6, 0, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-5, 0, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-4, 0, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-3, 0, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-2, 0, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-1, 0, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (0, 0, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (1, 0, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (2, 0, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (3, 0, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (4, 0, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (5, 0, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-7, 1, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-6, 1, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-5, 1, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-4, 1, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-3, 1, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-2, 1, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-1, 1, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (0, 1, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (1, 1, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (2, 1, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (3, 1, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (4, 1, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (5, 1, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-7, 2, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-6, 2, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-5, 2, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-4, 2, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-3, 2, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-2, 2, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-1, 2, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (0, 2, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (1, 2, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (2, 2, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (3, 2, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (4, 2, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (5, 2, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-7, 3, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-6, 3, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-5, 3, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-4, 3, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-3, 3, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-2, 3, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-1, 3, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (0, 3, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (1, 3, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (2, 3, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (3, 3, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (4, 3, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (5, 3, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-7, 4, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-6, 4, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-5, 4, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-4, 4, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-3, 4, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-2, 4, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-1, 4, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (0, 4, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (1, 4, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (2, 4, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (3, 4, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (4, 4, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (5, 4, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-7, 5, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-6, 5, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-5, 5, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-4, 5, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-3, 5, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-2, 5, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (-1, 5, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (0, 5, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (1, 5, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (2, 5, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (3, 5, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (4, 5, 0)
+PASS 첫 Play 화면 바닥 체크무늬: (5, 5, 0)
+PASS 시작 증강 선택 완료
+PASS 중복 선택 차단
+PASS 실제 UI 레이캐스트 클릭 대상: BuildRow_1 ((120.93, 479.45); BuildRow_1; depth=41; raycaster=True)
+PASS 보유 증강 클릭으로 상세창 및 입력 차단
+PASS 상세창 중 이동 입력은 턴을 소비하지 않음
+PASS 상세창을 닫은 클릭의 같은 프레임 보드 전달 차단
+PASS 닫은 뒤 기존 전투 입력 복원
+PASS 상세창 전후 공격 방향 선택 보존
+PASS 실제 UI 레이캐스트 클릭 대상: UltimateFrame ((293.74, 37.75); UltimateFrame; depth=5; raycaster=True)
+PASS 이동술 HUD 상세 클릭 연결
+PASS 실제 UI 레이캐스트 클릭 대상: TraitHud ((557.71, 37.75); TraitHud; depth=17; raycaster=True)
+PASS 시작 특성 HUD 상세 클릭 연결
+PASS 나이트 1→2 실제 불길 제거 효과 예고
+PASS 선택 API 적용: movement_training_1
+PASS 나이트 연마 실제 Lv.2 적용
+PASS 나이트 2→3 피해 보너스 예고
+PASS 선택 API 적용: movement_training_2
+PASS 최대 이동술 재연마 차단
+PASS 오래된 최대 연마 카드도 실제 선택 API에서 효과 없이 소비되지 않음
+PASS 이동술 교체 예고에 보존 레벨과 거리 표시
+PASS 선택 API 적용: movement_bishop
+PASS 실제 교체 레벨 보존
+PASS 선택 문구 잘림 없음: double_cast/life_tempering/0 (143.3484/354)
+PASS 선택 카드는 핵심 효과만 표시: life_tempering
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: life_tempering
+PASS 선택 상세 문구 잘림 없음: life_tempering/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: life_tempering
+PASS 선택 문구 잘림 없음: double_cast/life_tempering/1 (143.3484/354)
+PASS 선택 카드는 핵심 효과만 표시: life_tempering
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: life_tempering
+PASS 선택 상세 문구 잘림 없음: life_tempering/1 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: life_tempering
+PASS 선택 문구 잘림 없음: double_cast/life_tempering/2 (143.3484/354)
+PASS 선택 카드는 핵심 효과만 표시: life_tempering
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: life_tempering
+PASS 선택 상세 문구 잘림 없음: life_tempering/2 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: life_tempering
+PASS 최대 증강 후보/선택 제외: life_tempering
+PASS 선택 문구 잘림 없음: double_cast/mana_circulation/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: mana_circulation
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: mana_circulation
+PASS 선택 상세 문구 잘림 없음: mana_circulation/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: mana_circulation
+PASS 선택 문구 잘림 없음: double_cast/mana_circulation/1 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: mana_circulation
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: mana_circulation
+PASS 선택 상세 문구 잘림 없음: mana_circulation/1 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: mana_circulation
+PASS 최대 증강 후보/선택 제외: mana_circulation
+PASS 선택 문구 잘림 없음: double_cast/movement_breath/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_breath
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_breath
+PASS 선택 상세 문구 잘림 없음: movement_breath/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: movement_breath
+PASS 선택 문구 잘림 없음: double_cast/movement_breath/1 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_breath
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_breath
+PASS 선택 상세 문구 잘림 없음: movement_breath/1 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: movement_breath
+PASS 최대 증강 후보/선택 제외: movement_breath
+PASS 선택 문구 잘림 없음: double_cast/healing_breath/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: healing_breath
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: healing_breath
+PASS 선택 상세 문구 잘림 없음: healing_breath/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: healing_breath
+PASS 선택 문구 잘림 없음: double_cast/healing_breath/1 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: healing_breath
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: healing_breath
+PASS 선택 상세 문구 잘림 없음: healing_breath/1 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: healing_breath
+PASS 최대 증강 후보/선택 제외: healing_breath
+PASS 선택 문구 잘림 없음: double_cast/movement_knight/0 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_knight
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_knight
+PASS 선택 상세 문구 잘림 없음: movement_knight/0 (363.2579/386)
+PASS 플레이어 문구에 발동백 없음: movement_knight
+PASS 최대 증강 후보/선택 제외: movement_knight
+PASS 선택 문구 잘림 없음: double_cast/quick_cast/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: quick_cast
+PASS 특성 증강 발동 확률 표시: quick_cast
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: quick_cast
+PASS 선택 상세 문구 잘림 없음: quick_cast/0 (241.086/386)
+PASS 플레이어 문구에 발동백 없음: quick_cast
+PASS 선택 문구 잘림 없음: double_cast/quick_cast/1 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: quick_cast
+PASS 특성 증강 발동 확률 표시: quick_cast
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: quick_cast
+PASS 선택 상세 문구 잘림 없음: quick_cast/1 (241.086/386)
+PASS 플레이어 문구에 발동백 없음: quick_cast
+PASS 최대 증강 후보/선택 제외: quick_cast
+PASS 선택 문구 잘림 없음: double_cast/echo_warhead/0 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: echo_warhead
+PASS 특성 증강 발동 확률 표시: echo_warhead
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: echo_warhead
+PASS 선택 상세 문구 잘림 없음: echo_warhead/0 (192.2172/386)
+PASS 플레이어 문구에 발동백 없음: echo_warhead
+PASS 선택 문구 잘림 없음: double_cast/echo_warhead/1 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: echo_warhead
+PASS 특성 증강 발동 확률 표시: echo_warhead
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: echo_warhead
+PASS 선택 상세 문구 잘림 없음: echo_warhead/1 (192.2172/386)
+PASS 플레이어 문구에 발동백 없음: echo_warhead
+PASS 최대 증강 후보/선택 제외: echo_warhead
+PASS 선택 문구 잘림 없음: double_cast/echo_recovery/0 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: echo_recovery
+PASS 특성 증강 발동 확률 표시: echo_recovery
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: echo_recovery
+PASS 선택 상세 문구 잘림 없음: echo_recovery/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: echo_recovery
+PASS 선택 문구 잘림 없음: double_cast/echo_recovery/1 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: echo_recovery
+PASS 특성 증강 발동 확률 표시: echo_recovery
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: echo_recovery
+PASS 선택 상세 문구 잘림 없음: echo_recovery/1 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: echo_recovery
+PASS 최대 증강 후보/선택 제외: echo_recovery
+PASS 선택 문구 잘림 없음: double_cast/movement_training_1/0 (143.3484/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_training_1
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_training_1
+PASS 선택 상세 문구 잘림 없음: movement_training_1/0 (314.3892/386)
+PASS 플레이어 문구에 발동백 없음: movement_training_1
+PASS 최대 증강 후보/선택 제외: movement_training_1
+PASS 선택 문구 잘림 없음: double_cast/rapid_cycle/0 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: rapid_cycle
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: rapid_cycle
+PASS 선택 상세 문구 잘림 없음: rapid_cycle/0 (192.2172/386)
+PASS 플레이어 문구에 발동백 없음: rapid_cycle
+PASS 최대 증강 후보/선택 제외: rapid_cycle
+PASS 선택 문구 잘림 없음: double_cast/keen_magic/0 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: keen_magic
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: keen_magic
+PASS 선택 상세 문구 잘림 없음: keen_magic/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: keen_magic
+PASS 최대 증강 후보/선택 제외: keen_magic
+PASS 선택 문구 잘림 없음: double_cast/movement_bishop/0 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_bishop
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_bishop
+PASS 선택 상세 문구 잘림 없음: movement_bishop/0 (338.8235/386)
+PASS 플레이어 문구에 발동백 없음: movement_bishop
+PASS 최대 증강 후보/선택 제외: movement_bishop
+PASS 선택 문구 잘림 없음: double_cast/movement_training_2/0 (143.3484/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_training_2
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_training_2
+PASS 선택 상세 문구 잘림 없음: movement_training_2/0 (314.3892/386)
+PASS 플레이어 문구에 발동백 없음: movement_training_2
+PASS 최대 증강 후보/선택 제외: movement_training_2
+PASS 선택 문구 잘림 없음: double_cast/combat_regeneration/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: combat_regeneration
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: combat_regeneration
+PASS 선택 상세 문구 잘림 없음: combat_regeneration/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: combat_regeneration
+PASS 최대 증강 후보/선택 제외: combat_regeneration
+PASS 선택 문구 잘림 없음: double_cast/movement_rook/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_rook
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_rook
+PASS 선택 상세 문구 잘림 없음: movement_rook/0 (314.3892/386)
+PASS 플레이어 문구에 발동백 없음: movement_rook
+PASS 최대 증강 후보/선택 제외: movement_rook
+PASS 선택 문구 잘림 없음: double_cast/movement_training_3/0 (143.3484/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_training_3
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_training_3
+PASS 선택 상세 문구 잘림 없음: movement_training_3/0 (314.3892/386)
+PASS 플레이어 문구에 발동백 없음: movement_training_3
+PASS 최대 증강 후보/선택 제외: movement_training_3
+PASS 선택 문구 잘림 없음: double_cast/alternating_overload/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: alternating_overload
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: alternating_overload
+PASS 선택 상세 문구 잘림 없음: alternating_overload/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: alternating_overload
+PASS 최대 증강 후보/선택 제외: alternating_overload
+PASS 선택 문구 잘림 없음: double_cast/movement_training_4/0 (143.3484/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_training_4
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_training_4
+PASS 선택 상세 문구 잘림 없음: movement_training_4/0 (314.3892/386)
+PASS 플레이어 문구에 발동백 없음: movement_training_4
+PASS 최대 증강 후보/선택 제외: movement_training_4
+PASS 선택 문구 잘림 없음: double_cast/immortal_cycle/0 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: immortal_cycle
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: immortal_cycle
+PASS 선택 상세 문구 잘림 없음: immortal_cycle/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: immortal_cycle
+PASS 최대 증강 후보/선택 제외: immortal_cycle
+PASS 선택 문구 잘림 없음: double_cast/trait_mastery/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: trait_mastery
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: trait_mastery
+PASS 선택 상세 문구 잘림 없음: trait_mastery/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: trait_mastery
+PASS 최대 증강 후보/선택 제외: trait_mastery
+PASS 최대 이동술의 실제 상급 후보에서 연마 제외: double_cast/1
+PASS 최대 이동술의 실제 상급 후보에서 연마 제외: double_cast/2
+PASS 최대 이동술의 실제 상급 후보에서 연마 제외: double_cast/3
+PASS 최대 이동술의 실제 상급 후보에서 연마 제외: double_cast/4
+PASS 선택 문구 잘림 없음: pierce/life_tempering/0 (143.3484/354)
+PASS 선택 카드는 핵심 효과만 표시: life_tempering
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: life_tempering
+PASS 선택 상세 문구 잘림 없음: life_tempering/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: life_tempering
+PASS 선택 문구 잘림 없음: pierce/life_tempering/1 (143.3484/354)
+PASS 선택 카드는 핵심 효과만 표시: life_tempering
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: life_tempering
+PASS 선택 상세 문구 잘림 없음: life_tempering/1 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: life_tempering
+PASS 선택 문구 잘림 없음: pierce/life_tempering/2 (143.3484/354)
+PASS 선택 카드는 핵심 효과만 표시: life_tempering
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: life_tempering
+PASS 선택 상세 문구 잘림 없음: life_tempering/2 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: life_tempering
+PASS 최대 증강 후보/선택 제외: life_tempering
+PASS 선택 문구 잘림 없음: pierce/mana_circulation/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: mana_circulation
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: mana_circulation
+PASS 선택 상세 문구 잘림 없음: mana_circulation/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: mana_circulation
+PASS 선택 문구 잘림 없음: pierce/mana_circulation/1 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: mana_circulation
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: mana_circulation
+PASS 선택 상세 문구 잘림 없음: mana_circulation/1 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: mana_circulation
+PASS 최대 증강 후보/선택 제외: mana_circulation
+PASS 선택 문구 잘림 없음: pierce/movement_breath/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_breath
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_breath
+PASS 선택 상세 문구 잘림 없음: movement_breath/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: movement_breath
+PASS 선택 문구 잘림 없음: pierce/movement_breath/1 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_breath
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_breath
+PASS 선택 상세 문구 잘림 없음: movement_breath/1 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: movement_breath
+PASS 최대 증강 후보/선택 제외: movement_breath
+PASS 선택 문구 잘림 없음: pierce/healing_breath/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: healing_breath
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: healing_breath
+PASS 선택 상세 문구 잘림 없음: healing_breath/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: healing_breath
+PASS 선택 문구 잘림 없음: pierce/healing_breath/1 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: healing_breath
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: healing_breath
+PASS 선택 상세 문구 잘림 없음: healing_breath/1 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: healing_breath
+PASS 최대 증강 후보/선택 제외: healing_breath
+PASS 선택 문구 잘림 없음: pierce/movement_knight/0 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_knight
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_knight
+PASS 선택 상세 문구 잘림 없음: movement_knight/0 (363.2579/386)
+PASS 플레이어 문구에 발동백 없음: movement_knight
+PASS 최대 증강 후보/선택 제외: movement_knight
+PASS 선택 문구 잘림 없음: pierce/thin_reload/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: thin_reload
+PASS 특성 증강 발동 확률 표시: thin_reload
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: thin_reload
+PASS 선택 상세 문구 잘림 없음: thin_reload/0 (241.086/386)
+PASS 플레이어 문구에 발동백 없음: thin_reload
+PASS 최대 증강 후보/선택 제외: thin_reload
+PASS 선택 문구 잘림 없음: pierce/long_needle/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: long_needle
+PASS 특성 증강 발동 확률 표시: long_needle
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: long_needle
+PASS 선택 상세 문구 잘림 없음: long_needle/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: long_needle
+PASS 선택 문구 잘림 없음: pierce/long_needle/1 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: long_needle
+PASS 특성 증강 발동 확률 표시: long_needle
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: long_needle
+PASS 선택 상세 문구 잘림 없음: long_needle/1 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: long_needle
+PASS 최대 증강 후보/선택 제외: long_needle
+PASS 선택 문구 잘림 없음: pierce/pierce_recovery/0 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: pierce_recovery
+PASS 특성 증강 발동 확률 표시: pierce_recovery
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: pierce_recovery
+PASS 선택 상세 문구 잘림 없음: pierce_recovery/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: pierce_recovery
+PASS 선택 문구 잘림 없음: pierce/pierce_recovery/1 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: pierce_recovery
+PASS 특성 증강 발동 확률 표시: pierce_recovery
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: pierce_recovery
+PASS 선택 상세 문구 잘림 없음: pierce_recovery/1 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: pierce_recovery
+PASS 최대 증강 후보/선택 제외: pierce_recovery
+PASS 선택 문구 잘림 없음: pierce/movement_training_1/0 (143.3484/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_training_1
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_training_1
+PASS 선택 상세 문구 잘림 없음: movement_training_1/0 (363.2579/386)
+PASS 플레이어 문구에 발동백 없음: movement_training_1
+PASS 최대 증강 후보/선택 제외: movement_training_1
+PASS 선택 문구 잘림 없음: pierce/rapid_cycle/0 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: rapid_cycle
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: rapid_cycle
+PASS 선택 상세 문구 잘림 없음: rapid_cycle/0 (192.2172/386)
+PASS 플레이어 문구에 발동백 없음: rapid_cycle
+PASS 최대 증강 후보/선택 제외: rapid_cycle
+PASS 선택 문구 잘림 없음: pierce/keen_magic/0 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: keen_magic
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: keen_magic
+PASS 선택 상세 문구 잘림 없음: keen_magic/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: keen_magic
+PASS 최대 증강 후보/선택 제외: keen_magic
+PASS 선택 문구 잘림 없음: pierce/movement_bishop/0 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_bishop
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_bishop
+PASS 선택 상세 문구 잘림 없음: movement_bishop/0 (338.8235/386)
+PASS 플레이어 문구에 발동백 없음: movement_bishop
+PASS 최대 증강 후보/선택 제외: movement_bishop
+PASS 선택 문구 잘림 없음: pierce/movement_training_2/0 (143.3484/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_training_2
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_training_2
+PASS 선택 상세 문구 잘림 없음: movement_training_2/0 (363.2579/386)
+PASS 플레이어 문구에 발동백 없음: movement_training_2
+PASS 최대 증강 후보/선택 제외: movement_training_2
+PASS 선택 문구 잘림 없음: pierce/combat_regeneration/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: combat_regeneration
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: combat_regeneration
+PASS 선택 상세 문구 잘림 없음: combat_regeneration/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: combat_regeneration
+PASS 최대 증강 후보/선택 제외: combat_regeneration
+PASS 선택 문구 잘림 없음: pierce/movement_rook/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_rook
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_rook
+PASS 선택 상세 문구 잘림 없음: movement_rook/0 (314.3892/386)
+PASS 플레이어 문구에 발동백 없음: movement_rook
+PASS 최대 증강 후보/선택 제외: movement_rook
+PASS 선택 문구 잘림 없음: pierce/movement_training_3/0 (143.3484/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_training_3
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_training_3
+PASS 선택 상세 문구 잘림 없음: movement_training_3/0 (363.2579/386)
+PASS 플레이어 문구에 발동백 없음: movement_training_3
+PASS 최대 증강 후보/선택 제외: movement_training_3
+PASS 선택 문구 잘림 없음: pierce/alternating_overload/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: alternating_overload
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: alternating_overload
+PASS 선택 상세 문구 잘림 없음: alternating_overload/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: alternating_overload
+PASS 최대 증강 후보/선택 제외: alternating_overload
+PASS 선택 문구 잘림 없음: pierce/movement_training_4/0 (143.3484/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_training_4
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_training_4
+PASS 선택 상세 문구 잘림 없음: movement_training_4/0 (363.2579/386)
+PASS 플레이어 문구에 발동백 없음: movement_training_4
+PASS 최대 증강 후보/선택 제외: movement_training_4
+PASS 선택 문구 잘림 없음: pierce/immortal_cycle/0 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: immortal_cycle
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: immortal_cycle
+PASS 선택 상세 문구 잘림 없음: immortal_cycle/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: immortal_cycle
+PASS 최대 증강 후보/선택 제외: immortal_cycle
+PASS 선택 문구 잘림 없음: pierce/trait_mastery/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: trait_mastery
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: trait_mastery
+PASS 선택 상세 문구 잘림 없음: trait_mastery/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: trait_mastery
+PASS 최대 증강 후보/선택 제외: trait_mastery
+PASS 최대 이동술의 실제 상급 후보에서 연마 제외: pierce/1
+PASS 최대 이동술의 실제 상급 후보에서 연마 제외: pierce/2
+PASS 최대 이동술의 실제 상급 후보에서 연마 제외: pierce/3
+PASS 최대 이동술의 실제 상급 후보에서 연마 제외: pierce/4
+PASS 선택 문구 잘림 없음: damage_boost/life_tempering/0 (143.3484/354)
+PASS 선택 카드는 핵심 효과만 표시: life_tempering
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: life_tempering
+PASS 선택 상세 문구 잘림 없음: life_tempering/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: life_tempering
+PASS 선택 문구 잘림 없음: damage_boost/life_tempering/1 (143.3484/354)
+PASS 선택 카드는 핵심 효과만 표시: life_tempering
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: life_tempering
+PASS 선택 상세 문구 잘림 없음: life_tempering/1 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: life_tempering
+PASS 선택 문구 잘림 없음: damage_boost/life_tempering/2 (143.3484/354)
+PASS 선택 카드는 핵심 효과만 표시: life_tempering
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: life_tempering
+PASS 선택 상세 문구 잘림 없음: life_tempering/2 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: life_tempering
+PASS 최대 증강 후보/선택 제외: life_tempering
+PASS 선택 문구 잘림 없음: damage_boost/mana_circulation/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: mana_circulation
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: mana_circulation
+PASS 선택 상세 문구 잘림 없음: mana_circulation/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: mana_circulation
+PASS 선택 문구 잘림 없음: damage_boost/mana_circulation/1 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: mana_circulation
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: mana_circulation
+PASS 선택 상세 문구 잘림 없음: mana_circulation/1 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: mana_circulation
+PASS 최대 증강 후보/선택 제외: mana_circulation
+PASS 선택 문구 잘림 없음: damage_boost/movement_breath/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_breath
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_breath
+PASS 선택 상세 문구 잘림 없음: movement_breath/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: movement_breath
+PASS 선택 문구 잘림 없음: damage_boost/movement_breath/1 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_breath
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_breath
+PASS 선택 상세 문구 잘림 없음: movement_breath/1 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: movement_breath
+PASS 최대 증강 후보/선택 제외: movement_breath
+PASS 선택 문구 잘림 없음: damage_boost/healing_breath/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: healing_breath
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: healing_breath
+PASS 선택 상세 문구 잘림 없음: healing_breath/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: healing_breath
+PASS 선택 문구 잘림 없음: damage_boost/healing_breath/1 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: healing_breath
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: healing_breath
+PASS 선택 상세 문구 잘림 없음: healing_breath/1 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: healing_breath
+PASS 최대 증강 후보/선택 제외: healing_breath
+PASS 선택 문구 잘림 없음: damage_boost/movement_knight/0 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_knight
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_knight
+PASS 선택 상세 문구 잘림 없음: movement_knight/0 (363.2579/386)
+PASS 플레이어 문구에 발동백 없음: movement_knight
+PASS 최대 증강 후보/선택 제외: movement_knight
+PASS 선택 문구 잘림 없음: damage_boost/dense_mana/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: dense_mana
+PASS 특성 증강 발동 확률 표시: dense_mana
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: dense_mana
+PASS 선택 상세 문구 잘림 없음: dense_mana/0 (241.086/386)
+PASS 플레이어 문구에 발동백 없음: dense_mana
+PASS 선택 문구 잘림 없음: damage_boost/dense_mana/1 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: dense_mana
+PASS 특성 증강 발동 확률 표시: dense_mana
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: dense_mana
+PASS 선택 상세 문구 잘림 없음: dense_mana/1 (241.086/386)
+PASS 플레이어 문구에 발동백 없음: dense_mana
+PASS 최대 증강 후보/선택 제외: dense_mana
+PASS 선택 문구 잘림 없음: damage_boost/overcharge/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: overcharge
+PASS 특성 증강 발동 확률 표시: overcharge
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: overcharge
+PASS 선택 상세 문구 잘림 없음: overcharge/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: overcharge
+PASS 선택 문구 잘림 없음: damage_boost/overcharge/1 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: overcharge
+PASS 특성 증강 발동 확률 표시: overcharge
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: overcharge
+PASS 선택 상세 문구 잘림 없음: overcharge/1 (192.2172/386)
+PASS 플레이어 문구에 발동백 없음: overcharge
+PASS 최대 증강 후보/선택 제외: overcharge
+PASS 선택 문구 잘림 없음: damage_boost/afterglow_recovery/0 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: afterglow_recovery
+PASS 특성 증강 발동 확률 표시: afterglow_recovery
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: afterglow_recovery
+PASS 선택 상세 문구 잘림 없음: afterglow_recovery/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: afterglow_recovery
+PASS 선택 문구 잘림 없음: damage_boost/afterglow_recovery/1 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: afterglow_recovery
+PASS 특성 증강 발동 확률 표시: afterglow_recovery
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: afterglow_recovery
+PASS 선택 상세 문구 잘림 없음: afterglow_recovery/1 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: afterglow_recovery
+PASS 최대 증강 후보/선택 제외: afterglow_recovery
+PASS 선택 문구 잘림 없음: damage_boost/movement_training_1/0 (143.3484/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_training_1
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_training_1
+PASS 선택 상세 문구 잘림 없음: movement_training_1/0 (363.2579/386)
+PASS 플레이어 문구에 발동백 없음: movement_training_1
+PASS 최대 증강 후보/선택 제외: movement_training_1
+PASS 선택 문구 잘림 없음: damage_boost/rapid_cycle/0 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: rapid_cycle
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: rapid_cycle
+PASS 선택 상세 문구 잘림 없음: rapid_cycle/0 (192.2172/386)
+PASS 플레이어 문구에 발동백 없음: rapid_cycle
+PASS 최대 증강 후보/선택 제외: rapid_cycle
+PASS 선택 문구 잘림 없음: damage_boost/keen_magic/0 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: keen_magic
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: keen_magic
+PASS 선택 상세 문구 잘림 없음: keen_magic/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: keen_magic
+PASS 최대 증강 후보/선택 제외: keen_magic
+PASS 선택 문구 잘림 없음: damage_boost/movement_bishop/0 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_bishop
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_bishop
+PASS 선택 상세 문구 잘림 없음: movement_bishop/0 (338.8235/386)
+PASS 플레이어 문구에 발동백 없음: movement_bishop
+PASS 최대 증강 후보/선택 제외: movement_bishop
+PASS 선택 문구 잘림 없음: damage_boost/movement_training_2/0 (143.3484/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_training_2
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_training_2
+PASS 선택 상세 문구 잘림 없음: movement_training_2/0 (363.2579/386)
+PASS 플레이어 문구에 발동백 없음: movement_training_2
+PASS 최대 증강 후보/선택 제외: movement_training_2
+PASS 선택 문구 잘림 없음: damage_boost/combat_regeneration/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: combat_regeneration
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: combat_regeneration
+PASS 선택 상세 문구 잘림 없음: combat_regeneration/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: combat_regeneration
+PASS 최대 증강 후보/선택 제외: combat_regeneration
+PASS 선택 문구 잘림 없음: damage_boost/movement_rook/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_rook
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_rook
+PASS 선택 상세 문구 잘림 없음: movement_rook/0 (314.3892/386)
+PASS 플레이어 문구에 발동백 없음: movement_rook
+PASS 최대 증강 후보/선택 제외: movement_rook
+PASS 선택 문구 잘림 없음: damage_boost/movement_training_3/0 (143.3484/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_training_3
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_training_3
+PASS 선택 상세 문구 잘림 없음: movement_training_3/0 (363.2579/386)
+PASS 플레이어 문구에 발동백 없음: movement_training_3
+PASS 최대 증강 후보/선택 제외: movement_training_3
+PASS 선택 문구 잘림 없음: damage_boost/alternating_overload/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: alternating_overload
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: alternating_overload
+PASS 선택 상세 문구 잘림 없음: alternating_overload/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: alternating_overload
+PASS 최대 증강 후보/선택 제외: alternating_overload
+PASS 선택 문구 잘림 없음: damage_boost/movement_training_4/0 (143.3484/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_training_4
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_training_4
+PASS 선택 상세 문구 잘림 없음: movement_training_4/0 (363.2579/386)
+PASS 플레이어 문구에 발동백 없음: movement_training_4
+PASS 최대 증강 후보/선택 제외: movement_training_4
+PASS 선택 문구 잘림 없음: damage_boost/immortal_cycle/0 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: immortal_cycle
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: immortal_cycle
+PASS 선택 상세 문구 잘림 없음: immortal_cycle/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: immortal_cycle
+PASS 최대 증강 후보/선택 제외: immortal_cycle
+PASS 선택 문구 잘림 없음: damage_boost/trait_mastery/0 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: trait_mastery
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: trait_mastery
+PASS 선택 상세 문구 잘림 없음: trait_mastery/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: trait_mastery
+PASS 최대 증강 후보/선택 제외: trait_mastery
+PASS 최대 이동술의 실제 상급 후보에서 연마 제외: damage_boost/1
+PASS 최대 이동술의 실제 상급 후보에서 연마 제외: damage_boost/2
+PASS 최대 이동술의 실제 상급 후보에서 연마 제외: damage_boost/3
+PASS 최대 이동술의 실제 상급 후보에서 연마 제외: damage_boost/4
+PASS 선택 문구 잘림 없음: knockback/life_tempering/0 (143.3484/354)
+PASS 선택 카드는 핵심 효과만 표시: life_tempering
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: life_tempering
+PASS 선택 상세 문구 잘림 없음: life_tempering/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: life_tempering
+PASS 선택 문구 잘림 없음: knockback/life_tempering/1 (143.3484/354)
+PASS 선택 카드는 핵심 효과만 표시: life_tempering
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: life_tempering
+PASS 선택 상세 문구 잘림 없음: life_tempering/1 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: life_tempering
+PASS 선택 문구 잘림 없음: knockback/life_tempering/2 (143.3484/354)
+PASS 선택 카드는 핵심 효과만 표시: life_tempering
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: life_tempering
+PASS 선택 상세 문구 잘림 없음: life_tempering/2 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: life_tempering
+PASS 최대 증강 후보/선택 제외: life_tempering
+PASS 선택 문구 잘림 없음: knockback/mana_circulation/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: mana_circulation
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: mana_circulation
+PASS 선택 상세 문구 잘림 없음: mana_circulation/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: mana_circulation
+PASS 선택 문구 잘림 없음: knockback/mana_circulation/1 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: mana_circulation
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: mana_circulation
+PASS 선택 상세 문구 잘림 없음: mana_circulation/1 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: mana_circulation
+PASS 최대 증강 후보/선택 제외: mana_circulation
+PASS 선택 문구 잘림 없음: knockback/movement_breath/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_breath
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_breath
+PASS 선택 상세 문구 잘림 없음: movement_breath/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: movement_breath
+PASS 선택 문구 잘림 없음: knockback/movement_breath/1 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_breath
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_breath
+PASS 선택 상세 문구 잘림 없음: movement_breath/1 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: movement_breath
+PASS 최대 증강 후보/선택 제외: movement_breath
+PASS 선택 문구 잘림 없음: knockback/healing_breath/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: healing_breath
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: healing_breath
+PASS 선택 상세 문구 잘림 없음: healing_breath/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: healing_breath
+PASS 선택 문구 잘림 없음: knockback/healing_breath/1 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: healing_breath
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: healing_breath
+PASS 선택 상세 문구 잘림 없음: healing_breath/1 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: healing_breath
+PASS 최대 증강 후보/선택 제외: healing_breath
+PASS 선택 문구 잘림 없음: knockback/movement_knight/0 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_knight
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_knight
+PASS 선택 상세 문구 잘림 없음: movement_knight/0 (363.2579/386)
+PASS 플레이어 문구에 발동백 없음: movement_knight
+PASS 최대 증강 후보/선택 제외: movement_knight
+PASS 선택 문구 잘림 없음: knockback/compressed_impact/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: compressed_impact
+PASS 특성 증강 발동 확률 표시: compressed_impact
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: compressed_impact
+PASS 선택 상세 문구 잘림 없음: compressed_impact/0 (241.086/386)
+PASS 플레이어 문구에 발동백 없음: compressed_impact
+PASS 선택 문구 잘림 없음: knockback/compressed_impact/1 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: compressed_impact
+PASS 특성 증강 발동 확률 표시: compressed_impact
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: compressed_impact
+PASS 선택 상세 문구 잘림 없음: compressed_impact/1 (241.086/386)
+PASS 플레이어 문구에 발동백 없음: compressed_impact
+PASS 최대 증강 후보/선택 제외: compressed_impact
+PASS 선택 문구 잘림 없음: knockback/long_impact/0 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: long_impact
+PASS 특성 증강 발동 확률 표시: long_impact
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: long_impact
+PASS 선택 상세 문구 잘림 없음: long_impact/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: long_impact
+PASS 최대 증강 후보/선택 제외: long_impact
+PASS 선택 문구 잘림 없음: knockback/impact_recovery/0 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: impact_recovery
+PASS 특성 증강 발동 확률 표시: impact_recovery
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: impact_recovery
+PASS 선택 상세 문구 잘림 없음: impact_recovery/0 (192.2172/386)
+PASS 플레이어 문구에 발동백 없음: impact_recovery
+PASS 선택 문구 잘림 없음: knockback/impact_recovery/1 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: impact_recovery
+PASS 특성 증강 발동 확률 표시: impact_recovery
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: impact_recovery
+PASS 선택 상세 문구 잘림 없음: impact_recovery/1 (192.2172/386)
+PASS 플레이어 문구에 발동백 없음: impact_recovery
+PASS 최대 증강 후보/선택 제외: impact_recovery
+PASS 선택 문구 잘림 없음: knockback/movement_training_1/0 (143.3484/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_training_1
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_training_1
+PASS 선택 상세 문구 잘림 없음: movement_training_1/0 (363.2579/386)
+PASS 플레이어 문구에 발동백 없음: movement_training_1
+PASS 최대 증강 후보/선택 제외: movement_training_1
+PASS 선택 문구 잘림 없음: knockback/rapid_cycle/0 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: rapid_cycle
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: rapid_cycle
+PASS 선택 상세 문구 잘림 없음: rapid_cycle/0 (192.2172/386)
+PASS 플레이어 문구에 발동백 없음: rapid_cycle
+PASS 최대 증강 후보/선택 제외: rapid_cycle
+PASS 선택 문구 잘림 없음: knockback/keen_magic/0 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: keen_magic
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: keen_magic
+PASS 선택 상세 문구 잘림 없음: keen_magic/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: keen_magic
+PASS 최대 증강 후보/선택 제외: keen_magic
+PASS 선택 문구 잘림 없음: knockback/movement_bishop/0 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_bishop
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_bishop
+PASS 선택 상세 문구 잘림 없음: movement_bishop/0 (338.8235/386)
+PASS 플레이어 문구에 발동백 없음: movement_bishop
+PASS 최대 증강 후보/선택 제외: movement_bishop
+PASS 선택 문구 잘림 없음: knockback/movement_training_2/0 (143.3484/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_training_2
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_training_2
+PASS 선택 상세 문구 잘림 없음: movement_training_2/0 (363.2579/386)
+PASS 플레이어 문구에 발동백 없음: movement_training_2
+PASS 최대 증강 후보/선택 제외: movement_training_2
+PASS 선택 문구 잘림 없음: knockback/combat_regeneration/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: combat_regeneration
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: combat_regeneration
+PASS 선택 상세 문구 잘림 없음: combat_regeneration/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: combat_regeneration
+PASS 최대 증강 후보/선택 제외: combat_regeneration
+PASS 선택 문구 잘림 없음: knockback/movement_rook/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_rook
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_rook
+PASS 선택 상세 문구 잘림 없음: movement_rook/0 (314.3892/386)
+PASS 플레이어 문구에 발동백 없음: movement_rook
+PASS 최대 증강 후보/선택 제외: movement_rook
+PASS 선택 문구 잘림 없음: knockback/movement_training_3/0 (143.3484/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_training_3
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_training_3
+PASS 선택 상세 문구 잘림 없음: movement_training_3/0 (363.2579/386)
+PASS 플레이어 문구에 발동백 없음: movement_training_3
+PASS 최대 증강 후보/선택 제외: movement_training_3
+PASS 선택 문구 잘림 없음: knockback/alternating_overload/0 (167.7828/354)
+PASS 선택 카드는 핵심 효과만 표시: alternating_overload
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: alternating_overload
+PASS 선택 상세 문구 잘림 없음: alternating_overload/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: alternating_overload
+PASS 최대 증강 후보/선택 제외: alternating_overload
+PASS 선택 문구 잘림 없음: knockback/movement_training_4/0 (143.3484/354)
+PASS 선택 카드는 핵심 효과만 표시: movement_training_4
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=55; raycaster=True)
+PASS 선택 카드 상세 확인: movement_training_4
+PASS 선택 상세 문구 잘림 없음: movement_training_4/0 (363.2579/386)
+PASS 플레이어 문구에 발동백 없음: movement_training_4
+PASS 최대 증강 후보/선택 제외: movement_training_4
+PASS 선택 문구 잘림 없음: knockback/immortal_cycle/0 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: immortal_cycle
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: immortal_cycle
+PASS 선택 상세 문구 잘림 없음: immortal_cycle/0 (167.7828/386)
+PASS 플레이어 문구에 발동백 없음: immortal_cycle
+PASS 최대 증강 후보/선택 제외: immortal_cycle
+PASS 선택 문구 잘림 없음: knockback/trait_mastery/0 (192.2172/354)
+PASS 선택 카드는 핵심 효과만 표시: trait_mastery
+PASS 실제 UI 레이캐스트 클릭 대상: Details ((346.53, 445.07); Details, UpgradeChoice_1, UpgradeSelectionPanel; depth=56; raycaster=True)
+PASS 선택 카드 상세 확인: trait_mastery
+PASS 선택 상세 문구 잘림 없음: trait_mastery/0 (192.2172/386)
+PASS 플레이어 문구에 발동백 없음: trait_mastery
+PASS 최대 증강 후보/선택 제외: trait_mastery
+PASS 최대 이동술의 실제 상급 후보에서 연마 제외: knockback/1
+PASS 최대 이동술의 실제 상급 후보에서 연마 제외: knockback/2
+PASS 최대 이동술의 실제 상급 후보에서 연마 제외: knockback/3
+PASS 최대 이동술의 실제 상급 후보에서 연마 제외: knockback/4
+PASS 이동술 상세 문구 잘림 없음: Knight/1
+PASS 이동술 상세 문구 잘림 없음: Bishop/1
+PASS 이동술 상세 문구 잘림 없음: Rook/1
+PASS 이동술 상세 문구 잘림 없음: Knight/2
+PASS 이동술 상세 문구 잘림 없음: Bishop/2
+PASS 이동술 상세 문구 잘림 없음: Rook/2
+PASS 이동술 상세 문구 잘림 없음: Knight/3
+PASS 이동술 상세 문구 잘림 없음: Bishop/3
+PASS 이동술 상세 문구 잘림 없음: Rook/3
+PASS 유물 상세 문구 잘림 없음: alternating_gear
+PASS 유물 상세 문구 잘림 없음: vanguard_shield
+PASS 유물 상세 문구 잘림 없음: ash_boots
+PASS 유물 상세 문구 잘림 없음: hunters_mark
+PASS 유물 상세 문구 잘림 없음: blood_knot
+PASS 유물 상세 문구 잘림 없음: landing_ward
+PASS 유물 상세 문구 잘림 없음: kings_turn
+PASS 유물 상세 문구 잘림 없음: glass_heart
+PASS 유물 상세 문구 잘림 없음: ambush_crest
+PASS 유물 상세 문구 잘림 없음: twin_focus
+PASS 유물 상세 문구 잘림 없음: rotating_mirror
+PASS 유물 상세 문구 잘림 없음: triple_echo
+PASS 유물 상세 문구 잘림 없음: thorn_needle
+PASS 유물 상세 문구 잘림 없음: suture_needle
+PASS 유물 상세 문구 잘림 없음: infinite_orbit
+PASS 유물 상세 문구 잘림 없음: hot_afterglow
+PASS 유물 상세 문구 잘림 없음: excess_reservoir
+PASS 유물 상세 문구 잘림 없음: blast_core
+PASS 유물 상세 문구 잘림 없음: iron_nail
+PASS 유물 상세 문구 잘림 없음: domino_crest
+PASS 유물 상세 문구 잘림 없음: battering_ram
+PASS 4특성 × 256시드 × 4제단 웨이브: 위험 등급 하락 없음, 중복 없음, 16웨이브 최소 희귀

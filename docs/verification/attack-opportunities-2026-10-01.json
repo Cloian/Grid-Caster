@@ -1,0 +1,866 @@
+{
+  "kind": "static geometry proxy; NOT human fun, Unity integration, or win rate",
+  "board_interior": 13,
+  "seed": 20261001,
+  "snapshots_total": 4800,
+  "samples_per_group": 600,
+  "checks_passed": 3221,
+  "script_sha256": "96479dc9ff9f8ca119ba1f03c3411fe93616b83c155336b9bbbd43b61625ebcc",
+  "candidate_shapes": {
+    "reflect_once": "one wall-cell-centre specular bounce, no self damage",
+    "fork_two": "replace the centre with +/-45-degree rays",
+    "fan_three": "centre plus +/-45-degree rays"
+  },
+  "groups": [
+    {
+      "layout": "uniform",
+      "enemy_count": 3,
+      "snapshots": 600,
+      "means": {
+        "base": {
+          "any_attack_target": 0.545,
+          "best_unique_targets": 0.545,
+          "best_damage_units": 0.545,
+          "multi_target_snapshot": 0.0,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 0.68,
+          "static_neighbor_improves_target_count": 0.4,
+          "cleared_fire_best_damage_shot": 1.116667,
+          "best_damage_hit_uses_bounce": 0.0
+        },
+        "damage_plus_one": {
+          "any_attack_target": 0.545,
+          "best_unique_targets": 0.545,
+          "best_damage_units": 1.09,
+          "multi_target_snapshot": 0.0,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 0.68,
+          "static_neighbor_improves_target_count": 0.4,
+          "cleared_fire_best_damage_shot": 1.116667,
+          "best_damage_hit_uses_bounce": 0.0
+        },
+        "reflect_once": {
+          "any_attack_target": 0.665,
+          "best_unique_targets": 0.665,
+          "best_damage_units": 0.665,
+          "multi_target_snapshot": 0.0,
+          "new_target_snapshot": 0.205,
+          "new_reachable_targets": 0.216667,
+          "distinct_nonempty_target_sets": 0.896667,
+          "static_neighbor_improves_target_count": 0.331667,
+          "cleared_fire_best_damage_shot": 1.321667,
+          "best_damage_hit_uses_bounce": 0.398333
+        },
+        "fork_two": {
+          "any_attack_target": 0.545,
+          "best_unique_targets": 0.588333,
+          "best_damage_units": 0.588333,
+          "multi_target_snapshot": 0.043333,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 0.723333,
+          "static_neighbor_improves_target_count": 0.578333,
+          "cleared_fire_best_damage_shot": 1.771667,
+          "best_damage_hit_uses_bounce": 0.0
+        },
+        "fan_three": {
+          "any_attack_target": 0.545,
+          "best_unique_targets": 0.646667,
+          "best_damage_units": 0.646667,
+          "multi_target_snapshot": 0.098333,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 0.783333,
+          "static_neighbor_improves_target_count": 0.648333,
+          "cleared_fire_best_damage_shot": 2.491667,
+          "best_damage_hit_uses_bounce": 0.0
+        }
+      }
+    },
+    {
+      "layout": "uniform",
+      "enemy_count": 8,
+      "snapshots": 600,
+      "means": {
+        "base": {
+          "any_attack_target": 0.87,
+          "best_unique_targets": 0.87,
+          "best_damage_units": 0.87,
+          "multi_target_snapshot": 0.0,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 1.651667,
+          "static_neighbor_improves_target_count": 0.128333,
+          "cleared_fire_best_damage_shot": 0.721667,
+          "best_damage_hit_uses_bounce": 0.0
+        },
+        "damage_plus_one": {
+          "any_attack_target": 0.87,
+          "best_unique_targets": 0.87,
+          "best_damage_units": 1.74,
+          "multi_target_snapshot": 0.0,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 1.651667,
+          "static_neighbor_improves_target_count": 0.128333,
+          "cleared_fire_best_damage_shot": 0.721667,
+          "best_damage_hit_uses_bounce": 0.0
+        },
+        "reflect_once": {
+          "any_attack_target": 0.956667,
+          "best_unique_targets": 0.956667,
+          "best_damage_units": 0.956667,
+          "multi_target_snapshot": 0.0,
+          "new_target_snapshot": 0.416667,
+          "new_reachable_targets": 0.508333,
+          "distinct_nonempty_target_sets": 2.16,
+          "static_neighbor_improves_target_count": 0.043333,
+          "cleared_fire_best_damage_shot": 0.953333,
+          "best_damage_hit_uses_bounce": 0.551667
+        },
+        "fork_two": {
+          "any_attack_target": 0.87,
+          "best_unique_targets": 1.146667,
+          "best_damage_units": 1.146667,
+          "multi_target_snapshot": 0.276667,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 1.941667,
+          "static_neighbor_improves_target_count": 0.613333,
+          "cleared_fire_best_damage_shot": 1.313333,
+          "best_damage_hit_uses_bounce": 0.0
+        },
+        "fan_three": {
+          "any_attack_target": 0.87,
+          "best_unique_targets": 1.395,
+          "best_damage_units": 1.395,
+          "multi_target_snapshot": 0.458333,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 2.211667,
+          "static_neighbor_improves_target_count": 0.69,
+          "cleared_fire_best_damage_shot": 2.015,
+          "best_damage_hit_uses_bounce": 0.0
+        }
+      }
+    },
+    {
+      "layout": "uniform",
+      "enemy_count": 12,
+      "snapshots": 600,
+      "means": {
+        "base": {
+          "any_attack_target": 0.956667,
+          "best_unique_targets": 0.956667,
+          "best_damage_units": 0.956667,
+          "multi_target_snapshot": 0.0,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 2.246667,
+          "static_neighbor_improves_target_count": 0.043333,
+          "cleared_fire_best_damage_shot": 0.583333,
+          "best_damage_hit_uses_bounce": 0.0
+        },
+        "damage_plus_one": {
+          "any_attack_target": 0.956667,
+          "best_unique_targets": 0.956667,
+          "best_damage_units": 1.913333,
+          "multi_target_snapshot": 0.0,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 2.246667,
+          "static_neighbor_improves_target_count": 0.043333,
+          "cleared_fire_best_damage_shot": 0.583333,
+          "best_damage_hit_uses_bounce": 0.0
+        },
+        "reflect_once": {
+          "any_attack_target": 0.991667,
+          "best_unique_targets": 0.991667,
+          "best_damage_units": 0.991667,
+          "multi_target_snapshot": 0.0,
+          "new_target_snapshot": 0.5,
+          "new_reachable_targets": 0.633333,
+          "distinct_nonempty_target_sets": 2.88,
+          "static_neighbor_improves_target_count": 0.008333,
+          "cleared_fire_best_damage_shot": 0.98,
+          "best_damage_hit_uses_bounce": 0.595
+        },
+        "fork_two": {
+          "any_attack_target": 0.956667,
+          "best_unique_targets": 1.405,
+          "best_damage_units": 1.405,
+          "multi_target_snapshot": 0.448333,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 2.746667,
+          "static_neighbor_improves_target_count": 0.505,
+          "cleared_fire_best_damage_shot": 1.11,
+          "best_damage_hit_uses_bounce": 0.0
+        },
+        "fan_three": {
+          "any_attack_target": 0.956667,
+          "best_unique_targets": 1.801667,
+          "best_damage_units": 1.801667,
+          "multi_target_snapshot": 0.673333,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 3.151667,
+          "static_neighbor_improves_target_count": 0.658333,
+          "cleared_fire_best_damage_shot": 1.675,
+          "best_damage_hit_uses_bounce": 0.0
+        }
+      }
+    },
+    {
+      "layout": "uniform",
+      "enemy_count": 18,
+      "snapshots": 600,
+      "means": {
+        "base": {
+          "any_attack_target": 0.998333,
+          "best_unique_targets": 0.998333,
+          "best_damage_units": 0.998333,
+          "multi_target_snapshot": 0.0,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 3.083333,
+          "static_neighbor_improves_target_count": 0.001667,
+          "cleared_fire_best_damage_shot": 0.673333,
+          "best_damage_hit_uses_bounce": 0.0
+        },
+        "damage_plus_one": {
+          "any_attack_target": 0.998333,
+          "best_unique_targets": 0.998333,
+          "best_damage_units": 1.996667,
+          "multi_target_snapshot": 0.0,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 3.083333,
+          "static_neighbor_improves_target_count": 0.001667,
+          "cleared_fire_best_damage_shot": 0.673333,
+          "best_damage_hit_uses_bounce": 0.0
+        },
+        "reflect_once": {
+          "any_attack_target": 1.0,
+          "best_unique_targets": 1.0,
+          "best_damage_units": 1.0,
+          "multi_target_snapshot": 0.0,
+          "new_target_snapshot": 0.586667,
+          "new_reachable_targets": 0.766667,
+          "distinct_nonempty_target_sets": 3.85,
+          "static_neighbor_improves_target_count": 0.0,
+          "cleared_fire_best_damage_shot": 1.126667,
+          "best_damage_hit_uses_bounce": 0.583333
+        },
+        "fork_two": {
+          "any_attack_target": 0.998333,
+          "best_unique_targets": 1.716667,
+          "best_damage_units": 1.716667,
+          "multi_target_snapshot": 0.718333,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 3.91,
+          "static_neighbor_improves_target_count": 0.271667,
+          "cleared_fire_best_damage_shot": 0.911667,
+          "best_damage_hit_uses_bounce": 0.0
+        },
+        "fan_three": {
+          "any_attack_target": 0.998333,
+          "best_unique_targets": 2.27,
+          "best_damage_units": 2.27,
+          "multi_target_snapshot": 0.883333,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 4.435,
+          "static_neighbor_improves_target_count": 0.571667,
+          "cleared_fire_best_damage_shot": 1.423333,
+          "best_damage_hit_uses_bounce": 0.0
+        }
+      }
+    },
+    {
+      "layout": "clustered",
+      "enemy_count": 3,
+      "snapshots": 600,
+      "means": {
+        "base": {
+          "any_attack_target": 0.46,
+          "best_unique_targets": 0.46,
+          "best_damage_units": 0.46,
+          "multi_target_snapshot": 0.0,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 0.528333,
+          "static_neighbor_improves_target_count": 0.353333,
+          "cleared_fire_best_damage_shot": 1.233333,
+          "best_damage_hit_uses_bounce": 0.0
+        },
+        "damage_plus_one": {
+          "any_attack_target": 0.46,
+          "best_unique_targets": 0.46,
+          "best_damage_units": 0.92,
+          "multi_target_snapshot": 0.0,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 0.528333,
+          "static_neighbor_improves_target_count": 0.353333,
+          "cleared_fire_best_damage_shot": 1.233333,
+          "best_damage_hit_uses_bounce": 0.0
+        },
+        "reflect_once": {
+          "any_attack_target": 0.575,
+          "best_unique_targets": 0.575,
+          "best_damage_units": 0.575,
+          "multi_target_snapshot": 0.0,
+          "new_target_snapshot": 0.163333,
+          "new_reachable_targets": 0.163333,
+          "distinct_nonempty_target_sets": 0.691667,
+          "static_neighbor_improves_target_count": 0.363333,
+          "cleared_fire_best_damage_shot": 1.41,
+          "best_damage_hit_uses_bounce": 0.338333
+        },
+        "fork_two": {
+          "any_attack_target": 0.46,
+          "best_unique_targets": 0.485,
+          "best_damage_units": 0.485,
+          "multi_target_snapshot": 0.025,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 0.553333,
+          "static_neighbor_improves_target_count": 0.385,
+          "cleared_fire_best_damage_shot": 1.871667,
+          "best_damage_hit_uses_bounce": 0.0
+        },
+        "fan_three": {
+          "any_attack_target": 0.46,
+          "best_unique_targets": 0.523333,
+          "best_damage_units": 0.523333,
+          "multi_target_snapshot": 0.051667,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 0.593333,
+          "static_neighbor_improves_target_count": 0.478333,
+          "cleared_fire_best_damage_shot": 2.671667,
+          "best_damage_hit_uses_bounce": 0.0
+        }
+      }
+    },
+    {
+      "layout": "clustered",
+      "enemy_count": 8,
+      "snapshots": 600,
+      "means": {
+        "base": {
+          "any_attack_target": 0.671667,
+          "best_unique_targets": 0.671667,
+          "best_damage_units": 0.671667,
+          "multi_target_snapshot": 0.0,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 0.875,
+          "static_neighbor_improves_target_count": 0.245,
+          "cleared_fire_best_damage_shot": 0.833333,
+          "best_damage_hit_uses_bounce": 0.0
+        },
+        "damage_plus_one": {
+          "any_attack_target": 0.671667,
+          "best_unique_targets": 0.671667,
+          "best_damage_units": 1.343333,
+          "multi_target_snapshot": 0.0,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 0.875,
+          "static_neighbor_improves_target_count": 0.245,
+          "cleared_fire_best_damage_shot": 0.833333,
+          "best_damage_hit_uses_bounce": 0.0
+        },
+        "reflect_once": {
+          "any_attack_target": 0.85,
+          "best_unique_targets": 0.85,
+          "best_damage_units": 0.85,
+          "multi_target_snapshot": 0.0,
+          "new_target_snapshot": 0.358333,
+          "new_reachable_targets": 0.363333,
+          "distinct_nonempty_target_sets": 1.238333,
+          "static_neighbor_improves_target_count": 0.146667,
+          "cleared_fire_best_damage_shot": 0.901667,
+          "best_damage_hit_uses_bounce": 0.485
+        },
+        "fork_two": {
+          "any_attack_target": 0.671667,
+          "best_unique_targets": 0.718333,
+          "best_damage_units": 0.718333,
+          "multi_target_snapshot": 0.046667,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 0.938333,
+          "static_neighbor_improves_target_count": 0.315,
+          "cleared_fire_best_damage_shot": 1.528333,
+          "best_damage_hit_uses_bounce": 0.0
+        },
+        "fan_three": {
+          "any_attack_target": 0.671667,
+          "best_unique_targets": 0.833333,
+          "best_damage_units": 0.833333,
+          "multi_target_snapshot": 0.116667,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 1.033333,
+          "static_neighbor_improves_target_count": 0.48,
+          "cleared_fire_best_damage_shot": 2.428333,
+          "best_damage_hit_uses_bounce": 0.0
+        }
+      }
+    },
+    {
+      "layout": "clustered",
+      "enemy_count": 12,
+      "snapshots": 600,
+      "means": {
+        "base": {
+          "any_attack_target": 0.821667,
+          "best_unique_targets": 0.821667,
+          "best_damage_units": 0.821667,
+          "multi_target_snapshot": 0.0,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 1.31,
+          "static_neighbor_improves_target_count": 0.151667,
+          "cleared_fire_best_damage_shot": 0.658333,
+          "best_damage_hit_uses_bounce": 0.0
+        },
+        "damage_plus_one": {
+          "any_attack_target": 0.821667,
+          "best_unique_targets": 0.821667,
+          "best_damage_units": 1.643333,
+          "multi_target_snapshot": 0.0,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 1.31,
+          "static_neighbor_improves_target_count": 0.151667,
+          "cleared_fire_best_damage_shot": 0.658333,
+          "best_damage_hit_uses_bounce": 0.0
+        },
+        "reflect_once": {
+          "any_attack_target": 0.943333,
+          "best_unique_targets": 0.943333,
+          "best_damage_units": 0.943333,
+          "multi_target_snapshot": 0.0,
+          "new_target_snapshot": 0.356667,
+          "new_reachable_targets": 0.358333,
+          "distinct_nonempty_target_sets": 1.668333,
+          "static_neighbor_improves_target_count": 0.053333,
+          "cleared_fire_best_damage_shot": 0.776667,
+          "best_damage_hit_uses_bounce": 0.513333
+        },
+        "fork_two": {
+          "any_attack_target": 0.821667,
+          "best_unique_targets": 0.94,
+          "best_damage_units": 0.94,
+          "multi_target_snapshot": 0.118333,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 1.468333,
+          "static_neighbor_improves_target_count": 0.263333,
+          "cleared_fire_best_damage_shot": 1.353333,
+          "best_damage_hit_uses_bounce": 0.0
+        },
+        "fan_three": {
+          "any_attack_target": 0.821667,
+          "best_unique_targets": 1.173333,
+          "best_damage_units": 1.173333,
+          "multi_target_snapshot": 0.241667,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 1.651667,
+          "static_neighbor_improves_target_count": 0.436667,
+          "cleared_fire_best_damage_shot": 2.148333,
+          "best_damage_hit_uses_bounce": 0.0
+        }
+      }
+    },
+    {
+      "layout": "clustered",
+      "enemy_count": 18,
+      "snapshots": 600,
+      "means": {
+        "base": {
+          "any_attack_target": 0.9,
+          "best_unique_targets": 0.9,
+          "best_damage_units": 0.9,
+          "multi_target_snapshot": 0.0,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 1.655,
+          "static_neighbor_improves_target_count": 0.09,
+          "cleared_fire_best_damage_shot": 0.541667,
+          "best_damage_hit_uses_bounce": 0.0
+        },
+        "damage_plus_one": {
+          "any_attack_target": 0.9,
+          "best_unique_targets": 0.9,
+          "best_damage_units": 1.8,
+          "multi_target_snapshot": 0.0,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 1.655,
+          "static_neighbor_improves_target_count": 0.09,
+          "cleared_fire_best_damage_shot": 0.541667,
+          "best_damage_hit_uses_bounce": 0.0
+        },
+        "reflect_once": {
+          "any_attack_target": 0.99,
+          "best_unique_targets": 0.99,
+          "best_damage_units": 0.99,
+          "multi_target_snapshot": 0.0,
+          "new_target_snapshot": 0.431667,
+          "new_reachable_targets": 0.448333,
+          "distinct_nonempty_target_sets": 2.103333,
+          "static_neighbor_improves_target_count": 0.01,
+          "cleared_fire_best_damage_shot": 0.685,
+          "best_damage_hit_uses_bounce": 0.531667
+        },
+        "fork_two": {
+          "any_attack_target": 0.9,
+          "best_unique_targets": 1.053333,
+          "best_damage_units": 1.053333,
+          "multi_target_snapshot": 0.153333,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 1.835,
+          "static_neighbor_improves_target_count": 0.203333,
+          "cleared_fire_best_damage_shot": 1.205,
+          "best_damage_hit_uses_bounce": 0.0
+        },
+        "fan_three": {
+          "any_attack_target": 0.9,
+          "best_unique_targets": 1.385,
+          "best_damage_units": 1.385,
+          "multi_target_snapshot": 0.331667,
+          "new_target_snapshot": 0.0,
+          "new_reachable_targets": 0.0,
+          "distinct_nonempty_target_sets": 2.085,
+          "static_neighbor_improves_target_count": 0.391667,
+          "cleared_fire_best_damage_shot": 1.95,
+          "best_damage_hit_uses_bounce": 0.0
+        }
+      }
+    }
+  ],
+  "examples": [
+    {
+      "name": "off_axis_bank_shot",
+      "player": [
+        3,
+        5
+      ],
+      "enemies": [
+        [
+          5,
+          13
+        ]
+      ],
+      "variants": {
+        "base": {
+          "any_attack_target": false,
+          "best_unique_targets": 0,
+          "best_damage_units": 0,
+          "multi_target_snapshot": false,
+          "new_target_snapshot": false,
+          "new_reachable_targets": 0,
+          "distinct_nonempty_target_sets": 0,
+          "static_neighbor_improves_target_count": false,
+          "cleared_fire_best_damage_shot": 0,
+          "best_damage_hit_uses_bounce": false
+        },
+        "damage_plus_one": {
+          "any_attack_target": false,
+          "best_unique_targets": 0,
+          "best_damage_units": 0,
+          "multi_target_snapshot": false,
+          "new_target_snapshot": false,
+          "new_reachable_targets": 0,
+          "distinct_nonempty_target_sets": 0,
+          "static_neighbor_improves_target_count": false,
+          "cleared_fire_best_damage_shot": 0,
+          "best_damage_hit_uses_bounce": false
+        },
+        "reflect_once": {
+          "any_attack_target": true,
+          "best_unique_targets": 1,
+          "best_damage_units": 1,
+          "multi_target_snapshot": false,
+          "new_target_snapshot": true,
+          "new_reachable_targets": 1,
+          "distinct_nonempty_target_sets": 1,
+          "static_neighbor_improves_target_count": false,
+          "cleared_fire_best_damage_shot": 0,
+          "best_damage_hit_uses_bounce": true
+        },
+        "fork_two": {
+          "any_attack_target": false,
+          "best_unique_targets": 0,
+          "best_damage_units": 0,
+          "multi_target_snapshot": false,
+          "new_target_snapshot": false,
+          "new_reachable_targets": 0,
+          "distinct_nonempty_target_sets": 0,
+          "static_neighbor_improves_target_count": false,
+          "cleared_fire_best_damage_shot": 0,
+          "best_damage_hit_uses_bounce": false
+        },
+        "fan_three": {
+          "any_attack_target": false,
+          "best_unique_targets": 0,
+          "best_damage_units": 0,
+          "multi_target_snapshot": false,
+          "new_target_snapshot": false,
+          "new_reachable_targets": 0,
+          "distinct_nonempty_target_sets": 0,
+          "static_neighbor_improves_target_count": false,
+          "cleared_fire_best_damage_shot": 0,
+          "best_damage_hit_uses_bounce": false
+        }
+      }
+    },
+    {
+      "name": "centre_corner_retrace",
+      "player": [
+        7,
+        7
+      ],
+      "enemies": [
+        [
+          10,
+          9
+        ]
+      ],
+      "variants": {
+        "base": {
+          "any_attack_target": false,
+          "best_unique_targets": 0,
+          "best_damage_units": 0,
+          "multi_target_snapshot": false,
+          "new_target_snapshot": false,
+          "new_reachable_targets": 0,
+          "distinct_nonempty_target_sets": 0,
+          "static_neighbor_improves_target_count": true,
+          "cleared_fire_best_damage_shot": 0,
+          "best_damage_hit_uses_bounce": false
+        },
+        "damage_plus_one": {
+          "any_attack_target": false,
+          "best_unique_targets": 0,
+          "best_damage_units": 0,
+          "multi_target_snapshot": false,
+          "new_target_snapshot": false,
+          "new_reachable_targets": 0,
+          "distinct_nonempty_target_sets": 0,
+          "static_neighbor_improves_target_count": true,
+          "cleared_fire_best_damage_shot": 0,
+          "best_damage_hit_uses_bounce": false
+        },
+        "reflect_once": {
+          "any_attack_target": false,
+          "best_unique_targets": 0,
+          "best_damage_units": 0,
+          "multi_target_snapshot": false,
+          "new_target_snapshot": false,
+          "new_reachable_targets": 0,
+          "distinct_nonempty_target_sets": 0,
+          "static_neighbor_improves_target_count": true,
+          "cleared_fire_best_damage_shot": 0,
+          "best_damage_hit_uses_bounce": false
+        },
+        "fork_two": {
+          "any_attack_target": false,
+          "best_unique_targets": 0,
+          "best_damage_units": 0,
+          "multi_target_snapshot": false,
+          "new_target_snapshot": false,
+          "new_reachable_targets": 0,
+          "distinct_nonempty_target_sets": 0,
+          "static_neighbor_improves_target_count": true,
+          "cleared_fire_best_damage_shot": 0,
+          "best_damage_hit_uses_bounce": false
+        },
+        "fan_three": {
+          "any_attack_target": false,
+          "best_unique_targets": 0,
+          "best_damage_units": 0,
+          "multi_target_snapshot": false,
+          "new_target_snapshot": false,
+          "new_reachable_targets": 0,
+          "distinct_nonempty_target_sets": 0,
+          "static_neighbor_improves_target_count": true,
+          "cleared_fire_best_damage_shot": 0,
+          "best_damage_hit_uses_bounce": false
+        }
+      }
+    },
+    {
+      "name": "two_flanks",
+      "player": [
+        7,
+        7
+      ],
+      "enemies": [
+        [
+          5,
+          9
+        ],
+        [
+          9,
+          9
+        ]
+      ],
+      "variants": {
+        "base": {
+          "any_attack_target": true,
+          "best_unique_targets": 1,
+          "best_damage_units": 1,
+          "multi_target_snapshot": false,
+          "new_target_snapshot": false,
+          "new_reachable_targets": 0,
+          "distinct_nonempty_target_sets": 2,
+          "static_neighbor_improves_target_count": false,
+          "cleared_fire_best_damage_shot": 0,
+          "best_damage_hit_uses_bounce": false
+        },
+        "damage_plus_one": {
+          "any_attack_target": true,
+          "best_unique_targets": 1,
+          "best_damage_units": 2,
+          "multi_target_snapshot": false,
+          "new_target_snapshot": false,
+          "new_reachable_targets": 0,
+          "distinct_nonempty_target_sets": 2,
+          "static_neighbor_improves_target_count": false,
+          "cleared_fire_best_damage_shot": 0,
+          "best_damage_hit_uses_bounce": false
+        },
+        "reflect_once": {
+          "any_attack_target": true,
+          "best_unique_targets": 1,
+          "best_damage_units": 1,
+          "multi_target_snapshot": false,
+          "new_target_snapshot": false,
+          "new_reachable_targets": 0,
+          "distinct_nonempty_target_sets": 2,
+          "static_neighbor_improves_target_count": false,
+          "cleared_fire_best_damage_shot": 0,
+          "best_damage_hit_uses_bounce": false
+        },
+        "fork_two": {
+          "any_attack_target": true,
+          "best_unique_targets": 2,
+          "best_damage_units": 2,
+          "multi_target_snapshot": true,
+          "new_target_snapshot": false,
+          "new_reachable_targets": 0,
+          "distinct_nonempty_target_sets": 3,
+          "static_neighbor_improves_target_count": false,
+          "cleared_fire_best_damage_shot": 0,
+          "best_damage_hit_uses_bounce": false
+        },
+        "fan_three": {
+          "any_attack_target": true,
+          "best_unique_targets": 2,
+          "best_damage_units": 2,
+          "multi_target_snapshot": true,
+          "new_target_snapshot": false,
+          "new_reachable_targets": 0,
+          "distinct_nonempty_target_sets": 3,
+          "static_neighbor_improves_target_count": false,
+          "cleared_fire_best_damage_shot": 0,
+          "best_damage_hit_uses_bounce": false
+        }
+      }
+    },
+    {
+      "name": "three_targets",
+      "player": [
+        7,
+        7
+      ],
+      "enemies": [
+        [
+          5,
+          9
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          9,
+          9
+        ]
+      ],
+      "variants": {
+        "base": {
+          "any_attack_target": true,
+          "best_unique_targets": 1,
+          "best_damage_units": 1,
+          "multi_target_snapshot": false,
+          "new_target_snapshot": false,
+          "new_reachable_targets": 0,
+          "distinct_nonempty_target_sets": 3,
+          "static_neighbor_improves_target_count": false,
+          "cleared_fire_best_damage_shot": 0,
+          "best_damage_hit_uses_bounce": false
+        },
+        "damage_plus_one": {
+          "any_attack_target": true,
+          "best_unique_targets": 1,
+          "best_damage_units": 2,
+          "multi_target_snapshot": false,
+          "new_target_snapshot": false,
+          "new_reachable_targets": 0,
+          "distinct_nonempty_target_sets": 3,
+          "static_neighbor_improves_target_count": false,
+          "cleared_fire_best_damage_shot": 0,
+          "best_damage_hit_uses_bounce": false
+        },
+        "reflect_once": {
+          "any_attack_target": true,
+          "best_unique_targets": 1,
+          "best_damage_units": 1,
+          "multi_target_snapshot": false,
+          "new_target_snapshot": false,
+          "new_reachable_targets": 0,
+          "distinct_nonempty_target_sets": 3,
+          "static_neighbor_improves_target_count": false,
+          "cleared_fire_best_damage_shot": 0,
+          "best_damage_hit_uses_bounce": false
+        },
+        "fork_two": {
+          "any_attack_target": true,
+          "best_unique_targets": 2,
+          "best_damage_units": 2,
+          "multi_target_snapshot": true,
+          "new_target_snapshot": false,
+          "new_reachable_targets": 0,
+          "distinct_nonempty_target_sets": 4,
+          "static_neighbor_improves_target_count": false,
+          "cleared_fire_best_damage_shot": 0,
+          "best_damage_hit_uses_bounce": false
+        },
+        "fan_three": {
+          "any_attack_target": true,
+          "best_unique_targets": 3,
+          "best_damage_units": 3,
+          "multi_target_snapshot": true,
+          "new_target_snapshot": false,
+          "new_reachable_targets": 0,
+          "distinct_nonempty_target_sets": 5,
+          "static_neighbor_improves_target_count": false,
+          "cleared_fire_best_damage_shot": 0,
+          "best_damage_hit_uses_bounce": false
+        }
+      }
+    }
+  ]
+}
