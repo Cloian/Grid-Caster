@@ -13,6 +13,7 @@ using UnityEngine.UI;
 public static class ChessPlaytestValidation
 {
     private const string PendingKey = "GridCaster.ChessValidation";
+    private const double ValidationTimeoutSeconds = 300d;
     private static IEnumerator routine;
     private static double deadline;
     private static readonly List<string> checks = new List<string>();
@@ -27,7 +28,9 @@ public static class ChessPlaytestValidation
             {
                 SessionState.SetBool(PendingKey, false);
                 checks.Clear();
-                deadline = EditorApplication.timeSinceStartup + 120;
+                // 씬 전환과 장시간 웨이브 검증까지 포함하므로 느린 에디터에서도
+                // 기능 실패가 단순 시간 초과로 오인되지 않도록 충분한 여유를 둔다.
+                deadline = EditorApplication.timeSinceStartup + ValidationTimeoutSeconds;
                 routine = Run();
                 EditorApplication.update += Tick;
             }
@@ -252,35 +255,64 @@ public static class ChessPlaytestValidation
         PlaceFixture(test, player, new Vector3Int(7, 5, 0), new Vector3Int(8, 8, 0));
         fixtureRook.ApplyKnockback(new Vector3Int(5, 11, 0));
         projectiles.ClearProjectiles();
+        ChessMonsterBehaviour fixtureRookBehaviour = fixtureRook.GetComponent<ChessMonsterBehaviour>();
+        var aimMethod = typeof(ChessMonsterBehaviour).GetMethod("RookAimCell",
+            System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+        UnityEngine.Random.State originalAimRandom = UnityEngine.Random.state;
+        HashSet<int> sampledColumns = new HashSet<int>();
+        Func<Vector3Int, bool> wallBlocked = cell => cell.x == 9;
+        for (int seed = 0; seed < 128; seed++)
+        {
+            player.ResetPlaytest(new Vector3Int(1, 5, 0));
+            UnityEngine.Random.InitState(seed);
+            Vector3Int firstAim = (Vector3Int)aimMethod.Invoke(fixtureRookBehaviour, new object[] { wallBlocked });
+            player.ResetPlaytest(new Vector3Int(10, 5, 0));
+            UnityEngine.Random.InitState(seed);
+            Vector3Int secondAim = (Vector3Int)aimMethod.Invoke(fixtureRookBehaviour, new object[] { wallBlocked });
+            Check(firstAim == secondAim && firstAim.x != 5 && firstAim.x != 9
+                && grid.IsTopBoundaryWallCell(firstAim), $"룩 무작위 사선은 플레이어 위치와 무관하고 점유 열 제외: 시드 {seed}");
+            sampledColumns.Add(firstAim.x);
+        }
+        UnityEngine.Random.state = originalAimRandom;
+        Check(sampledColumns.Count > 1, "룩 사선은 여러 성벽 열로 무작위 분산");
+        player.ResetPlaytest(new Vector3Int(7, 5, 0));
         done = false;
         IsolatedTurn(fixtureRook, test, () => done = true);
         while (!done) yield return null;
-        ChessMonsterBehaviour fixtureRookBehaviour = fixtureRook.GetComponent<ChessMonsterBehaviour>();
         Check(grid.IsTopBoundaryWallCell(fixtureRook.GridPosition)
-            && fixtureRook.GridPosition.x == 7
             && fixtureRookBehaviour.IsRookCharged
-            && fixtureRookBehaviour.RookTargetColumn == 7
+            && fixtureRookBehaviour.RookTargetColumn == fixtureRook.GridPosition.x
             && EnemyBullets().Length == 0,
-            "룩은 상단 벽에서 플레이어 열로 이동해 한 행동 장전");
+            "룩은 상단 벽의 무작위 열로 이동해 한 행동 장전");
         Check(!spawner.TryKnockbackMonster(fixtureRook, Vector3Int.down),
             "성벽 쇠뇌 룩은 지상 넉백 면역");
 
-        player.ResetPlaytest(new Vector3Int(6, 5, 0));
+        int chargedColumn = fixtureRookBehaviour.RookTargetColumn;
+        player.ResetPlaytest(new Vector3Int(chargedColumn == 1 ? 2 : 1, 5, 0));
         int healthBeforeDodgingShot = player.CurrentHealth;
         done = false;
         IsolatedTurn(fixtureRook, test, () => done = true);
         while (!done) yield return null;
         Check(player.CurrentHealth == healthBeforeDodgingShot
             && !fixtureRookBehaviour.IsRookCharged
+            && fixtureRookBehaviour.IsRookRecovering
+            && fixtureRookBehaviour.RookTargetColumn == chargedColumn
             && EnemyBullets().Length == 0,
             "룩은 장전 열을 즉시 사격하며 이동한 플레이어를 재조준하지 않음");
 
         done = false;
         IsolatedTurn(fixtureRook, test, () => done = true);
         while (!done) yield return null;
+        Check(!fixtureRookBehaviour.IsRookCharged && !fixtureRookBehaviour.IsRookRecovering
+            && fixtureRook.GridPosition.x == chargedColumn,
+            "룩은 발사 후 한 턴 재정비하며 기존 열에 남아 반격 허용");
+        done = false;
+        IsolatedTurn(fixtureRook, test, () => done = true);
+        while (!done) yield return null;
         Check(fixtureRookBehaviour.IsRookCharged
-            && fixtureRookBehaviour.RookTargetColumn == player.GridPosition.x,
-            "룩은 다음 장전에서 새 플레이어 열을 고정");
+            && fixtureRookBehaviour.RookTargetColumn != chargedColumn,
+            "재정비 후 이전 열과 다른 무작위 사선을 장전");
+        player.ResetPlaytest(new Vector3Int(fixtureRookBehaviour.RookTargetColumn, 5, 0));
         int healthBeforeHit = player.CurrentHealth;
         done = false;
         IsolatedTurn(fixtureRook, test, () => done = true);
@@ -290,7 +322,8 @@ public static class ChessPlaytestValidation
             && EnemyBullets().Length == 0,
             "룩 발사는 보드 잔류 탄 없이 예고 열에 즉시 피해 2");
 
-        player.ResetPlaytest(new Vector3Int(fixtureRook.GridPosition.x, 5, 0));
+        // 무작위 열에는 다른 적이 있을 수 있으므로 벽 바로 아래에서 룩 적중만 분리 검사한다.
+        player.ResetPlaytest(new Vector3Int(fixtureRook.GridPosition.x, 10, 0));
         CharacterHealth rookHealth = fixtureRook.GetComponent<CharacterHealth>();
         int rookHealthBeforeShot = rookHealth.CurrentHealth;
         bool wallShotCompleted = false;
@@ -300,6 +333,14 @@ public static class ChessPlaytestValidation
         while (!wallShotCompleted) yield return null;
         Check(rookHealth.CurrentHealth == rookHealthBeforeShot - 1,
             "플레이어 기본공격은 벽 충돌 전에 성벽 룩을 타격");
+        int healthBeforeCounter = player.CurrentHealth;
+        Vector3Int counterRookCell = fixtureRook.GridPosition;
+        done = false;
+        IsolatedTurn(fixtureRook, test, () => done = true);
+        while (!done) yield return null;
+        Check(player.CurrentHealth == healthBeforeCounter && fixtureRook.GridPosition == counterRookCell
+            && !fixtureRookBehaviour.IsRookCharged,
+            "발사 후 같은 열에서 룩을 공격해도 재정비 턴에는 피해 없이 반격 가능");
         // 이후 검사는 불길·이동만 측정하므로 새 즉시 사격이 결과에 섞이지 않게 룩 픽스처를 정리한다.
         fixtureRook.TakeDamage(rookHealth.CurrentHealth);
         yield return null;
@@ -326,12 +367,10 @@ public static class ChessPlaytestValidation
         PlaceFixture(test, player, new Vector3Int(5, 4, 0), new Vector3Int(10, 9, 0));
         fire.Clear();
         projectiles.ClearProjectiles();
-        UltimateGauge playtestGauge = player.gameObject.AddComponent<UltimateGauge>();
         player.GetComponent<RunProgressionSystem>()
             .SetMovementArtForPlaytest(PlayerMovementArt.Rook);
-        playtestGauge.AddGauge(playtestGauge.MaxGauge);
         Vector3Int chessTeleportTarget = new Vector3Int(8, 4, 0);
-        Check(player.TryPerformAction(PlayerActionSelectionMode.MovementArt,
+        Check(player.TryPerformAction(PlayerActionSelectionMode.Move,
             chessTeleportTarget - player.GridPosition), "체스 3종 앞에서 룩 이동술");
         while (!player.CanAct) yield return null;
         Check(player.GridPosition == chessTeleportTarget, "체스 테스트 룩 이동술 착지 좌표");
@@ -364,7 +403,13 @@ public static class ChessPlaytestValidation
             int turn = test.TurnCount;
             Vector3Int direction = Directions.First(d => !RayHasMonster(player.GridPosition, d, test, grid));
             Check(player.TryPerformAction(PlayerActionSelectionMode.Attack, direction), "혼합 패턴 턴 진행");
-            while (test.IsRunning && test.TurnCount == turn) yield return null;
+            double turnDeadline = EditorApplication.timeSinceStartup + 10d;
+            while (test.IsRunning && test.TurnCount == turn)
+            {
+                if (EditorApplication.timeSinceStartup > turnDeadline)
+                    throw new InvalidOperationException($"혼합 턴 지연: turn={turn}, hp={player.CurrentHealth}, canAct={player.CanAct}, world={spawner.IsWorldTurnInProgress}, projectiles={UnityEngine.Object.FindObjectsByType<TurnProjectile>(FindObjectsSortMode.None).Length}, echo={player.IsChoosingEchoDirection}");
+                yield return null;
+            }
             CheckOccupancy(test, player, grid);
         }
         Check(test.TurnCount == 20 && !player.CanAct, "테스트 20턴 종료");
@@ -389,6 +434,29 @@ public static class ChessPlaytestValidation
         GameHudController hud = UnityEngine.Object.FindAnyObjectByType<GameHudController>();
         Check(player != null && grid != null && normalSpawner != null && hud != null,
             "SampleScene 기존 컴포넌트 로드");
+        string detectedPipeline = DetectPipeline();
+        Check(detectedPipeline.Contains("Universal"), "픽셀 표시 검사 전 URP 렌더 파이프라인 확인");
+        var walls = new Dictionary<Vector3Int, (UnityEngine.Tilemaps.TileBase, Color)>();
+        foreach (Vector3Int cell in grid.GroundTilemap.cellBounds.allPositionsWithin)
+        {
+            if (grid.GroundTilemap.HasTile(cell) && !grid.IsWalkableCell(cell))
+                walls.Add(cell, (grid.GroundTilemap.GetTile(cell), grid.GroundTilemap.GetColor(cell)));
+        }
+        grid.Initialize(grid.GroundTilemap, 1);
+        Check(walls.All(pair => grid.GroundTilemap.GetTile(pair.Key) == pair.Value.Item1
+            && grid.GroundTilemap.GetColor(pair.Key) == pair.Value.Item2 && !grid.IsWalkableCell(pair.Key)),
+            "체크무늬 갱신은 외벽 타일 에셋·색·충돌을 보존");
+        bool alternatingFloor = true;
+        foreach (Vector3Int cell in grid.GroundTilemap.cellBounds.allPositionsWithin)
+        {
+            if (!grid.IsWalkableCell(cell)) continue;
+            Color expectedColor = (cell.x + cell.y) % 2 == 0 ? Color.white : new Color(0.8f, 0.85f, 0.9f);
+            alternatingFloor &= grid.GroundTilemap.GetColor(cell) == expectedColor;
+            if (grid.IsWalkableCell(cell + new Vector3Int(1, 1, 0)))
+                alternatingFloor &= grid.GroundTilemap.GetColor(cell)
+                    == grid.GroundTilemap.GetColor(cell + new Vector3Int(1, 1, 0));
+        }
+        Check(alternatingFloor, "모든 바닥은 체크무늬이며 비숍 대각선의 타일 색 유지");
         CameraController boardCameraController = UnityEngine.Object.FindAnyObjectByType<CameraController>();
         Camera boardCamera = Camera.main;
         Check(boardCameraController != null && boardCamera != null
@@ -428,8 +496,8 @@ public static class ChessPlaytestValidation
             "20웨이브 스테이지 흐름과 전투 상태");
         int[] expectedWaveCounts =
         {
-            3, 4, 5, 6, 8, 9, 10, 11, 12, 14,
-            13, 15, 16, 17, 18, 20, 21, 22, 23, 25
+            3, 3, 4, 5, 6, 7, 8, 8, 9, 8,
+            8, 11, 12, 12, 13, 14, 15, 15, 16, 18
         };
         int[] relicWaves = { 4, 8, 12, 16 };
         for (int wave = 1; wave <= expectedWaveCounts.Length; wave++)
@@ -446,8 +514,9 @@ public static class ChessPlaytestValidation
             {
                 WaveTemplate previous = WaveTemplateCatalog.Get(wave - 1);
                 Check(template.DifficultyTier == previous.DifficultyTier + 1
-                    && template.Monsters.Count > previous.Monsters.Count,
-                    $"웨이브 {wave} 유물 획득과 동시에 난이도 상승");
+                    && (template.Monsters.Count > previous.Monsters.Count
+                        || template.Monsters.Any(pattern => !previous.Monsters.Contains(pattern))),
+                    $"웨이브 {wave} 단계 상승과 새 기믹 또는 수량 압박");
             }
 
             bool hasKnight = template.Monsters.Contains(MonsterMovementPattern.Knight);
@@ -514,8 +583,10 @@ public static class ChessPlaytestValidation
             && Mathf.Approximately(traitHud.anchoredPosition.y, attackHud.anchoredPosition.y)
             && Mathf.Approximately(attackHud.anchoredPosition.y, moveHud.anchoredPosition.y),
             "하단 전투 HUD가 해상도에 맞춰 보드 중앙 아래에 밀착 정렬");
-        Check(ultimateShortcut != null && ultimateShortcut.text == "F",
-            "이동술 카드에 F 단축키 배지 표시");
+        Check(ultimateShortcut != null && ultimateShortcut.text == "S+",
+            "이동술 카드에 S 통합 배지 표시");
+        Check(GameObject.Find("GaugeBackground") == null,
+            "폐기된 필살기 게이지는 HUD에서 숨김");
         Vector3[] topHudCorners = new Vector3[4];
         Vector3[] bottomHudCorners = new Vector3[4];
         waveHud.GetWorldCorners(topHudCorners);
@@ -611,25 +682,31 @@ public static class ChessPlaytestValidation
         Check(!normalSpawner.FireTrail.HasFire(fireClearCell)
             && !normalSpawner.FireTrail.HasFire(secondFireClearCell),
             "기본공격이 지나간 모든 바닥 칸의 비숍 불길 제거");
-        UltimateGauge gauge = player.GetComponent<UltimateGauge>();
         progression.SetMovementArtForPlaytest(PlayerMovementArt.None);
-        Check(gauge != null && !gauge.IsReady
-            && !player.TryPerformAction(PlayerActionSelectionMode.MovementArt, new Vector3Int(2, 1, 0))
+        Check(!player.TryPerformAction(PlayerActionSelectionMode.Move, new Vector3Int(2, 1, 0))
             && completedTurns == 2, "이동술 미보유 상태는 턴을 쓰지 않음");
+        player.CancelSelection();
         player.ProcessInputFrame(false, false, false, false, Vector2.zero, true);
-        Check(player.SelectionMode != PlayerActionSelectionMode.MovementArt && completedTurns == 2,
-            "이동술 미보유 상태의 F 키는 선택을 열지 않음");
-        gauge.AddGauge(gauge.MaxGauge);
+        Check(player.SelectionMode == PlayerActionSelectionMode.None && completedTurns == 2,
+            "폐기된 F 키는 이동술 선택을 열지 않음");
         Button teleportButton = GameObject.Find("UltimateFrame")?.GetComponent<Button>();
-        Check(teleportButton != null, "기존 F 아이콘 버튼 연결");
+        Check(teleportButton != null && teleportButton.interactable,
+            "구형 필살기 프레임은 이동술 상세 확인 카드로 표시");
         teleportButton.onClick.Invoke();
-        Check(player.SelectionMode != PlayerActionSelectionMode.MovementArt,
-            "게이지가 가득 차도 이동술 미보유면 F 버튼 비활성");
+        RunProgressionUiController detailUi = UnityEngine.Object.FindAnyObjectByType<RunProgressionUiController>();
+        Check(detailUi != null && detailUi.IsDetailOpen && completedTurns == 2,
+            "이동술 카드 클릭은 상세 설명만 열고 턴을 소비하지 않음");
+        detailUi.CloseDetails();
 
         progression.SetMovementArtForPlaytest(PlayerMovementArt.Knight);
-        teleportButton.onClick.Invoke();
-        Check(player.SelectionMode == PlayerActionSelectionMode.MovementArt,
-            "나이트 이동술 보유 시 F 아이콘으로 착지 타일 선택");
+        yield return null;
+        Image movementArtIcon = GameObject.Find("UltimateIcon")?.GetComponent<Image>();
+        Check(movementArtIcon != null && movementArtIcon.sprite != null
+            && movementArtIcon.sprite.name == "KnightMove",
+            "나이트 이동술 카드에 통일된 체스 말 아이콘 표시");
+        player.ProcessInputFrame(false, true, false, false, Vector2.zero);
+        Check(player.SelectionMode == PlayerActionSelectionMode.Move,
+            "나이트 이동술 보유 시 S로 기본 이동과 착지 타일을 함께 선택");
         Vector3Int[] knightOffsets =
         {
             new Vector3Int(1, 2, 0), new Vector3Int(2, 1, 0),
@@ -640,8 +717,18 @@ public static class ChessPlaytestValidation
         int knightChoiceCount = knightOffsets.Count(offset =>
             grid.IsWalkableCell(player.GridPosition + offset)
             && !normalSpawner.TryGetMonsterAtCell(player.GridPosition + offset, out _));
-        Check(player.GetComponent<DirectionalActionIndicator>().ActiveChoiceCount == knightChoiceCount,
-            "나이트 이동술은 L자 빈 타일만 후보로 표시");
+        Vector3Int[] adjacentOffsets =
+        {
+            Vector3Int.up, new Vector3Int(1, 1, 0), Vector3Int.right,
+            new Vector3Int(1, -1, 0), Vector3Int.down, new Vector3Int(-1, -1, 0),
+            Vector3Int.left, new Vector3Int(-1, 1, 0)
+        };
+        int adjacentChoiceCount = adjacentOffsets.Count(offset =>
+            grid.IsWalkableCell(player.GridPosition + offset)
+            && !normalSpawner.TryGetMonsterAtCell(player.GridPosition + offset, out _));
+        Check(player.GetComponent<DirectionalActionIndicator>().ActiveChoiceCount
+            == adjacentChoiceCount + knightChoiceCount,
+            "S 선택은 기본 8방향과 나이트 L자 빈 타일을 함께 표시");
         Transform firstChoice = player.transform.Find("ActionArrow_1");
         SpriteRenderer teleportTile = firstChoice != null
             ? firstChoice.Find("Arrow")?.GetComponent<SpriteRenderer>() : null;
@@ -649,13 +736,13 @@ public static class ChessPlaytestValidation
             && teleportTile.sprite.name == "RuntimeMovementArtTileSprite"
             && !firstChoice.GetComponent<SpriteRenderer>().enabled
             && teleportTile.color == new Color32(255, 205, 91, 235),
-            "이동술 후보는 노란색 타일 테두리로 표시");
+            "모든 이동 후보는 노란색 타일 테두리로 표시");
         MonsterMovement occupiedTarget = normalSpawner.ActiveMonsters.First(m => m != null && !m.IsDead);
-        Check(!player.TryUseMovementArtAtCell(occupiedTarget.GridPosition) && gauge.IsReady
-            && completedTurns == 2, "적 점유 타일은 게이지와 턴을 소모하지 않음");
+        Check(!player.TryUseMovementArtAtCell(occupiedTarget.GridPosition)
+            && completedTurns == 2, "적 점유 타일은 턴을 소모하지 않음");
         Check(!player.TryUseMovementArtAtCell(player.GridPosition + Vector3Int.right * 2)
-            && gauge.IsReady && completedTurns == 2,
-            "나이트는 직선 이동을 할 수 없고 게이지도 소모하지 않음");
+            && completedTurns == 2,
+            "나이트는 직선 2칸 이동을 할 수 없고 턴도 소모하지 않음");
         Vector3Int teleportTarget = knightOffsets.Select(offset => player.GridPosition + offset)
             .First(cell => grid.IsWalkableCell(cell)
                 && !normalSpawner.TryGetMonsterAtCell(cell, out _));
@@ -665,8 +752,8 @@ public static class ChessPlaytestValidation
         Check(player.GridPosition == teleportTarget && grid.WorldToCell(player.transform.position) == teleportTarget,
             "애니메이션 없이 논리 좌표와 화면 위치 동시 이동");
         while (!player.CanAct) yield return null;
-        Check(completedTurns == 3 && gauge.CurrentGauge == 0,
-            "이동술 한 번에 적 한 턴 진행 및 게이지 전량 소모");
+        Check(completedTurns == 3,
+            "이동술은 충전 없이 사용할 수 있고 적 한 턴 진행");
         Check(beforeTeleport.Any(pair => pair.Key != null && !pair.Key.IsDead
             && Mathf.Abs(pair.Key.GridPosition.x - teleportTarget.x)
                 + Mathf.Abs(pair.Key.GridPosition.y - teleportTarget.y)
@@ -684,28 +771,34 @@ public static class ChessPlaytestValidation
         }
 
         progression.SetMovementArtForPlaytest(PlayerMovementArt.Bishop);
-        gauge.AddGauge(gauge.MaxGauge);
+        yield return null;
+        Check(movementArtIcon.sprite != null && movementArtIcon.sprite.name == "BishopMove",
+            "비숍 이동술 카드에 통일된 체스 말 아이콘 표시");
         Vector3Int nearbyTeleport = new[]
             {
-                new Vector3Int(1, 1, 0), new Vector3Int(1, -1, 0),
-                new Vector3Int(-1, -1, 0), new Vector3Int(-1, 1, 0)
+                new Vector3Int(2, 2, 0), new Vector3Int(2, -2, 0),
+                new Vector3Int(-2, -2, 0), new Vector3Int(-2, 2, 0)
             }.Select(direction => teleportTarget + direction)
             .First(cell => grid.IsWalkableCell(cell)
                 && !normalSpawner.TryGetMonsterAtCell(cell, out _));
         normalSpawner.FireTrail.AddFire(nearbyTeleport);
-        player.ProcessInputFrame(false, false, false, false, Vector2.zero, true);
-        Check(player.SelectionMode == PlayerActionSelectionMode.MovementArt,
-            "F 키로 비숍 이동술 타일 선택");
-        player.ProcessInputFrame(false, false, false, false, Vector2.zero, true);
-        Check(player.SelectionMode == PlayerActionSelectionMode.None && gauge.IsReady,
-            "F 키를 다시 누르면 게이지 소모 없이 선택 취소");
-        player.ProcessInputFrame(false, false, false, false, Vector2.zero, true);
+        player.ProcessInputFrame(false, true, false, false, Vector2.zero);
+        Check(player.SelectionMode == PlayerActionSelectionMode.Move,
+            "S 키로 비숍 이동술 타일 선택");
+        player.ProcessInputFrame(false, true, false, false, Vector2.zero);
+        Check(player.SelectionMode == PlayerActionSelectionMode.None,
+            "S 키를 다시 누르면 선택 취소");
+        player.ProcessInputFrame(false, true, false, false, Vector2.zero);
         Check(player.TryConfirmSelectedCell(Camera.main.WorldToScreenPoint(grid.GetCellCenterWorld(nearbyTeleport))),
             "게임 화면의 타일 클릭으로 비숍 이동술 확정");
         while (!player.CanAct) yield return null;
         Check(player.GridPosition == nearbyTeleport && completedTurns == 4
             && !normalSpawner.FireTrail.HasFire(nearbyTeleport),
             "비숍 이동술은 대각선 착지와 경로 불길 제거 후 적 한 턴 처리");
+        progression.SetMovementArtForPlaytest(PlayerMovementArt.Rook);
+        yield return null;
+        Check(movementArtIcon.sprite != null && movementArtIcon.sprite.name == "RookMove",
+            "룩 이동술 카드에 통일된 체스 말 아이콘 표시");
         progression.SetMovementArtForPlaytest(PlayerMovementArt.None);
         if (normalSpawner.ChessWavesEnabled)
         {
@@ -760,14 +853,28 @@ public static class ChessPlaytestValidation
                         .First(cell => grid.IsWalkableCell(cell) && !normalSpawner.TryGetMonsterAtCell(cell, out _));
                     player.ResetPlaytest(safeCell);
                     player.GetComponent<CharacterHealth>().Initialize(1000);
+                    bool pairRecoverySeen = false;
                     for (int action = 0; action < 4; action++)
                     {
                         int previousTurns = completedTurns;
-                        Vector3Int direction = Vector3Int.left;
-                        Check(player.TryPerformAction(PlayerActionSelectionMode.Attack, direction), "혼합 웨이브 기본공격");
+                        Vector3Int direction = Directions.First(candidate =>
+                            grid.IsWalkableCell(player.GridPosition + candidate)
+                            && !normalSpawner.TryGetMonsterAtCell(
+                                player.GridPosition + candidate, out _));
+                        Check(player.TryPerformAction(PlayerActionSelectionMode.Move, direction),
+                            "혼합 웨이브 기본 이동");
                         while (!player.CanAct) yield return null;
                         Check(completedTurns == previousTurns + 1, "혼합 웨이브에서 한 행동에 적/탄 한 턴");
+                        ChessMonsterBehaviour[] rookPair = enemies
+                            .Where(item => item.MovementPattern == MonsterMovementPattern.Rook && !item.IsDead)
+                            .Select(item => item.GetComponent<ChessMonsterBehaviour>()).ToArray();
+                        int[] chargedColumns = rookPair.Where(item => item.IsRookCharged)
+                            .Select(item => item.RookTargetColumn).ToArray();
+                        Check(chargedColumns.Distinct().Count() == chargedColumns.Length,
+                            "혼합 웨이브 룩 2마리는 장전 열을 중복 예약하지 않음");
+                        pairRecoverySeen |= rookPair.Length == 2 && rookPair.All(item => item.IsRookRecovering);
                     }
+                    Check(pairRecoverySeen, "실제 룩 2마리 혼합 웨이브에서 동시 발사 후 재정비 창 제공");
                     Check(rookBehaviour.PatternExecutions > 0
                         && EnemyBullets().Length == 0,
                         "SampleScene 룩 장전 후 즉시 사격 실행");
@@ -828,11 +935,17 @@ public static class ChessPlaytestValidation
                             $"웨이브 {wave} 영구 강화 없이 자동 진행");
                     }
                     if (wave == 1)
-                        Check(player.CurrentHealth == 850, "웨이브 클리어 시 최대 체력의 10% 회복");
+                        Check(player.CurrentHealth == 1000, "웨이브 클리어 시 최대 체력의 30% 회복 (상한 적용)");
                     Check(EnemyBullets().Length == 0 && normalSpawner.FireTrail.Count == 0, "다음 웨이브에 이전 적 탄/불길 없음");
                 }
             }
         }
+    }
+
+    private static string DetectPipeline()
+    {
+        var pipeline = UnityEngine.Rendering.GraphicsSettings.currentRenderPipeline;
+        return pipeline != null ? pipeline.GetType().FullName : "BuiltIn";
     }
 
     private static void ValidateTransitReservations(MonsterSpawner spawner, MonsterMovement bishop, MonsterMovement snake)
@@ -906,8 +1019,11 @@ public static class ChessPlaytestValidation
 
     private static bool RayHasMonster(Vector3Int cell, Vector3Int direction, ChessPlaytest test, GridManager grid)
     {
-        for (cell += direction; grid.IsWalkableCell(cell); cell += direction)
+        for (cell += direction; grid.IsInsideMapCell(cell); cell += direction)
+        {
             if (test.Encounter.Any(m => m != null && !m.IsDead && m.GridPosition == cell)) return true;
+            if (!grid.IsWalkableCell(cell)) break;
+        }
         return false;
     }
 }

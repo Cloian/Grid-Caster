@@ -31,7 +31,8 @@ public sealed class MonsterSpawner : MonoBehaviour
     [Tooltip("비워 두면 기존 체스 몬스터 스프라이트를 임시로 사용합니다.")]
     [SerializeField] private Sprite rookMonsterSprite;
     [SerializeField, Min(1)] private int chessMonsterHealth = 3;
-    [SerializeField, Min(1)] private int knightActionInterval = 1;
+    [Tooltip("일반 웨이브의 나이트는 최소 2턴 간격으로 도약합니다. 독립 패턴 테스트는 별도 값을 사용합니다.")]
+    [SerializeField, Min(2)] private int knightActionInterval = 2;
     [SerializeField, Min(1)] private int bishopMoveDistance = 4;
     [SerializeField, Min(1)] private int bishopOrbitDistance = 2;
     [SerializeField, Min(1)] private int bishopFireTurns = 3;
@@ -156,7 +157,7 @@ public sealed class MonsterSpawner : MonoBehaviour
         activeMonsters.RemoveAll(monster => monster == null || monster.IsDead);
 
         if (waveActive && activeMonsters.Count == 0
-            && monstersStillMoving == 0 && !worldTurnInProgress)
+            && monstersStillMoving == 0 && !worldTurnInProgress && !playerMovement.IsActionInProgress)
         {
             CompleteCurrentWave();
         }
@@ -678,7 +679,7 @@ public sealed class MonsterSpawner : MonoBehaviour
         foreach (MonsterMovementPattern pattern in waveSpawnPlan)
             if (pattern == MonsterMovementPattern.Rook) rookCount++;
         rookSpawnCellCursor = rookWallSpawnCells.Count > 0
-            ? (currentWave * 3) % rookWallSpawnCells.Count
+            ? UnityEngine.Random.Range(0, rookWallSpawnCells.Count)
             : 0;
         rookSpawnStride = rookWallSpawnCells.Count > 0
             ? Mathf.Max(1, rookWallSpawnCells.Count / Mathf.Max(1, rookCount))
@@ -741,7 +742,7 @@ public sealed class MonsterSpawner : MonoBehaviour
                 : chessMonsterSprite;
             MonsterMovement chessMonster = SpawnPlaytestMonster(movementPattern, chessCell,
                 monsterSprite, ChessWaveDisplay.ColorFor(movementPattern), chessMonsterHealth,
-                ++spawnSerial, knightActionInterval, bishopMoveDistance, bishopOrbitDistance);
+                ++spawnSerial, Mathf.Max(2, knightActionInterval), bishopMoveDistance, bishopOrbitDistance);
             return true;
         }
         MonsterMovement prefab = GetNextPrefab(movementPattern);

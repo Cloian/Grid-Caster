@@ -31,6 +31,8 @@ public static class ChessWaveSetupTool
             target.FindProperty("chessMonsterHealth").intValue = source.FindProperty("monsterHealth").intValue;
             foreach (string field in new[] { "knightActionInterval", "bishopMoveDistance", "bishopOrbitDistance", "bishopFireTurns", "bishopFireDamage" })
                 target.FindProperty(field).intValue = source.FindProperty(field).intValue;
+            target.FindProperty("knightActionInterval").intValue = Mathf.Max(2,
+                source.FindProperty("knightActionInterval").intValue);
             target.FindProperty("bishopMoveDistance").intValue = 4;
             target.FindProperty("bishopOrbitDistance").intValue = 2;
             target.ApplyModifiedPropertiesWithoutUndo();

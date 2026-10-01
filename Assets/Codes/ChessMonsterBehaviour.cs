@@ -38,6 +38,7 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
     private readonly Queue<Vector3Int> recentBishopCells = new Queue<Vector3Int>();
     private Vector3Int previousKnightCell;
     private bool rookCharged;
+    private bool rookRecovering;
     private int rookTargetColumn;
     private float rookShotFlashUntil;
     private bool showCross;
@@ -47,13 +48,19 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
     public bool IsRookCharged => monster != null
         && monster.MovementPattern == MonsterMovementPattern.Rook && rookCharged;
     public int RookTargetColumn => rookTargetColumn;
+    public bool IsRookRecovering => monster != null
+        && monster.MovementPattern == MonsterMovementPattern.Rook && rookRecovering;
+    public bool WillKnightJumpNextTurn => monster != null
+        && monster.MovementPattern == MonsterMovementPattern.Knight
+        && actionIndex % knightInterval == 0;
     public string StatusText => monster.MovementPattern == MonsterMovementPattern.Knight
-        ? "N · L자 착지 후 상하좌우 공격"
+        ? $"N · {knightInterval}턴마다 도약 / 다음: {(WillKnightJumpNextTurn ? "도약" : "준비")}"
         : monster.MovementPattern == MonsterMovementPattern.Bishop
             ? "B · 대각선 이동 / 불길 남김"
             : rookCharged
                 ? $"R · 성벽 쇠뇌 / {rookTargetColumn}열 발사 준비"
-                : "R · 성벽 쇠뇌 / 다음 행동에 장전";
+                : rookRecovering ? "R · 성벽 쇠뇌 / 한 턴 재정비 · 반격 기회"
+                : "R · 성벽 쇠뇌 / 무작위 열 장전 대기";
 
     public void Initialize(MonsterMovement owner, GridManager map, ProjectileManager manager,
         Move target, int knightTurns, int travelDistance, int orbitDistance, BishopFireTrail trail)
@@ -71,6 +78,7 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
         previousKnightCell = monster.GridPosition;
         recentBishopCells.Clear();
         rookCharged = false;
+        rookRecovering = false;
         rookTargetColumn = monster.GridPosition.x;
         rookShotFlashUntil = 0f;
     }
@@ -81,7 +89,7 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
         {
             case MonsterMovementPattern.Knight: TakeKnightTurn(playerCell, blocked); break;
             case MonsterMovementPattern.Bishop: TakeBishopTurn(playerCell, blocked); break;
-            case MonsterMovementPattern.Rook: TakeRookTurn(playerCell, blocked); break;
+            case MonsterMovementPattern.Rook: TakeRookTurn(blocked); break;
             default: monster.FinishTurn(); break;
         }
         actionIndex++;
@@ -231,37 +239,25 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
         return grid != null && grid.IsTopBoundaryWallCell(cell);
     }
 
-    private Vector3Int RookAimCell(Vector3Int playerCell, Func<Vector3Int, bool> blocked)
+    private Vector3Int RookAimCell(Func<Vector3Int, bool> blocked)
     {
         Vector3Int origin = monster.GridPosition;
-        Vector3Int result = origin;
-        int bestPlayerDistance = Mathf.Abs(origin.x - playerCell.x);
-        int bestTravelDistance = 0;
+        List<Vector3Int> candidates = new List<Vector3Int>();
         BoundsInt bounds = grid.GroundTilemap.cellBounds;
         for (int x = bounds.xMin; x < bounds.xMax; x++)
         {
             Vector3Int candidate = new Vector3Int(x, origin.y, 0);
-            if (!IsRookWallCell(candidate)
-                || (candidate != origin && blocked(candidate))) continue;
-
-            int playerDistance = Mathf.Abs(candidate.x - playerCell.x);
-            int travelDistance = Mathf.Abs(candidate.x - origin.x);
-            if (playerDistance < bestPlayerDistance
-                || (playerDistance == bestPlayerDistance
-                    && travelDistance < bestTravelDistance))
-            {
-                bestPlayerDistance = playerDistance;
-                bestTravelDistance = travelDistance;
-                result = candidate;
-            }
+            if (candidate == origin || !IsRookWallCell(candidate) || blocked(candidate)) continue;
+            candidates.Add(candidate);
         }
-        return result;
+        // 플레이어 좌표를 참조하지 않는다. 다른 룩의 현재/예약 열을 피해 새 사선을 고른다.
+        return candidates.Count == 0 ? origin : candidates[UnityEngine.Random.Range(0, candidates.Count)];
     }
 
-    private void ChargeRook(Vector3Int playerCell, Func<Vector3Int, bool> blocked)
+    private void ChargeRook(Func<Vector3Int, bool> blocked)
     {
         Vector3Int origin = monster.GridPosition;
-        Vector3Int aimCell = RookAimCell(playerCell, blocked);
+        Vector3Int aimCell = RookAimCell(blocked);
         rookTargetColumn = aimCell.x;
         rookCharged = true;
 
@@ -275,6 +271,7 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
     private void FireRook()
     {
         rookCharged = false;
+        rookRecovering = true;
         rookShotFlashUntil = Time.unscaledTime + 0.16f;
         // 장전 때 고정한 세로 열을 즉시 관통 사격한다. 발사 순간 플레이어를 재조준하지 않는다.
         if (player.CurrentHealth > 0 && player.GridPosition.x == rookTargetColumn)
@@ -283,12 +280,18 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
         monster.FinishTurn();
     }
 
-    private void TakeRookTurn(Vector3Int playerCell, Func<Vector3Int, bool> blocked)
+    private void TakeRookTurn(Func<Vector3Int, bool> blocked)
     {
         if (rookCharged)
             FireRook();
+        else if (rookRecovering)
+        {
+            // 발사 직후 한 턴 동안 자리를 지켜 같은 사선에서 무피해 반격할 틈을 준다.
+            rookRecovering = false;
+            monster.FinishTurn();
+        }
         else
-            ChargeRook(playerCell, blocked);
+            ChargeRook(blocked);
     }
 
     private void OnGUI()
