@@ -8,6 +8,11 @@ using UnityEngine.UI;
 public sealed class GameHudController : MonoBehaviour
 {
     private const float BoardEdgeHudReservation = 96f;
+    public const string StartupControlsText =
+        "조작 안내   <color=#FF6569>A</color> 공격 방향 · <color=#59D1FF>S</color> 이동 / 이동술\n"
+        + "공격 화살표에 마우스: 경로 확인 · 좌클릭: 실행\n"
+        + "우클릭: 선택 취소 · 행동하면 적도 한 번 행동\n"
+        + "특성 선택: 카드 클릭 / 숫자 1 · 2 · 3 · 4";
     public static event Action QuitRequested;
     public event Action<string> TraitSelected;
 
@@ -28,6 +33,9 @@ public sealed class GameHudController : MonoBehaviour
     [SerializeField] private Sprite moveIcon;
     [Tooltip("제작한 이동술 아이콘 Sprite를 넣습니다.")]
     [SerializeField] private Sprite ultimateIcon;
+    [SerializeField] private Sprite knightMovementIcon;
+    [SerializeField] private Sprite bishopMovementIcon;
+    [SerializeField] private Sprite rookMovementIcon;
 
     [Header("UI 참조")]
     [SerializeField, HideInInspector] private Font uiFont;
@@ -91,6 +99,8 @@ public sealed class GameHudController : MonoBehaviour
     private float elapsedPlayTime;
     private RunProgressionUiController runProgressionUi;
     private RunProgressionSystem progressionSystem;
+    private PlayerMovementArt displayedMovementArt = (PlayerMovementArt)(-1);
+    private int displayedMovementArtLevel = -1;
 
     public bool IsTraitSelectionOpen => selectionOverlay != null && selectionOverlay.activeSelf;
     public bool IsGameOver => playerIsDead;
@@ -137,7 +147,6 @@ public sealed class GameHudController : MonoBehaviour
             progressionSystem.MovementArtChanged -= HandleMovementArtChanged;
             progressionSystem.MovementArtChanged += HandleMovementArtChanged;
         }
-        SubscribeGauge();
         SubscribePlayerMovement();
         SubscribeHealth();
         SubscribeWave();
@@ -146,6 +155,7 @@ public sealed class GameHudController : MonoBehaviour
     private void Start()
     {
         Time.timeScale = 1f;
+        ConfigureStartupControls();
         RefreshGauge();
         RefreshActionMode(playerMovement != null
             ? playerMovement.SelectionMode
@@ -163,6 +173,7 @@ public sealed class GameHudController : MonoBehaviour
             if (runProgressionUi == null)
                 runProgressionUi = gameObject.AddComponent<RunProgressionUiController>();
             runProgressionUi.Initialize(progression, cameraController);
+            ConfigureProgressionDetails();
         }
 
         if (gameOverOverlay != null)
@@ -187,12 +198,50 @@ public sealed class GameHudController : MonoBehaviour
         ShowUnselectedTrait();
     }
 
+    private void ConfigureStartupControls()
+    {
+        if (selectionOverlay == null)
+            return;
+
+        Transform panel = selectionOverlay.transform.Find("SelectionPanel");
+        UnityEngine.UI.Text footer = panel != null
+            ? panel.Find("SelectionFooter")?.GetComponent<UnityEngine.UI.Text>()
+            : null;
+        if (footer == null)
+            return;
+
+        // 기존 시작 선택 화면 안에만 안내를 넣는다. 별도 팝업·입력 잠금·추가 클릭은 만들지 않는다.
+        RectTransform panelRect = panel.GetComponent<RectTransform>();
+        if (panelRect != null)
+            panelRect.sizeDelta = new Vector2(panelRect.sizeDelta.x,
+                Mathf.Max(panelRect.sizeDelta.y, 832f));
+
+        footer.text = StartupControlsText;
+        footer.supportRichText = true;
+        footer.fontSize = 18;
+        footer.fontStyle = FontStyle.Normal;
+        footer.lineSpacing = 1.1f;
+        footer.alignment = TextAnchor.MiddleCenter;
+        footer.resizeTextForBestFit = false;
+        footer.horizontalOverflow = HorizontalWrapMode.Wrap;
+        footer.verticalOverflow = VerticalWrapMode.Truncate;
+        footer.raycastTarget = false;
+        RectTransform footerRect = footer.rectTransform;
+        footerRect.anchorMin = footerRect.anchorMax = new Vector2(0.5f, 0f);
+        footerRect.pivot = new Vector2(0.5f, 0f);
+        footerRect.anchoredPosition = new Vector2(0f, 18f);
+        footerRect.sizeDelta = new Vector2(744f, 104f);
+    }
+
     private void Update()
     {
         if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
         {
             if (runProgressionUi != null && runProgressionUi.IsModalOpen)
+            {
+                if (runProgressionUi.IsDetailOpen) runProgressionUi.CloseDetails();
                 return;
+            }
             if (IsGameOver)
             {
                 ToggleGameOverReview();
@@ -208,17 +257,15 @@ public sealed class GameHudController : MonoBehaviour
             HandleTraitShortcutInput();
         }
 
-        AnimateReadyGlow();
-        RefreshUltimateButton();
         UpdateElapsedTime();
         RefreshHealth();
+        RefreshMovementArtVisualIfChanged();
     }
 
     private void OnDisable()
     {
         if (progressionSystem != null)
             progressionSystem.MovementArtChanged -= HandleMovementArtChanged;
-        UnsubscribeGauge();
         UnsubscribePlayerMovement();
         UnsubscribeHealth();
         UnsubscribeWave();
@@ -276,6 +323,11 @@ public sealed class GameHudController : MonoBehaviour
         {
             ultimateGauge = playerMovement.GetComponent<UltimateGauge>();
         }
+        if (ultimateGauge != null)
+        {
+            // 이동술이 상시 이동 선택지가 되면서 구형 게이지는 진행과 UI에서 완전히 정지한다.
+            ultimateGauge.enabled = false;
+        }
 
         if (cameraController == null)
         {
@@ -321,7 +373,17 @@ public sealed class GameHudController : MonoBehaviour
             if (traitChoiceDescriptionTexts != null && i < traitChoiceDescriptionTexts.Length
                 && traitChoiceDescriptionTexts[i] != null)
             {
-                traitChoiceDescriptionTexts[i].text = traitOptions[i].Description;
+                string shortEffect = traitOptions[i].Id switch
+                {
+                    "double_cast" => "같은 방향으로 기본공격을 한 번 더 시전합니다.",
+                    "pierce" => "첫 적을 넘어 뒤쪽 적 1명까지 공격합니다.",
+                    "damage_boost" => "발동한 공격의 직접 피해가 1 증가합니다.",
+                    "knockback" => "살아남은 적을 공격 방향으로 1칸 밉니다.",
+                    _ => traitOptions[i].Description
+                };
+                traitChoiceDescriptionTexts[i].text = "평균 발동 확률 "
+                    + RunProgressionDescriptions.Chance(traitOptions[i].ActivationBagSize)
+                    + "\n" + shortEffect;
             }
 
             Image iconImage = traitChoiceIconImages != null && i < traitChoiceIconImages.Length
@@ -379,15 +441,15 @@ public sealed class GameHudController : MonoBehaviour
             moveActionButton.onClick.AddListener(playerMovement.SelectMoveMode);
         }
 
-        // 기존 필살기 프레임을 버튼으로 사용해 씬의 UI 배치를 바꾸지 않는다.
+        // 기존 프레임은 보유 이동술을 보여주는 상태 카드로만 사용한다.
         if (ultimateFrameImage != null)
         {
             ultimateActionButton = ultimateFrameImage.GetComponent<Button>();
-            if (ultimateActionButton == null)
-                ultimateActionButton = ultimateFrameImage.gameObject.AddComponent<Button>();
-            ultimateActionButton.transition = Selectable.Transition.None;
-            ultimateActionButton.onClick.AddListener(playerMovement.SelectMovementArtMode);
-            RefreshUltimateButton();
+            if (ultimateActionButton != null)
+            {
+                ultimateActionButton.onClick.RemoveAllListeners();
+                ultimateActionButton.interactable = false;
+            }
         }
     }
 
@@ -411,6 +473,33 @@ public sealed class GameHudController : MonoBehaviour
         if (pauseQuitButton != null)
         {
             pauseQuitButton.onClick.AddListener(QuitGame);
+        }
+    }
+
+    private void ConfigureProgressionDetails()
+    {
+        if (runProgressionUi == null) return;
+        if (ultimateFrameImage != null)
+        {
+            ultimateActionButton = ultimateFrameImage.GetComponent<UnityEngine.UI.Button>();
+            if (ultimateActionButton == null)
+                ultimateActionButton = ultimateFrameImage.gameObject.AddComponent<UnityEngine.UI.Button>();
+            ultimateFrameImage.raycastTarget = true;
+            ultimateActionButton.targetGraphic = ultimateFrameImage;
+            ultimateActionButton.onClick.RemoveAllListeners();
+            ultimateActionButton.onClick.AddListener(runProgressionUi.ShowMovementDetails);
+            ultimateActionButton.interactable = true;
+        }
+        // 기존 특성 HUD의 배경만 클릭 대상으로 바꾸고 아이콘/글자는 입력을 통과시킨다.
+        Transform traitHud = selectedTraitIconImage != null
+            ? selectedTraitIconImage.transform.parent?.parent : null;
+        if (traitHud != null && traitHud.TryGetComponent(out UnityEngine.UI.Image frame))
+        {
+            UnityEngine.UI.Button button = traitHud.GetComponent<UnityEngine.UI.Button>();
+            if (button == null) button = traitHud.gameObject.AddComponent<UnityEngine.UI.Button>();
+            frame.raycastTarget = true;
+            button.targetGraphic = frame;
+            button.onClick.AddListener(runProgressionUi.ShowTraitDetails);
         }
     }
 
@@ -519,9 +608,23 @@ public sealed class GameHudController : MonoBehaviour
         ApplyIcon(
             ultimateIconImage,
             ultimatePlaceholderText,
-            ultimateIcon,
-            "U"
+            CurrentMovementArtIcon(),
+            "이동"
         );
+    }
+
+    private Sprite CurrentMovementArtIcon()
+    {
+        if (progressionSystem == null && playerMovement != null)
+            progressionSystem = playerMovement.GetComponent<RunProgressionSystem>();
+        if (progressionSystem == null) return ultimateIcon;
+        return progressionSystem.ActiveMovementArt switch
+        {
+            PlayerMovementArt.Knight => knightMovementIcon != null ? knightMovementIcon : ultimateIcon,
+            PlayerMovementArt.Bishop => bishopMovementIcon != null ? bishopMovementIcon : ultimateIcon,
+            PlayerMovementArt.Rook => rookMovementIcon != null ? rookMovementIcon : ultimateIcon,
+            _ => ultimateIcon
+        };
     }
 
     private void ApplyIcon(Image image, Text placeholderText, Sprite sprite, string placeholder)
@@ -671,7 +774,7 @@ public sealed class GameHudController : MonoBehaviour
     {
         if (actionGuideText != null)
         {
-            actionGuideText.text = "A 공격 · S 이동 · F 이동술 · 아이콘 클릭 가능 · 우클릭 취소 · Esc 메뉴";
+            actionGuideText.text = "A 공격 · S 이동/이동술 · 아이콘 클릭 가능 · 우클릭 취소 · Esc 메뉴";
         }
 
         SetActionCardColors(mode);
@@ -815,73 +918,70 @@ public sealed class GameHudController : MonoBehaviour
 
     private void RefreshGauge()
     {
-        if (ultimateGauge == null)
-            return;
-
-        float normalized = ultimateGauge.NormalizedGauge;
         bool hasMovementArt = progressionSystem != null && progressionSystem.HasMovementArt;
-        bool isReady = hasMovementArt && ultimateGauge.IsReady;
+        ApplyUltimateIcon();
+        displayedMovementArt = progressionSystem != null
+            ? progressionSystem.ActiveMovementArt : PlayerMovementArt.None;
+        displayedMovementArtLevel = progressionSystem != null
+            ? progressionSystem.MovementArtLevel : 0;
 
         if (ultimateGaugeFillImage != null)
         {
-            ultimateGaugeFillImage.fillAmount = normalized;
-            ultimateGaugeFillImage.color = Color.Lerp(
-                GaugeEmptyColor,
-                GaugeFullColor,
-                normalized
-            );
+            ultimateGaugeFillImage.transform.parent.gameObject.SetActive(false);
         }
 
         if (ultimateGaugeValueText != null)
         {
-            ultimateGaugeValueText.text = !hasMovementArt
-                ? "이동술 미보유"
-                : isReady ? "100%" : $"{ultimateGauge.CurrentGauge} / {ultimateGauge.MaxGauge}";
+            ultimateGaugeValueText.text = hasMovementArt
+                ? $"{MovementArtDisplayName()}\n현재 Lv.{progressionSystem.MovementArtLevel}"
+                : "미보유";
+            ultimateGaugeValueText.fontSize = hasMovementArt ? 10 : 11;
         }
 
         if (ultimateStateText != null)
         {
-            ultimateStateText.text = !hasMovementArt
-                ? "유물 웨이브 보상에서 이동술을 습득하세요"
-                : isReady ? $"READY · {MovementArtDisplayName()} 사용 가능"
-                : $"충전 중 · 이동 +{ultimateGauge.MoveGain} / 적중 +{ultimateGauge.AttackHitGain}";
-            ultimateStateText.color = isReady
-                ? GaugeFullColor
-                : new Color32(166, 190, 224, 255);
+            ultimateStateText.text = hasMovementArt
+                ? "S 이동 · 클릭하면 상세 설명"
+                : "2웨이브 보상에서 이동술 습득";
+            ultimateStateText.color = hasMovementArt
+                ? GaugeFullColor : new Color32(166, 190, 224, 255);
         }
 
         if (ultimateFrameImage != null)
         {
-            ultimateFrameImage.color = isReady ? FrameReadyColor : FrameNormalColor;
+            ultimateFrameImage.color = hasMovementArt ? FrameReadyColor : FrameNormalColor;
+            Transform shortcutKey = ultimateFrameImage.transform.Find(
+                "UltimateShortcutBadge/UltimateShortcutKey");
+            if (shortcutKey != null && shortcutKey.TryGetComponent(out Text keyText))
+                keyText.text = "S+";
         }
 
         if (ultimateReadyGlowImage != null)
         {
-            ultimateReadyGlowImage.gameObject.SetActive(isReady);
+            ultimateReadyGlowImage.gameObject.SetActive(false);
         }
+    }
 
-        RefreshUltimateButton();
+    private void RefreshMovementArtVisualIfChanged()
+    {
+        if (progressionSystem == null && playerMovement != null)
+            progressionSystem = playerMovement.GetComponent<RunProgressionSystem>();
+        if (progressionSystem == null) return;
+        if (displayedMovementArt == progressionSystem.ActiveMovementArt
+            && displayedMovementArtLevel == progressionSystem.MovementArtLevel)
+            return;
+        RefreshGauge();
     }
 
     private void RefreshUltimateButton()
     {
-        if (ultimateActionButton == null) return;
-        bool canTeleport = ultimateGauge != null && ultimateGauge.IsReady
-            && progressionSystem != null && progressionSystem.HasMovementArt
-            && playerMovement != null && playerMovement.CanAct
-            && !IsTraitSelectionOpen && !IsPauseMenuOpen && !IsGameOver;
-        if (ultimateActionButton.interactable != canTeleport)
-            ultimateActionButton.interactable = canTeleport;
+        if (ultimateActionButton != null) ultimateActionButton.interactable = runProgressionUi != null;
     }
 
     private void AnimateReadyGlow()
     {
-        if (ultimateGauge == null || !ultimateGauge.IsReady || ultimateReadyGlowImage == null)
-            return;
-
-        Color glowColor = ultimateReadyGlowImage.color;
-        glowColor.a = Mathf.Lerp(0.12f, 0.42f, (Mathf.Sin(Time.unscaledTime * 4f) + 1f) * 0.5f);
-        ultimateReadyGlowImage.color = glowColor;
+        if (ultimateReadyGlowImage != null)
+            ultimateReadyGlowImage.gameObject.SetActive(false);
     }
 
     private void HandleMovementArtChanged(PlayerMovementArt movementArt, int level)

@@ -21,6 +21,10 @@ public static class GameHudSetupTool
     private const string BasicAttackIconPath = "Assets/UI/Icons/Actions/BasicAttack.png";
     private const string MoveIconPath = "Assets/UI/Icons/Actions/Move.png";
     private const string TeleportIconPath = "Assets/UI/Icons/Traits/Teleport.png";
+    private const string KnightMovementIconPath = "Assets/UI/Icons/Movement/KnightMove.png";
+    private const string BishopMovementIconPath = "Assets/UI/Icons/Movement/BishopMove.png";
+    private const string RookMovementIconPath = "Assets/UI/Icons/Movement/RookMove.png";
+    private const string ProgressionIconFolder = "Assets/Resources/UI/ProgressionIcons/";
     private const string DoubleCastIconPath = "Assets/UI/Icons/Traits/DoubleCast.png";
     private const string PierceIconPath = "Assets/UI/Icons/Traits/Pierce.png";
     private const string DamageBoostIconPath = "Assets/UI/Icons/Traits/DamageBoost.png";
@@ -39,7 +43,7 @@ public static class GameHudSetupTool
     private static Font uiFont;
     private static Sprite uiSprite;
 
-    [MenuItem("Tools/UI/특성 및 필살기 HUD 만들기")]
+    [MenuItem("Tools/UI/특성 및 이동술 HUD 만들기")]
     public static void BuildGameHud()
     {
         Scene scene = SceneManager.GetSceneByPath(ScenePath);
@@ -527,7 +531,7 @@ public static class GameHudSetupTool
         CreateCenteredText(
             "UltimateShortcutKey",
             shortcutBadge.transform,
-            "F",
+            "S+",
             14,
             new Color32(12, 18, 34, 255)
         );
@@ -548,11 +552,12 @@ public static class GameHudSetupTool
         gaugeFill.fillMethod = Image.FillMethod.Horizontal;
         gaugeFill.fillOrigin = 0;
         gaugeFill.fillAmount = 0f;
+        gaugeBackground.gameObject.SetActive(false);
 
         gaugeValue = CreateText(
             "GaugeValue",
             iconBackground.transform,
-            "0%",
+            "미보유",
             11,
             FontStyle.Bold,
             TextAnchor.LowerRight,
@@ -899,7 +904,7 @@ public static class GameHudSetupTool
             new Vector2(0.5f, 0.5f),
             new Vector2(0.5f, 0.5f),
             Vector2.zero,
-            new Vector2(804f, 760f),
+            new Vector2(804f, 832f),
             PanelColor
         );
         AddOutline(panel, BorderColor, 3f);
@@ -985,16 +990,16 @@ public static class GameHudSetupTool
         CreateText(
             "SelectionFooter",
             panel.transform,
-            "카드를 클릭하거나 숫자 키  1 · 2 · 3 · 4  로 선택",
-            14,
-            FontStyle.Bold,
+            GameHudController.StartupControlsText,
+            18,
+            FontStyle.Normal,
             TextAnchor.MiddleCenter,
             new Color32(194, 211, 235, 255),
             new Vector2(0.5f, 0f),
             new Vector2(0.5f, 0f),
             new Vector2(0.5f, 0f),
-            new Vector2(0f, 20f),
-            new Vector2(650f, 28f)
+            new Vector2(0f, 18f),
+            new Vector2(744f, 104f)
         );
     }
 
@@ -1410,6 +1415,9 @@ public static class GameHudSetupTool
         Sprite basicAttackSprite = LoadIcon(BasicAttackIconPath);
         Sprite moveSprite = LoadIcon(MoveIconPath);
         Sprite ultimateSprite = LoadIcon(TeleportIconPath);
+        Sprite knightMovementSprite = LoadIcon(KnightMovementIconPath);
+        Sprite bishopMovementSprite = LoadIcon(BishopMovementIconPath);
+        Sprite rookMovementSprite = LoadIcon(RookMovementIconPath);
         Sprite[] traitSprites =
         {
             LoadIcon(DoubleCastIconPath),
@@ -1430,6 +1438,9 @@ public static class GameHudSetupTool
         serializedController.FindProperty("basicAttackIcon").objectReferenceValue = basicAttackSprite;
         serializedController.FindProperty("moveIcon").objectReferenceValue = moveSprite;
         serializedController.FindProperty("ultimateIcon").objectReferenceValue = ultimateSprite;
+        serializedController.FindProperty("knightMovementIcon").objectReferenceValue = knightMovementSprite;
+        serializedController.FindProperty("bishopMovementIcon").objectReferenceValue = bishopMovementSprite;
+        serializedController.FindProperty("rookMovementIcon").objectReferenceValue = rookMovementSprite;
         serializedController.FindProperty("layoutVersion").intValue = CurrentLayoutVersion;
         serializedController.FindProperty("typographyVersion").intValue = CurrentTypographyVersion;
         serializedController.FindProperty("selectionOverlay").objectReferenceValue = selectionOverlay;
@@ -1590,6 +1601,15 @@ public static class GameHudSetupTool
             BasicAttackIconPath,
             MoveIconPath,
             TeleportIconPath,
+            KnightMovementIconPath,
+            BishopMovementIconPath,
+            RookMovementIconPath,
+            ProgressionIconFolder + "KnightMove.png",
+            ProgressionIconFolder + "BishopMove.png",
+            ProgressionIconFolder + "RookMove.png",
+            ProgressionIconFolder + "ChainBurst.png",
+            ProgressionIconFolder + "BindingLanding.png",
+            ProgressionIconFolder + "EchoPressure.png",
             DoubleCastIconPath,
             PierceIconPath,
             DamageBoostIconPath,
@@ -1626,10 +1646,19 @@ public static class GameHudSetupTool
             importer.SaveAndReimport();
         }
 
-        AssetDatabase.ImportAsset(AsepriteSourcePath, ImportAssetOptions.ForceSynchronousImport);
-
-        if (AssetImporter.GetAtPath(AsepriteSourcePath) is AsepriteImporter asepriteImporter)
+        // PNG와 함께 보관하는 정적 아이콘 원본도 동일한 픽셀 기준을 유지한다.
+        string[] asepritePaths =
         {
+            AsepriteSourcePath,
+            "Assets/UI/Icons/Movement/KnightMove.aseprite",
+            "Assets/UI/Icons/Movement/BishopMove.aseprite",
+            "Assets/UI/Icons/Movement/RookMove.aseprite"
+        };
+        foreach (string path in asepritePaths)
+        {
+            AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceSynchronousImport);
+            if (AssetImporter.GetAtPath(path) is not AsepriteImporter asepriteImporter)
+                throw new InvalidOperationException($"UI 아이콘 원본을 불러올 수 없습니다: {path}");
             bool changed = !Mathf.Approximately(asepriteImporter.spritePixelsPerUnit, 32f)
                 || asepriteImporter.filterMode != FilterMode.Point
                 || asepriteImporter.mipmapEnabled
