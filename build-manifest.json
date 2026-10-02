@@ -1,8 +1,8 @@
 {
-  "loaderUrl": "Build/59f9a4c2064a8cb9/MobileWeb.loader.js",
-  "dataUrl": "Build/59f9a4c2064a8cb9/MobileWeb.data",
-  "frameworkUrl": "Build/59f9a4c2064a8cb9/MobileWeb.framework.js",
-  "codeUrl": "Build/59f9a4c2064a8cb9/MobileWeb.wasm",
+  "loaderUrl": "Build/8cc07f5fd37231c5/MobileBoardWeb.loader.js",
+  "dataUrl": "Build/8cc07f5fd37231c5/MobileBoardWeb.data",
+  "frameworkUrl": "Build/8cc07f5fd37231c5/MobileBoardWeb.framework.js",
+  "codeUrl": "Build/8cc07f5fd37231c5/MobileBoardWeb.wasm",
   "companyName": "Grid Caster",
   "productName": "Grid Caster · Mobile Playtest",
   "productVersion": "0.1"
