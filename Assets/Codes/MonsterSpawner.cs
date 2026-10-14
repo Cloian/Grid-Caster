@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+public enum KnockbackBlockKind { None, Wall, Monster, Player, Immovable, Invalid }
+
 [DisallowMultipleComponent]
 [RequireComponent(typeof(GridManager))]
 [RequireComponent(typeof(ProjectileManager))]
@@ -39,7 +41,7 @@ public sealed class MonsterSpawner : MonoBehaviour
     [SerializeField, Min(1)] private int bishopFireDamage = 1;
     public BishopFireTrail FireTrail { get; private set; }
 
-    private bool UsesChessTurns => chessPlaytest != null || enableChessWaves;
+    private bool UsesChessTurns => chessPlaytest != null || bossPlaytest != null || enableChessWaves;
     public bool ChessWavesEnabled => enableChessWaves;
 
     private readonly List<MonsterMovement> activeMonsters = new List<MonsterMovement>();
@@ -73,6 +75,7 @@ public sealed class MonsterSpawner : MonoBehaviour
     private bool planningMonsterTurn;
     private bool projectileTurnStarted;
     private ChessPlaytest chessPlaytest;
+    private QueenBossPlaytest bossPlaytest;
     private StageFlowManager stageFlowManager;
 
     public int CurrentWave => currentWave;
@@ -81,10 +84,41 @@ public sealed class MonsterSpawner : MonoBehaviour
     public bool IsWorldTurnInProgress => worldTurnInProgress;
     public IReadOnlyList<MonsterMovement> ActiveMonsters => activeMonsters;
 
+    // 일반 적은 한 칸, 큰 보스는 몸 전체를 범위 판정에 사용하되 피해는 적당 한 번이다.
+    public IEnumerable<Vector3Int> OccupiedCellsOf(MonsterMovement actor)
+    {
+        if (bossPlaytest != null && bossPlaytest.IsQueen(actor))
+        {
+            for (int y=-1;y<=1;y++) for(int x=-1;x<=1;x++)
+                yield return QueenBossBehaviour.QueenCenter + new Vector3Int(x,y,0);
+        }
+        else if (actor != null) yield return actor.GridPosition;
+    }
+    public Vector3Int ImpactCellOf(MonsterMovement actor, Vector3Int origin, Vector3Int direction)
+    {
+        if (bossPlaytest == null || !bossPlaytest.IsQueen(actor) || direction == Vector3Int.zero) return actor.GridPosition;
+        foreach (Vector3Int cell in OccupiedCellsOf(actor))
+        {
+            Vector3Int delta=cell-origin;
+            int distance=Mathf.Max(Mathf.Abs(delta.x),Mathf.Abs(delta.y));
+            if(distance>0&&origin+direction*distance==cell)
+            {
+                for(int step=1;step<distance;step++)
+                {
+                    Vector3Int earlier=origin+direction*step;
+                    if(Mathf.Abs(earlier.x-QueenBossBehaviour.QueenCenter.x)<=1&&Mathf.Abs(earlier.y-QueenBossBehaviour.QueenCenter.y)<=1)return earlier;
+                }
+                return cell;
+            }
+        }
+        return actor.GridPosition;
+    }
+
     private void Awake()
     {
         chessPlaytest = GetComponent<ChessPlaytest>();
-        if (chessPlaytest == null)
+        bossPlaytest = GetComponent<QueenBossPlaytest>();
+        if (chessPlaytest == null && bossPlaytest == null)
         {
             stageFlowManager = GetComponent<StageFlowManager>();
             if (stageFlowManager == null)
@@ -131,6 +165,12 @@ public sealed class MonsterSpawner : MonoBehaviour
         }
         playerMovement.MoveCompleted += BeginMonsterTurn;
 
+        if (bossPlaytest != null)
+        {
+            bossPlaytest.Initialize(this, playerMovement, gridManager, projectileManager);
+            return;
+        }
+
         if (chessPlaytest != null)
         {
             chessPlaytest.Initialize(this, playerMovement, gridManager, projectileManager);
@@ -149,7 +189,7 @@ public sealed class MonsterSpawner : MonoBehaviour
 
     private void Update()
     {
-        if (chessPlaytest != null)
+        if (chessPlaytest != null || bossPlaytest != null)
             return;
         if (playerHealth != null && playerHealth.IsDead)
             return;
@@ -224,7 +264,7 @@ public sealed class MonsterSpawner : MonoBehaviour
             return false;
         }
 
-        if (chessPlaytest == null && (monsterPrefabs == null || monsterPrefabs.Length == 0))
+        if (chessPlaytest == null && bossPlaytest == null && (monsterPrefabs == null || monsterPrefabs.Length == 0))
         {
             Debug.LogError("MonsterSpawner에 몬스터 프리팹이 필요합니다.", this);
             return false;
@@ -243,8 +283,29 @@ public sealed class MonsterSpawner : MonoBehaviour
         FireTrail.Initialize(gridManager, playerMovement, turns, damage);
     }
 
+    public void CloseKnightCounterWindows()
+    {
+        foreach (MonsterMovement monster in activeMonsters)
+            if (monster != null && monster.TryGetComponent(out ChessMonsterBehaviour pattern))
+                pattern.CloseKnightCounterWindow();
+    }
+
     private void BeginMonsterTurn()
     {
+        if (bossPlaytest != null)
+        {
+            // 플레이어 전체 공격 경로가 끝난 완료 알림에서만 보스의 한 행동을 진행한다.
+            worldTurnInProgress = true;
+            bossPlaytest.TakeWorldTurn(() =>
+            {
+                worldTurnInProgress = false;
+                playerMovement.CompleteMonsterTurn();
+                WorldTurnCompleted?.Invoke();
+            });
+            return;
+        }
+        // 봉쇄로 자체 행동이 생략된 나이트에도 이전 기회가 남지 않는다.
+        CloseKnightCounterWindows();
         worldTurnInProgress = true;
         monsterTurnCompleted = false;
         projectileTurnCompleted = false;
@@ -397,11 +458,10 @@ public sealed class MonsterSpawner : MonoBehaviour
 
     public bool TryGetMonsterAtCell(Vector3Int cell, out MonsterMovement targetMonster)
     {
-        activeMonsters.RemoveAll(monster => monster == null || monster.IsDead);
-
+        if (bossPlaytest != null && bossPlaytest.TryGetQueenAtCell(cell, out targetMonster)) return true;
         foreach (MonsterMovement monster in activeMonsters)
         {
-            if (monster.GridPosition == cell)
+            if (monster != null && !monster.IsDead && monster.GridPosition == cell)
             {
                 targetMonster = monster;
                 return true;
@@ -427,13 +487,24 @@ public sealed class MonsterSpawner : MonoBehaviour
         out MonsterMovement collisionMonster
     )
     {
+        return TryKnockbackMonster(targetMonster, attackDirection, distance, out collisionMonster, out _);
+    }
+
+    public bool TryKnockbackMonster(MonsterMovement targetMonster, Vector3Int attackDirection,
+        int distance, out MonsterMovement collisionMonster, out KnockbackBlockKind block)
+    {
         collisionMonster = null;
+        block = KnockbackBlockKind.Invalid;
         if (targetMonster == null || targetMonster.IsDead || gridManager == null)
             return false;
 
         // 성벽에 고정된 쇠뇌 룩은 지상 넉백의 대상이 아니다.
-        if (targetMonster.MovementPattern == MonsterMovementPattern.Rook)
+        if (targetMonster.MovementPattern == MonsterMovementPattern.Rook
+            || (bossPlaytest != null && bossPlaytest.IsQueen(targetMonster)))
+        {
+            block = KnockbackBlockKind.Immovable;
             return false;
+        }
 
         Vector3Int normalizedDirection = new Vector3Int(
             Mathf.Clamp(attackDirection.x, -1, 1),
@@ -444,20 +515,24 @@ public sealed class MonsterSpawner : MonoBehaviour
         if (normalizedDirection == Vector3Int.zero)
             return false;
 
+        block = KnockbackBlockKind.None;
         Vector3Int originCell = targetMonster.GridPosition;
         Vector3Int destinationCell = originCell;
         int steps = Mathf.Max(1, distance);
         for (int step = 0; step < steps; step++)
         {
             Vector3Int candidate = destinationCell + normalizedDirection;
-            if (!gridManager.IsWalkableCell(candidate)
-                || (player != null && playerMovement.GridPosition == candidate)) break;
+            if (player != null && playerMovement.GridPosition == candidate)
+            { block = KnockbackBlockKind.Player; break; }
             if (TryGetMonsterAtCell(candidate, out MonsterMovement occupyingMonster)
                 && occupyingMonster != targetMonster)
             {
                 collisionMonster = occupyingMonster;
+                block = KnockbackBlockKind.Monster;
                 break;
             }
+            if (!gridManager.IsWalkableCell(candidate))
+            { block = KnockbackBlockKind.Wall; break; }
             destinationCell = candidate;
         }
         return destinationCell != originCell && targetMonster.ApplyKnockback(destinationCell);
@@ -508,6 +583,7 @@ public sealed class MonsterSpawner : MonoBehaviour
 
     public void ResetPlaytestEncounter()
     {
+        CombatFeedback.ClearAll();
         worldTurnInProgress = false;
         activeMonsters.RemoveAll(monster => monster == null);
         foreach (MonsterMovement monster in activeMonsters)
@@ -665,12 +741,18 @@ public sealed class MonsterSpawner : MonoBehaviour
 
         currentWave = Mathf.Max(1, waveNumber);
         recentlyDefeatedCells.Clear();
-        CurrentWaveTemplate = WaveTemplateCatalog.Get(currentWave);
+        CurrentWaveTemplate = WaveTemplateCatalog.Roll(currentWave);
         BuildWaveSpawnPlan(CurrentWaveTemplate);
-        // 같은 웨이브는 같은 외곽 배치 순서에서 시작한다. 플레이어와 점유 상태 때문에
-        // 사용할 수 없는 칸만 순서대로 건너뛴다.
+        bool variableWave = currentWave != 10 && currentWave != WaveTemplateCatalog.FinalWave;
+        if (variableWave)
+            for (int i = waveSpawnPlan.Count - 1; i > 0; i--)
+            {
+                int other = UnityEngine.Random.Range(0, i + 1);
+                (waveSpawnPlan[i], waveSpawnPlan[other]) = (waveSpawnPlan[other], waveSpawnPlan[i]);
+            }
+        // 외곽 간격과 플레이어 최소 거리는 보존하고 시작점/유형 배치를 변주한다.
         waveSpawnCellCursor = spawnCells.Count > 0
-            ? (currentWave * 7) % spawnCells.Count
+            ? variableWave ? UnityEngine.Random.Range(0, spawnCells.Count) : (currentWave * 7) % spawnCells.Count
             : 0;
         waveSpawnStride = spawnCells.Count > 0
             ? Mathf.Max(1, spawnCells.Count / Mathf.Max(1, waveSpawnPlan.Count))
@@ -828,6 +910,7 @@ public sealed class MonsterSpawner : MonoBehaviour
 
     public bool IsOccupied(Vector3Int cell)
     {
+        if (bossPlaytest != null && bossPlaytest.TryGetQueenAtCell(cell, out _)) return true;
         foreach (MonsterMovement monster in activeMonsters)
         {
             if (monster != null

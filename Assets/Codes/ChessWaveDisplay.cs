@@ -46,7 +46,8 @@ public sealed class ChessWaveDisplay : MonoBehaviour
             Color previous = GUI.color;
             GUI.color = ColorFor(monster.MovementPattern);
             string intent = monster.MovementPattern == MonsterMovementPattern.Knight
-                ? (behaviour.WillKnightJumpNextTurn ? " 도약" : " 준비") : string.Empty;
+                ? (behaviour.IsKnightCounterVulnerable ? " 취약"
+                    : behaviour.WillKnightJumpNextTurn ? " 도약" : " 준비") : string.Empty;
             if (monster.MovementPattern == MonsterMovementPattern.Rook)
             {
                 arrow = "↓";

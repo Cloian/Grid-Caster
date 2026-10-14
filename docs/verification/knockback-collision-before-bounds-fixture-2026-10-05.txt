@@ -1,0 +1,9 @@
+KNOCKBACK_COLLISION_FAIL
+Controlled actual SampleScene fixtures; gameplay-rule validation, not human fun assessment.
+Unity 6000.4.0f1; 2026-10-05T22:07:34.9616000+09:00
+System.InvalidOperationException: 테스트 스폰 타일이 막혀 있습니다: (6, 0, 0)
+  at MonsterSpawner.SpawnPlaytestMonster (MonsterMovementPattern pattern, UnityEngine.Vector3Int cell, UnityEngine.Sprite sprite, UnityEngine.Color color, System.Int32 health, System.Int32 order, System.Int32 knightInterval, System.Int32 bishopTravel, System.Int32 bishopOrbit) [0x0016c] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Codes/MonsterSpawner.cs:595 
+  at KnockbackCollisionValidation.Spawn (UnityEngine.Vector3Int cell, System.Int32 hp, MonsterMovementPattern kind) [0x00000] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/KnockbackCollisionValidation.cs:159 
+  at KnockbackCollisionValidation+<Run>d__34.MoveNext () [0x00269] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/KnockbackCollisionValidation.cs:226 
+  at KnockbackCollisionValidation+<Flatten>d__26.MoveNext () [0x0009e] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/KnockbackCollisionValidation.cs:135 
+  at KnockbackCollisionValidation.Tick () [0x00048] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/KnockbackCollisionValidation.cs:75 

@@ -32,6 +32,7 @@ public sealed class DirectionalActionIndicator : MonoBehaviour
 
     private readonly List<ArrowMarker> markerPool = new List<ArrowMarker>();
     private readonly List<PathMarker> pathMarkerPool = new List<PathMarker>();
+    private readonly List<PathMarker> areaMarkerPool = new List<PathMarker>();
 
     private Texture2D arrowTexture;
     private Sprite arrowSprite;
@@ -43,6 +44,7 @@ public sealed class DirectionalActionIndicator : MonoBehaviour
 
     public int ActiveChoiceCount => activeChoiceCount;
     public int ActivePathCount => activePathCount;
+    public int ActiveAreaCount { get; private set; }
 
     private void Awake()
     {
@@ -119,7 +121,8 @@ public sealed class DirectionalActionIndicator : MonoBehaviour
 
     public void ShowAttackPath(
         IReadOnlyList<Vector3> pathWorldPositions,
-        int emphasizedCellIndex
+        int emphasizedCellIndex,
+        int conditionalStartIndex = -1
     )
     {
         EnsureTileSprite();
@@ -142,16 +145,49 @@ public sealed class DirectionalActionIndicator : MonoBehaviour
             marker.Renderer.color = i == emphasizedCellIndex
                 ? attackPathTargetColor
                 : attackPathColor;
+            // 첫 적중 이후는 처치/넉백/연계로 점유가 달라질 수 있는 통과 가능 경로다.
+            if (conditionalStartIndex >= 0 && i >= conditionalStartIndex)
+            {
+                Color conditional = attackPathColor;
+                conditional.a *= 0.5f;
+                marker.Renderer.color = conditional;
+            }
         }
     }
 
     public void ClearAttackPath()
     {
         activePathCount = 0;
+        ActiveAreaCount = 0;
+        foreach (PathMarker marker in areaMarkerPool) marker.Root.SetActive(false);
 
         foreach (PathMarker marker in pathMarkerPool)
         {
             marker.Root.SetActive(false);
+        }
+    }
+
+    public void ShowAttackArea(IReadOnlyList<Vector3> positions)
+    {
+        EnsureTileSprite();
+        while (areaMarkerPool.Count < positions.Count)
+        {
+            PathMarker marker = CreatePathMarker(areaMarkerPool.Count);
+            marker.Root.name = $"AttackArea_{areaMarkerPool.Count + 1}";
+            marker.Renderer.sortingOrder = sortingOrder - 3;
+            areaMarkerPool.Add(marker);
+        }
+        ActiveAreaCount = positions.Count;
+        for (int i = 0; i < areaMarkerPool.Count; i++)
+        {
+            PathMarker marker = areaMarkerPool[i];
+            marker.Root.SetActive(i < ActiveAreaCount);
+            if (i >= ActiveAreaCount) continue;
+            Vector3 position = positions[i];
+            position.z = transform.position.z;
+            marker.Root.transform.position = position;
+            marker.Root.transform.localScale = Vector3.one * teleportTileScale;
+            marker.Renderer.color = new Color32(255, 145, 65, 190);
         }
     }
 

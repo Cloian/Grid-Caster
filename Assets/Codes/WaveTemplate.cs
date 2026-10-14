@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 [Serializable]
 public sealed class WaveTemplate
@@ -110,5 +111,34 @@ public static class WaveTemplateCatalog
     {
         int index = Math.Max(1, Math.Min(Templates.Length, waveNumber)) - 1;
         return Templates[index];
+    }
+
+    public static IReadOnlyList<WaveTemplate> Variants(int waveNumber)
+    {
+        WaveTemplate baseline = Get(waveNumber);
+        var variants = new List<WaveTemplate> { baseline };
+        if (baseline.WaveNumber == 10 || baseline.WaveNumber == FinalWave) return variants;
+        // 총 마릿수·해금·특수전의 강조를 유지하며 기존 조합에서 한 마리만 교환한다.
+        // 기존에 등장한 각 유형은 최소 한 마리 남겨 새 기믹을 추첨으로 건너뛰지 않는다.
+        foreach (MonsterMovementPattern donor in baseline.Monsters.Distinct())
+        {
+            if (baseline.Monsters.Count(pattern => pattern == donor) <= 1) continue;
+            foreach (MonsterMovementPattern receiver in baseline.Monsters.Distinct())
+            {
+                if (receiver == donor) continue;
+                var monsters = baseline.Monsters.ToList();
+                monsters.Remove(donor);
+                monsters.Add(receiver);
+                variants.Add(new WaveTemplate(baseline.WaveNumber, baseline.DisplayName + " · 변주",
+                    baseline.IsSpecialWave, baseline.DifficultyTier, monsters.ToArray()));
+            }
+        }
+        return variants;
+    }
+
+    public static WaveTemplate Roll(int waveNumber)
+    {
+        IReadOnlyList<WaveTemplate> variants = Variants(waveNumber);
+        return variants.Count == 1 ? variants[0] : variants[UnityEngine.Random.Range(0, variants.Count)];
     }
 }

@@ -1,0 +1,161 @@
+KNOCKBACK_COLLISION_PASS
+Controlled actual SampleScene fixtures; gameplay-rule validation, not human fun assessment.
+Unity 6000.4.0f1; 2026-10-05T22:11:00.5083480+09:00
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS wall collision damages direct survivor in direction (1, 0, 0)
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS wall collision damages direct survivor in direction (0, 1, 0)
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS wall collision damages direct survivor in direction (-1, 0, 0)
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS wall collision damages direct survivor in direction (0, -1, 0)
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS wall collision damages direct survivor in direction (1, 1, 0)
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS wall collision damages direct survivor in direction (-1, 1, 0)
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS wall collision damages direct survivor in direction (-1, -1, 0)
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS wall collision damages direct survivor in direction (1, -1, 0)
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS enemy collision damages both participants only
+PASS blocked enemies never overlap or retry movement
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS base knockback does not spread
+PASS spread preview shows hit-centered cells and excludes player
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS spread retains original hit center and does not repush direct target
+PASS outward neighbor moves once without free splash damage (1, 0, 0)
+PASS outward neighbor moves once without free splash damage (0, 1, 0)
+PASS outward neighbor moves once without free splash damage (0, -1, 0)
+PASS outward neighbor moves once without free splash damage (1, 1, 0)
+PASS outward neighbor moves once without free splash damage (-1, 1, 0)
+PASS outward neighbor moves once without free splash damage (-1, -1, 0)
+PASS outward neighbor moves once without free splash damage (1, -1, 0)
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS primary receiver and secondary wall collision share per-action damage cap
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS collision cap resets on next accepted attack
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS partial enemy collision applies pair damage at last legal position
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS immovable Rook does not take fictitious basic collision damage; nail=False
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS immovable Rook does not take fictitious basic collision damage; nail=True
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS mounted Rook receives actual creature collision damage before wall classification
+PASS partial push actual attack accepted
+PASS partial push lands at last legal cell and applies collision damage immediately
+PASS enemy turn waits for displacement presentation
+PASS partial collision creates one world turn
+PASS lethal collision immediately frees landing cell
+PASS lethal collision corpse keeps displacement recovery pending
+PASS delayed corpse travels instead of freezing at original cell
+PASS lethal partial collision creates one world turn
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS radial push survives direct target death
+PASS player obstruction is distinct from damaging collision
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS collision combines basic damage with iron_nail
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS collision combines basic damage with domino_crest
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS mastery adds direct and receiver damage exactly once
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS secondary wall kill gives no direct-kill follow-up move
+PASS spread never extends direct-target blockade to unrelated neighbors
+PASS blockade maintains two primary actions and one receiver action
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS ordinary attack cannot emit knockback or radial spread
+PASS all displacement presentation clears after action

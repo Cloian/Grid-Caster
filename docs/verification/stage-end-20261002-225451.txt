@@ -1,0 +1,75 @@
+STAGE_END_PASS
+Controlled final-state fixtures + actual scene reload. NOT normal combat clears or human play.
+Executed 2026-10-02T22:54:51.2399950+09:00; Unity 6000.4.0f1
+PASS fresh scene resets build, charge, movement art, relics, wave and grave; trait=0
+PASS initial trait/upgrade still playable; trait=0
+PASS actual final-wave spawn API accepts compressed fixture
+PASS final clear occurs once and locks living player; trait=0
+PASS pause/resume cannot reopen combat after stage clear; trait=0
+PASS stale selection and attack callbacks cannot change the finished build or advance combat
+PASS existing result panel clearly reports final-wave clear without a death claim
+PASS result text fits existing pixel-font rectangle: GameOverTitle
+PASS result text fits existing pixel-font rectangle: GameOverSummary
+PASS result text fits existing pixel-font rectangle: ReplayLabel
+PASS result text fits existing pixel-font rectangle: QuitHint
+PASS clear changes outline accent, never dark panel fill or pixel font
+PASS result overlay blocks whole Canvas including board-side build/relic panels
+PASS actual clear screenshot saved: stage-clear-20261002-225449.png
+PASS clear review hides only result UI
+PASS clear review freezes timer/board and never starts wave 21
+PASS review returns to result panel without resuming
+PASS actual result-panel GraphicRaycaster reaches replay button
+PASS fresh scene resets build, charge, movement art, relics, wave and grave; trait=1
+PASS initial trait/upgrade still playable; trait=1
+PASS actual final-wave spawn API accepts compressed fixture
+PASS final clear occurs once and locks living player; trait=1
+PASS pause/resume cannot reopen combat after stage clear; trait=1
+PASS stale selection and attack callbacks cannot change the finished build or advance combat
+PASS existing result panel clearly reports final-wave clear without a death claim
+PASS result text fits existing pixel-font rectangle: GameOverTitle
+PASS result text fits existing pixel-font rectangle: GameOverSummary
+PASS result text fits existing pixel-font rectangle: ReplayLabel
+PASS result text fits existing pixel-font rectangle: QuitHint
+PASS clear changes outline accent, never dark panel fill or pixel font
+PASS result overlay blocks whole Canvas including board-side build/relic panels
+PASS clear review hides only result UI
+PASS clear review freezes timer/board and never starts wave 21
+PASS review returns to result panel without resuming
+PASS actual result-panel GraphicRaycaster reaches replay button
+PASS fresh scene resets build, charge, movement art, relics, wave and grave; trait=2
+PASS initial trait/upgrade still playable; trait=2
+PASS actual final-wave spawn API accepts compressed fixture
+PASS final clear occurs once and locks living player; trait=2
+PASS pause/resume cannot reopen combat after stage clear; trait=2
+PASS stale selection and attack callbacks cannot change the finished build or advance combat
+PASS existing result panel clearly reports final-wave clear without a death claim
+PASS result text fits existing pixel-font rectangle: GameOverTitle
+PASS result text fits existing pixel-font rectangle: GameOverSummary
+PASS result text fits existing pixel-font rectangle: ReplayLabel
+PASS result text fits existing pixel-font rectangle: QuitHint
+PASS clear changes outline accent, never dark panel fill or pixel font
+PASS result overlay blocks whole Canvas including board-side build/relic panels
+PASS clear review hides only result UI
+PASS clear review freezes timer/board and never starts wave 21
+PASS review returns to result panel without resuming
+PASS actual result-panel GraphicRaycaster reaches replay button
+PASS fresh scene resets build, charge, movement art, relics, wave and grave; trait=3
+PASS initial trait/upgrade still playable; trait=3
+PASS actual final-wave spawn API accepts compressed fixture
+PASS final clear occurs once and locks living player; trait=3
+PASS pause/resume cannot reopen combat after stage clear; trait=3
+PASS stale selection and attack callbacks cannot change the finished build or advance combat
+PASS existing result panel clearly reports final-wave clear without a death claim
+PASS result text fits existing pixel-font rectangle: GameOverTitle
+PASS result text fits existing pixel-font rectangle: GameOverSummary
+PASS result text fits existing pixel-font rectangle: ReplayLabel
+PASS result text fits existing pixel-font rectangle: QuitHint
+PASS clear changes outline accent, never dark panel fill or pixel font
+PASS result overlay blocks whole Canvas including board-side build/relic panels
+PASS clear review hides only result UI
+PASS clear review freezes timer/board and never starts wave 21
+PASS review returns to result panel without resuming
+PASS actual result-panel GraphicRaycaster reaches replay button
+PASS death result and grave remain distinct from clear result
+PASS death review never unlocks input
+PASS death replay starts clean trait selection with restored health/time

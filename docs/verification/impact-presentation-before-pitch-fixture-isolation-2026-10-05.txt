@@ -1,0 +1,58 @@
+IMPACT_PRESENTATION_FAIL
+Controlled actual SampleScene fixtures; gameplay-rule validation, not human fun assessment.
+Unity 6000.4.0f1; 2026-10-05T14:16:35.0517710+09:00
+PASS actual F attack accepted
+PASS prepared damage boost has thicker warm projectile and short tail
+PASS all damage resolves at center impact, independently of fragment animation
+PASS splash kill frees occupancy immediately
+PASS living and lethal side targets both receive fragments, dead target retains independent echo
+PASS side flash and recoil wait for fragment arrival
+PASS pause freezes fragment flight and queued hit presentation
+PASS fragments split into short curved paths after gathering
+PASS within 80ms plus one frame, fragments disappear and neighbor hit flash begins
+PASS presentation retains one world turn and never recharges the F attack
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS direct and splash kills merge into one action outcome
+PASS existing visible HUD displays exactly one major result
+PASS damage outside completed player attack cannot add kills
+PASS outcome expires and restores action guidance
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS ordinary attack produces neither residual fragments nor outcome spam
+PASS actual Knight landing opens a counter window
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS actual adjacent counter hit applies bonus and displays its cause
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS later ordinary hit never reuses counter label
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS actual occupied knockback destination displays collision once
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS unblocked displacement never displays collision
+PASS kill spark is larger and warm colored compared with ordinary white hit
+PASS actual kill uses lower pitched impact audio
+PASS restart clears particles, queued audio, result and damage presentation scope
+System.InvalidOperationException: normal launch resets pitch after a heavier kill sound
+  at ImpactPresentationValidation.Check (System.Boolean result, System.String description) [0x0001f] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/ImpactPresentationValidation.cs:114 
+  at ImpactPresentationValidation+<Run>d__34.MoveNext () [0x00c7f] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/ImpactPresentationValidation.cs:334 
+  at ImpactPresentationValidation+<Flatten>d__26.MoveNext () [0x0009e] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/ImpactPresentationValidation.cs:135 
+  at ImpactPresentationValidation.Tick () [0x00048] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/ImpactPresentationValidation.cs:75 

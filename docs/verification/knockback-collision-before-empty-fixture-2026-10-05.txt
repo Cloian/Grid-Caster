@@ -1,0 +1,9 @@
+KNOCKBACK_COLLISION_FAIL
+Controlled actual SampleScene fixtures; gameplay-rule validation, not human fun assessment.
+Unity 6000.4.0f1; 2026-10-05T22:08:27.0610390+09:00
+System.InvalidOperationException: prepared special selectable
+  at KnockbackCollisionValidation.Check (System.Boolean result, System.String description) [0x0001f] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/KnockbackCollisionValidation.cs:114 
+  at KnockbackCollisionValidation+<Fire>d__31.MoveNext () [0x0004d] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/KnockbackCollisionValidation.cs:169 
+  at KnockbackCollisionValidation+<Flatten>d__26.MoveNext () [0x0009e] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/KnockbackCollisionValidation.cs:135 
+  at KnockbackCollisionValidation+<Flatten>d__26.MoveNext () [0x00067] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/KnockbackCollisionValidation.cs:140 
+  at KnockbackCollisionValidation.Tick () [0x00048] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/KnockbackCollisionValidation.cs:75 

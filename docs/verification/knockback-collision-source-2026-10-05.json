@@ -1,0 +1,37 @@
+{
+  "createdAt": "2026-10-05T22:15:10.364066+09:00",
+  "unity": "6000.4.0f1",
+  "validationProject": "/tmp/grid-caster-impact-implementation-20261004",
+  "publicWebUpdated": false,
+  "notes": [
+    "Controlled actual-input fixtures; no human enjoyment or full-run balance claim.",
+    "Runtime files unchanged between collision/mechanics/regression runs. Collision validator header comment amended afterward.",
+    "Early failures were bounds, empty-encounter timing, and attack-line interception fixtures; original reports preserved."
+  ],
+  "sha256": {
+    "Assets/Codes/Move.cs": "de25b4b2b26eb3b8522a1c7cacd434ba99942fe40fa9cf0021c1e2acf6edbc99",
+    "Assets/Codes/MonsterSpawner.cs": "cd9f60ad2a633db17f4cce97406fba9dcd794f4a683097111f5a5d138503dcd2",
+    "Assets/Codes/MonsterMovement.cs": "104ac242a4a608707e36fce5f3c208a3bd45b2b86a516d72f67999745a7e8b73",
+    "Assets/Codes/CharacterHealth.cs": "b87b9bde8bdfee35ded79b0ed8fa5af96ae0bbf2cad612736a46d1c5e941752b",
+    "Assets/Codes/CombatFeedback.cs": "0d6223fd80710559fe18008771e0fd02055fa808d39edf939ec3cc993bd3f17e",
+    "Assets/Codes/CombatFeedbackFragments.cs": "10e572c35716913b9721a840e20fbbf56dfabfc27bf922646d55d53d3aab58ff",
+    "Assets/Codes/RunProgressionSystem.cs": "1ca45c3da190f71941b3d7737d3274895637fcea418dba5e752998005edd22d8",
+    "Assets/Codes/RunProgressionCatalog.cs": "8fa99aca391c2d78d026484641a2d0cb12fbbe4e8b289c2ced4b06a7f9fb3a84",
+    "Assets/Codes/RunProgressionDescriptions.cs": "96d304a714ea1e9204f8ed1cf4b86017fc8f453a0196f37a94bfd0d3f42800be",
+    "Assets/Codes/GameHudController.cs": "a1e505216392cc832fdfb70b92be2dbd78cfd9ce6c69921ce543819671ddd173",
+    "Assets/Codes/PlayerTraitSystem.cs": "eaed087fa89ca1a9566eb957bc5e9a0fbe02487cdd8b3c31ccd7c73b5828b73e",
+    "Assets/Codes/TurnProjectile.cs": "f03100ae11cee7dfade259a924061b24b8010196155ec4e65e267a15b826d3c2",
+    "Assets/Codes/DirectionalActionIndicator.cs": "d9da83a24dc0d7b1d944b64432c6dc25e74e91df2fefca7e2980030a534c62dd",
+    "Assets/Codes/GameAudio.cs": "d45335e791d4688d4b4666241ae54d18fe54786c0dee3fc0b5ed21c971589940",
+    "Assets/Codes/CameraController.cs": "984b75a682d8a90b4144b2680469bbe7f5e710a0ffb1b79ebe3c83414ffe1764",
+    "Assets/Editor/KnockbackCollisionValidation.cs": "86b8424528d0bcb4b78fd45881ba23c236068a1d7cf3f2b7a0776e648407eb50",
+    "Assets/Editor/RunBalanceValidation.cs": "1187f735bd64d57c1a300b0df7cab98763df2311814574fefe2cf4171e4d60b3",
+    "Assets/Editor/TacticalCoreValidation.cs": "c95412d7d2a94794273c3dbdee9dcdb85f1a97c904e53830c75a6c22b695abc3",
+    "Assets/Editor/CombatFeedbackValidation.cs": "a0fa4c9e5078e32b18741fcc2d3c58b42eb40843946f980a17e63d4598b53fd4",
+    "Assets/Editor/ImpactPresentationValidation.cs": "bb735feaede8a57f6bfe9f5b8944f7b93009b2eb1398011cf07ed45a7fa576b2",
+    "Assets/Editor/ProgressionUsabilityValidation.cs": "1f0da7bd1641927ee0f931c42dc1091574f8fb6513054e8dad141990969a1ab6",
+    "Assets/Scenes/SampleScene.unity": "5b113b91c93dc9c00c3250f3a6644fac785cf003137e9558c63d9c8d1ee7220d",
+    "Packages/manifest.json": "1af939a850e4520c936ae5fcc976b83cc9d0869bd8981163fe63b5f3c53c3618",
+    "ProjectSettings/ProjectVersion.txt": "8468d7add4c1613c42224053cb9c889688ccf141875f44065a40e6d133bc3ea7"
+  }
+}

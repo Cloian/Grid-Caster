@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -8,6 +9,15 @@ public sealed class GridManager : MonoBehaviour
     [Header("맵 설정")]
     [SerializeField] private Tilemap groundTilemap;
     [SerializeField, Min(1)] private int boundaryThickness = 1;
+    private readonly HashSet<Vector3Int> temporaryObstacles = new HashSet<Vector3Int>();
+
+    // 임시 성벽도 기본 이동·이동술·공격 경로가 공유하는 타일 판정에 포함한다.
+    public void SetTemporaryObstacles(IEnumerable<Vector3Int> cells)
+    {
+        temporaryObstacles.Clear();
+        if (cells != null) foreach (Vector3Int cell in cells) temporaryObstacles.Add(cell);
+    }
+    public bool HasTemporaryObstacle(Vector3Int cell) => temporaryObstacles.Contains(cell);
 
     public Tilemap GroundTilemap => groundTilemap;
     public bool IsReady => groundTilemap != null;
@@ -56,7 +66,8 @@ public sealed class GridManager : MonoBehaviour
 
     public bool IsWalkableCell(Vector3Int cellPosition)
     {
-        if (groundTilemap == null || !groundTilemap.HasTile(cellPosition))
+        if (groundTilemap == null || !groundTilemap.HasTile(cellPosition)
+            || temporaryObstacles.Contains(cellPosition))
             return false;
 
         BoundsInt bounds = groundTilemap.cellBounds;

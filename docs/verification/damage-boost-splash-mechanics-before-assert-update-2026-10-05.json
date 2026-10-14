@@ -1,0 +1,30 @@
+{
+    "label": "damage-boost-splash-mechanics-2026-10-05",
+    "policy": "heuristic-v5-manual; public board and charge readiness; use ready trait on selected attack; not paired with legacy random-proc policy",
+    "policyHash": "43d75bb97980f088284932213bebbd2a37221819b581499c620c07716e19588a",
+    "unityVersion": "6000.4.0f1",
+    "sourceHash": "5d29827a234f6d770917c0f3af50c1ef56a48e1b8b24e9bc0db6bfade9b7dfa5",
+    "allowRelics": true,
+    "avoidLegendary": false,
+    "complete": false,
+    "error": "System.InvalidOperationException: damage mastery does not damage neighbors without an actual overflow kill\n  at RunBalanceValidation.Check (System.Boolean condition, System.String message) [0x0001a] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/RunBalanceValidation.cs:582 \n  at RunBalanceValidation+<Mechanics>d__37.MoveNext () [0x00815] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/RunBalanceValidation.cs:688 \n  at RunBalanceValidation+<Run>d__27.MoveNext () [0x0009b] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/RunBalanceValidation.cs:254 \n  at RunBalanceValidation.Tick () [0x00047] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/RunBalanceValidation.cs:185 ",
+    "editorDiagnostics": [
+        "ArgumentOutOfRangeException: Index was out of range. Must be non-negative and less than the size of the collection.\nParameter name: index\nSystem.Collections.Generic.List`1[T].get_Item (System.Int32 index) (at <67e9686a86934ae8b0ef7cc81c6b4608>:0)\nUnityEditor.Search.SearchDatabase+<EnumerateAll>d__80.MoveNext () (at /Users/bokken/build/output/unity/unity/Modules/QuickSearch/Editor/Indexing/SearchDatabase.cs:445)\nSystem.Linq.Enumerable.TryGetFirst[TSource] (System.Collections.Generic.IEnumerable`1[T] source, System.Boolean& found) (at <fe5fd0116f6c450487f1e1dfe36adc18>:0)\nSystem.Linq.Enumerable.First[TSource] (System.Collections.Generic.IEnumerable`1[T] source) (at <fe5fd0116f6c450487f1e1dfe36adc18>:0)\nUnityEditor.Search.SearchDatabase.GetDefaultSearchDatabase () (at /Users/bokken/build/output/unity/unity/Modules/QuickSearch/Editor/Indexing/SearchDatabase.cs:420)\nUnityEditor.Search.SearchInit.IndexationOnStartup () (at /Users/bokken/build/output/unity/unity/Modules/QuickSearch/Editor/SearchInit.cs:109)\nUnityEditor.EditorApplication.Internal_CallDelayFunctions () (at /Users/bokken/build/output/unity/unity/Editor/Mono/EditorApplication.cs:416)\n"
+    ],
+    "checks": [
+        "pipeline detection: UnityEngine.Rendering.Universal.UniversalRenderPipelineAsset (rendering unchanged)",
+        "armadillo remains 32 PPU / Point",
+        "unrelated upgrade preserves partial charge",
+        "frequency upgrade preserves charge and immediately lowers requirement",
+        "movement replacement preserves mastery",
+        "maxed movement training replaced with applicable card",
+        "damage mastery changes overflow capacity, not direct damage or activation rate",
+        "overcharge second stack supplies real excess damage rather than unconditional area damage",
+        "both healing stacks have integer marginal value",
+        "pierce acceleration improves later direct targets without off-line damage",
+        "dead knockback target does not redirect its control to unrelated neighbors",
+        "double mastery boosts additional casts only",
+        "pierce mastery boosts additional targets only"
+    ],
+    "runs": []
+}

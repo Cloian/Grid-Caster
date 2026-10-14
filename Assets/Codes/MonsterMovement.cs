@@ -135,9 +135,8 @@ public sealed class MonsterMovement : MonoBehaviour
         isCellBlocked = checkCellBlocked;
         isPreferredCell = checkPreferredCell;
 
-        if (skippedTurns > 0)
+        if (ConsumeBlockedTurn())
         {
-            skippedTurns--;
             FinishTurn();
             return;
         }
@@ -402,19 +401,37 @@ public sealed class MonsterMovement : MonoBehaviour
 
     internal void AttackPlayer()
     {
-        playerMovement.TakeDamage(attackDamage);
+        playerMovement.TakeDamage(attackDamage, PlayerDamageKind.Normal, playerMovement.GridPosition - gridPosition);
         FinishTurn();
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, Vector3Int incomingDirection = default)
     {
         LastDamageOverflow = Mathf.Max(0, damage - characterHealth.CurrentHealth);
-        characterHealth.TakeDamage(damage);
+        int healthBefore = characterHealth.CurrentHealth;
+        characterHealth.TakeDamage(damage, incomingDirection);
+        if (characterHealth.CurrentHealth < healthBefore)
+            CombatFeedback.PlayHitSound(movementPattern == MonsterMovementPattern.CardinalFour
+                || movementPattern == MonsterMovementPattern.EightDirection
+                ? CombatSound.SoftHit : CombatSound.HardHit, characterHealth.IsDead);
     }
 
     public void SkipNextTurn()
     {
-        skippedTurns = Mathf.Max(skippedTurns, 1);
+        SkipTurns(1);
+    }
+
+    public void SkipTurns(int turns)
+    {
+        // 한 적의 남은 봉쇄만 갱신한다. 다른 봉쇄 효과가 기간을 줄이거나 누적하지 않는다.
+        skippedTurns = Mathf.Max(skippedTurns, Mathf.Max(0, turns));
+    }
+
+    public bool ConsumeBlockedTurn()
+    {
+        if (skippedTurns <= 0) return false;
+        skippedTurns--;
+        return true;
     }
 
     public bool ApplyKnockback(Vector3Int destinationCell)
@@ -433,7 +450,9 @@ public sealed class MonsterMovement : MonoBehaviour
         jumpProgress = 0f;
         targetPosition = gridManager.GetCellCenterWorld(destinationCell);
         targetPosition.z = transform.position.z;
+        Vector3 previousPosition = transform.position;
         transform.position = targetPosition;
+        CombatFeedback.AnimateKnockback(this, previousPosition, targetPosition);
         return true;
     }
 

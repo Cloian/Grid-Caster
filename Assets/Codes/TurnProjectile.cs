@@ -6,6 +6,30 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public sealed class TurnProjectile : MonoBehaviour
 {
+    // 실행과 예고가 같은 경계/벽 장착 적 검사 순서를 사용한다. 호출 자체는 보드를 바꾸지 않는다.
+    public static Vector3Int FindImpact(GridManager grid, MonsterSpawner spawner,
+        Vector3Int origin, Vector3Int step, out MonsterMovement target,
+        Action<Vector3Int> onFloorEntered = null)
+    {
+        target = null;
+        Vector3Int destination = origin;
+        if (grid == null || step == Vector3Int.zero) return destination;
+        // 관통의 다음 구간이 큰 적 내부에서 시작해도 같은 적을 다시 직격하지 않는다.
+        MonsterMovement originOccupant = null;
+        if (spawner != null) spawner.TryGetMonsterAtCell(origin, out originOccupant);
+        while (grid.IsInsideMapCell(destination + step))
+        {
+            destination += step;
+            // 적이 서 있는 적중 칸도 공격이 지나간 바닥이다. 외벽은 제외한다.
+            // 미리보기는 콜백을 전달하지 않으므로 불길이나 점유를 바꾸지 않는다.
+            if (grid.IsWalkableCell(destination)) onFloorEntered?.Invoke(destination);
+            if (spawner != null && spawner.TryGetMonsterAtCell(destination, out MonsterMovement candidate)
+                && candidate != originOccupant)
+            { target = candidate; break; }
+            if (!grid.IsWalkableCell(destination)) break;
+        }
+        return destination;
+    }
     private GridManager gridManager;
     private MonsterSpawner monsterSpawner;
     private Vector3Int currentCell;
@@ -17,6 +41,7 @@ public sealed class TurnProjectile : MonoBehaviour
     private int tilesPerTurn = 1;
     private bool moving;
     private bool travellingFullPath;
+    private float fullPathDeadline = -1f;
     private bool destroyAfterMove;
     private bool finished;
     private MonsterMovement pendingHitTarget;
@@ -45,7 +70,7 @@ public sealed class TurnProjectile : MonoBehaviour
     {
         // 피해 직전에 숨겨 적중한 탄이 한 프레임 더 보이지 않도록 한다.
         GetComponent<SpriteRenderer>().enabled = false;
-        try { enemyTarget.TakeDamage(damage); }
+        try { enemyTarget.TakeDamage(damage, PlayerDamageKind.Normal, direction); }
         finally { FinishTurn(true); }
     }
 
@@ -77,7 +102,7 @@ public sealed class TurnProjectile : MonoBehaviour
         targetPosition = transform.position;
     }
 
-    public void TravelFullPath(Action<TurnProjectile> onTravelCompleted)
+    public void TravelFullPath(Action<TurnProjectile> onTravelCompleted, float completionDeadline = -1f)
     {
         if (moving || finished)
             return;
@@ -94,38 +119,8 @@ public sealed class TurnProjectile : MonoBehaviour
 
         // 판정은 발사 순간 타일 경로로 확정하고 Transform은 결과를 빠르게 연출만 한다.
         // 사거리 제한 없이 첫 대상 또는 맵 끝의 경계 벽까지 탐색한다.
-        while (true)
-        {
-            Vector3Int nextCell = destinationCell + direction;
-
-            if (!gridManager.IsInsideMapCell(nextCell))
-            {
-                break;
-            }
-
-            destinationCell = nextCell;
-
-            // 성벽 장착형 룩은 비보행 벽 셀을 점유하므로 벽 충돌보다 먼저 대상을 확인한다.
-            if (monsterSpawner != null
-                && monsterSpawner.TryGetMonsterAtCell(
-                    destinationCell,
-                    out MonsterMovement wallMountedTarget
-                ))
-            {
-                pendingHitTarget = wallMountedTarget;
-                break;
-            }
-
-            // 바깥 경계 벽 타일을 목적지에 포함해 벽에 닿는 연출 뒤 제거한다.
-            if (!gridManager.IsWalkableCell(destinationCell))
-            {
-                break;
-            }
-
-            // 기본공격이 실제로 통과하는 모든 바닥 칸에 경로 효과를 즉시 적용한다.
-            pathCellEntered?.Invoke(destinationCell);
-
-        }
+        destinationCell = FindImpact(gridManager, monsterSpawner, currentCell, direction,
+            out pendingHitTarget, pathCellEntered);
 
         if (destinationCell == currentCell)
         {
@@ -136,8 +131,12 @@ public sealed class TurnProjectile : MonoBehaviour
         targetPosition = gridManager.GetCellCenterWorld(destinationCell);
         targetPosition.z = transform.position.z;
         travellingFullPath = true;
+        fullPathDeadline = completionDeadline;
         destroyAfterMove = true;
         moving = true;
+        // 여러 관통 구간은 같은 시전의 시간 상한을 공유한다. 남은 구간도 같은 프레임에 종료한다.
+        if (fullPathDeadline >= 0f && Time.time >= fullPathDeadline)
+            CompleteVisualMove();
     }
 
     public void TakeTurn(Action<TurnProjectile> onTurnCompleted)
@@ -242,7 +241,7 @@ public sealed class TurnProjectile : MonoBehaviour
 
         try
         {
-            targetMonster.TakeDamage(damage);
+            targetMonster.TakeDamage(damage, direction);
             hitConfirmed?.Invoke(targetMonster);
         }
         finally
@@ -263,8 +262,17 @@ public sealed class TurnProjectile : MonoBehaviour
             moveSpeed * Time.deltaTime
         );
 
+        if (travellingFullPath && fullPathDeadline >= 0f && Time.time >= fullPathDeadline)
+            transform.position = targetPosition;
+
         if ((transform.position - targetPosition).sqrMagnitude > 0.000001f)
             return;
+
+        CompleteVisualMove();
+    }
+
+    private void CompleteVisualMove()
+    {
 
         transform.position = targetPosition;
         currentCell = destinationCell;

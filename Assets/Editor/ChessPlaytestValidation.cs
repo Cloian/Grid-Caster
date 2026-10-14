@@ -16,6 +16,8 @@ public static class ChessPlaytestValidation
     private const double ValidationTimeoutSeconds = 300d;
     private static IEnumerator routine;
     private static double deadline;
+    private static int lastFrame;
+    private static bool previousRunInBackground;
     private static readonly List<string> checks = new List<string>();
     private static readonly Vector3Int[] Directions =
         { Vector3Int.right, Vector3Int.up, Vector3Int.left, Vector3Int.down };
@@ -28,6 +30,9 @@ public static class ChessPlaytestValidation
             {
                 SessionState.SetBool(PendingKey, false);
                 checks.Clear();
+                lastFrame = -1;
+                previousRunInBackground = Application.runInBackground;
+                Application.runInBackground = true;
                 // 씬 전환과 장시간 웨이브 검증까지 포함하므로 느린 에디터에서도
                 // 기능 실패가 단순 시간 초과로 오인되지 않도록 충분한 여유를 둔다.
                 deadline = EditorApplication.timeSinceStartup + ValidationTimeoutSeconds;
@@ -64,6 +69,10 @@ public static class ChessPlaytestValidation
         {
             if (!EditorApplication.isPlaying || EditorApplication.timeSinceStartup > deadline)
                 throw new InvalidOperationException("Play 검증이 중단되었거나 제한 시간을 넘었습니다.");
+            // Editor update는 게임 프레임보다 여러 번 호출될 수 있다.
+            // yield null이 실제 새 프레임/씬 초기화/LateUpdate를 기다리도록 한다.
+            if (lastFrame == Time.frameCount) return;
+            lastFrame = Time.frameCount;
             if (routine.MoveNext()) return;
             Complete("PASS");
         }
@@ -77,6 +86,7 @@ public static class ChessPlaytestValidation
     private static void Complete(string status)
     {
         EditorApplication.update -= Tick;
+        Application.runInBackground = previousRunInBackground;
         string report = "CHESS_PLAYTEST_VALIDATION_" + status + "\n" + string.Join("\n", checks);
         File.WriteAllText(Path.Combine(Path.GetTempPath(), "GridCasterChessValidation.txt"), report);
         if (status == "PASS") Debug.Log(report); else Debug.LogError(report);
@@ -89,6 +99,13 @@ public static class ChessPlaytestValidation
     {
         if (!value) throw new InvalidOperationException(message);
         checks.Add("OK " + message);
+    }
+
+    private static Rect UiPixels(RectTransform rect)
+    {
+        Vector3[] corners = new Vector3[4];
+        rect.GetWorldCorners(corners);
+        return Rect.MinMaxRect(corners[0].x, corners[0].y, corners[2].x, corners[2].y);
     }
 
     private static IEnumerator Run()
@@ -221,6 +238,9 @@ public static class ChessPlaytestValidation
         {
             Vector3Int origin = bishop.GridPosition;
             fire.AdvanceTurn();
+            HashSet<Vector3Int> priorFire = new HashSet<Vector3Int>();
+            foreach (Vector3Int cell in grid.GroundTilemap.cellBounds.allPositionsWithin)
+                if (fire.HasFire(cell)) priorFire.Add(cell);
             done = false;
             IsolatedTurn(bishop, test, () => done = true);
             while (!done) yield return null;
@@ -230,12 +250,12 @@ public static class ChessPlaytestValidation
             Vector3Int step = new Vector3Int(Math.Sign(delta.x), Math.Sign(delta.y), 0);
             for (Vector3Int cell = origin; cell != bishop.GridPosition + step; cell += step)
                 Check(fire.HasFire(cell), "비숍 출발점/경로/도착점에 불길");
-            Check(new[]
-            {
-                new Vector3Int(1, 1, 0), new Vector3Int(1, -1, 0),
-                new Vector3Int(-1, 1, 0), new Vector3Int(-1, -1, 0)
-            }.Any(direction => fire.HasFire(player.GridPosition + direction)),
-                "비숍이 플레이어 주위 대각선에 차단 불길 생성");
+            HashSet<Vector3Int> actualPath = new HashSet<Vector3Int>();
+            for (Vector3Int cell = origin; cell != bishop.GridPosition + step; cell += step)
+                actualPath.Add(cell);
+            foreach (Vector3Int cell in grid.GroundTilemap.cellBounds.allPositionsWithin)
+                if (!priorFire.Contains(cell) && fire.HasFire(cell))
+                    Check(actualPath.Contains(cell), "비숍 새 불길은 실제 이동 경로에만 생성: " + cell);
             visited.Add(bishop.GridPosition);
         }
         Check(visited.Count >= 5 && player.CurrentHealth == 10, "비숍 주변 순회 및 몸통 직접 피해 없음");
@@ -457,6 +477,8 @@ public static class ChessPlaytestValidation
                     == grid.GroundTilemap.GetColor(cell + new Vector3Int(1, 1, 0));
         }
         Check(alternatingFloor, "모든 바닥은 체크무늬이며 비숍 대각선의 타일 색 유지");
+        yield return null;
+        yield return null;
         CameraController boardCameraController = UnityEngine.Object.FindAnyObjectByType<CameraController>();
         Camera boardCamera = Camera.main;
         Check(boardCameraController != null && boardCamera != null
@@ -469,8 +491,19 @@ public static class ChessPlaytestValidation
         Vector3 boardWorldMin = grid.GroundTilemap.CellToWorld(boardBounds.min);
         Vector3 boardWorldMax = grid.GroundTilemap.CellToWorld(boardBounds.max);
         Vector3 expectedBoardCenter = (boardWorldMin + boardWorldMax) * 0.5f;
-        Check(Vector2.Distance(boardCamera.transform.position, expectedBoardCenter) < 0.01f,
-            "카메라가 전체 맵 중앙에 고정");
+        // PC 구성은 HUD 여백을 위해 보드 중심이 화면 중심보다 조금 위에 있다.
+        // 카메라 Transform=맵 중심이라는 구형 구현 대신 실제 표시 위치를 검사한다.
+        Vector3 projectedBoardCenter = boardCamera.WorldToScreenPoint(expectedBoardCenter);
+        // EditorApplication.update의 Screen은 Game 뷰의 툴바 포함 크기를 반환할 수 있다.
+        // 실제 전체 화면 카메라의 렌더 영역으로 비교하고 런타임에서 쓴 크기도 대조한다.
+        Vector2Int runtimeScreen = (Vector2Int)typeof(CameraController).GetField("lastScreenSize",
+            System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic)
+            .GetValue(boardCameraController);
+        Check(runtimeScreen == new Vector2Int(boardCamera.pixelWidth, boardCamera.pixelHeight),
+            $"런타임 화면 크기와 전체 화면 카메라 일치 (runtime={runtimeScreen}, editor={Screen.width}x{Screen.height})");
+        Vector2 expectedScreenCenter = PcBoardLayout.BoardPixelRect(runtimeScreen.x, runtimeScreen.y).center;
+        Check(Vector2.Distance(projectedBoardCenter, expectedScreenCenter) < 0.1f,
+            $"맵 중앙이 고정 PC 보드 영역 중앙에 표시 (actual={projectedBoardCenter}, expected={expectedScreenCenter}, enabled={boardCameraController.enabled}, camera={boardCamera.transform.position}, ortho={boardCamera.orthographicSize}, pixels={boardCamera.pixelRect}, screen={Screen.width}x{Screen.height}, bounds={boardBounds})");
         Vector3 minViewport = boardCamera.WorldToViewportPoint(boardWorldMin);
         Vector3 maxViewport = boardCamera.WorldToViewportPoint(boardWorldMax);
         Check(minViewport.x >= 0f && minViewport.y >= 0f
@@ -484,8 +517,8 @@ public static class ChessPlaytestValidation
         Check(!player.CanAct && normalSpawner.CurrentWave == 1
             && progression.IsStarterUpgradeSelection
             && progression.CurrentUpgradeOptions.Count == 3
-            && progression.CurrentUpgradeOptions.All(item => item.RequiredTrait == "double_cast"),
-            "시작 특성 선택 직후 전용 강화 3택1");
+            && progression.CurrentUpgradeOptions.All(item => progression.CanSelectUpgrade(item)),
+            "시작 특성 선택 직후 유효한 가중 추첨 강화 3택1");
         string starterUpgradeId = progression.CurrentUpgradeOptions[0].Id;
         GameObject.Find("UpgradeChoice_1").GetComponent<Button>().onClick.Invoke();
         Check(player.CanAct && progression.Stack(starterUpgradeId) == 1,
@@ -534,13 +567,14 @@ public static class ChessPlaytestValidation
         for (int wave = 1; wave < WaveTemplateCatalog.FinalWave; wave++)
             Check(RunProgressionCatalog.IsStandardUpgradeWave(wave)
                 == standardRewardWaves.Contains(wave), $"웨이브 {wave} 일반 강화 보상 간격");
-        Check(progression != null && RunProgressionCatalog.Upgrades.Count == 17
-            && RunProgressionCatalog.AdvancedUpgrades.Count == 12
+        Check(progression != null && RunProgressionCatalog.Upgrades.Count == 18
+            && RunProgressionCatalog.AdvancedUpgrades.Count == 7
             && RunProgressionCatalog.Relics.Count == 21,
-            "일반 강화 17종·상급 강화 12종·유물 21종 카탈로그");
+            "일반 강화 18종·상급 강화 7종·유물 21종 정리 카탈로그");
         for (int tier = 1; tier <= 4; tier++)
-            Check(RunProgressionCatalog.AdvancedUpgrades.Count(item => item.RewardTier == tier) == 3,
-                $"유물 {tier}단계 상급 강화 3종");
+            Check(RunProgressionCatalog.AdvancedUpgrades.Count(item => item.RewardTier == tier)
+                == (tier == 1 ? 3 : tier == 4 ? 2 : 1),
+                $"유물 {tier}단계 상급 해금 후보 수");
         RunProgressionUiController progressionUi = hud.GetComponent<RunProgressionUiController>();
         GameObject buildHud = progressionUi != null
             ? progressionUi.transform.Find("BuildHudPanel")?.gameObject : null;
@@ -565,23 +599,25 @@ public static class ChessPlaytestValidation
         RectTransform traitHud = GameObject.Find("TraitHud")?.GetComponent<RectTransform>();
         RectTransform attackHud = GameObject.Find("AttackActionFrame")?.GetComponent<RectTransform>();
         RectTransform moveHud = GameObject.Find("MoveActionFrame")?.GetComponent<RectTransform>();
+        RectTransform statusHud = GameObject.Find("ActionModeHud")?.GetComponent<RectTransform>();
         Text ultimateShortcut = GameObject.Find("UltimateShortcutKey")?.GetComponent<Text>();
         Check(waveHud != null && timeHud != null
-            && Mathf.Approximately(waveHud.anchoredPosition.x, 266f)
-            && Mathf.Approximately(timeHud.anchoredPosition.x, 424f)
-            && Mathf.Approximately(waveHud.anchoredPosition.y, timeHud.anchoredPosition.y),
+            && UiPixels(waveHud).xMax <= UiPixels(timeHud).xMin + 1f
+            && Mathf.Abs(UiPixels(waveHud).center.y - UiPixels(timeHud).center.y) < 1f
+            && Mathf.Abs((UiPixels(waveHud).xMin + UiPixels(timeHud).xMax) * 0.5f
+                - expectedScreenCenter.x) < 1f,
             "웨이브와 시간이 해상도에 맞춰 보드 중앙 상단 묶음으로 정렬");
         Check(ultimateHud != null && healthHud != null && traitHud != null
-            && attackHud != null && moveHud != null
-            && Mathf.Approximately(ultimateHud.anchoredPosition.x, 70f)
-            && Mathf.Approximately(healthHud.anchoredPosition.x, 174f)
-            && Mathf.Approximately(traitHud.anchoredPosition.x, 502f)
-            && Mathf.Approximately(attackHud.anchoredPosition.x, 602f)
-            && Mathf.Approximately(moveHud.anchoredPosition.x, 702f)
-            && Mathf.Approximately(ultimateHud.anchoredPosition.y, healthHud.anchoredPosition.y)
-            && Mathf.Approximately(healthHud.anchoredPosition.y, traitHud.anchoredPosition.y)
-            && Mathf.Approximately(traitHud.anchoredPosition.y, attackHud.anchoredPosition.y)
-            && Mathf.Approximately(attackHud.anchoredPosition.y, moveHud.anchoredPosition.y),
+            && attackHud != null && moveHud != null && statusHud != null,
+            "하단 전투 HUD와 별도 행동 상태 문구 존재");
+        RectTransform[] actionHud = { ultimateHud, healthHud, traitHud, attackHud, moveHud };
+        Rect[] actionPixels = actionHud.Select(UiPixels).ToArray();
+        Check(Enumerable.Range(0, actionPixels.Length - 1)
+                .All(index => actionPixels[index].xMax <= actionPixels[index + 1].xMin + 1f)
+            && actionPixels.All(rect => rect.yMax < UiPixels(statusHud).yMin + 1f
+                && rect.yMin >= 0f && rect.xMin >= 0f && rect.xMax <= runtimeScreen.x)
+            && Mathf.Abs((actionPixels[0].xMin + actionPixels[4].xMax) * 0.5f
+                - expectedScreenCenter.x) < 1f,
             "하단 전투 HUD가 해상도에 맞춰 보드 중앙 아래에 밀착 정렬");
         Check(ultimateShortcut != null && ultimateShortcut.text == "S+",
             "이동술 카드에 S 통합 배지 표시");
@@ -590,10 +626,10 @@ public static class ChessPlaytestValidation
         Vector3[] topHudCorners = new Vector3[4];
         Vector3[] bottomHudCorners = new Vector3[4];
         waveHud.GetWorldCorners(topHudCorners);
-        moveHud.GetWorldCorners(bottomHudCorners);
+        statusHud.GetWorldCorners(bottomHudCorners);
         float boardScreenMinY = boardCamera.WorldToScreenPoint(boardWorldMin).y;
         float boardScreenMaxY = boardCamera.WorldToScreenPoint(boardWorldMax).y;
-        float referenceScale = Screen.height / 1080f;
+        float referenceScale = PcBoardLayout.Scale(runtimeScreen.x, runtimeScreen.y);
         Check(topHudCorners[0].y >= boardScreenMaxY
             && topHudCorners[0].y - boardScreenMaxY <= 32f * referenceScale,
             "상단 HUD가 윗벽 바로 위 안전 간격에 위치");
@@ -688,7 +724,7 @@ public static class ChessPlaytestValidation
         player.CancelSelection();
         player.ProcessInputFrame(false, false, false, false, Vector2.zero, true);
         Check(player.SelectionMode == PlayerActionSelectionMode.None && completedTurns == 2,
-            "폐기된 F 키는 이동술 선택을 열지 않음");
+            "폐기된 별도 이동술 입력은 이동술 선택을 열지 않음");
         Button teleportButton = GameObject.Find("UltimateFrame")?.GetComponent<Button>();
         Check(teleportButton != null && teleportButton.interactable,
             "구형 필살기 프레임은 이동술 상세 확인 카드로 표시");
@@ -748,10 +784,14 @@ public static class ChessPlaytestValidation
                 && !normalSpawner.TryGetMonsterAtCell(cell, out _));
         Dictionary<MonsterMovement, Vector3Int> beforeTeleport = normalSpawner.ActiveMonsters
             .Where(m => m != null && !m.IsDead).ToDictionary(m => m, m => m.GridPosition);
+        Vector3 departurePosition = player.transform.position;
         Check(player.TryUseMovementArtAtCell(teleportTarget), "나이트 L자 이동술 실행");
-        Check(player.GridPosition == teleportTarget && grid.WorldToCell(player.transform.position) == teleportTarget,
-            "애니메이션 없이 논리 좌표와 화면 위치 동시 이동");
+        Check(player.GridPosition == teleportTarget && player.transform.position == departurePosition
+            && player.GetComponent<Animator>().GetBool("IsMoving") && completedTurns == 2,
+            "이동술은 출발지에서 걷기 연출을 시작하고 적 턴을 대기");
         while (!player.CanAct) yield return null;
+        Check(grid.WorldToCell(player.transform.position) == teleportTarget,
+            "이동 연출 종료 후 논리 좌표와 화면 착지점 일치");
         Check(completedTurns == 3,
             "이동술은 충전 없이 사용할 수 있고 적 한 턴 진행");
         Check(beforeTeleport.Any(pair => pair.Key != null && !pair.Key.IsDead
@@ -807,8 +847,8 @@ public static class ChessPlaytestValidation
             {
                 while (normalSpawner.CurrentWave < wave) yield return null;
                 MonsterMovement[] enemies = normalSpawner.ActiveMonsters.Where(m => m != null && !m.IsDead).ToArray();
-                WaveTemplate template = WaveTemplateCatalog.Get(wave);
-                Check(enemies.Length == template.Monsters.Count, $"웨이브 {wave} 고정 조합 총 마릿수");
+                WaveTemplate template = normalSpawner.CurrentWaveTemplate;
+                Check(enemies.Length == template.Monsters.Count, $"웨이브 {wave} 실제 추첨 조합 총 마릿수");
                 Check(enemies.Select(m => m.SpawnOrder).Distinct().Count() == enemies.Length,
                     $"웨이브 {wave} 일반/체스 적의 고유 예약 순서");
                 foreach (MonsterMovementPattern pattern in Enum.GetValues(typeof(MonsterMovementPattern)))
@@ -853,7 +893,8 @@ public static class ChessPlaytestValidation
                         .First(cell => grid.IsWalkableCell(cell) && !normalSpawner.TryGetMonsterAtCell(cell, out _));
                     player.ResetPlaytest(safeCell);
                     player.GetComponent<CharacterHealth>().Initialize(1000);
-                    bool pairRecoverySeen = false;
+                    int expectedRooks = template.Monsters.Count(item => item == MonsterMovementPattern.Rook);
+                    bool groupRecoverySeen = false;
                     for (int action = 0; action < 4; action++)
                     {
                         int previousTurns = completedTurns;
@@ -871,10 +912,11 @@ public static class ChessPlaytestValidation
                         int[] chargedColumns = rookPair.Where(item => item.IsRookCharged)
                             .Select(item => item.RookTargetColumn).ToArray();
                         Check(chargedColumns.Distinct().Count() == chargedColumns.Length,
-                            "혼합 웨이브 룩 2마리는 장전 열을 중복 예약하지 않음");
-                        pairRecoverySeen |= rookPair.Length == 2 && rookPair.All(item => item.IsRookRecovering);
+                            "혼합 웨이브 룩은 장전 열을 중복 예약하지 않음");
+                        groupRecoverySeen |= expectedRooks > 0 && rookPair.Length == expectedRooks
+                            && rookPair.All(item => item.IsRookRecovering);
                     }
-                    Check(pairRecoverySeen, "실제 룩 2마리 혼합 웨이브에서 동시 발사 후 재정비 창 제공");
+                    Check(groupRecoverySeen, "실제 혼합 웨이브의 룩 전원이 동시 발사 후 재정비 창 제공");
                     Check(rookBehaviour.PatternExecutions > 0
                         && EnemyBullets().Length == 0,
                         "SampleScene 룩 장전 후 즉시 사격 실행");
@@ -905,14 +947,13 @@ public static class ChessPlaytestValidation
                             Check(player.CurrentHealth == 1000, "웨이브 회복은 최대 체력을 넘지 않음");
                         Check(progression.CurrentUpgradeOptions.Count == 3,
                             $"웨이브 {wave} 강화 3개 제시");
-                        if (wave == 2)
-                            Check(progression.CurrentUpgradeOptions.Any(item => item.Id == "movement_knight"),
-                                "2웨이브 보상에 첫 이동술 선택지 보장");
-                        Check(progression.CurrentUpgradeOptions.All(item => item.IsAdvanced == advancedReward),
-                            $"웨이브 {wave} 일반/상급 강화 종류 분리");
+                        Check(advancedReward
+                            ? progression.CurrentUpgradeOptions.Any(item => item.IsAdvanced)
+                            : progression.CurrentUpgradeOptions.All(item => !item.IsAdvanced),
+                            $"웨이브 {wave} 일반 추첨/상급 최소 품질 유지");
                         if (advancedReward)
-                            Check(progression.CurrentUpgradeOptions.All(item => item.RewardTier == wave / 4),
-                                $"웨이브 {wave} 유물 단계에 맞는 상급 강화");
+                            Check(progression.CurrentUpgradeOptions.All(item => item.RewardTier <= wave / 4),
+                                $"웨이브 {wave} 현재 또는 이전에 해금된 상급 강화만 제시");
                         GameObject upgradePanel = GameObject.Find("UpgradeSelectionPanel");
                         Check(upgradePanel != null && upgradePanel.activeInHierarchy,
                             $"웨이브 {wave} 중앙 강화 선택 패널 표시");

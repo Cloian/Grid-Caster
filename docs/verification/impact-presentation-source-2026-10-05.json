@@ -1,0 +1,17 @@
+{
+  "engine": "6000.4.0f1",
+  "sourceMatchesTestCopy": true,
+  "sha256": {
+    "Assets/Codes/CombatFeedback.cs": "156dddb7a0dc02bed07927ce289ec0215484db4f1921946a119b13f4ec8b60b6",
+    "Assets/Codes/CombatFeedbackFragments.cs": "10e572c35716913b9721a840e20fbbf56dfabfc27bf922646d55d53d3aab58ff",
+    "Assets/Codes/CharacterHealth.cs": "b87b9bde8bdfee35ded79b0ed8fa5af96ae0bbf2cad612736a46d1c5e941752b",
+    "Assets/Codes/MonsterMovement.cs": "104ac242a4a608707e36fce5f3c208a3bd45b2b86a516d72f67999745a7e8b73",
+    "Assets/Codes/Move.cs": "defaf6f1c4a572af1d076675652e9738fe5239bcc5123e8e85774b5916422ec7",
+    "Assets/Codes/ProjectileManager.cs": "f48b2ad7b0c778be82a39e0dcb795447ca16328d604ec9683eb083d53e8aadad",
+    "Assets/Codes/RunProgressionSystem.cs": "f984f53cc4f353e5c91e6965c0b2ef9969bb4ccb12c9d6dffd34137c78cfc33d",
+    "Assets/Codes/GameAudio.cs": "d45335e791d4688d4b4666241ae54d18fe54786c0dee3fc0b5ed21c971589940",
+    "Assets/Codes/GameHudController.cs": "cc20fab06c5f91b28ff981b8896a140de8e3971fe2ff3394957cca9fe191dad3",
+    "Assets/Editor/ImpactPresentationValidation.cs": "bb735feaede8a57f6bfe9f5b8944f7b93009b2eb1398011cf07ed45a7fa576b2",
+    "Assets/Editor/ChessPlaytestValidation.cs": "713569f758f5375d55b926908a3ffe13125e459a50ce8a409bb32c6e50e344ba"
+  }
+}

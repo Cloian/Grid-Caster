@@ -1,0 +1,19 @@
+{
+  "engine": "6000.4.0f1",
+  "sourceMatchesTestCopy": true,
+  "sha256": {
+    "Assets/Codes/DamageBoostArea.cs": "84d28a2172cc0cbc2fffe6995ceabb11e7e85fe253d45e5c35673af02bf3ecb7",
+    "Assets/Codes/RunProgressionSystem.cs": "f6cf20b498c2d600a3c035036736b57aeaa29fa65bda5cc67157686337b1840a",
+    "Assets/Codes/RunProgressionCatalog.cs": "206041f010fe2f032a7e760f371773c9a8394fb48de35edcc15419bf66b88daa",
+    "Assets/Codes/RunProgressionDescriptions.cs": "b1aa524f8dc30029c457425a8bd004836eab9bb278dc0a55c021c7f57ebda2e9",
+    "Assets/Codes/Move.cs": "5511cead2fe7d3675ebf1b7a63dc264ceaed84496841efc537fe1b4da8ec5849",
+    "Assets/Codes/CombatFeedback.cs": "156dddb7a0dc02bed07927ce289ec0215484db4f1921946a119b13f4ec8b60b6",
+    "Assets/Codes/CombatFeedbackFragments.cs": "10e572c35716913b9721a840e20fbbf56dfabfc27bf922646d55d53d3aab58ff",
+    "Assets/Codes/ProjectileManager.cs": "f48b2ad7b0c778be82a39e0dcb795447ca16328d604ec9683eb083d53e8aadad",
+    "Assets/Editor/DamageBoostSplashValidation.cs": "8971170f7786c656c95c86cccecd75eccacf67049f146523e2af9dd832a7e2b2",
+    "Assets/Editor/RunBalanceValidation.cs": "82080bc51ce02607574cc77be7374c7c35aae1a508e6f43c384d4cb4d0e10bd7",
+    "Assets/Editor/TacticalCoreValidation.cs": "c95412d7d2a94794273c3dbdee9dcdb85f1a97c904e53830c75a6c22b695abc3",
+    "Assets/Editor/ImpactPresentationValidation.cs": "bb735feaede8a57f6bfe9f5b8944f7b93009b2eb1398011cf07ed45a7fa576b2",
+    "Assets/Editor/ProgressionUsabilityValidation.cs": "1f0da7bd1641927ee0f931c42dc1091574f8fb6513054e8dad141990969a1ab6"
+  }
+}

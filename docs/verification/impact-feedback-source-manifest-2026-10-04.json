@@ -1,0 +1,16 @@
+{
+  "unity": "6000.4.0f1",
+  "files": {
+    "Assets/Codes/CombatFeedback.cs": "e5e6dff450ae06f27e9e18ea9bced7b0372017e74a859ff414281d60b9840ac5",
+    "Assets/Codes/CharacterHealth.cs": "0f2e37640607c0d39d786f175bd7956231632f97bb115acb4dfdb2563e1cd6d1",
+    "Assets/Codes/MonsterMovement.cs": "69e1a45aac8b36c76b395343deb56d17c18c2fdeec250e687504138b928f7d0b",
+    "Assets/Codes/MonsterSpawner.cs": "8bf309e2a65a59be3408efa1c091c5a76d2f457a0a942646f45b508029b7555b",
+    "Assets/Codes/Move.cs": "2168a101d6a3ba9a76bc1779f9554498e113f20d7f60104a5d884c0b300524db",
+    "Assets/Codes/ProjectileManager.cs": "98db1a88cc7001d50cae451035961db5d1a80af2d356c5093f793568eddd768c",
+    "Assets/Codes/TurnProjectile.cs": "f03100ae11cee7dfade259a924061b24b8010196155ec4e65e267a15b826d3c2",
+    "Assets/Codes/CameraController.cs": "984b75a682d8a90b4144b2680469bbe7f5e710a0ffb1b79ebe3c83414ffe1764",
+    "Assets/Codes/GameAudio.cs": "994ae39471d6709a0a3563983ae200eb098f63157db4c60597a5bab24980f70b",
+    "Assets/Codes/RunProgressionSystem.cs": "a2c1fe0ac822f6acd793adf347311362d54ea840352049af2100e0f08d47d8ae",
+    "Assets/Editor/CombatFeedbackValidation.cs": "253596a11e4b91d7bb877bc7810f46ebf15b921d5427ee852d7517a2708d37de"
+  }
+}

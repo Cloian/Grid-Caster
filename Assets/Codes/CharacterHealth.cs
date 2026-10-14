@@ -29,6 +29,7 @@ public sealed class CharacterHealth : MonoBehaviour
     {
         maxHealth = Mathf.Max(1, startingMaxHealth);
         currentHealth = maxHealth;
+        CombatFeedback.ResetActor(this);
     }
 
     public void IncreaseMaxHealth(int amount, bool healSameAmount)
@@ -49,13 +50,14 @@ public sealed class CharacterHealth : MonoBehaviour
         currentHealth = Mathf.Min(currentHealth, maxHealth);
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, Vector3Int incomingDirection = default)
     {
         if (IsDead || damage <= 0)
             return;
 
         currentHealth = Mathf.Max(0, currentHealth - damage);
-        damageFlash?.Play();
+        if (CombatFeedback.DamageVisualDelay <= 0f) damageFlash?.Play();
+        CombatFeedback.PlayHit(this, incomingDirection, IsDead);
         Debug.Log($"{name}: 피해 {damage}, 체력 {currentHealth}/{maxHealth}", this);
 
         if (IsDead)

@@ -42,9 +42,13 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
     private int rookTargetColumn;
     private float rookShotFlashUntil;
     private bool showCross;
+    private bool knightCounterOpen;
     private Vector3Int lastCrossCenter;
 
     public int PatternExecutions { get; private set; }
+    public int BishopMoveDistance => bishopMoveDistance;
+    public bool IsKnightCounterVulnerable => monster != null && !monster.IsDead
+        && monster.MovementPattern == MonsterMovementPattern.Knight && knightCounterOpen;
     public bool IsRookCharged => monster != null
         && monster.MovementPattern == MonsterMovementPattern.Rook && rookCharged;
     public int RookTargetColumn => rookTargetColumn;
@@ -55,6 +59,7 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
         && actionIndex % knightInterval == 0;
     public string StatusText => monster.MovementPattern == MonsterMovementPattern.Knight
         ? $"N · {knightInterval}턴마다 도약 / 다음: {(WillKnightJumpNextTurn ? "도약" : "준비")}"
+            + (IsKnightCounterVulnerable ? " · 이번 행동 인접 첫 직격 +1" : string.Empty)
         : monster.MovementPattern == MonsterMovementPattern.Bishop
             ? "B · 대각선 이동 / 불길 남김"
             : rookCharged
@@ -81,7 +86,10 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
         rookRecovering = false;
         rookTargetColumn = monster.GridPosition.x;
         rookShotFlashUntil = 0f;
+        knightCounterOpen = false;
     }
+
+    public void CloseKnightCounterWindow() => knightCounterOpen = false;
 
     public void TakeTurn(Vector3Int playerCell, Func<Vector3Int, bool> blocked)
     {
@@ -150,6 +158,7 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
 
     private void TakeKnightTurn(Vector3Int playerCell, Func<Vector3Int, bool> blocked)
     {
+        CloseKnightCounterWindow();
         showCross = false;
         if (actionIndex % knightInterval != 0)
         {
@@ -163,8 +172,11 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
         {
             showCross = true;
             lastCrossCenter = destination;
+            GameAudio.Play(CombatSound.KnightLand);
             if (player.CurrentHealth > 0 && Distance(destination, player.GridPosition) == 1)
                 player.TakeDamage(1);
+            // 피격 여부와 무관하게 도약을 끝낸 나이트에 다음 행동의 반격 기회를 연다.
+            knightCounterOpen = player.CurrentHealth > 0;
         }))
         {
             previousKnightCell = origin;
@@ -214,24 +226,13 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
             return;
         }
         if (monster.IsDead) return;
+        GameAudio.Play(CombatSound.FireTrail);
         previousBishopCell = origin;
         recentBishopCells.Enqueue(origin);
         if (recentBishopCells.Count > 4) recentBishopCells.Dequeue();
         fire.AddFire(origin);
         foreach (Vector3Int cell in path) fire.AddFire(cell);
-        AddBishopOrbitFire(playerCell, path[path.Count - 1]);
         PatternExecutions++;
-    }
-
-    private void AddBishopOrbitFire(Vector3Int playerCell, Vector3Int bishopCell)
-    {
-        int x = Math.Sign(bishopCell.x - playerCell.x);
-        int y = Math.Sign(bishopCell.y - playerCell.y);
-        if (x == 0) x = bishopCell.x <= playerCell.x ? -1 : 1;
-        if (y == 0) y = bishopCell.y <= playerCell.y ? -1 : 1;
-        Vector3Int cutoffCell = playerCell + new Vector3Int(x, y, 0);
-        if (cutoffCell != playerCell && grid.IsWalkableCell(cutoffCell))
-            fire.AddFire(cutoffCell);
     }
 
     public bool IsRookWallCell(Vector3Int cell)

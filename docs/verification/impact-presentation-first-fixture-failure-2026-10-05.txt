@@ -1,0 +1,10 @@
+IMPACT_PRESENTATION_FAIL
+Controlled actual SampleScene fixtures; gameplay-rule validation, not human fun assessment.
+Unity 6000.4.0f1; 2026-10-05T14:11:02.7731890+09:00
+PASS actual F attack accepted
+PASS prepared damage boost has thicker warm projectile and short tail
+System.InvalidOperationException: all damage resolves at center impact, independently of fragment animation
+  at ImpactPresentationValidation.Check (System.Boolean result, System.String description) [0x0001f] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/ImpactPresentationValidation.cs:114 
+  at ImpactPresentationValidation+<Run>d__34.MoveNext () [0x002ab] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/ImpactPresentationValidation.cs:234 
+  at ImpactPresentationValidation+<Flatten>d__26.MoveNext () [0x0009e] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/ImpactPresentationValidation.cs:135 
+  at ImpactPresentationValidation.Tick () [0x00048] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/ImpactPresentationValidation.cs:75 

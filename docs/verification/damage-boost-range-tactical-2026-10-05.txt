@@ -1,0 +1,72 @@
+TACTICAL_CORE_PASS
+Executed 2026-10-05T15:09:49.7664930+09:00; Unity 6000.4.0f1
+Controlled fixtures; not normal-run survival or human enjoyment evidence.
+PASS UI raycast reaches UpgradeChoice_1 at (211.33, 236.67) screen=640x480 hits=UpgradeChoice_1,UpgradeSelectionPanel
+PASS initial build selection through actual UI callback
+INFO Runtime pipeline=URP; no render settings/assets changed
+INFO Existing fixture sprite: Frame_0, PPU=40, filter=Point; not modified
+PASS unready manual selection rejected
+PASS F does not select special attack before charge is ready
+PASS ordinary miss via screen click
+PASS miss does not charge; one world turn (charge=0, turns=0->1)
+PASS ordinary hit via screen click 1
+PASS one completed normal hit = one charge 1
+PASS ordinary hit via screen click 2
+PASS one completed normal hit = one charge 2
+PASS two ordinary hits prepare pierce
+PASS normal attack holds ready trait and does not auto-pierce
+PASS F command selects special aim without consuming charge
+PASS aim cancellation does not consume readiness
+PASS A switches special aim back to ordinary attack and preserves readiness
+PASS visible, untruncated action hint: manual attack (18/54)
+PASS prepared pierce preview includes second target but no wall
+PASS manual pierce via screen click
+PASS manual pierce hits aligned pair, no self recharge, one enemy turn
+PASS UI raycast reaches SelectedTraitIconFrame at (358.67, 79.67) screen=640x480 hits=SelectedTraitIconFrame,TraitHud
+PASS existing trait icon selects manual attack
+PASS committed manual miss consumes one use
+PASS partial charge carries across ordinary wave events
+PASS lower requirement immediately prepares existing charge
+PASS stage clear resets charge
+PASS double cast = two hits, zero charge, one world turn
+PASS visible, untruncated action hint: reaim (18/54)
+PASS reaim blocks direct move API
+PASS reaim blocks S and cancel
+PASS prepared damage attack gives two direct damage, no automatic recharge
+PASS prepared knockback moves surviving target one cell without recharging
+PASS visible, untruncated action hint: free king step (18/54)
+PASS king bonus occurs before original attack enemy turn
+PASS F cannot interrupt king free movement with special attack
+PASS free step rejects A/direct attack/manual trait attack
+PASS right click skips bonus and resumes exactly one enemy turn
+PASS rook cannot cross occupied intermediate tile to empty target
+PASS rook fire destination remains selectable via mouse
+PASS rook can cross fire, landing on fire hurts (not blocked by fire)
+PASS rook Lv.1 cannot move beyond four cells
+PASS knight shows possible cross threats, not exact future landing
+PASS new threat border uses 32 PPU / Point
+PASS hover query leaves position, pattern, and RNG unchanged
+PASS bishop separates possible creation from entry damage
+PASS fire-clearing attack commits through board input
+PASS ordinary attack clears traversed and occupied impact floor fire
+PASS ordinary attack does not clear fire beyond its first impact
+PASS charged pierce fire fixture commits
+PASS pierce clears both impact floors and intervening fire in one world turn
+PASS double cast first direct target killed before reaim
+PASS idle reaim does not advance enemy turn or change attack origin
+PASS second cast gains different-direction direct damage
+PASS third cast reaim also blocks movement
+PASS triple reaim resolves three targets at original position in exactly one world turn
+PASS damage range growth hits adjacent and outer cross targets for one while preserving gaps without chaining
+PASS blocked knockback deals direct plus actual obstruction damage without overlapping
+PASS knockback locks direct target for two actions, first collision for one, not neighbors
+PASS pierce direct-pair healing capped at twice per wave: 1
+PASS pierce direct-pair healing capped at twice per wave: 2
+PASS pierce direct-pair healing capped at twice per wave: 3
+PASS knight Lv.2 art commits from S choices
+PASS knight Lv.2 cleans landing fire before entry damage
+PASS rook charges a fixed column on top boundary only
+PASS rook fire fixture starts an actual player action
+PASS fixed-column rook fires once for two damage
+PASS rook recovery is one harmless enemy action
+PASS death resets charge and stops input

@@ -1,0 +1,27 @@
+{
+  "unity": "6000.4.0f1",
+  "scope": "Explicit gameplay/UI and validation sources only; not a repository commit or human playtest. Gameplay sources unchanged during regression assertion repairs.",
+  "files": {
+    "Assets/Codes/RunProgressionSystem.cs": "6ed947948aff9901a9e09c6bed4795afc69520e6d12b276472268921eebad887",
+    "Assets/Codes/RunProgressionCatalog.cs": "d700c921836bda96c2f6b054a12d588f9f530010535968e3adddefbcce603f13",
+    "Assets/Codes/RunProgressionDescriptions.cs": "a77b449a17999bd566a274def65e2a7efb329ec4021b0072ce225fd892ac8d84",
+    "Assets/Codes/Move.cs": "ee46c851e4e67acd1ca257e6bc3c770c231b44b5d2c93c4ebc9a8e0e031848c6",
+    "Assets/Codes/DirectionalActionIndicator.cs": "d9da83a24dc0d7b1d944b64432c6dc25e74e91df2fefca7e2980030a534c62dd",
+    "Assets/Codes/GameHudController.cs": "1019123c38e65d8c9ae5794a1fa1de4b15db1daa0cac22b1abc9b1ad24c35b4e",
+    "Assets/Codes/CombatFeedback.cs": "e5e6dff450ae06f27e9e18ea9bced7b0372017e74a859ff414281d60b9840ac5",
+    "Assets/Codes/MonsterMovement.cs": "69e1a45aac8b36c76b395343deb56d17c18c2fdeec250e687504138b928f7d0b",
+    "Assets/Codes/MonsterSpawner.cs": "c99a6fec138093e0a9faf866815fb88c0116db1d29c2462a6e3e40b9fd0f99a9",
+    "Assets/Codes/PlayerTraitSystem.cs": "eaed087fa89ca1a9566eb957bc5e9a0fbe02487cdd8b3c31ccd7c73b5828b73e",
+    "Assets/Codes/TurnProjectile.cs": "f03100ae11cee7dfade259a924061b24b8010196155ec4e65e267a15b826d3c2",
+    "Assets/Codes/ProjectileManager.cs": "98db1a88cc7001d50cae451035961db5d1a80af2d356c5093f793568eddd768c",
+    "Assets/Codes/ChessMonsterBehaviour.cs": "297278bf923343fd112a296bfef32de762ab3c30522d53e8b180336cbcfa6d50",
+    "Assets/Editor/DamageBoostSplashValidation.cs": "300ee528a46ab5c5d446947f8b41d084fbab25c4e338e714eeee5a725273e83b",
+    "Assets/Editor/RunBalanceValidation.cs": "901c988ac76ccac17452aaeea046fbf493bd8145cda510659249bc28aeb28385",
+    "Assets/Editor/TacticalCoreValidation.cs": "b405820122e49417172c97c48fd2ce6c1d6ed733ac8971b4ae1b838c69b65460",
+    "Assets/Editor/ProgressionUsabilityValidation.cs": "1f0da7bd1641927ee0f931c42dc1091574f8fb6513054e8dad141990969a1ab6",
+    "Assets/Editor/KnightCounterValidation.cs": "f4fd674941e0d11c40ccb84718dec86710c166cf8380ac33688faa2b890fc88e",
+    "Assets/Editor/ChessPlaytestValidation.cs": "f69a7551af11531abd74d11685406fc17aaa629b4eda6badf7f28bcd655fe46a",
+    "Assets/Editor/GameHudSetupTool.cs": "c44cbb27ee1f903ecc64ef665c9365f6ea8f9bbba548e842d03cbec59530cebe",
+    "Assets/Editor/DamageBoostSplashValidation.cs.meta": "73b3077f201cf1d12cc910d8cee99b6417345ace8920ee9a4ee4574bf93e042f"
+  }
+}

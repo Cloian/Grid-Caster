@@ -1,0 +1,31 @@
+IMPACT_PROBE_PASS
+Controlled actual SampleScene fixtures; not human listening or normal stage completion.
+Unity 6000.4.0f1; 2026-10-04T13:19:53.5224790+09:00
+PASS normal combat unlocked
+OBS walkable board center=(-1, -1, 0); bounds=Position: (-8, -8, 0), Size: (15, 15, 1)
+OBS serialized projectile speed=16.8; cell world size=1
+PASS attack accepted at (1, 0, 0)
+PASS hit then exactly one world turn at (1, 0, 0)
+OBS target=(1, 0, 0) time-to-hit-ms=59.52 impact-to-enemy-start-ms=0.00 impact-to-enemy-start-frames=0
+PASS attack accepted at (2, 0, 0)
+PASS hit then exactly one world turn at (2, 0, 0)
+OBS target=(2, 0, 0) time-to-hit-ms=119.09 impact-to-enemy-start-ms=0.00 impact-to-enemy-start-frames=0
+PASS attack accepted at (6, 0, 0)
+PASS hit then exactly one world turn at (6, 0, 0)
+OBS target=(6, 0, 0) time-to-hit-ms=357.22 impact-to-enemy-start-ms=0.00 impact-to-enemy-start-frames=0
+PASS attack accepted at (1, 1, 0)
+PASS hit then exactly one world turn at (1, 1, 0)
+OBS target=(1, 1, 0) time-to-hit-ms=84.34 impact-to-enemy-start-ms=0.00 impact-to-enemy-start-frames=0
+PASS attack accepted at (6, 6, 0)
+PASS hit then exactly one world turn at (6, 6, 0)
+OBS target=(6, 6, 0) time-to-hit-ms=505.12 impact-to-enemy-start-ms=0.00 impact-to-enemy-start-frames=0
+PASS nonlethal hit starts flash
+PASS nonlethal target and flash survive to next frame
+PASS knockback transform reaches new cell synchronously; no travel phase
+OBS after lethal TakeDamage: dead=True; flash active=False; occupied=False
+PASS lethal hit releases occupancy immediately
+PASS lethal target removed before next frame probe; cannot finish 220ms flash
+PASS all four same-frame targets lose HP
+OBS four same-frame soft hits accepted sounds=1 (35ms limiter)
+OBS mixed combat requests=4; accepted=3; normal voices=3
+LIMIT headless code/timing probe only; not displayed-frame QA, hardware audio latency, preference or fun validation.

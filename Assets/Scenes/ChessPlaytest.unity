@@ -494,8 +494,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Move
   moveSpeed: 2.67
+  movementArtTravelSeconds: 0.4
   maxHealth: 10
   attackDamage: 1
+  attackRecoverySeconds: 0.08
   blockedMoveSound: {fileID: 0}
   blockedMoveSoundVolume: 0.45
   actionIndicator: {fileID: 1103089923}
@@ -550,7 +552,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 6254356484370202729, guid: ad66df2e418824f4f8fdd34f3d36e18e, type: 3}
+  m_Sprite: {fileID: -1147218300, guid: 2433d5cabf14c4c0a94311c3e020b818, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2199,7 +2201,8 @@ MonoBehaviour:
   edgeInsetTiles: 1
   minimumPlayerDistance: 4
   enableChessWaves: 0
-  chessMonsterSprite: {fileID: 0}
+  chessMonsterSprite: {fileID: -2062616160, guid: 2f54d1484e82941b08d43790761d4864, type: 3}
+  chessMonsterAnimatorController: {fileID: 9100000, guid: ec8be16b33cce443a9d6c3f6b4952fb9, type: 2}
   bishopMonsterSprite: {fileID: -1933069808, guid: 40115c6db072f4dac9a38e773eef0d88, type: 3}
   bishopMonsterAnimatorController: {fileID: 9100000, guid: d6fe023b245ad46c88b3bf3b67292d63, type: 2}
   rookMonsterSprite: {fileID: 0}
@@ -2227,7 +2230,7 @@ MonoBehaviour:
   bishopOrbitDistance: 2
   bishopFireTurns: 3
   bishopFireDamage: 1
-  monsterSprite: {fileID: 6687599659494732175, guid: f8dccbf2331384711b8ba0dbd24d7c13, type: 3}
+  monsterSprite: {fileID: -2062616160, guid: 2f54d1484e82941b08d43790761d4864, type: 3}
 --- !u!114 &1423128752
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2243,6 +2246,8 @@ MonoBehaviour:
   moveSpeed: 16.8
   projectileColor: {r: 1, g: 1, b: 1, a: 1}
   sortingOrder: 15
+  minimumFlightSeconds: 0.06
+  maximumFlightSeconds: 0.25
   projectileSprite: {fileID: 7817816895817814352, guid: 14a2a48dfb4c04eeb942aa8d3bbaa4e8, type: 3}
   projectileAnimatorController: {fileID: 9100000, guid: 33e5e8ff9d21c4f668437596dd8f1be1, type: 2}
 --- !u!114 &1423128753
