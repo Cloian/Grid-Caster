@@ -77,6 +77,7 @@ PC 화면 기준 정리 → 첫 스테이지 판단·빌드 검증 → 보스와
 * 렌더링: Universal Render Pipeline 2D
 * 입력 패키지: Unity Input System
 * 스프라이트 기준: 32 PPU
+* 에디터 연동: MCP for Unity `com.coplaydev.unity-mcp` `v10.2.0` (서버 `mcpforunityserver==10.2.0`과 버전을 맞춘다. Codex·Claude 공통)
 
 Unity 버전과 현재 프로젝트 설정을 먼저 확인한 뒤 코드를 작성한다.
 
