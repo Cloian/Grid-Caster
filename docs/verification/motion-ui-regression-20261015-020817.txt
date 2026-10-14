@@ -1,0 +1,59 @@
+MOTION_UI_REGRESSION_PASS
+Controlled SampleScene Play fixtures; not a human playtest.
+PASS fixture begins in Hit: None
+PASS movement accepted after damage: None
+PASS IsMoving set: None
+PASS walk replaces remaining Hit: None
+PASS movement has visible travel before arrival: None
+PASS walk throughout travel: None
+PASS walk throughout travel: None
+PASS walk throughout travel: None
+PASS one landing and one world turn: None
+PASS fixture begins in Hit: Knight
+PASS movement accepted after damage: Knight
+PASS IsMoving set: Knight
+PASS walk replaces remaining Hit: Knight
+PASS movement has visible travel before arrival: Knight
+PASS walk throughout travel: Knight
+PASS walk throughout travel: Knight
+PASS walk throughout travel: Knight
+PASS walk throughout travel: Knight
+PASS one landing and one world turn: Knight
+PASS fixture begins in Hit: Bishop
+PASS movement accepted after damage: Bishop
+PASS IsMoving set: Bishop
+PASS walk replaces remaining Hit: Bishop
+PASS movement has visible travel before arrival: Bishop
+PASS walk throughout travel: Bishop
+PASS walk throughout travel: Bishop
+PASS walk throughout travel: Bishop
+PASS walk throughout travel: Bishop
+PASS one landing and one world turn: Bishop
+PASS fixture begins in Hit: Rook
+PASS movement accepted after damage: Rook
+PASS IsMoving set: Rook
+PASS walk replaces remaining Hit: Rook
+PASS movement has visible travel before arrival: Rook
+PASS walk throughout travel: Rook
+PASS walk throughout travel: Rook
+PASS walk throughout travel: Rook
+PASS walk throughout travel: Rook
+PASS one landing and one world turn: Rook
+PASS action can resume moving: idle-run/Hit
+PASS action can resume moving: idle-run/Attack
+PASS action can resume moving: Bat/Hit
+PASS action can resume moving: Bat/Attack
+PASS action can resume moving: Snake/Hit
+PASS action can resume moving: Snake/Attack
+PASS mouse available for actual board hover
+PASS altar hover visible during battle
+PASS pause hides existing tooltip and blocks actions
+PASS hover cannot reopen tooltip over pause
+PASS altar hover resumes after pause
+PASS result panel freezes combat and hides tooltip
+PASS death reaches final grave sprite while timeScale is zero
+PASS grave retains original color instead of frozen damage flash
+PASS death visual does not advance combat or reopen input
+PASS board review may show altar details without reopening combat
+PASS reset restores normal animator clock and clears death marker
+PASS new run starts with normal animation clock and fresh selection

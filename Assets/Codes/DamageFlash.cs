@@ -105,6 +105,11 @@ public sealed class DamageFlash : MonoBehaviour
 
     private void OnDisable()
     {
+        Stop();
+    }
+
+    public void Stop()
+    {
         remainingTime = 0f;
         RestoreOriginalColors();
     }

@@ -14,6 +14,7 @@ public sealed class PlayerDeathMarker : MonoBehaviour
     private CharacterHealth characterHealth;
     private SpriteRenderer playerSprite;
     private Animator playerAnimator;
+    private AnimatorUpdateMode aliveAnimatorUpdateMode;
     private GameObject graveObject;
     private bool deathAnimationShowsGrave;
 
@@ -25,6 +26,7 @@ public sealed class PlayerDeathMarker : MonoBehaviour
         characterHealth = GetComponent<CharacterHealth>();
         playerSprite = GetComponent<SpriteRenderer>();
         playerAnimator = GetComponent<Animator>();
+        if (playerAnimator != null) aliveAnimatorUpdateMode = playerAnimator.updateMode;
     }
 
     private void OnEnable()
@@ -56,6 +58,9 @@ public sealed class PlayerDeathMarker : MonoBehaviour
         // 사망 모션이 묘비가 솟아오르는 장면까지 재생하고 마지막 프레임을 유지한다.
         if (ActorMotion.HasDeath(this))
         {
+            // 결과 창은 전투 시간을 멈춘다. 사망 표현만 비배율 시간으로 끝까지 재생한다.
+            playerAnimator.updateMode = AnimatorUpdateMode.UnscaledTime;
+            GetComponent<DamageFlash>()?.Stop();
             deathAnimationShowsGrave = true;
             return;
         }
@@ -112,6 +117,9 @@ public sealed class PlayerDeathMarker : MonoBehaviour
         if (playerSprite != null)
             playerSprite.enabled = true;
         if (playerAnimator != null)
+        {
+            playerAnimator.updateMode = aliveAnimatorUpdateMode;
             playerAnimator.enabled = true;
+        }
     }
 }

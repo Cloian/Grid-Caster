@@ -33,6 +33,7 @@ public sealed class RunProgressionUiController : MonoBehaviour
     private const float ScreenEdgeMargin = 18f;
 
     private RunProgressionSystem progression;
+    private GameHudController gameHud;
     private CameraController boardCamera;
     private Font font;
     private RectTransform canvasRect;
@@ -98,6 +99,7 @@ public sealed class RunProgressionUiController : MonoBehaviour
             return;
 
         progression = target;
+        gameHud = GetComponent<GameHudController>();
         boardCamera = cameraController != null
             ? cameraController : FindAnyObjectByType<CameraController>();
         progression.TryInitialize();
@@ -169,7 +171,15 @@ public sealed class RunProgressionUiController : MonoBehaviour
         // 카메라(실행 순서 100)가 새 창 크기를 반영한 뒤 HUD의 보드 경계를 계산한다.
         Vector2Int size = new Vector2Int(Screen.width, Screen.height);
         if (initialized && size != lastScreenSize) LayoutPanels();
-        if (initialized) UpdateBoardAltarHover();
+        if (initialized)
+        {
+            if (IsHoverBlocked)
+            {
+                tooltipFromBoard = false;
+                HideHoverTooltip();
+            }
+            else UpdateBoardAltarHover();
+        }
     }
 
     private void BuildLeftPanel()
@@ -440,6 +450,9 @@ public sealed class RunProgressionUiController : MonoBehaviour
     private const float TooltipWidth = 380f;
     private static readonly (string title, string body) NoTooltip = (null, null);
 
+    private bool IsHoverBlocked => IsDetailOpen || (gameHud != null
+        && (gameHud.IsTraitSelectionOpen || gameHud.IsPauseMenuOpen || gameHud.IsGameOverOverlayVisible));
+
     private void BuildHoverTooltip()
     {
         hoverTooltip = CreateFixedCard("HoverTooltip", transform, Vector2.zero, new Vector2(TooltipWidth, 120f), LegendaryColor);
@@ -470,7 +483,7 @@ public sealed class RunProgressionUiController : MonoBehaviour
 
     private void ShowHoverTooltip(RectTransform target, (string title, string body) content)
     {
-        if (hoverTooltip == null || string.IsNullOrEmpty(content.title)) return;
+        if (hoverTooltip == null || IsHoverBlocked || string.IsNullOrEmpty(content.title)) return;
         hoverTitle.text = content.title;
         hoverBody.text = content.body;
         float height = 44f + hoverBody.preferredHeight + 14f;
@@ -496,7 +509,7 @@ public sealed class RunProgressionUiController : MonoBehaviour
     {
         if (hoverTooltip == null || Mouse.current == null) return;
         bool shown = false;
-        if (!IsModalOpen && progression.ActiveAltars.Count > 0)
+        if (!IsHoverBlocked && !IsModalOpen && progression.ActiveAltars.Count > 0)
         {
             Camera camera = boardCamera != null ? boardCamera.GetComponent<Camera>() : null;
             GridManager grid = FindAnyObjectByType<GridManager>();
@@ -523,7 +536,7 @@ public sealed class RunProgressionUiController : MonoBehaviour
 
     private void ShowTooltipAtScreen(Vector2 screen, (string title, string body) content)
     {
-        if (string.IsNullOrEmpty(content.title)) return;
+        if (IsHoverBlocked || string.IsNullOrEmpty(content.title)) return;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, screen, null, out Vector2 local);
         hoverTitle.text = content.title;
         hoverBody.text = content.body;

@@ -1,0 +1,50 @@
+PC_BOARD_LAYOUT_FAIL
+Actual Editor geometry/raycast + separately labelled layout calculations. Not human play evidence.
+PASS runtime pipeline detected as URP; render settings unchanged
+PASS desktop Web is not inherently mobile
+PASS phone/native/forced adapter retained
+PASS calculation: board stays clear of HUD space (top/bottom) at (1024, 768)
+PASS integer pixel scale whenever 2x or larger fits at (1024, 768) scale=1.440476
+PASS board uses most of screen height at (1024, 768)
+PASS calculation: board stays clear of HUD space (side) at (1280, 720)
+PASS integer pixel scale whenever 2x or larger fits at (1280, 720) scale=1.455556
+PASS board uses most of screen height at (1280, 720)
+PASS calculation: board stays clear of HUD space (side) at (1920, 1080)
+PASS integer pixel scale whenever 2x or larger fits at (1920, 1080) scale=2
+PASS board uses most of screen height at (1920, 1080)
+PASS calculation: board stays clear of HUD space (side) at (2560, 1080)
+PASS integer pixel scale whenever 2x or larger fits at (2560, 1080) scale=2
+PASS board uses most of screen height at (2560, 1080)
+PASS calculation: board stays clear of HUD space (side) at (3840, 2160)
+PASS integer pixel scale whenever 2x or larger fits at (3840, 2160) scale=4
+PASS board uses most of screen height at (3840, 2160)
+PASS calculation: board stays clear of HUD space (top/bottom) at (800, 1200)
+PASS integer pixel scale whenever 2x or larger fits at (800, 1200) scale=1.625
+PASS board uses most of screen height at (800, 1200)
+PASS calculation: board stays clear of HUD space (side) at (960, 540)
+PASS integer pixel scale whenever 2x or larger fits at (960, 540) scale=1.091667
+PASS board uses most of screen height at (960, 540)
+PASS native PC does not attach mobile adapter
+PASS 13x13 internal board plus outer walls preserved
+PASS actual GraphicRaycaster reaches UpgradeChoice_1 (hits: UpgradeChoice_1,UpgradeSelectionPanel)
+PASS actual runtime viewport dimensions ((1960, 1960)); Editor callback Screen=1948x1688
+PASS actual full board matches common PC geometry
+PASS actual HUD outside playable cells and inside screen: BuildInventoryButton
+PASS actual HUD outside playable cells and inside screen: WaveHud
+PASS actual HUD outside playable cells and inside screen: TimeHud
+PASS actual HUD outside playable cells and inside screen: HealthHud
+PASS actual HUD outside playable cells and inside screen: UltimateFrame
+PASS actual HUD outside playable cells and inside screen: TraitHud
+PASS actual HUD outside playable cells and inside screen: AttackActionFrame
+PASS actual HUD outside playable cells and inside screen: MoveActionFrame
+PASS actual HUD outside playable cells and inside screen: ActionModeHud
+PASS owned upgrades and relics hidden during battle
+PASS actual GraphicRaycaster reaches AttackActionFrame (hits: AttackActionFrame)
+PASS attack UI opens eight directions
+PASS actual GraphicRaycaster reaches MoveActionFrame (hits: MoveActionFrame)
+PASS movement UI remains usable
+System.InvalidOperationException: actual GraphicRaycaster reaches BuildInventoryButton (hits: )
+  at PcBoardLayoutValidation.Check (System.Boolean ok, System.String description) [0x0001f] in /Users/gimdong-yun/GitHub/Grid-Caster/Assets/Editor/PcBoardLayoutValidation.cs:99 
+  at PcBoardLayoutValidation.Click (UnityEngine.RectTransform rect) [0x00057] in /Users/gimdong-yun/GitHub/Grid-Caster/Assets/Editor/PcBoardLayoutValidation.cs:117 
+  at PcBoardLayoutValidation+<Run>d__17.MoveNext () [0x00877] in /Users/gimdong-yun/GitHub/Grid-Caster/Assets/Editor/PcBoardLayoutValidation.cs:202 
+  at PcBoardLayoutValidation.Tick () [0x00043] in /Users/gimdong-yun/GitHub/Grid-Caster/Assets/Editor/PcBoardLayoutValidation.cs:73 

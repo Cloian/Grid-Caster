@@ -268,6 +268,8 @@ public static class LivelyMotionSetupTool
         Immediate(move.AddTransition(idle)).AddCondition(AnimatorConditionMode.IfNot, 0, "IsMoving");
         foreach (AnimatorState action in new[] { attack, hit })
         {
+            // 다음 이동 행동은 이전 행동의 남은 모션에 가로막히지 않는다.
+            Immediate(action.AddTransition(move)).AddCondition(AnimatorConditionMode.If, 0, "IsMoving");
             AnimatorStateTransition back = Immediate(action.AddTransition(idle));
             back.hasExitTime = true;
             back.exitTime = 1f;
