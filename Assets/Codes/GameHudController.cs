@@ -44,6 +44,7 @@ public sealed class GameHudController : MonoBehaviour
     [SerializeField, HideInInspector] private Text[] traitChoicePlaceholderTexts;
     [SerializeField, HideInInspector] private Text[] traitChoiceNameTexts;
     [SerializeField, HideInInspector] private Text[] traitChoiceDescriptionTexts;
+    private bool traitCardsPolished;
     [SerializeField, HideInInspector] private Image selectedTraitIconImage;
     [SerializeField, HideInInspector] private Text selectedTraitPlaceholderText;
     [SerializeField, HideInInspector] private Text selectedTraitNameText;
@@ -270,6 +271,16 @@ public sealed class GameHudController : MonoBehaviour
 
     private bool displayingAttackOutcome;
 
+    private void LateUpdate()
+    {
+        // 초기화 순서상 Awake/Start에서는 카드 배치가 덮일 수 있어, 창이 실제로 보일 때 한 번 맞춘다.
+        if (!traitCardsPolished && IsTraitSelectionOpen && !MobilePlaytestController.IsActive)
+        {
+            PolishTraitCards();
+            traitCardsPolished = true;
+        }
+    }
+
     private void Update()
     {
         if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
@@ -418,6 +429,59 @@ public sealed class GameHudController : MonoBehaviour
         }
     }
 
+    // 시작 특성 카드: 위쪽에 아이콘·이름, 아래쪽 전체 폭에 준비 조건·효과를 둬 줄이 잘리지 않게 한다.
+    private void PolishTraitCards()
+    {
+        if (traitChoiceButtons == null) return;
+        // Awake 시점에는 레이아웃이 계산되지 않아 카드 크기가 0일 수 있다.
+        Canvas.ForceUpdateCanvases();
+        for (int i = 0; i < traitChoiceButtons.Length; i++)
+        {
+            if (traitChoiceButtons[i] == null) continue;
+            RectTransform card = traitChoiceButtons[i].GetComponent<RectTransform>();
+            float width = card.rect.width > 1f ? card.rect.width : 340f;
+            float height = card.rect.height > 1f ? card.rect.height : 244f;
+            PlaceTopLeft(card.Find("ShortcutBadge") as RectTransform, 8f, 8f, 28f, 28f);
+            RectTransform iconFrame = card.Find("TraitIconFrame") as RectTransform;
+            PlaceTopLeft(iconFrame, 26f, 28f, 84f, 84f);
+            if (iconFrame != null && iconFrame.childCount > 0)
+            {
+                RectTransform iconBackground = iconFrame.GetChild(0) as RectTransform;
+                iconBackground.anchorMin = Vector2.zero;
+                iconBackground.anchorMax = Vector2.one;
+                iconBackground.anchoredPosition = Vector2.zero;
+                iconBackground.sizeDelta = new Vector2(-8f, -8f);
+            }
+            if (traitChoiceNameTexts != null && i < traitChoiceNameTexts.Length && traitChoiceNameTexts[i] != null)
+            {
+                Text name = traitChoiceNameTexts[i];
+                PlaceTopLeft(name.rectTransform, 126f, 44f, width - 142f, 52f);
+                name.fontSize = 24;
+                name.alignment = TextAnchor.MiddleLeft;
+            }
+            if (traitChoiceDescriptionTexts != null && i < traitChoiceDescriptionTexts.Length
+                && traitChoiceDescriptionTexts[i] != null)
+            {
+                Text description = traitChoiceDescriptionTexts[i];
+                PlaceTopLeft(description.rectTransform, 20f, 128f, width - 40f, height - 140f);
+                description.fontSize = 17;
+                description.lineSpacing = 1.15f;
+                description.alignment = TextAnchor.UpperLeft;
+                description.horizontalOverflow = HorizontalWrapMode.Wrap;
+                description.verticalOverflow = VerticalWrapMode.Overflow;
+            }
+        }
+    }
+
+    private static void PlaceTopLeft(RectTransform rect, float x, float y, float width, float height)
+    {
+        if (rect == null) return;
+        rect.anchorMin = rect.anchorMax = new Vector2(0f, 1f);
+        rect.pivot = new Vector2(0f, 1f);
+        rect.anchoredPosition = new Vector2(x, -y);
+        rect.sizeDelta = new Vector2(width, height);
+    }
+
     private void ConfigureTraitChoices()
     {
         int optionCount = traitOptions != null ? traitOptions.Length : 0;
@@ -449,9 +513,15 @@ public sealed class GameHudController : MonoBehaviour
                     "knockback" => "생존한 적을 1칸 밀고, 벽·적 충돌 시 피해 1.",
                     _ => traitOptions[i].Description
                 };
-                traitChoiceDescriptionTexts[i].text = "일반 공격 적중 "
-                    + Mathf.Max(1, traitOptions[i].ActivationBagSize - 1) + "회로 준비 · 수동 사용"
-                    + "\n" + shortEffect;
+                int hits = Mathf.Max(1, traitOptions[i].ActivationBagSize - 1);
+                string cost = MobilePlaytestController.IsActive
+                    ? "일반 공격 적중 " + hits + "회로 준비 · 수동 사용"
+                    : "적중 " + hits + "회로 준비 · 수동 사용";
+                // PC 카드는 준비 조건을 강조색 한 줄로, 효과를 그 아래에 둔다(모바일은 기존 문구).
+                traitChoiceDescriptionTexts[i].supportRichText = true;
+                traitChoiceDescriptionTexts[i].text = MobilePlaytestController.IsActive
+                    ? cost + "\n" + shortEffect
+                    : "<color=#67CAFF>" + cost + "</color>\n" + shortEffect;
             }
 
             Image iconImage = traitChoiceIconImages != null && i < traitChoiceIconImages.Length

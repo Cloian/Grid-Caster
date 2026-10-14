@@ -69,6 +69,11 @@ public sealed class RunProgressionUiController : MonoBehaviour
     private readonly IconView[] altarIcons = new IconView[2];
     private readonly UnityEngine.UI.Button[] upgradeButtons = new UnityEngine.UI.Button[3];
     private readonly UnityEngine.UI.Text[] upgradeTexts = new UnityEngine.UI.Text[3];
+    // PC 카드 구성: 이름 · 등급 · 레벨 변화를 효과 설명(upgradeTexts)과 나눠 보여 준다.
+    private readonly UnityEngine.UI.Text[] upgradeNames = new UnityEngine.UI.Text[3];
+    private readonly UnityEngine.UI.Text[] upgradeGrades = new UnityEngine.UI.Text[3];
+    private readonly UnityEngine.UI.Text[] upgradeLevels = new UnityEngine.UI.Text[3];
+    private readonly GameObject[] upgradePcOnly = new GameObject[3];
     private readonly IconView[] upgradeIcons = new IconView[3];
     private readonly UpgradeDefinition[] displayedUpgrades = new UpgradeDefinition[3];
     private readonly UnityEngine.UI.Button[] replacementButtons = new UnityEngine.UI.Button[5];
@@ -219,6 +224,9 @@ public sealed class RunProgressionUiController : MonoBehaviour
         label.rectTransform.sizeDelta = Vector2.zero;
         foreach (RectTransform panel in new[] { leftPanel, rightPanel })
         {
+            // 빌드 창(PC 전용) 글씨를 키운다. 12~13px 설명이 1080p에서 읽기 어려웠다.
+            foreach (UnityEngine.UI.Text text in panel.GetComponentsInChildren<UnityEngine.UI.Text>(true))
+                text.fontSize = Mathf.RoundToInt(text.fontSize * 1.2f);
             panel.SetParent(inventoryCard, false);
             panel.anchorMin = panel.anchorMax = panel.pivot = Vector2.one * 0.5f;
             panel.anchoredPosition = new Vector2(panel == leftPanel ? -177f : 177f, -36f);
@@ -298,26 +306,56 @@ public sealed class RunProgressionUiController : MonoBehaviour
     private void BuildUpgradePanel()
     {
         upgradePanel = CreateCenterOverlay("UpgradeSelectionPanel", transform);
+        // 제목·안내·카드를 하나의 받침 패널 위에 묶는다.
+        RectTransform frame = CreateFixedCard("UpgradeFrame", upgradePanel,
+            new Vector2(0f, -10f), new Vector2(1068f, 540f), BorderColor);
+        frame.GetComponent<UnityEngine.UI.Image>().color = new Color32(14, 24, 44, 245);
         upgradeTitle = CreateText("Title", upgradePanel, "웨이브 강화 선택", 30,
             TextAnchor.MiddleCenter, TextColor, Vector2.zero, new Vector2(900f, 60f));
-        SetCentered(upgradeTitle.rectTransform, new Vector2(0f, 310f), new Vector2(1000f, 60f));
+        SetCentered(upgradeTitle.rectTransform, new Vector2(0f, 222f), new Vector2(1000f, 52f));
         upgradeGuide = CreateText("Guide", upgradePanel,
-            "하나를 선택하면 다음 웨이브가 바로 시작됩니다  ·  클릭 또는 1 · 2 · 3", 14,
+            "하나를 선택하면 다음 웨이브가 바로 시작됩니다  ·  클릭 또는 1 · 2 · 3", 16,
             TextAnchor.MiddleCenter, MutedColor, Vector2.zero, new Vector2(900f, 34f));
-        SetCentered(upgradeGuide.rectTransform, new Vector2(0f, 266f), new Vector2(1000f, 34f));
+        SetCentered(upgradeGuide.rectTransform, new Vector2(0f, 184f), new Vector2(1000f, 30f));
         for (int i = 0; i < 3; i++)
         {
             int captured = i;
             RectTransform card = CreateFixedCard($"UpgradeChoice_{i + 1}", upgradePanel,
-                new Vector2((i - 1) * 326f, -10f), new Vector2(306f, 470f), BorderColor);
+                new Vector2((i - 1) * 342f, -40f), new Vector2(322f, 380f), BorderColor);
             UnityEngine.UI.Button button = card.gameObject.AddComponent<UnityEngine.UI.Button>();
             UnityEngine.UI.Image cardImage = card.GetComponent<UnityEngine.UI.Image>();
             cardImage.raycastTarget = true;
             button.targetGraphic = cardImage;
+            UnityEngine.UI.ColorBlock colors = button.colors;
+            colors.highlightedColor = new Color32(220, 236, 255, 255);
+            colors.pressedColor = new Color32(180, 205, 235, 255);
+            button.colors = colors;
             button.onClick.AddListener(() => SelectUpgrade(captured));
             upgradeButtons[i] = button;
-            upgradeIcons[i] = CreateIcon("Icon", card, new Vector2(121f, -20f), new Vector2(64f, 64f));
-            RectTransform details = CreateCard("Details", card, new Vector2(214f, -24f), new Vector2(74f, 32f), BorderColor);
+
+            // 번호 배지 · 아이콘 · 이름/등급 · 상세 버튼 (위쪽 줄)
+            GameObject pcOnly = new GameObject("PcLayout", typeof(RectTransform));
+            pcOnly.transform.SetParent(card, false);
+            RectTransform pcRect = pcOnly.GetComponent<RectTransform>();
+            pcRect.anchorMin = Vector2.zero;
+            pcRect.anchorMax = Vector2.one;
+            pcRect.sizeDelta = Vector2.zero;
+            upgradePcOnly[i] = pcOnly;
+            RectTransform badge = CreateCard("Badge", pcRect, new Vector2(14f, -14f), new Vector2(30f, 30f), BorderColor);
+            badge.anchorMax = new Vector2(0f, 1f);
+            badge.GetComponent<UnityEngine.UI.Image>().color = BorderColor;
+            UnityEngine.UI.Text number = CreateText("Number", badge, (i + 1).ToString(), 17,
+                TextAnchor.MiddleCenter, TextColor, Vector2.zero, Vector2.zero);
+            number.rectTransform.anchorMin = Vector2.zero;
+            number.rectTransform.anchorMax = Vector2.one;
+            number.rectTransform.sizeDelta = Vector2.zero;
+            upgradeIcons[i] = CreateIcon("Icon", card, new Vector2(18f, -56f), new Vector2(80f, 80f));
+            upgradeGrades[i] = CreateText("Grade", pcRect, string.Empty, 14, TextAnchor.LowerLeft,
+                LegendaryColor, new Vector2(112f, -58f), new Vector2(-126f, 24f));
+            upgradeNames[i] = CreateText("Name", pcRect, string.Empty, 22, TextAnchor.UpperLeft,
+                TextColor, new Vector2(112f, -84f), new Vector2(-126f, 56f));
+
+            RectTransform details = CreateCard("Details", card, new Vector2(234f, -14f), new Vector2(74f, 32f), BorderColor);
             details.anchorMin = details.anchorMax = new Vector2(0f, 1f);
             details.sizeDelta = new Vector2(74f, 32f);
             AddDetailButton(details, () =>
@@ -326,12 +364,26 @@ public sealed class RunProgressionUiController : MonoBehaviour
                 if (item != null) OpenDetails(RunProgressionDescriptions.ChoiceName(item, progression),
                     RunProgressionDescriptions.ChoiceDetails(item, progression));
             });
-            CreateText("Label", details, "상세", 13, TextAnchor.MiddleCenter,
+            CreateText("Label", details, "상세", 14, TextAnchor.MiddleCenter,
                 TextColor, new Vector2(4f, -2f), new Vector2(-8f, 28f));
-            upgradeTexts[i] = CreateText("Label", card, string.Empty, 18, TextAnchor.UpperCenter,
-                TextColor, new Vector2(18f, -96f), new Vector2(-36f, 354f));
+
+            // 레벨 변화 줄 · 구분선 · 효과
+            RectTransform levelBox = CreateCard("LevelBox", pcRect, new Vector2(14f, -152f), new Vector2(-28f, 62f), BorderColor);
+            levelBox.GetComponent<UnityEngine.UI.Image>().color = new Color32(10, 18, 34, 255);
+            upgradeLevels[i] = CreateText("Level", levelBox, string.Empty, 16, TextAnchor.MiddleLeft,
+                RareColor, new Vector2(12f, 0f), new Vector2(-24f, 62f));
+            upgradeLevels[i].supportRichText = true;
+            upgradeTexts[i] = CreateText("Label", card, string.Empty, 17, TextAnchor.UpperLeft,
+                TextColor, new Vector2(20f, -230f), new Vector2(-40f, 140f));
+            upgradeTexts[i].lineSpacing = 1.15f;
         }
         upgradePanel.gameObject.SetActive(false);
+        // 모바일 어댑터는 기존 단일 문구 카드를 재배치한다.
+        if (MobilePlaytestController.IsActive)
+        {
+            frame.gameObject.SetActive(false);
+            foreach (GameObject pcOnly in upgradePcOnly) pcOnly.SetActive(false);
+        }
     }
 
     private void BuildDetailPanel()
@@ -517,12 +569,28 @@ public sealed class RunProgressionUiController : MonoBehaviour
             LayoutSidePanel(replacementPanel, true, innerEdge, panelScale);
         }
         LayoutBoardEdgeHud();
+        StretchViewportOverlays(canvasWidth, canvasHeight);
         if (detailCard != null)
         {
             float scale = Mathf.Min(1f, (canvasWidth - 36f) / 660f, (canvasHeight - 36f) / 590f);
             detailCard.localScale = Vector3.one * Mathf.Max(0.1f, scale);
         }
         lastScreenSize = new Vector2Int(Screen.width, Screen.height);
+    }
+
+    // 시작 특성·일시정지·결과 창은 좁은 ViewportHudRoot 안에 있어 배경이 가운데 띠만 덮었다.
+    // 배경을 캔버스 전체 폭으로 넓히고, 안쪽 패널은 가운데에 그대로 둔다.
+    private void StretchViewportOverlays(float canvasWidth, float canvasHeight)
+    {
+        foreach (string name in new[] { "TraitSelectionOverlay", "PauseMenuOverlay", "GameOverOverlay" })
+        {
+            RectTransform overlay = transform.GetComponentsInChildren<RectTransform>(true)
+                .FirstOrDefault(item => item.name == name);
+            RectTransform root = overlay != null ? overlay.parent as RectTransform : null;
+            if (overlay == null || root == null) continue;
+            overlay.sizeDelta = new Vector2(Mathf.Max(0f, canvasWidth - root.rect.width),
+                Mathf.Max(0f, canvasHeight - root.rect.height));
+        }
     }
 
     private void LayoutBoardEdgeHud()
@@ -588,6 +656,7 @@ public sealed class RunProgressionUiController : MonoBehaviour
                 maximum.y += 36f;
             }
             boardActionHudBounds = new Bounds((minimum + maximum) * 0.5f, maximum - minimum);
+            PolishActionHud(minimum, maximum);
         }
         BoundsInt cells = grid.GroundTilemap.cellBounds;
         float leftX = camera.WorldToScreenPoint(grid.GroundTilemap.CellToWorld(cells.min)).x;
@@ -603,6 +672,55 @@ public sealed class RunProgressionUiController : MonoBehaviour
         boardActionHudGroup.localScale = Vector3.one * scale;
         boardActionHudGroup.anchoredPosition = new Vector2((left.x + right.x) * 0.5f
             - boardActionHudBounds.center.x * scale, left.y - boardActionHudBounds.max.y * scale);
+    }
+
+    // 하단 행동 HUD: 받침 패널로 외벽이 틈새로 비치지 않게 하고, 체력·충전 글자를 키우며
+    // 체력 바를 둥근 흐림 스프라이트 대신 단색 사각형으로 그려 픽셀 경계를 선명하게 한다.
+    private void PolishActionHud(Vector3 minimum, Vector3 maximum)
+    {
+        if (MobilePlaytestController.IsActive) return;
+        GameObject backing = new GameObject("ActionHudBacking", typeof(RectTransform), typeof(CanvasRenderer),
+            typeof(UnityEngine.UI.Image), typeof(UnityEngine.UI.Outline));
+        RectTransform rect = backing.GetComponent<RectTransform>();
+        rect.SetParent(boardActionHudGroup, false);
+        rect.SetAsFirstSibling();
+        rect.anchorMin = rect.anchorMax = rect.pivot = Vector2.one * 0.5f;
+        const float padding = 8f;
+        rect.anchoredPosition = (minimum + maximum) * 0.5f;
+        rect.sizeDelta = new Vector2(maximum.x - minimum.x + padding * 2f, maximum.y - minimum.y + padding * 2f);
+        UnityEngine.UI.Image image = backing.GetComponent<UnityEngine.UI.Image>();
+        image.color = new Color32(12, 18, 34, 245);
+        image.raycastTarget = false;
+        UnityEngine.UI.Outline outline = backing.GetComponent<UnityEngine.UI.Outline>();
+        outline.effectColor = BorderColor;
+        outline.effectDistance = new Vector2(2f, -2f);
+
+        UnityEngine.UI.Image healthFill = GameObject.Find("HealthFill")?.GetComponent<UnityEngine.UI.Image>();
+        if (healthFill != null)
+        {
+            // Filled 채움은 스프라이트가 있어야 동작하므로 1px 흰색 스프라이트(Point)로 단색 사각형을 만든다.
+            Texture2D white = new Texture2D(1, 1, TextureFormat.RGBA32, false)
+                { filterMode = FilterMode.Point, hideFlags = HideFlags.DontSave };
+            white.SetPixel(0, 0, Color.white);
+            white.Apply();
+            healthFill.sprite = Sprite.Create(white, new Rect(0, 0, 1, 1), Vector2.one * 0.5f, 1f);
+            healthFill.type = UnityEngine.UI.Image.Type.Filled;
+        }
+        foreach (string name in new[] { "HealthValue", "HealthLabel" })
+        {
+            UnityEngine.UI.Text text = GameObject.Find(name)?.GetComponent<UnityEngine.UI.Text>();
+            if (text == null) continue;
+            text.fontSize = 20;
+            text.horizontalOverflow = HorizontalWrapMode.Overflow;
+        }
+        UnityEngine.UI.Text traitHeader = GameObject.Find("TraitHeader")?.GetComponent<UnityEngine.UI.Text>();
+        if (traitHeader != null)
+        {
+            traitHeader.fontSize = 14;
+            traitHeader.horizontalOverflow = HorizontalWrapMode.Overflow;
+        }
+        UnityEngine.UI.Text mode = GameObject.Find("ActionMode")?.GetComponent<UnityEngine.UI.Text>();
+        if (mode != null) mode.fontSize = 18;
     }
 
     private void LayoutHeaderHud(float boardTop, float gap)
@@ -691,7 +809,27 @@ public sealed class RunProgressionUiController : MonoBehaviour
             string grade = progression.IsStarterUpgradeSelection
                 ? "[시작 강화] "
                 : item.IsAdvanced ? "[상급 강화] " : string.Empty;
-            upgradeTexts[i].text = $"{i + 1}. {grade}{RunProgressionDescriptions.ChoiceName(item, progression)}\n\n{RunProgressionDescriptions.ChoiceSummary(item, progression)}";
+            string name = RunProgressionDescriptions.ChoiceName(item, progression);
+            string summary = RunProgressionDescriptions.ChoiceSummary(item, progression);
+            if (MobilePlaytestController.IsActive)
+                upgradeTexts[i].text = $"{i + 1}. {grade}{name}\n\n{summary}";
+            else
+            {
+                // "현재: …\n선택 후: …\n\n효과" 를 레벨 변화와 효과로 나눈다.
+                int split = summary.IndexOf("\n\n", StringComparison.Ordinal);
+                string levels = split >= 0 ? summary.Substring(0, split) : string.Empty;
+                string effect = split >= 0 ? summary.Substring(split + 2) : summary;
+                upgradeNames[i].text = name;
+                upgradeGrades[i].text = progression.IsStarterUpgradeSelection ? "시작 강화"
+                    : item.IsAdvanced ? "상급 강화" : "강화";
+                upgradeGrades[i].color = item.IsAdvanced ? LegendaryColor : RareColor;
+                // 두 줄: 현재 / 선택 후 (선택 후 값은 금색으로 강조)
+                string[] levelLines = levels.Split('\n');
+                string now = levelLines.Length > 0 ? levelLines[0].Replace("현재: ", string.Empty) : string.Empty;
+                string after = levelLines.Length > 1 ? levelLines[1].Replace("선택 후: ", string.Empty) : string.Empty;
+                upgradeLevels[i].text = $"현재  {now}\n선택 후  <color=#FFC954>{after}</color>";
+                upgradeTexts[i].text = effect;
+            }
             upgradeButtons[i].interactable = progression.CanSelectUpgrade(item);
             ApplyIcon(upgradeIcons[i], item.Id, item.Name);
         }
@@ -953,6 +1091,60 @@ public sealed class RunProgressionUiController : MonoBehaviour
             case "movement_breath":
             case "impact_recovery":
                 return "BindingLanding";
+            // 준비 적중 수를 줄이는 강화
+            case "quick_cast":
+            case "thin_reload":
+            case "dense_mana":
+            case "compressed_impact":
+                return "Bolt";
+            // 더블 캐스트 추가 시전
+            case "echo_warhead":
+            case "echo_recovery":
+            case "twin_focus":
+            case "rotating_mirror":
+            case "triple_echo":
+                return "EchoPressure";
+            // 관통
+            case "long_needle":
+            case "pierce_recovery":
+            case "thorn_needle":
+            case "suture_needle":
+            case "infinite_orbit":
+                return "Needle";
+            // 범위 공격·마력
+            case "overcharge":
+            case "hot_afterglow":
+            case "excess_reservoir":
+                return "ManaGem";
+            case "afterglow_recovery":
+            case "blast_core":
+                return "ChainBurst";
+            // 넉백
+            case "long_impact":
+            case "iron_nail":
+            case "domino_crest":
+            case "battering_ram":
+                return "Ram";
+            // 체력
+            case "life_tempering":
+            case "healing_breath":
+            case "blood_knot":
+            case "glass_heart":
+                return "Heart";
+            case "vanguard_shield":
+            case "landing_ward":
+                return "Shield";
+            case "ash_boots":
+                return "Boot";
+            case "kings_turn":
+                return "Crown";
+            case "hunters_mark":
+            case "ambush_crest":
+                return "Target";
+            case "rapid_cycle":
+            case "keen_magic":
+            case "trait_mastery":
+                return "Star";
             default:
                 return id;
         }

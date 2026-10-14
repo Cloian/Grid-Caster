@@ -2057,11 +2057,8 @@ public static class GameHudSetupTool
         {
             if (text.text == "20% · 기본 공격을 한 번 더\n연속으로 시전")
                 text.text = "20% · 기본 공격을\n한 번 더 연속 시전";
-            // 제목 아래에서 시작하도록 위쪽 피벗을 사용한다. 기존 중앙 피벗은 제목과 겹쳤다.
-            text.rectTransform.pivot = new Vector2(0f, 1f);
-            text.rectTransform.anchoredPosition = new Vector2(138f, 8f);
-            text.rectTransform.sizeDelta = new Vector2(186f, 110f);
-            text.fontSize = 18;
+            // 카드 안 배치·크기는 런타임(GameHudController.PolishTraitCards, 모바일 어댑터)이 맡는다.
+            // Play 진입 때마다 여기서 위치를 덮어쓰면 PC 카드 배치가 되돌아갔다.
             text.lineSpacing = 1.15f;
         }
     }
