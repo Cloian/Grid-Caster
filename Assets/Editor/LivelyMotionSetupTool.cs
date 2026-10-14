@@ -23,6 +23,8 @@ public static class LivelyMotionSetupTool
     private const string ChessScenePath = "Assets/Scenes/ChessPlaytest.unity";
     private const string BatControllerPath = "Assets/Monsters/Controllers/Bat.controller";
     private const string SnakeControllerPath = "Assets/Monsters/Controllers/Snake.controller";
+    private const string ArmadilloControllerPath = "Assets/Monsters/Controllers/ArmadilloBishop.controller";
+    private const string FireTrailSheet = "Assets/Resources/Effects/fire_trail.png";
 
     private sealed class Motion
     {
@@ -31,7 +33,8 @@ public static class LivelyMotionSetupTool
         public int Size;
         public bool Loop;
         public int[] DurationsMs;
-        public float Ppu => Size == 50 ? PixelsPerUnit : MonsterPixelsPerUnit;
+        public float PpuOverride;
+        public float Ppu => PpuOverride > 0f ? PpuOverride : Size == 50 ? PixelsPerUnit : MonsterPixelsPerUnit;
     }
 
     private static readonly Motion[] Player =
@@ -76,6 +79,21 @@ public static class LivelyMotionSetupTool
             Size = 40, DurationsMs = new[] { 60, 90, 120, 110, 180, 70, 70, 70, 70, 300 } },
     };
 
+    // 비숍 아르마딜로: 64px 프레임, 32 PPU(스포너가 타일 안에 맞춰 축소). 이동은 굴러가는 공.
+    private static readonly Motion[] Armadillo =
+    {
+        new Motion { Sheet = "Assets/Monsters/Armadillo/Lively/armadillo_idle.png", Clip = "Assets/Monsters/Animations/Armadillo/ArmadilloIdle.anim",
+            Size = 64, PpuOverride = 32f, Loop = true, DurationsMs = new[] { 200, 200, 200, 200 } },
+        new Motion { Sheet = "Assets/Monsters/Armadillo/Lively/armadillo_move.png", Clip = "Assets/Monsters/Animations/Armadillo/ArmadilloMove.anim",
+            Size = 64, PpuOverride = 32f, Loop = true, DurationsMs = new[] { 60, 60, 60, 60, 60, 60 } },
+        new Motion { Sheet = "Assets/Monsters/Armadillo/Lively/armadillo_attack.png", Clip = "Assets/Monsters/Animations/Armadillo/ArmadilloAttack.anim",
+            Size = 64, PpuOverride = 32f, DurationsMs = new[] { 80, 100, 120, 140 } },
+        new Motion { Sheet = "Assets/Monsters/Armadillo/Lively/armadillo_hit.png", Clip = "Assets/Monsters/Animations/Armadillo/ArmadilloHit.anim",
+            Size = 64, PpuOverride = 32f, DurationsMs = new[] { 50, 80, 110, 140 } },
+        new Motion { Sheet = "Assets/Monsters/Armadillo/Lively/armadillo_death.png", Clip = "Assets/Monsters/Animations/Armadillo/ArmadilloDeath.anim",
+            Size = 64, PpuOverride = 32f, DurationsMs = new[] { 80, 90, 90, 110, 140, 100, 100, 160 } },
+    };
+
     [MenuItem("Tools/Art/Apply Lively Motions")]
     public static void Apply()
     {
@@ -88,6 +106,8 @@ public static class LivelyMotionSetupTool
         AnimationClip[] playerClips = Player.Select(Build).ToArray();
         AnimationClip[] batClips = Bat.Select(Build).ToArray();
         AnimationClip[] snakeClips = Snake.Select(Build).ToArray();
+        AnimationClip[] armadilloClips = Armadillo.Select(Build).ToArray();
+        ConfigureSheet(new Motion { Sheet = FireTrailSheet, Size = 32, PpuOverride = 32f });
 
         AnimatorController player = AssetDatabase.LoadAssetAtPath<AnimatorController>(PlayerControllerPath);
         if (player == null)
@@ -97,6 +117,8 @@ public static class LivelyMotionSetupTool
         ConfigureController(bat, batClips, "Idle", "Move");
         AnimatorController snake = LoadOrCreate(SnakeControllerPath);
         ConfigureController(snake, snakeClips, "Idle", "Move");
+        AnimatorController armadillo = LoadOrCreate(ArmadilloControllerPath);
+        ConfigureController(armadillo, armadilloClips, "Idle", "Move");
 
         Sprite batIdle = LoadFrames(Bat[0])[0];
         Sprite playerIdle = LoadFrames(Player[0])[0];
@@ -106,7 +128,7 @@ public static class LivelyMotionSetupTool
         ApplyToPrefab(BatPrefabPath, batIdle, bat);
         ApplyToPrefab(SnakePrefabPath, LoadFrames(Snake[0])[0], snake);
         AssetDatabase.SaveAssets();
-        Validate(playerClips.Concat(batClips).Concat(snakeClips).ToArray(), player, bat, snake);
+        Validate(playerClips.Concat(batClips).Concat(snakeClips).Concat(armadilloClips).ToArray(), player, bat, snake, armadillo);
     }
 
     // Temp/LivelyMotionSetup.pending 이 있으면 다음 스크립트 로드 때 한 번만 자동 적용한다.
@@ -378,7 +400,7 @@ public static class LivelyMotionSetupTool
 
     private static void Validate(AnimationClip[] clips, params AnimatorController[] controllers)
     {
-        foreach (Motion motion in Player.Concat(Bat).Concat(Snake))
+        foreach (Motion motion in Player.Concat(Bat).Concat(Snake).Concat(Armadillo))
         {
             TextureImporter importer = AssetImporter.GetAtPath(motion.Sheet) as TextureImporter;
             Sprite[] frames = LoadFrames(motion);

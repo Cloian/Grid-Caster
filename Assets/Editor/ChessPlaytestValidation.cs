@@ -913,12 +913,18 @@ public static class ChessPlaytestValidation
                     for (int action = 0; action < 4; action++)
                     {
                         int previousTurns = completedTurns;
-                        Vector3Int direction = Directions.First(candidate =>
+                        Vector3Int direction = Directions.FirstOrDefault(candidate =>
                             grid.IsWalkableCell(player.GridPosition + candidate)
                             && !normalSpawner.TryGetMonsterAtCell(
                                 player.GridPosition + candidate, out _));
-                        Check(player.TryPerformAction(PlayerActionSelectionMode.Move, direction),
-                            "혼합 웨이브 기본 이동");
+                        // 적에게 포위돼 빈 칸이 없으면 인접한 적을 공격해 같은 한 행동을 소비한다.
+                        bool surrounded = direction == Vector3Int.zero;
+                        if (surrounded)
+                            direction = Directions.First(candidate =>
+                                normalSpawner.TryGetMonsterAtCell(player.GridPosition + candidate, out _));
+                        Check(player.TryPerformAction(surrounded ? PlayerActionSelectionMode.Attack
+                                : PlayerActionSelectionMode.Move, direction),
+                            surrounded ? "혼합 웨이브 포위 시 인접 공격" : "혼합 웨이브 기본 이동");
                         while (!player.CanAct) yield return null;
                         Check(completedTurns == previousTurns + 1, "혼합 웨이브에서 한 행동에 적/탄 한 턴");
                         ChessMonsterBehaviour[] rookPair = enemies

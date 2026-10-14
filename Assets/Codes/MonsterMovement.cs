@@ -61,6 +61,8 @@ public sealed class MonsterMovement : MonoBehaviour
     private const float KnightJumpSeconds = 0.24f;
 
     public bool IsDead => characterHealth != null && characterHealth.IsDead;
+    // 연출 전용: 타일 이동 보간 중인지(판정에는 쓰지 않는다).
+    public bool IsMovingVisual => moving;
     public MonsterMovementPattern MovementPattern => movementPattern;
     public Vector3Int GridPosition => gridPosition;
     public int SpawnOrder { get; private set; }
