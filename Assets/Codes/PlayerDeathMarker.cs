@@ -15,6 +15,10 @@ public sealed class PlayerDeathMarker : MonoBehaviour
     private SpriteRenderer playerSprite;
     private Animator playerAnimator;
     private GameObject graveObject;
+    private bool deathAnimationShowsGrave;
+
+    // 별도 묘비 오브젝트 또는 묘비로 끝나는 사망 모션이 표시 중인지.
+    public bool ShowsGrave => graveObject != null || deathAnimationShowsGrave;
 
     private void Awake()
     {
@@ -51,7 +55,10 @@ public sealed class PlayerDeathMarker : MonoBehaviour
 
         // 사망 모션이 묘비가 솟아오르는 장면까지 재생하고 마지막 프레임을 유지한다.
         if (ActorMotion.HasDeath(this))
+        {
+            deathAnimationShowsGrave = true;
             return;
+        }
 
         if (graveSprite == null)
         {
@@ -96,6 +103,7 @@ public sealed class PlayerDeathMarker : MonoBehaviour
 
     public void ResetMarker()
     {
+        deathAnimationShowsGrave = false;
         if (graveObject != null)
         {
             Destroy(graveObject);

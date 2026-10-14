@@ -497,9 +497,10 @@ public sealed class RunProgressionUiController : MonoBehaviour
             inventoryCard.localScale = Vector3.one * Mathf.Min(1f,
                 (canvasWidth - 36f) / 724f, (canvasHeight - 36f) / 920f);
             Rect board = PcBoardLayout.BoardPixelRect(Screen.width, Screen.height);
+            // 위 외벽 줄 오른쪽, 헤더(WAVE·TIME)와 같은 높이에 둔다.
             RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect,
                 new Vector2(board.xMax - 95f * PcBoardLayout.Scale(Screen.width, Screen.height),
-                    board.yMax + 40f * PcBoardLayout.Scale(Screen.width, Screen.height)),
+                    board.yMax - board.height / PcBoardLayout.BoardTiles * 0.5f),
                 null, out Vector2 buttonPosition);
             inventoryButton.anchoredPosition = buttonPosition;
             inventoryButton.localScale = Vector3.one * panelScale;
@@ -541,9 +542,10 @@ public sealed class RunProgressionUiController : MonoBehaviour
         float referenceScale = PcBoardLayout.Scale(Screen.width, Screen.height);
         float desiredGap = BoardPanelGap * referenceScale;
 
-        LayoutHeaderHud(boardMaximumY, desiredGap);
-
-        LayoutActionHudGroup(camera, grid, boardMinimumY, desiredGap);
+        // 위·아래 외벽 한 줄씩은 헤더·행동 HUD 뒤에 겹쳐도 된다. HUD는 플레이 칸 바로 바깥에서 시작한다.
+        float wallPixels = (boardMaximumY - boardMinimumY) / Mathf.Max(1, bounds.size.y);
+        LayoutHeaderHud(boardMaximumY - wallPixels, desiredGap);
+        LayoutActionHudGroup(camera, grid, boardMinimumY + wallPixels, desiredGap);
     }
 
     private void LayoutActionHudGroup(Camera camera, GridManager grid, float bottomY, float gap)

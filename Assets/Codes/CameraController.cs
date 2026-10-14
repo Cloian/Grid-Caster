@@ -178,7 +178,7 @@ public class CameraController : MonoBehaviour
         else
         {
             // 외벽을 포함한 전체 맵을 공통 PC 구성의 보드 영역에 맞춘다. UI별 예약 계산은 하지 않는다.
-            float boardPixels = PcBoardLayout.BoardPixelRect(Screen.width, Screen.height).height;
+            float boardPixels = PcBoardLayout.BoardPixelRect(targetCamera.pixelWidth, targetCamera.pixelHeight).height;
             targetCamera.orthographicSize = Mathf.Max(mapWidth, mapHeight) * 0.5f
                 * targetCamera.pixelHeight / Mathf.Max(1f, boardPixels);
         }
@@ -192,10 +192,17 @@ public class CameraController : MonoBehaviour
             return;
         }
 
-        float offset = MobilePlaytestController.IsActive ? 0f
-            : PcBoardLayout.BoardCenterY * PcBoardLayout.Scale(Screen.width, Screen.height)
-                * targetCamera.orthographicSize * 2f / Mathf.Max(1f, targetCamera.pixelHeight);
-        targetCamera.transform.position = new Vector3(mapCenter.x, mapCenter.y - offset, cameraZ);
+        if (MobilePlaytestController.IsActive)
+        {
+            targetCamera.transform.position = new Vector3(mapCenter.x, mapCenter.y, cameraZ);
+            return;
+        }
+        // 맵 중심을 PC 보드 영역 중심(정수 픽셀)에 놓는다. 그래야 타일 경계가 화면 픽셀과 맞는다.
+        Rect board = PcBoardLayout.BoardPixelRect(targetCamera.pixelWidth, targetCamera.pixelHeight);
+        float unitsPerPixel = targetCamera.orthographicSize * 2f / Mathf.Max(1f, targetCamera.pixelHeight);
+        Vector2 offset = (board.center - new Vector2(targetCamera.pixelWidth, targetCamera.pixelHeight) * 0.5f)
+            * unitsPerPixel;
+        targetCamera.transform.position = new Vector3(mapCenter.x - offset.x, mapCenter.y - offset.y, cameraZ);
     }
 
     private void OnValidate()

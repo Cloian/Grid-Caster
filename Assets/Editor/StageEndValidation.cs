@@ -129,7 +129,7 @@ public static class StageEndValidation
                 && trait.SelectedTraitId == string.Empty && trait.ChargeProgress == 0
                 && growth.ActiveMovementArt == PlayerMovementArt.None && growth.Relics.Count == 0
                 && RunProgressionCatalog.AllUpgrades.All(item => growth.Stack(item.Id) == 0)
-                && spawner.CurrentWave == 1 && GameObject.Find("PlayerGrave") == null,
+                && spawner.CurrentWave == 1 && !player.GetComponent<PlayerDeathMarker>().ShowsGrave,
                 "fresh scene resets build, charge, movement art, relics, wave and grave; trait=" + traitIndex);
             hud.SelectTrait(traitIndex); yield return null;
             GameObject.Find("UpgradeChoice_1").GetComponent<Button>().onClick.Invoke();
@@ -210,7 +210,7 @@ public static class StageEndValidation
         Move deathPlayer = UnityEngine.Object.FindAnyObjectByType<Move>();
         deathPlayer.TakeDamage(10000);
         Check(deathHud.IsGameOver && deathHud.IsGameOverOverlayVisible && !deathPlayer.CanAct
-            && GameObject.Find("PlayerGrave") != null && TextIn(deathHud, "GameOverTitle").text == "GAME OVER",
+            && deathPlayer.GetComponent<PlayerDeathMarker>().ShowsGrave && TextIn(deathHud, "GameOverTitle").text == "GAME OVER",
             "death result and grave remain distinct from clear result");
         deathHud.ToggleGameOverReview();
         deathHud.ContinueGame();
@@ -221,7 +221,7 @@ public static class StageEndValidation
         deathPlayer = UnityEngine.Object.FindAnyObjectByType<Move>();
         Check(deathHud.IsTraitSelectionOpen && !deathHud.IsGameOver && !deathPlayer.CanAct
             && deathPlayer.CurrentHealth == deathPlayer.GetComponent<CharacterHealth>().MaxHealth
-            && GameObject.Find("PlayerGrave") == null && Time.timeScale == 1f,
+            && !deathPlayer.GetComponent<PlayerDeathMarker>().ShowsGrave && Time.timeScale == 1f,
             "death replay starts clean trait selection with restored health/time");
     }
 }

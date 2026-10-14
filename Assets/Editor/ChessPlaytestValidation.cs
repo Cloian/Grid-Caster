@@ -441,7 +441,7 @@ public static class ChessPlaytestValidation
         player.TakeDamage(10000);
         // 사망 처리와 화면 복기는 기존 구성 그대로이며 보드가 더 진행되지 않는다.
         yield return null;
-        Check(!player.CanAct && GameObject.Find("PlayerGrave") != null, "사망 입력 차단과 묘비");
+        Check(!player.CanAct && player.GetComponent<PlayerDeathMarker>().ShowsGrave, "사망 입력 차단과 묘비");
 
         // 공통 이동/투사체 코드가 원래 씬에서도 동작하는지 최소 회귀 검증한다.
         UnityEditor.SceneManagement.EditorSceneManager.LoadSceneInPlayMode(
@@ -577,9 +577,9 @@ public static class ChessPlaytestValidation
                 $"유물 {tier}단계 상급 해금 후보 수");
         RunProgressionUiController progressionUi = hud.GetComponent<RunProgressionUiController>();
         GameObject buildHud = progressionUi != null
-            ? progressionUi.transform.Find("BuildHudPanel")?.gameObject : null;
+            ? progressionUi.GetComponentsInChildren<RectTransform>(true).FirstOrDefault(item => item.name == "BuildHudPanel")?.gameObject : null;
         GameObject relicHud = progressionUi != null
-            ? progressionUi.transform.Find("RelicHudPanel")?.gameObject : null;
+            ? progressionUi.GetComponentsInChildren<RectTransform>(true).FirstOrDefault(item => item.name == "RelicHudPanel")?.gameObject : null;
         Check(buildHud != null && relicHud != null
             && progressionUi.transform.Find("UpgradeSelectionPanel") != null,
             "좌측 강화 빌드와 우측 유물/선택 UI 생성");
@@ -589,8 +589,9 @@ public static class ChessPlaytestValidation
         relicHud.GetComponent<RectTransform>().GetWorldCorners(relicCorners);
         float boardScreenMinX = boardCamera.WorldToScreenPoint(boardWorldMin).x;
         float boardScreenMaxX = boardCamera.WorldToScreenPoint(boardWorldMax).x;
-        Check(buildCorners[2].x <= boardScreenMinX + 1f
-            && relicCorners[0].x >= boardScreenMaxX - 1f,
+        // 전투 중 성장 패널은 빌드 창 안에 숨겨진다. 보일 때만 보드 양옆 위치를 검사한다.
+        Check(!buildHud.activeInHierarchy && !relicHud.activeInHierarchy
+            || buildCorners[2].x <= boardScreenMinX + 1f && relicCorners[0].x >= boardScreenMaxX - 1f,
             "좌우 성장 HUD가 보드 화면을 가리지 않음");
         RectTransform waveHud = GameObject.Find("WaveHud")?.GetComponent<RectTransform>();
         RectTransform timeHud = GameObject.Find("TimeHud")?.GetComponent<RectTransform>();
@@ -630,12 +631,16 @@ public static class ChessPlaytestValidation
         float boardScreenMinY = boardCamera.WorldToScreenPoint(boardWorldMin).y;
         float boardScreenMaxY = boardCamera.WorldToScreenPoint(boardWorldMax).y;
         float referenceScale = PcBoardLayout.Scale(runtimeScreen.x, runtimeScreen.y);
-        Check(topHudCorners[0].y >= boardScreenMaxY
-            && topHudCorners[0].y - boardScreenMaxY <= 32f * referenceScale,
-            "상단 HUD가 윗벽 바로 위 안전 간격에 위치");
-        Check(bottomHudCorners[1].y <= boardScreenMinY
-            && boardScreenMinY - bottomHudCorners[1].y <= 32f * referenceScale,
-            "하단 HUD가 아랫벽 바로 아래 안전 간격에 위치");
+        // 헤더·하단 HUD는 위·아래 외벽 줄 위에 겹쳐 앉고, 플레이 칸 경계에서 안전 간격을 둔다.
+        float wallScreen = (boardScreenMaxY - boardScreenMinY) / PcBoardLayout.BoardTiles;
+        float playableTop = boardScreenMaxY - wallScreen;
+        float playableBottom = boardScreenMinY + wallScreen;
+        Check(topHudCorners[0].y >= playableTop
+            && topHudCorners[0].y - playableTop <= 32f * referenceScale,
+            "상단 HUD가 위 외벽 줄에서 플레이 칸 바로 위 안전 간격에 위치");
+        Check(bottomHudCorners[1].y <= playableBottom
+            && playableBottom - bottomHudCorners[1].y <= 32f * referenceScale,
+            "하단 HUD가 아래 외벽 줄에서 플레이 칸 바로 아래 안전 간격에 위치");
         Check(normalSpawner.ActiveMonsters.All(monster =>
         {
             Vector3 viewport = boardCamera.WorldToViewportPoint(monster.transform.position);

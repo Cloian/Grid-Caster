@@ -134,11 +134,16 @@ public static class PcBoardLayoutValidation
         {
             float scale = PcBoardLayout.Scale(size.x, size.y);
             Rect board = PcBoardLayout.BoardPixelRect(size.x, size.y);
+            // 위·아래 외벽 한 줄씩은 헤더·행동 HUD 뒤에 겹쳐도 된다. 플레이 칸은 HUD 공간 밖에 있어야 한다.
+            float wall = board.height / PcBoardLayout.BoardTiles;
+            float pixelScale = PcBoardLayout.PixelScale(size.x, size.y);
             Check(board.width == board.height && board.x >= 0 && board.xMax <= size.x
-                && board.y >= PcBoardLayout.ActionSpace * scale - 1f
-                && board.yMax <= size.y - PcBoardLayout.HeaderSpace * scale + 1f,
-                "calculation: whole board uses available screen with only header/action margins at " + size);
-            Check(board.width > 800f * scale, "board larger than previous side-panel layout at " + size);
+                && board.y + wall >= PcBoardLayout.ActionSpace * scale - 1f
+                && board.yMax - wall <= size.y - PcBoardLayout.HeaderSpace * scale + 1f,
+                "calculation: playable board stays clear of header/action space at " + size);
+            Check(pixelScale < 2f || Mathf.Approximately(pixelScale, Mathf.Round(pixelScale)),
+                "integer pixel scale whenever 2x or larger fits at " + size + " scale=" + pixelScale);
+            Check(board.height >= size.y * 0.6f - 1f, "board uses most of screen height at " + size);
         }
         GameHudController hud = UnityEngine.Object.FindAnyObjectByType<GameHudController>();
         Move player = UnityEngine.Object.FindAnyObjectByType<Move>();
@@ -165,13 +170,17 @@ public static class PcBoardLayoutValidation
         Rect boardRect = Rect.MinMaxRect(min.x, min.y, max.x, max.y);
         Check(Vector2.Distance(boardRect.center, expected.center) < 1f
             && Mathf.Abs(boardRect.width - expected.width) < 1f, "actual full board matches common PC geometry");
+        // HUD는 외벽 줄 위에는 겹쳐도 되지만 플레이 칸(내부 13×13)은 가리지 않는다.
+        float wallPixels = boardRect.height / PcBoardLayout.BoardTiles;
+        Rect playableRect = Rect.MinMaxRect(boardRect.xMin + wallPixels, boardRect.yMin + wallPixels,
+            boardRect.xMax - wallPixels, boardRect.yMax - wallPixels);
         foreach (string name in new[] { "BuildInventoryButton", "WaveHud", "TimeHud", "HealthHud",
             "UltimateFrame", "TraitHud", "AttackActionFrame", "MoveActionFrame", "ActionModeHud" })
         {
             Rect rect = Pixels(Find(hud.transform, name));
-            Check(!rect.Overlaps(boardRect) && rect.xMin >= -1 && rect.yMin >= -1
+            Check(!rect.Overlaps(playableRect) && rect.xMin >= -1 && rect.yMin >= -1
                 && rect.xMax <= runtimeSize.x + 1 && rect.yMax <= runtimeSize.y + 1,
-                "actual HUD outside board and inside screen: " + name);
+                "actual HUD outside playable cells and inside screen: " + name);
         }
         Check(!Find(hud.transform, "BuildHudPanel").gameObject.activeInHierarchy
             && !Find(hud.transform, "RelicHudPanel").gameObject.activeInHierarchy,
