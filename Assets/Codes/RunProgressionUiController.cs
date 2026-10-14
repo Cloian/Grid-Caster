@@ -111,6 +111,7 @@ public sealed class RunProgressionUiController : MonoBehaviour
         BuildUpgradePanel();
         BuildReplacementPanel();
         BuildDetailPanel();
+        BuildHoverTooltip();
 
         progression.UpgradeOptionsReady += ShowUpgradeOptions;
         progression.UpgradesChanged += RefreshBuild;
@@ -168,6 +169,7 @@ public sealed class RunProgressionUiController : MonoBehaviour
         // 카메라(실행 순서 100)가 새 창 크기를 반영한 뒤 HUD의 보드 경계를 계산한다.
         Vector2Int size = new Vector2Int(Screen.width, Screen.height);
         if (initialized && size != lastScreenSize) LayoutPanels();
+        if (initialized) UpdateBoardAltarHover();
     }
 
     private void BuildLeftPanel()
@@ -191,6 +193,13 @@ public sealed class RunProgressionUiController : MonoBehaviour
                 new Vector2(14f, -148f - i * 46f), new Vector2(-28f, 42f), BorderColor);
             int captured = i;
             buildButtons[i] = AddDetailButton(row, () => ShowUpgradeDetails(buildUpgradeIds[captured]));
+            AddHoverTooltip(row, () =>
+            {
+                string id = buildUpgradeIds[captured];
+                if (string.IsNullOrEmpty(id) || progression.Stack(id) == 0) return NoTooltip;
+                UpgradeDefinition item = RunProgressionCatalog.Upgrade(id);
+                return (item.Name, RunProgressionDescriptions.OwnedDescription(item, progression));
+            });
             buildRows[i] = row.gameObject;
             buildIcons[i] = CreateIcon("Icon", row, new Vector2(7f, -5f), new Vector2(32f, 32f));
             buildTexts[i] = CreateText("Label", row, string.Empty, 13, TextAnchor.MiddleLeft,
@@ -262,6 +271,7 @@ public sealed class RunProgressionUiController : MonoBehaviour
     public void CloseInventory()
     {
         if (inventoryPanel == null || !IsInventoryOpen) return;
+        HideHoverTooltip();
         inventoryPanel.gameObject.SetActive(false);
         progression.GetComponent<Move>().SetInspectionOpen(IsDetailOpen);
     }
@@ -280,6 +290,7 @@ public sealed class RunProgressionUiController : MonoBehaviour
                 new Vector2(14f, -72f - i * 92f), new Vector2(-28f, 82f), BorderColor);
             int captured = i;
             relicButtons[i] = AddDetailButton(row, () => ShowRelicDetails(captured));
+            AddHoverTooltip(row, () => RelicTooltip(captured));
             relicIcons[i] = CreateIcon("Icon", row, new Vector2(9f, -11f), new Vector2(58f, 58f));
             relicTexts[i] = CreateText("Label", row, $"슬롯 {i + 1}  비어 있음", 12,
                 TextAnchor.MiddleLeft, MutedColor, new Vector2(78f, -6f), new Vector2(-86f, 70f));
@@ -296,6 +307,7 @@ public sealed class RunProgressionUiController : MonoBehaviour
                 rightPanel, new Vector2(14f, -496f - i * 126f), new Vector2(-28f, 114f), border);
             int captured = i;
             AddDetailButton(row, () => ShowAltarDetails(captured));
+            AddHoverTooltip(row, () => AltarTooltip(captured));
             altarIcons[i] = CreateIcon("Icon", row, new Vector2(9f, -26f), new Vector2(58f, 58f));
             altarTexts[i] = CreateText("Label", row, string.Empty, 12, TextAnchor.MiddleLeft,
                 TextColor, new Vector2(78f, -7f), new Vector2(-86f, 100f));
@@ -421,8 +433,135 @@ public sealed class RunProgressionUiController : MonoBehaviour
         return button;
     }
 
+    // 마우스를 올리면 클릭 없이 설명을 보여 주는 말풍선. 상세 창과 같은 문구를 쓴다.
+    private RectTransform hoverTooltip;
+    private UnityEngine.UI.Text hoverTitle;
+    private UnityEngine.UI.Text hoverBody;
+    private const float TooltipWidth = 380f;
+    private static readonly (string title, string body) NoTooltip = (null, null);
+
+    private void BuildHoverTooltip()
+    {
+        hoverTooltip = CreateFixedCard("HoverTooltip", transform, Vector2.zero, new Vector2(TooltipWidth, 120f), LegendaryColor);
+        hoverTooltip.pivot = new Vector2(0f, 1f);
+        hoverTooltip.GetComponent<UnityEngine.UI.Image>().color = new Color32(10, 16, 30, 250);
+        hoverTitle = CreateText("Title", hoverTooltip, string.Empty, 18, TextAnchor.UpperLeft,
+            LegendaryColor, new Vector2(14f, -12f), new Vector2(-28f, 28f));
+        hoverBody = CreateText("Body", hoverTooltip, string.Empty, 15, TextAnchor.UpperLeft,
+            TextColor, new Vector2(14f, -44f), new Vector2(-28f, 400f));
+        hoverBody.lineSpacing = 1.15f;
+        hoverBody.verticalOverflow = VerticalWrapMode.Overflow;
+        hoverTooltip.gameObject.SetActive(false);
+    }
+
+    private void AddHoverTooltip(RectTransform target, Func<(string title, string body)> content)
+    {
+        UnityEngine.UI.Image image = target.GetComponent<UnityEngine.UI.Image>();
+        if (image != null) image.raycastTarget = true;
+        if (!target.TryGetComponent(out UnityEngine.EventSystems.EventTrigger trigger))
+            trigger = target.gameObject.AddComponent<UnityEngine.EventSystems.EventTrigger>();
+        var enter = new UnityEngine.EventSystems.EventTrigger.Entry { eventID = UnityEngine.EventSystems.EventTriggerType.PointerEnter };
+        enter.callback.AddListener(_ => ShowHoverTooltip(target, content()));
+        var exit = new UnityEngine.EventSystems.EventTrigger.Entry { eventID = UnityEngine.EventSystems.EventTriggerType.PointerExit };
+        exit.callback.AddListener(_ => HideHoverTooltip());
+        trigger.triggers.Add(enter);
+        trigger.triggers.Add(exit);
+    }
+
+    private void ShowHoverTooltip(RectTransform target, (string title, string body) content)
+    {
+        if (hoverTooltip == null || string.IsNullOrEmpty(content.title)) return;
+        hoverTitle.text = content.title;
+        hoverBody.text = content.body;
+        float height = 44f + hoverBody.preferredHeight + 14f;
+        hoverTooltip.sizeDelta = new Vector2(TooltipWidth, height);
+        // 대상 오른쪽에 두고, 화면 밖으로 나가면 왼쪽에 둔다. 위아래는 캔버스 안으로 맞춘다.
+        Vector3[] corners = new Vector3[4];
+        target.GetWorldCorners(corners);
+        Vector2 rightTop = canvasRect.InverseTransformPoint(corners[2]);
+        Vector2 leftTop = canvasRect.InverseTransformPoint(corners[1]);
+        Rect canvas = canvasRect.rect;
+        float x = rightTop.x + 10f;
+        if (x + TooltipWidth > canvas.xMax - 8f) x = leftTop.x - 10f - TooltipWidth;
+        float y = Mathf.Clamp(rightTop.y, canvas.yMin + height + 8f, canvas.yMax - 8f);
+        hoverTooltip.anchoredPosition = new Vector2(x, y);
+        hoverTooltip.gameObject.SetActive(true);
+        hoverTooltip.SetAsLastSibling();
+    }
+
+    // 보드 위 제단 칸에 마우스를 올리면 그 유물 설명을 커서 옆에 보여 준다.
+    private bool tooltipFromBoard;
+
+    private void UpdateBoardAltarHover()
+    {
+        if (hoverTooltip == null || Mouse.current == null) return;
+        bool shown = false;
+        if (!IsModalOpen && progression.ActiveAltars.Count > 0)
+        {
+            Camera camera = boardCamera != null ? boardCamera.GetComponent<Camera>() : null;
+            GridManager grid = FindAnyObjectByType<GridManager>();
+            if (camera != null && grid != null && grid.IsReady)
+            {
+                Vector2 mouse = Mouse.current.position.ReadValue();
+                Vector3 world = camera.ScreenToWorldPoint(new Vector3(mouse.x, mouse.y, -camera.transform.position.z));
+                Vector3Int cell = grid.WorldToCell(world);
+                for (int i = 0; i < progression.ActiveAltars.Count; i++)
+                {
+                    if (progression.ActiveAltars[i].Cell != cell) continue;
+                    ShowTooltipAtScreen(mouse, AltarTooltip(i));
+                    shown = tooltipFromBoard = true;
+                    break;
+                }
+            }
+        }
+        if (!shown && tooltipFromBoard)
+        {
+            tooltipFromBoard = false;
+            HideHoverTooltip();
+        }
+    }
+
+    private void ShowTooltipAtScreen(Vector2 screen, (string title, string body) content)
+    {
+        if (string.IsNullOrEmpty(content.title)) return;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, screen, null, out Vector2 local);
+        hoverTitle.text = content.title;
+        hoverBody.text = content.body;
+        float height = 44f + hoverBody.preferredHeight + 14f;
+        hoverTooltip.sizeDelta = new Vector2(TooltipWidth, height);
+        Rect canvas = canvasRect.rect;
+        float x = local.x + 18f;
+        if (x + TooltipWidth > canvas.xMax - 8f) x = local.x - 18f - TooltipWidth;
+        float y = Mathf.Clamp(local.y - 12f, canvas.yMin + height + 8f, canvas.yMax - 8f);
+        hoverTooltip.anchoredPosition = new Vector2(x, y);
+        hoverTooltip.gameObject.SetActive(true);
+        hoverTooltip.SetAsLastSibling();
+    }
+
+    private void HideHoverTooltip()
+    {
+        if (hoverTooltip != null) hoverTooltip.gameObject.SetActive(false);
+    }
+
+    private (string title, string body) RelicTooltip(int index)
+    {
+        if (index < 0 || index >= progression.Relics.Count) return NoTooltip;
+        RelicDefinition relic = progression.Relics[index];
+        return (RarityName(relic.Rarity) + " 유물 · " + relic.Name, relic.Description);
+    }
+
+    private (string title, string body) AltarTooltip(int index)
+    {
+        if (index < 0 || index >= progression.ActiveAltars.Count) return NoTooltip;
+        RelicOffer offer = progression.ActiveAltars[index];
+        return ((offer.IsRisky ? "위험" : "안전") + " 제단 · " + offer.Relic.Name,
+            RarityName(offer.Relic.Rarity) + " 유물\n\n" + offer.Relic.Description
+            + "\n\n제단 칸으로 이동하면 즉시 획득합니다.");
+    }
+
     private void OpenDetails(string title, string description)
     {
+        HideHoverTooltip();
         if (detailPanel == null) return;
         Move player = progression.GetComponent<Move>();
         if (player.IsActionInProgress && !player.IsChoosingEchoDirection && !player.IsChoosingFreeMove
@@ -505,6 +644,9 @@ public sealed class RunProgressionUiController : MonoBehaviour
             button.targetGraphic = cardImage;
             button.onClick.AddListener(() => ResolveRelic(captured == 4 ? -1 : captured));
             replacementButtons[i] = button;
+            AddHoverTooltip(card, () => captured < 4 ? RelicTooltip(captured)
+                : incomingRelicDetails != null ? ("새 유물 · " + incomingRelicDetails.Name, incomingRelicDetails.Description)
+                : NoTooltip);
             if (i < 4)
             {
                 replacementIcons[i] = CreateIcon("Icon", card,
@@ -549,10 +691,10 @@ public sealed class RunProgressionUiController : MonoBehaviour
             inventoryCard.localScale = Vector3.one * Mathf.Min(1f,
                 (canvasWidth - 36f) / 724f, (canvasHeight - 36f) / 920f);
             Rect board = PcBoardLayout.BoardPixelRect(Screen.width, Screen.height);
-            // 위 외벽 줄 오른쪽, 헤더(WAVE·TIME)와 같은 높이에 둔다.
+            // 상하 모드: 보드 오른쪽 위 바깥(헤더 높이). 측면 모드는 LayoutSideHud가 다시 놓는다.
             RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect,
                 new Vector2(board.xMax - 95f * PcBoardLayout.Scale(Screen.width, Screen.height),
-                    board.yMax - board.height / PcBoardLayout.BoardTiles * 0.5f),
+                    board.yMax + 40f * PcBoardLayout.Scale(Screen.width, Screen.height)),
                 null, out Vector2 buttonPosition);
             inventoryButton.anchoredPosition = buttonPosition;
             inventoryButton.localScale = Vector3.one * panelScale;
@@ -610,10 +752,94 @@ public sealed class RunProgressionUiController : MonoBehaviour
         float referenceScale = PcBoardLayout.Scale(Screen.width, Screen.height);
         float desiredGap = BoardPanelGap * referenceScale;
 
-        // 위·아래 외벽 한 줄씩은 헤더·행동 HUD 뒤에 겹쳐도 된다. HUD는 플레이 칸 바로 바깥에서 시작한다.
         float wallPixels = (boardMaximumY - boardMinimumY) / Mathf.Max(1, bounds.size.y);
-        LayoutHeaderHud(boardMaximumY - wallPixels, desiredGap);
+        bool side = PcBoardLayout.UsesSideHud(Screen.width, Screen.height);
+        // 위 외벽은 룩이 서는 줄이라 헤더가 가리지 않는다. 상하 모드의 행동 HUD만 아래 외벽 줄에 겹친다.
+        LayoutHeaderHud(boardMaximumY, desiredGap);
         LayoutActionHudGroup(camera, grid, boardMinimumY + wallPixels, desiredGap);
+        ArrangeActionHud(side);
+        if (side) LayoutSideHud();
+    }
+
+    // 측면 모드: 헤더·빌드 버튼은 보드 왼쪽 위, 행동 HUD는 보드 오른쪽 아래 열에 둔다. 보드는 가리지 않는다.
+    private void LayoutSideHud()
+    {
+        Rect board = PcBoardLayout.BoardPixelRect(Screen.width, Screen.height);
+        float gap = BoardPanelGap * PcBoardLayout.Scale(Screen.width, Screen.height);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect,
+            new Vector2(board.xMax + gap, board.yMin), null, out Vector2 rightBottom);
+        boardActionHudGroup.localScale = Vector3.one;
+        boardActionHudGroup.anchoredPosition = rightBottom
+            + new Vector2(SideHudWidth * 0.5f + SideHudPadding, SideHudHeight + SideHudPadding);
+
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect,
+            new Vector2(board.xMin - gap, board.yMax), null, out Vector2 leftTop);
+        boardHeaderHudGroup.anchoredPosition = leftTop
+            - new Vector2(boardHeaderHudBounds.max.x, boardHeaderHudBounds.max.y);
+        if (inventoryButton != null)
+        {
+            Vector2 size = inventoryButton.sizeDelta * inventoryButton.localScale.x;
+            inventoryButton.anchoredPosition = new Vector2(leftTop.x - size.x * 0.5f,
+                leftTop.y - boardHeaderHudBounds.size.y - 14f - size.y * 0.5f);
+        }
+    }
+
+    private const float SideHudWidth = 332f;
+    private const float SideHudHeight = 336f;
+    private const float SideHudPadding = 8f;
+    private readonly Dictionary<RectTransform, Vector3> actionHudHome = new Dictionary<RectTransform, Vector3>();
+    private Vector2 actionStatusHomeSize;
+    private Vector2 actionBackingHomeSize;
+    private bool actionHudInColumn;
+
+    // 행동 HUD 요소를 가로 한 줄(상하 모드) 또는 세로 열(측면 모드)로 배치한다.
+    private void ArrangeActionHud(bool column)
+    {
+        if (boardActionHudGroup == null || column == actionHudInColumn) return;
+        RectTransform Find(string name) => boardActionHudGroup.GetComponentsInChildren<RectTransform>(true)
+            .FirstOrDefault(item => item.name == name && item.parent == boardActionHudGroup);
+        RectTransform status = Find("ActionModeHud");
+        RectTransform backing = Find("ActionHudBacking");
+        string[] names = { "ActionModeHud", "HealthHud", "UltimateFrame", "UltimateReadyGlow",
+            "TraitHud", "AttackActionFrame", "MoveActionFrame", "ActionHudBacking" };
+        if (actionHudHome.Count == 0)
+        {
+            foreach (string name in names)
+            {
+                RectTransform rect = Find(name);
+                if (rect != null) actionHudHome[rect] = rect.localPosition;
+            }
+            if (status != null) actionStatusHomeSize = status.sizeDelta;
+            if (backing != null) actionBackingHomeSize = backing.sizeDelta;
+        }
+        actionHudInColumn = column;
+        if (!column)
+        {
+            foreach (var pair in actionHudHome) pair.Key.localPosition = pair.Value;
+            if (status != null) status.sizeDelta = actionStatusHomeSize;
+            if (backing != null) backing.sizeDelta = actionBackingHomeSize;
+            return;
+        }
+        if (status != null) status.sizeDelta = new Vector2(SideHudWidth, 56f);
+        PlaceCenter(status, new Vector2(0f, -28f));
+        PlaceCenter(Find("HealthHud"), new Vector2(0f, -96f));
+        PlaceCenter(Find("UltimateFrame"), new Vector2(-52f, -184f));
+        PlaceCenter(Find("UltimateReadyGlow"), new Vector2(-52f, -184f));
+        PlaceCenter(Find("TraitHud"), new Vector2(52f, -184f));
+        PlaceCenter(Find("AttackActionFrame"), new Vector2(-52f, -288f));
+        PlaceCenter(Find("MoveActionFrame"), new Vector2(52f, -288f));
+        if (backing != null)
+        {
+            backing.sizeDelta = new Vector2(SideHudWidth + SideHudPadding * 2f, SideHudHeight + SideHudPadding * 2f);
+            PlaceCenter(backing, new Vector2(0f, -SideHudHeight * 0.5f));
+        }
+    }
+
+    private static void PlaceCenter(RectTransform rect, Vector2 center)
+    {
+        if (rect == null) return;
+        Vector2 offset = rect.rect.center;
+        rect.localPosition = new Vector3(center.x - offset.x, center.y - offset.y, rect.localPosition.z);
     }
 
     private void LayoutActionHudGroup(Camera camera, GridManager grid, float bottomY, float gap)

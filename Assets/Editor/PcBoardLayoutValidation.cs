@@ -134,13 +134,16 @@ public static class PcBoardLayoutValidation
         {
             float scale = PcBoardLayout.Scale(size.x, size.y);
             Rect board = PcBoardLayout.BoardPixelRect(size.x, size.y);
-            // 위·아래 외벽 한 줄씩은 헤더·행동 HUD 뒤에 겹쳐도 된다. 플레이 칸은 HUD 공간 밖에 있어야 한다.
             float wall = board.height / PcBoardLayout.BoardTiles;
             float pixelScale = PcBoardLayout.PixelScale(size.x, size.y);
+            bool side = PcBoardLayout.UsesSideHud(size.x, size.y);
+            // 측면 모드: HUD 열이 보드 양옆에 들어간다. 상하 모드: 위 외벽(룩)은 헤더 밖, 아래 외벽만 행동 HUD와 겹칠 수 있다.
+            float column = (PcBoardLayout.SideColumnWidth + PcBoardLayout.PanelGap) * scale;
             Check(board.width == board.height && board.x >= 0 && board.xMax <= size.x
-                && board.y + wall >= PcBoardLayout.ActionSpace * scale - 1f
-                && board.yMax - wall <= size.y - PcBoardLayout.HeaderSpace * scale + 1f,
-                "calculation: playable board stays clear of header/action space at " + size);
+                && (side ? board.x >= column - 1f && board.y >= 0 && board.yMax <= size.y
+                    : board.y + wall >= PcBoardLayout.ActionSpace * scale - 1f
+                        && board.yMax <= size.y - PcBoardLayout.HeaderSpace * scale + 1f),
+                "calculation: board stays clear of HUD space (" + (side ? "side" : "top/bottom") + ") at " + size);
             Check(pixelScale < 2f || Mathf.Approximately(pixelScale, Mathf.Round(pixelScale)),
                 "integer pixel scale whenever 2x or larger fits at " + size + " scale=" + pixelScale);
             Check(board.height >= size.y * 0.6f - 1f, "board uses most of screen height at " + size);
@@ -170,10 +173,11 @@ public static class PcBoardLayoutValidation
         Rect boardRect = Rect.MinMaxRect(min.x, min.y, max.x, max.y);
         Check(Vector2.Distance(boardRect.center, expected.center) < 1f
             && Mathf.Abs(boardRect.width - expected.width) < 1f, "actual full board matches common PC geometry");
-        // HUD는 외벽 줄 위에는 겹쳐도 되지만 플레이 칸(내부 13×13)은 가리지 않는다.
+        // 측면 모드에서는 HUD가 보드 전체(외벽 포함)를 가리지 않는다. 상하 모드에서는 아래 외벽 줄만 겹칠 수 있다.
         float wallPixels = boardRect.height / PcBoardLayout.BoardTiles;
-        Rect playableRect = Rect.MinMaxRect(boardRect.xMin + wallPixels, boardRect.yMin + wallPixels,
-            boardRect.xMax - wallPixels, boardRect.yMax - wallPixels);
+        bool sideRuntime = PcBoardLayout.UsesSideHud(runtimeSize.x, runtimeSize.y);
+        Rect playableRect = sideRuntime ? boardRect : Rect.MinMaxRect(boardRect.xMin, boardRect.yMin + wallPixels,
+            boardRect.xMax, boardRect.yMax);
         foreach (string name in new[] { "BuildInventoryButton", "WaveHud", "TimeHud", "HealthHud",
             "UltimateFrame", "TraitHud", "AttackActionFrame", "MoveActionFrame", "ActionModeHud" })
         {

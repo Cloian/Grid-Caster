@@ -41,7 +41,7 @@ public static class LivelyMotionSetupTool
         new Motion { Sheet = "Assets/Player/Lively/wizard_walk.png", Clip = "Assets/Player/player_walk.anim",
             Size = 50, Loop = true, DurationsMs = new[] { 110, 130, 120, 150, 130, 110 } },
         new Motion { Sheet = "Assets/Player/Lively/wizard_attack.png", Clip = "Assets/Player/player_attack.anim",
-            Size = 50, DurationsMs = new[] { 150, 220, 60, 110, 130, 200 } },
+            Size = 50, DurationsMs = new[] { 70, 90, 60, 100, 110, 170 } },
         new Motion { Sheet = "Assets/Player/Lively/wizard_hit.png", Clip = "Assets/Player/player_hit.anim",
             Size = 50, DurationsMs = new[] { 50, 80, 110, 60, 60, 90, 140 } },
         new Motion { Sheet = "Assets/Player/Lively/wizard_death.png", Clip = "Assets/Player/player_death.anim",

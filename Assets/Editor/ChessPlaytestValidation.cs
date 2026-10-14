@@ -602,24 +602,32 @@ public static class ChessPlaytestValidation
         RectTransform moveHud = GameObject.Find("MoveActionFrame")?.GetComponent<RectTransform>();
         RectTransform statusHud = GameObject.Find("ActionModeHud")?.GetComponent<RectTransform>();
         Text ultimateShortcut = GameObject.Find("UltimateShortcutKey")?.GetComponent<Text>();
+        bool sideHud = PcBoardLayout.UsesSideHud(runtimeScreen.x, runtimeScreen.y);
         Check(waveHud != null && timeHud != null
             && UiPixels(waveHud).xMax <= UiPixels(timeHud).xMin + 1f
             && Mathf.Abs(UiPixels(waveHud).center.y - UiPixels(timeHud).center.y) < 1f
-            && Mathf.Abs((UiPixels(waveHud).xMin + UiPixels(timeHud).xMax) * 0.5f
-                - expectedScreenCenter.x) < 1f,
-            "웨이브와 시간이 해상도에 맞춰 보드 중앙 상단 묶음으로 정렬");
+            && (sideHud ? UiPixels(timeHud).xMax <= boardScreenMinX + 1f
+                : Mathf.Abs((UiPixels(waveHud).xMin + UiPixels(timeHud).xMax) * 0.5f
+                    - expectedScreenCenter.x) < 1f),
+            sideHud ? "웨이브와 시간이 보드 왼쪽 위 측면 열에 정렬" : "웨이브와 시간이 해상도에 맞춰 보드 중앙 상단 묶음으로 정렬");
         Check(ultimateHud != null && healthHud != null && traitHud != null
             && attackHud != null && moveHud != null && statusHud != null,
             "하단 전투 HUD와 별도 행동 상태 문구 존재");
         RectTransform[] actionHud = { ultimateHud, healthHud, traitHud, attackHud, moveHud };
         Rect[] actionPixels = actionHud.Select(UiPixels).ToArray();
-        Check(Enumerable.Range(0, actionPixels.Length - 1)
-                .All(index => actionPixels[index].xMax <= actionPixels[index + 1].xMin + 1f)
-            && actionPixels.All(rect => rect.yMax < UiPixels(statusHud).yMin + 1f
-                && rect.yMin >= 0f && rect.xMin >= 0f && rect.xMax <= runtimeScreen.x)
-            && Mathf.Abs((actionPixels[0].xMin + actionPixels[4].xMax) * 0.5f
-                - expectedScreenCenter.x) < 1f,
-            "하단 전투 HUD가 해상도에 맞춰 보드 중앙 아래에 밀착 정렬");
+        if (sideHud)
+            Check(actionPixels.All(rect => rect.xMin >= boardScreenMaxX - 1f
+                    && rect.yMin >= 0f && rect.xMax <= runtimeScreen.x)
+                && UiPixels(statusHud).xMin >= boardScreenMaxX - 1f,
+                "전투 HUD가 보드 오른쪽 측면 열에 겹치지 않게 정렬");
+        else
+            Check(Enumerable.Range(0, actionPixels.Length - 1)
+                    .All(index => actionPixels[index].xMax <= actionPixels[index + 1].xMin + 1f)
+                && actionPixels.All(rect => rect.yMax < UiPixels(statusHud).yMin + 1f
+                    && rect.yMin >= 0f && rect.xMin >= 0f && rect.xMax <= runtimeScreen.x)
+                && Mathf.Abs((actionPixels[0].xMin + actionPixels[4].xMax) * 0.5f
+                    - expectedScreenCenter.x) < 1f,
+                "하단 전투 HUD가 해상도에 맞춰 보드 중앙 아래에 밀착 정렬");
         Check(ultimateShortcut != null && ultimateShortcut.text == "S+",
             "이동술 카드에 S 통합 배지 표시");
         Check(GameObject.Find("GaugeBackground") == null,
@@ -631,16 +639,18 @@ public static class ChessPlaytestValidation
         float boardScreenMinY = boardCamera.WorldToScreenPoint(boardWorldMin).y;
         float boardScreenMaxY = boardCamera.WorldToScreenPoint(boardWorldMax).y;
         float referenceScale = PcBoardLayout.Scale(runtimeScreen.x, runtimeScreen.y);
-        // 헤더·하단 HUD는 위·아래 외벽 줄 위에 겹쳐 앉고, 플레이 칸 경계에서 안전 간격을 둔다.
+        // 상하 모드: 헤더는 위 외벽(룩 자리) 바로 위, 행동 HUD는 아래 외벽 줄에서 플레이 칸 바로 아래.
         float wallScreen = (boardScreenMaxY - boardScreenMinY) / PcBoardLayout.BoardTiles;
-        float playableTop = boardScreenMaxY - wallScreen;
         float playableBottom = boardScreenMinY + wallScreen;
-        Check(topHudCorners[0].y >= playableTop
-            && topHudCorners[0].y - playableTop <= 32f * referenceScale,
-            "상단 HUD가 위 외벽 줄에서 플레이 칸 바로 위 안전 간격에 위치");
-        Check(bottomHudCorners[1].y <= playableBottom
-            && playableBottom - bottomHudCorners[1].y <= 32f * referenceScale,
-            "하단 HUD가 아래 외벽 줄에서 플레이 칸 바로 아래 안전 간격에 위치");
+        if (!sideHud)
+        {
+            Check(topHudCorners[0].y >= boardScreenMaxY
+                && topHudCorners[0].y - boardScreenMaxY <= 32f * referenceScale,
+                "상단 HUD가 위 외벽 바로 위 안전 간격에 위치(룩을 가리지 않음)");
+            Check(bottomHudCorners[1].y <= playableBottom
+                && playableBottom - bottomHudCorners[1].y <= 32f * referenceScale,
+                "하단 HUD가 아래 외벽 줄에서 플레이 칸 바로 아래 안전 간격에 위치");
+        }
         Check(normalSpawner.ActiveMonsters.All(monster =>
         {
             Vector3 viewport = boardCamera.WorldToViewportPoint(monster.transform.position);

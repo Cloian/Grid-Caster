@@ -36,7 +36,7 @@ public static class ActorMotion
         Animator animator = Find(actor, Attack);
         if (animator == null) return 0f;
         string controller = animator.runtimeAnimatorController.name;
-        if (controller == "idle-run") return 0.37f;  // wizard_attack 150 + 220ms
+        if (controller == "idle-run") return 0.16f;  // wizard_attack 70 + 90ms
         if (controller == "Bat") return 0.28f;       // bat_attack 130 + 150ms
         if (controller == "Snake") return 0.30f;     // snake_attack 140 + 160ms
         return 0f;
