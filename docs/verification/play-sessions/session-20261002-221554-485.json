@@ -1,0 +1,2608 @@
+{
+    "recordedAt": "2026-10-02T22:15:54.4852870+09:00",
+    "unityVersion": "6000.4.0f1",
+    "evidenceKind": "Controlled validation fixtures; NOT a human play session.",
+    "deathCause": "Not inferred. Review the board and add a human note if needed.",
+    "selectedTrait": "pierce",
+    "ending": "GameOver",
+    "ordinaryAttacks": 9,
+    "specialAttacks": 13,
+    "basicMoves": 0,
+    "artMoves": 2,
+    "bonusSteps": 0,
+    "worldTurns": 24,
+    "diagnostics": [],
+    "entries": [
+        {
+            "eventKind": "attached",
+            "frame": 1,
+            "elapsedSeconds": 8.065730631817133,
+            "wave": 1,
+            "worldTurn": 0,
+            "action": "",
+            "playerCell": {
+                "x": -1,
+                "y": -1,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "1:CardinalFour:(-4, 5, 0):hp=3",
+                "2:CardinalFour:(4, 5, 0):hp=3",
+                "3:CardinalFour:(5, 0, 0):hp=3"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "trait_selected",
+            "frame": 3,
+            "elapsedSeconds": 8.17681850680674,
+            "wave": 1,
+            "worldTurn": 0,
+            "action": "",
+            "playerCell": {
+                "x": -1,
+                "y": -1,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "1:CardinalFour:(-4, 5, 0):hp=3",
+                "2:CardinalFour:(4, 5, 0):hp=3",
+                "3:CardinalFour:(5, 0, 0):hp=3"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "upgrade_selected",
+            "frame": 4,
+            "elapsedSeconds": 8.185882256817422,
+            "wave": 1,
+            "worldTurn": 0,
+            "action": "",
+            "playerCell": {
+                "x": -1,
+                "y": -1,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [
+                "quick_cast:1"
+            ],
+            "relics": [],
+            "enemies": [
+                "1:CardinalFour:(-4, 5, 0):hp=3",
+                "2:CardinalFour:(4, 5, 0):hp=3",
+                "3:CardinalFour:(5, 0, 0):hp=3"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "trait_selected",
+            "frame": 4,
+            "elapsedSeconds": 8.187668340804521,
+            "wave": 1,
+            "worldTurn": 0,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [
+                "quick_cast:1"
+            ],
+            "relics": [],
+            "enemies": [],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "world_turn_completed",
+            "frame": 293,
+            "elapsedSeconds": 8.83474829881743,
+            "wave": 1,
+            "worldTurn": 1,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=20",
+                "2:CardinalFour:(-1, -5, 0):hp=20"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "player_action_completed_signal",
+            "frame": 293,
+            "elapsedSeconds": 8.835013798816363,
+            "wave": 1,
+            "worldTurn": 1,
+            "action": "attack",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 1,
+                "z": 0
+            },
+            "casts": 1,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=20",
+                "2:CardinalFour:(-1, -5, 0):hp=20"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "world_turn_completed",
+            "frame": 349,
+            "elapsedSeconds": 8.953016965810093,
+            "wave": 1,
+            "worldTurn": 2,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 1,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=19",
+                "2:CardinalFour:(-1, -5, 0):hp=20"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "player_action_completed_signal",
+            "frame": 349,
+            "elapsedSeconds": 8.953080590814352,
+            "wave": 1,
+            "worldTurn": 2,
+            "action": "attack",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "direction": {
+                "x": 1,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 1,
+            "directHits": 1,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 1,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=19",
+                "2:CardinalFour:(-1, -5, 0):hp=20"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "world_turn_completed",
+            "frame": 399,
+            "elapsedSeconds": 9.071980090811849,
+            "wave": 1,
+            "worldTurn": 3,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 2,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=18",
+                "2:CardinalFour:(-1, -5, 0):hp=20"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "player_action_completed_signal",
+            "frame": 399,
+            "elapsedSeconds": 9.072060840815539,
+            "wave": 1,
+            "worldTurn": 3,
+            "action": "attack",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "direction": {
+                "x": 1,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 1,
+            "directHits": 1,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 2,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=18",
+                "2:CardinalFour:(-1, -5, 0):hp=20"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "world_turn_completed",
+            "frame": 462,
+            "elapsedSeconds": 9.19101034081541,
+            "wave": 1,
+            "worldTurn": 4,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 2,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=17",
+                "2:CardinalFour:(-1, -5, 0):hp=20"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "player_action_completed_signal",
+            "frame": 462,
+            "elapsedSeconds": 9.191042340811692,
+            "wave": 1,
+            "worldTurn": 4,
+            "action": "attack",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "direction": {
+                "x": 1,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 1,
+            "directHits": 1,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 2,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=17",
+                "2:CardinalFour:(-1, -5, 0):hp=20"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "world_turn_completed",
+            "frame": 593,
+            "elapsedSeconds": 9.431586256818264,
+            "wave": 1,
+            "worldTurn": 5,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=16",
+                "2:CardinalFour:(-1, -5, 0):hp=19"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "player_action_completed_signal",
+            "frame": 593,
+            "elapsedSeconds": 9.431615965804668,
+            "wave": 1,
+            "worldTurn": 5,
+            "action": "attack",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "direction": {
+                "x": 1,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 1,
+            "directHits": 2,
+            "usedTrait": true,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=16",
+                "2:CardinalFour:(-1, -5, 0):hp=19"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "world_turn_completed",
+            "frame": 980,
+            "elapsedSeconds": 10.089382715814282,
+            "wave": 1,
+            "worldTurn": 6,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=16",
+                "2:CardinalFour:(-1, -5, 0):hp=19"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "player_action_completed_signal",
+            "frame": 980,
+            "elapsedSeconds": 10.08941367380612,
+            "wave": 1,
+            "worldTurn": 6,
+            "action": "attack",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 1,
+                "z": 0
+            },
+            "casts": 1,
+            "directHits": 0,
+            "usedTrait": true,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=16",
+                "2:CardinalFour:(-1, -5, 0):hp=19"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "trait_selected",
+            "frame": 980,
+            "elapsedSeconds": 10.09167925681686,
+            "wave": 1,
+            "worldTurn": 6,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "world_turn_completed",
+            "frame": 1123,
+            "elapsedSeconds": 10.330666756810388,
+            "wave": 1,
+            "worldTurn": 7,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=18"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "player_action_completed_signal",
+            "frame": 1123,
+            "elapsedSeconds": 10.330690756818513,
+            "wave": 1,
+            "worldTurn": 7,
+            "action": "attack",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "direction": {
+                "x": 1,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 2,
+            "directHits": 2,
+            "usedTrait": true,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=18"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "world_turn_completed",
+            "frame": 1590,
+            "elapsedSeconds": 11.105960465807585,
+            "wave": 1,
+            "worldTurn": 8,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [
+                "echo_recovery:1"
+            ],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=17"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "player_action_completed_signal",
+            "frame": 1590,
+            "elapsedSeconds": 11.105994340818143,
+            "wave": 1,
+            "worldTurn": 8,
+            "action": "attack",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 1,
+                "z": 0
+            },
+            "casts": 2,
+            "directHits": 1,
+            "usedTrait": true,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [
+                "echo_recovery:1"
+            ],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=17"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "trait_selected",
+            "frame": 1590,
+            "elapsedSeconds": 11.107907131809043,
+            "wave": 1,
+            "worldTurn": 8,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "world_turn_completed",
+            "frame": 1661,
+            "elapsedSeconds": 11.227281173807569,
+            "wave": 1,
+            "worldTurn": 9,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=18"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "player_action_completed_signal",
+            "frame": 1661,
+            "elapsedSeconds": 11.227328965818743,
+            "wave": 1,
+            "worldTurn": 9,
+            "action": "attack",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "direction": {
+                "x": 1,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 1,
+            "directHits": 1,
+            "usedTrait": true,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=18"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "trait_selected",
+            "frame": 1661,
+            "elapsedSeconds": 11.231229923811043,
+            "wave": 1,
+            "worldTurn": 9,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "world_turn_completed",
+            "frame": 1730,
+            "elapsedSeconds": 11.347151048816159,
+            "wave": 1,
+            "worldTurn": 10,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-2, -5, 0):hp=19"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "player_action_completed_signal",
+            "frame": 1730,
+            "elapsedSeconds": 11.347182631812757,
+            "wave": 1,
+            "worldTurn": 10,
+            "action": "attack",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "direction": {
+                "x": 1,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 1,
+            "directHits": 1,
+            "usedTrait": true,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-2, -5, 0):hp=19"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "trait_selected",
+            "frame": 1730,
+            "elapsedSeconds": 11.349884965806269,
+            "wave": 1,
+            "worldTurn": 10,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "relic_changed",
+            "frame": 1730,
+            "elapsedSeconds": 11.351093756806222,
+            "wave": 1,
+            "worldTurn": 10,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [
+                "kings_turn"
+            ],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "world_turn_completed",
+            "frame": 1801,
+            "elapsedSeconds": 11.469141090812628,
+            "wave": 1,
+            "worldTurn": 11,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 1,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [
+                "kings_turn"
+            ],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "player_action_completed_signal",
+            "frame": 1801,
+            "elapsedSeconds": 11.469162256806158,
+            "wave": 1,
+            "worldTurn": 11,
+            "action": "attack",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "direction": {
+                "x": 1,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 1,
+            "directHits": 1,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 1,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [
+                "kings_turn"
+            ],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "world_turn_completed",
+            "frame": 1802,
+            "elapsedSeconds": 11.475310715817614,
+            "wave": 1,
+            "worldTurn": 12,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -2,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 9,
+            "charge": 1,
+            "movementArt": "Rook",
+            "movementLevel": 1,
+            "upgrades": [],
+            "relics": [
+                "kings_turn"
+            ],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=20"
+            ],
+            "fireCount": 1
+        },
+        {
+            "eventKind": "player_action_completed_signal",
+            "frame": 1802,
+            "elapsedSeconds": 11.475336173811229,
+            "wave": 1,
+            "worldTurn": 12,
+            "action": "movement_art",
+            "playerCell": {
+                "x": -5,
+                "y": -2,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 9,
+            "charge": 1,
+            "movementArt": "Rook",
+            "movementLevel": 1,
+            "upgrades": [],
+            "relics": [
+                "kings_turn"
+            ],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=20"
+            ],
+            "fireCount": 1
+        },
+        {
+            "eventKind": "trait_selected",
+            "frame": 1803,
+            "elapsedSeconds": 11.490708881814499,
+            "wave": 1,
+            "worldTurn": 12,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "world_turn_completed",
+            "frame": 1862,
+            "elapsedSeconds": 11.594714548817138,
+            "wave": 1,
+            "worldTurn": 13,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 1,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=19"
+            ],
+            "fireCount": 1
+        },
+        {
+            "eventKind": "player_action_completed_signal",
+            "frame": 1862,
+            "elapsedSeconds": 11.594739548818325,
+            "wave": 1,
+            "worldTurn": 13,
+            "action": "attack",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "direction": {
+                "x": 1,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 1,
+            "directHits": 1,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 1,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=19"
+            ],
+            "fireCount": 1
+        },
+        {
+            "eventKind": "world_turn_completed",
+            "frame": 1996,
+            "elapsedSeconds": 11.836845715806703,
+            "wave": 1,
+            "worldTurn": 14,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=18",
+                "2:CardinalFour:(-1, -5, 0):hp=19"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "player_action_completed_signal",
+            "frame": 1996,
+            "elapsedSeconds": 11.836877881811234,
+            "wave": 1,
+            "worldTurn": 14,
+            "action": "attack",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "direction": {
+                "x": 1,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 1,
+            "directHits": 2,
+            "usedTrait": true,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=18",
+                "2:CardinalFour:(-1, -5, 0):hp=19"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "trait_selected",
+            "frame": 1996,
+            "elapsedSeconds": 11.83904742381128,
+            "wave": 1,
+            "worldTurn": 14,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "relic_changed",
+            "frame": 1996,
+            "elapsedSeconds": 11.83992671580927,
+            "wave": 1,
+            "worldTurn": 14,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [
+                "echo_recovery:1"
+            ],
+            "relics": [
+                "triple_echo"
+            ],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "world_turn_completed",
+            "frame": 2190,
+            "elapsedSeconds": 12.203142090816982,
+            "wave": 1,
+            "worldTurn": 15,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [
+                "echo_recovery:1"
+            ],
+            "relics": [
+                "triple_echo"
+            ],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "player_action_completed_signal",
+            "frame": 2190,
+            "elapsedSeconds": 12.203169881817303,
+            "wave": 1,
+            "worldTurn": 15,
+            "action": "attack",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "direction": {
+                "x": -1,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 3,
+            "directHits": 3,
+            "usedTrait": true,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [
+                "echo_recovery:1"
+            ],
+            "relics": [
+                "triple_echo"
+            ],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "trait_selected",
+            "frame": 2190,
+            "elapsedSeconds": 12.205141506812652,
+            "wave": 1,
+            "worldTurn": 15,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [
+                "echo_recovery:1"
+            ],
+            "relics": [],
+            "enemies": [],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "world_turn_completed",
+            "frame": 2257,
+            "elapsedSeconds": 12.324786840807065,
+            "wave": 1,
+            "worldTurn": 16,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [
+                "overcharge:2",
+                "afterglow_recovery:2"
+            ],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "2:CardinalFour:(-3, -4, 0):hp=2",
+                "3:CardinalFour:(-3, -3, 0):hp=4"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "player_action_completed_signal",
+            "frame": 2257,
+            "elapsedSeconds": 12.324820715817623,
+            "wave": 1,
+            "worldTurn": 16,
+            "action": "attack",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "direction": {
+                "x": 1,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 1,
+            "directHits": 1,
+            "usedTrait": true,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [
+                "overcharge:2",
+                "afterglow_recovery:2"
+            ],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "2:CardinalFour:(-3, -4, 0):hp=2",
+                "3:CardinalFour:(-3, -3, 0):hp=4"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "trait_selected",
+            "frame": 2257,
+            "elapsedSeconds": 12.327399756817613,
+            "wave": 1,
+            "worldTurn": 16,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [
+                "overcharge:2",
+                "afterglow_recovery:2"
+            ],
+            "relics": [],
+            "enemies": [],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "world_turn_completed",
+            "frame": 2321,
+            "elapsedSeconds": 12.444189256813843,
+            "wave": 1,
+            "worldTurn": 17,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [
+                "impact_recovery:2"
+            ],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=8",
+                "2:CardinalFour:(-2, -5, 0):hp=10",
+                "3:CardinalFour:(-3, -4, 0):hp=10"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "player_action_completed_signal",
+            "frame": 2321,
+            "elapsedSeconds": 12.444235090806615,
+            "wave": 1,
+            "worldTurn": 17,
+            "action": "attack",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "direction": {
+                "x": 1,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 1,
+            "directHits": 1,
+            "usedTrait": true,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [
+                "impact_recovery:2"
+            ],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=8",
+                "2:CardinalFour:(-2, -5, 0):hp=10",
+                "3:CardinalFour:(-3, -4, 0):hp=10"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "trait_selected",
+            "frame": 2321,
+            "elapsedSeconds": 12.446456590812887,
+            "wave": 1,
+            "worldTurn": 17,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [
+                "impact_recovery:2"
+            ],
+            "relics": [],
+            "enemies": [],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "relic_changed",
+            "frame": 2321,
+            "elapsedSeconds": 12.446973548809183,
+            "wave": 1,
+            "worldTurn": 17,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [
+                "suture_needle"
+            ],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "world_turn_completed",
+            "frame": 2441,
+            "elapsedSeconds": 12.685446006813436,
+            "wave": 1,
+            "worldTurn": 18,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 7,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [
+                "suture_needle"
+            ],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=19",
+                "2:CardinalFour:(-1, -5, 0):hp=19"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "player_action_completed_signal",
+            "frame": 2441,
+            "elapsedSeconds": 12.685499881816213,
+            "wave": 1,
+            "worldTurn": 18,
+            "action": "attack",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "direction": {
+                "x": 1,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 1,
+            "directHits": 2,
+            "usedTrait": true,
+            "bonusStep": false,
+            "health": 7,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [
+                "suture_needle"
+            ],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=19",
+                "2:CardinalFour:(-1, -5, 0):hp=19"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "world_turn_completed",
+            "frame": 2551,
+            "elapsedSeconds": 12.925052256818163,
+            "wave": 1,
+            "worldTurn": 19,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 8,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [
+                "suture_needle"
+            ],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=18",
+                "2:CardinalFour:(-1, -5, 0):hp=18"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "player_action_completed_signal",
+            "frame": 2551,
+            "elapsedSeconds": 12.92508734081639,
+            "wave": 1,
+            "worldTurn": 19,
+            "action": "attack",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "direction": {
+                "x": 1,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 1,
+            "directHits": 2,
+            "usedTrait": true,
+            "bonusStep": false,
+            "health": 8,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [
+                "suture_needle"
+            ],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=18",
+                "2:CardinalFour:(-1, -5, 0):hp=18"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "world_turn_completed",
+            "frame": 2679,
+            "elapsedSeconds": 13.165344256805838,
+            "wave": 1,
+            "worldTurn": 20,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 8,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [
+                "suture_needle"
+            ],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=17",
+                "2:CardinalFour:(-1, -5, 0):hp=17"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "player_action_completed_signal",
+            "frame": 2679,
+            "elapsedSeconds": 13.165374965814408,
+            "wave": 1,
+            "worldTurn": 20,
+            "action": "attack",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "direction": {
+                "x": 1,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 1,
+            "directHits": 2,
+            "usedTrait": true,
+            "bonusStep": false,
+            "health": 8,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [
+                "suture_needle"
+            ],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:CardinalFour:(-3, -5, 0):hp=17",
+                "2:CardinalFour:(-1, -5, 0):hp=17"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "trait_selected",
+            "frame": 2679,
+            "elapsedSeconds": 13.167419631805388,
+            "wave": 1,
+            "worldTurn": 20,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "world_turn_completed",
+            "frame": 2679,
+            "elapsedSeconds": 13.168549173817155,
+            "wave": 1,
+            "worldTurn": 21,
+            "action": "",
+            "playerCell": {
+                "x": -3,
+                "y": -4,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "Knight",
+            "movementLevel": 2,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "player_action_completed_signal",
+            "frame": 2679,
+            "elapsedSeconds": 13.168568715816946,
+            "wave": 1,
+            "worldTurn": 21,
+            "action": "movement_art",
+            "playerCell": {
+                "x": -3,
+                "y": -4,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "Knight",
+            "movementLevel": 2,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "trait_selected",
+            "frame": 2680,
+            "elapsedSeconds": 13.171668631810462,
+            "wave": 1,
+            "worldTurn": 21,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "player_action_completed_signal",
+            "frame": 2785,
+            "elapsedSeconds": 13.350028006811045,
+            "wave": 1,
+            "worldTurn": 21,
+            "action": "attack",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": -1,
+                "z": 0
+            },
+            "casts": 1,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:Rook:(-6, 6, 0):hp=20"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "world_turn_completed",
+            "frame": 2845,
+            "elapsedSeconds": 13.461945798815578,
+            "wave": 1,
+            "worldTurn": 22,
+            "action": "",
+            "playerCell": {
+                "x": -5,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 10,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:Rook:(-6, 6, 0):hp=20"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "world_turn_completed",
+            "frame": 2938,
+            "elapsedSeconds": 13.64188917381398,
+            "wave": 1,
+            "worldTurn": 23,
+            "action": "",
+            "playerCell": {
+                "x": -6,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 8,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:Rook:(-6, 6, 0):hp=20"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "player_action_completed_signal",
+            "frame": 2938,
+            "elapsedSeconds": 13.641934673811193,
+            "wave": 1,
+            "worldTurn": 23,
+            "action": "attack",
+            "playerCell": {
+                "x": -6,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": -6,
+                "y": -5,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": -1,
+                "z": 0
+            },
+            "casts": 1,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 8,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:Rook:(-6, 6, 0):hp=20"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "world_turn_completed",
+            "frame": 3031,
+            "elapsedSeconds": 13.820240798813757,
+            "wave": 1,
+            "worldTurn": 24,
+            "action": "",
+            "playerCell": {
+                "x": -6,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 8,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:Rook:(-6, 6, 0):hp=20"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "player_action_completed_signal",
+            "frame": 3031,
+            "elapsedSeconds": 13.820270548807457,
+            "wave": 1,
+            "worldTurn": 24,
+            "action": "attack",
+            "playerCell": {
+                "x": -6,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": -6,
+                "y": -5,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": -1,
+                "z": 0
+            },
+            "casts": 1,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 8,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:Rook:(-6, 6, 0):hp=20"
+            ],
+            "fireCount": 0
+        },
+        {
+            "eventKind": "stage_GameOver",
+            "frame": 3031,
+            "elapsedSeconds": 13.82397859080811,
+            "wave": 1,
+            "worldTurn": 24,
+            "action": "",
+            "playerCell": {
+                "x": -6,
+                "y": -5,
+                "z": 0
+            },
+            "attackOrigin": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "direction": {
+                "x": 0,
+                "y": 0,
+                "z": 0
+            },
+            "casts": 0,
+            "directHits": 0,
+            "usedTrait": false,
+            "bonusStep": false,
+            "health": 0,
+            "charge": 0,
+            "movementArt": "None",
+            "movementLevel": 0,
+            "upgrades": [],
+            "relics": [],
+            "enemies": [
+                "0:CardinalFour:(0, 0, 0):hp=100",
+                "1:Rook:(-6, 6, 0):hp=20"
+            ],
+            "fireCount": 0
+        }
+    ]
+}
