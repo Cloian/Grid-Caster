@@ -1,0 +1,225 @@
+{
+  "scene": "Assets/Scenes/SampleScene.unity",
+  "date": "2026-10-14",
+  "scope": "saved scene dependency and runtime resource mapping",
+  "sources": [
+    {
+      "category": "Player",
+      "role": "주인공",
+      "original_path": "/Users/gimdong-yun/Desktop/aseprite-practice/new_wizard.aseprite",
+      "organized_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Art/Sources/SampleScene/Player/new_wizard.aseprite",
+      "unity_assets": [
+        "Assets/Player/new_wizard-Sheet.png"
+      ],
+      "notes": "첫 8프레임을 각 50×50에서 (5,5,40,40)로 추출한 320×40 시트. idle 2프레임·walk 6프레임.",
+      "sha256": "4e0974b33e2144792ba9ecd4184effb6af20db4acf7b268eefc9ced7e976ac2a"
+    },
+    {
+      "category": "Player",
+      "role": "사망 묘비",
+      "original_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Assets/Player/Death/grave.aseprite",
+      "organized_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Art/Sources/SampleScene/Player/grave.aseprite",
+      "unity_assets": [
+        "Assets/Player/Death/grave.aseprite"
+      ],
+      "notes": "PlayerDeathMarker 참조.",
+      "sha256": "e21b6dae38e80454fb2d381d9412297a77527ff9b8e43a28b0bd15c8beaba2ee"
+    },
+    {
+      "category": "Monsters",
+      "role": "박쥐 / 나이트·룩 공용 외형",
+      "original_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Assets/Monsters/Bat/bat_frame.aseprite",
+      "organized_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Art/Sources/SampleScene/Monsters/bat_frame.aseprite",
+      "unity_assets": [
+        "Assets/Monsters/Bat/bat_frame.aseprite"
+      ],
+      "notes": "박쥐와 chessMonsterSprite가 공유. 룩 전용 Sprite는 미할당이므로 같은 Sprite를 사용하며 기믹·색상 표현을 더한다.",
+      "sha256": "7b63c4d1aa5c56b032026137d1b23e9c41060f872d94116360dbaf38b6a9544b"
+    },
+    {
+      "category": "Monsters",
+      "role": "뱀",
+      "original_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Assets/Monsters/Snake/snake_asprite.aseprite",
+      "organized_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Art/Sources/SampleScene/Monsters/snake_asprite.aseprite",
+      "unity_assets": [
+        "Assets/Monsters/Snake/snake_asprite.aseprite"
+      ],
+      "notes": "현재 MonsterSpawner의 기존 Snake Prefab을 통해 사용.",
+      "sha256": "28c5c2977397764e71c0443a5a9146eb66ecb08bba03784951b72da844706f84"
+    },
+    {
+      "category": "Monsters",
+      "role": "비숍 / 아르마딜로",
+      "original_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Assets/Monsters/Armadillo/armadillo.aseprite",
+      "organized_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Art/Sources/SampleScene/Monsters/armadillo.aseprite",
+      "unity_assets": [
+        "Assets/Monsters/Armadillo/armadillo_sheet.png"
+      ],
+      "notes": "bishopMonsterSprite와 독립 ArmadilloIdle.anim / Animator Controller로 사용.",
+      "sha256": "f0dbf4272d082de6a8adf79d6272cce813d11179db2f82782c657481e21cb4a8"
+    },
+    {
+      "category": "Projectiles",
+      "role": "플레이어 공격 투사체",
+      "original_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Assets/Projectiles/Attack/attack.aseprite",
+      "organized_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Art/Sources/SampleScene/Projectiles/attack.aseprite",
+      "unity_assets": [
+        "Assets/Projectiles/Attack/attack.aseprite"
+      ],
+      "notes": "PlayerProjectileAttack.anim에서도 참조.",
+      "sha256": "f95abfd142aa74d1c702ff13b2a14f39eb527b7aad660f9421a72f4df0a1369a"
+    },
+    {
+      "category": "Tiles",
+      "role": "타일셋",
+      "original_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Assets/TIles/tileset2.aseprite",
+      "organized_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Art/Sources/SampleScene/Tiles/tileset2.aseprite",
+      "unity_assets": [
+        "Assets/TIles/tileset2.aseprite"
+      ],
+      "notes": "씬과 Tile 에셋이 원본 Aseprite의 sub-asset을 직접 참조.",
+      "sha256": "65f2c7677a5fb78293c57e21a2788e96c8eada8922ea14975ccf658995df95a4"
+    },
+    {
+      "category": "Tiles",
+      "role": "벽 시트 22",
+      "original_path": "/Users/gimdong-yun/Desktop/aseprite-practice/wall-Sheet22.aseprite",
+      "organized_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Art/Sources/SampleScene/Tiles/wall-Sheet22.aseprite",
+      "unity_assets": [
+        "Assets/TIles/wall-Sheet22.png"
+      ],
+      "notes": "첫 프레임 PNG 내보내기와 게임 PNG의 픽셀 전체 일치 확인.",
+      "sha256": "1bcd0e2a6762bd25821a68aebd07c6bcff78e301c48eb4f9af091e5440acccd0"
+    },
+    {
+      "category": "Tiles",
+      "role": "벽 시트",
+      "original_path": "/Users/gimdong-yun/Desktop/aseprite-practice/wall_sheet.aseprite",
+      "organized_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Art/Sources/SampleScene/Tiles/wall_sheet.aseprite",
+      "unity_assets": [
+        "Assets/TIles/wall_sheet.png"
+      ],
+      "notes": "첫 프레임 PNG 내보내기와 게임 PNG의 픽셀 전체 일치 확인.",
+      "sha256": "35569b6a4e92dd8bf4c72a363df87148b8fa043fb2a8a9f8518a97f10b0bac95"
+    },
+    {
+      "category": "Tiles",
+      "role": "벽 시트 123",
+      "original_path": "/Users/gimdong-yun/Desktop/aseprite-practice/wall_sheet123.aseprite",
+      "organized_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Art/Sources/SampleScene/Tiles/wall_sheet123.aseprite",
+      "unity_assets": [
+        "Assets/TIles/wall_sheet123.png"
+      ],
+      "notes": "첫 프레임 PNG 내보내기와 게임 PNG의 픽셀 전체 일치 확인.",
+      "sha256": "82271182d40baca771ef5dc9e3d21475672a674ca49a35ebebf58916c35a5ba9"
+    },
+    {
+      "category": "UI",
+      "role": "행동·시작 특성 공통 시트",
+      "original_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Assets/UI/Icons/yosulbong.aseprite",
+      "organized_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Art/Sources/SampleScene/UI/yosulbong.aseprite",
+      "unity_assets": [
+        "Assets/UI/Icons/Actions/BasicAttack.png",
+        "Assets/UI/Icons/Actions/Move.png",
+        "Assets/UI/Icons/Traits/Teleport.png",
+        "Assets/UI/Icons/Traits/DoubleCast.png",
+        "Assets/UI/Icons/Traits/Pierce.png",
+        "Assets/UI/Icons/Traits/DamageBoost.png",
+        "Assets/UI/Icons/Traits/Knockback.png"
+      ],
+      "notes": "140×20 시트를 20×20으로 자른 7아이콘과 정확히 일치. 순서: 기본공격 / 구 Teleport / 더블캐스트 / 관통 / 범위공격 / 넉백 / 이동. Teleport는 기존 HUD 대체 참조이며 F 순간이동 기능을 뜻하지 않는다.",
+      "sha256": "987d6d610e1b7dc93545df1b34851711acefdca6dba9bbf5a60c7c345d21f1b4"
+    },
+    {
+      "category": "UI",
+      "role": "체력 하트",
+      "original_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Assets/UI/Icons/Health/heart.aseprite",
+      "organized_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Art/Sources/SampleScene/UI/heart.aseprite",
+      "unity_assets": [
+        "Assets/UI/Icons/Health/heart.aseprite"
+      ],
+      "notes": "HUD 체력 표시.",
+      "sha256": "ebde6c607c89b85411c0ec92cfbe1fbe21ec7cf0af8c7f94914beebed50a16f4"
+    },
+    {
+      "category": "UI/Movement",
+      "role": "나이트 이동술 아이콘",
+      "original_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Assets/UI/Icons/Movement/KnightMove.aseprite",
+      "organized_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Art/Sources/SampleScene/UI/Movement/KnightMove.aseprite",
+      "unity_assets": [
+        "Assets/UI/Icons/Movement/KnightMove.png",
+        "Assets/Resources/UI/ProgressionIcons/KnightMove.png"
+      ],
+      "notes": "HUD와 성장 UI가 같은 PNG 내용 사용.",
+      "sha256": "ff70399b3fdc4592fb8817c06c0a148f17fc4018e4086b36a457589f6b176f36"
+    },
+    {
+      "category": "UI/Movement",
+      "role": "비숍 이동술 아이콘",
+      "original_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Assets/UI/Icons/Movement/BishopMove.aseprite",
+      "organized_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Art/Sources/SampleScene/UI/Movement/BishopMove.aseprite",
+      "unity_assets": [
+        "Assets/UI/Icons/Movement/BishopMove.png",
+        "Assets/Resources/UI/ProgressionIcons/BishopMove.png"
+      ],
+      "notes": "HUD와 성장 UI가 같은 PNG 내용 사용.",
+      "sha256": "5a3042140322dfac8d52a754a7d62f34f36c829f3d1a0f9dae5e1f944b4b07bb"
+    },
+    {
+      "category": "UI/Movement",
+      "role": "룩 이동술 아이콘",
+      "original_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Assets/UI/Icons/Movement/RookMove.aseprite",
+      "organized_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Art/Sources/SampleScene/UI/Movement/RookMove.aseprite",
+      "unity_assets": [
+        "Assets/UI/Icons/Movement/RookMove.png",
+        "Assets/Resources/UI/ProgressionIcons/RookMove.png"
+      ],
+      "notes": "HUD와 성장 UI가 같은 PNG 내용 사용.",
+      "sha256": "41bd20856c24ba7c7beb5bee902990d5cb7149728ef619021aeb201be0067d16"
+    },
+    {
+      "category": "UI/Progression",
+      "role": "기어 강화 아이콘",
+      "original_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Art/Icons/HandPixel_v1/ChainBurst.aseprite",
+      "organized_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Art/Sources/SampleScene/UI/Progression/ChainBurst.aseprite",
+      "unity_assets": [
+        "Assets/Resources/UI/ProgressionIcons/ChainBurst.png"
+      ],
+      "notes": "alternating_gear에서 런타임 로드. Art/Icons/HandPixel_v1/ChainBurst.png와 파일 내용 동일.",
+      "sha256": "8337aee4f8a062c20ab767e67e1d72894e0048cdc4f7ad4c648d74a1c1c69b41"
+    },
+    {
+      "category": "UI/Progression",
+      "role": "봉쇄 강화 아이콘",
+      "original_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Art/Icons/HandPixel_v1/BindingLanding.aseprite",
+      "organized_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Art/Sources/SampleScene/UI/Progression/BindingLanding.aseprite",
+      "unity_assets": [
+        "Assets/Resources/UI/ProgressionIcons/BindingLanding.png"
+      ],
+      "notes": "movement_breath / impact_recovery에서 런타임 로드. 제작 PNG와 파일 내용 동일.",
+      "sha256": "2c3367e46b3c5077da16bc01b00d0d9e5b7364699d2b3935952c57f34b62e2b5"
+    },
+    {
+      "category": "Tiles/PNGOnly",
+      "role": "바닥 타일 PNG 원본",
+      "original_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Assets/TIles/Sprite-tile2-Sheet.png",
+      "organized_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Art/Sources/SampleScene/Tiles/PNGOnly/Sprite-tile2-Sheet.png",
+      "unity_assets": [
+        "Assets/TIles/Sprite-tile2-Sheet.png"
+      ],
+      "notes": "대응 편집용 Aseprite를 확정하지 못함. tile_1234 및 tile_1234-Sheet 내보내기와 픽셀이 달라 동일 원본으로 취급하지 않음.",
+      "sha256": "b1ee1f674c920959bddb88777b3db6b87d1c44942373c76422fb12e28d48a09f"
+    },
+    {
+      "category": "Tiles/PNGOnly",
+      "role": "벽 2 PNG 원본",
+      "original_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Assets/TIles/wall2_sheet.png",
+      "organized_path": "/Users/gimdong-yun/GitHub/Grid-Caster/Art/Sources/SampleScene/Tiles/PNGOnly/wall2_sheet.png",
+      "unity_assets": [
+        "Assets/TIles/wall2_sheet.png"
+      ],
+      "notes": "대응 편집용 Aseprite를 확정하지 못함. 일부 연결 Tile 에셋은 Assets/trash 아래에 남아 있음.",
+      "sha256": "68eaca21c87fa34eb185eb9bb07df9d7b68bf44b829382ba61945faabe4ad976"
+    }
+  ]
+}
