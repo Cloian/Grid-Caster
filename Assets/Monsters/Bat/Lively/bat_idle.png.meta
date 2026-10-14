@@ -1,0 +1,400 @@
+fileFormatVersion: 2
+guid: 2f54d1484e82941b08d43790761d4864
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3121528857211528895
+    second: bat_idle_0
+  - first:
+      213: 2868076889194776294
+    second: bat_idle_1
+  - first:
+      213: -6503176614684565198
+    second: bat_idle_2
+  - first:
+      213: -8758927461462092268
+    second: bat_idle_3
+  - first:
+      213: -8345105268503715082
+    second: bat_idle_4
+  - first:
+      213: 8939051452728522804
+    second: bat_idle_5
+  - first:
+      213: -587093967069140200
+    second: bat_idle_6
+  - first:
+      213: -4784695335049408318
+    second: bat_idle_7
+  - first:
+      213: -4475225989153881433
+    second: bat_idle_8
+  - first:
+      213: -1444968794862352212
+    second: bat_idle_9
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 40
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: bat_idle_00
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 284f66fd3f9ad4ab98189424c000b52e
+      internalID: -2062616160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bat_idle_01
+      rect:
+        serializedVersion: 2
+        x: 40
+        y: 0
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e5e1ec6207f243dbad52c72dccbe2d6
+      internalID: 2141954223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bat_idle_02
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39829a7a205ab45449b51fbac26e7bc4
+      internalID: -1096853363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bat_idle_03
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 0
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31e52178f25414fb2910d9e35625c67e
+      internalID: -545642617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bat_idle_04
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee92cd9bc905c48cbb01f47f50e97a84
+      internalID: -1046254368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bat_idle_05
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 0
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00e37bf96b80a4c65bf228b77c46d8a9
+      internalID: -1185788344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bat_idle_06
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 0
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c04a59a5cfb6f4fb49318cf826006f15
+      internalID: -1341355642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bat_idle_07
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 0
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bd03a89da36a4809b027409801d2688
+      internalID: 1284222791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bat_idle_08
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50688cbf687144763a5853193a6048a8
+      internalID: -646446853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bat_idle_09
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 0
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a0389da7c2a0472e9415a34c34c0266
+      internalID: -1067276109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 95f33d461607b4e23a0a42062eb1eba6
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      bat_idle_0: 3121528857211528895
+      bat_idle_00: -2062616160
+      bat_idle_01: 2141954223
+      bat_idle_02: -1096853363
+      bat_idle_03: -545642617
+      bat_idle_04: -1046254368
+      bat_idle_05: -1185788344
+      bat_idle_06: -1341355642
+      bat_idle_07: 1284222791
+      bat_idle_08: -646446853
+      bat_idle_09: -1067276109
+      bat_idle_1: 2868076889194776294
+      bat_idle_2: -6503176614684565198
+      bat_idle_3: -8758927461462092268
+      bat_idle_4: -8345105268503715082
+      bat_idle_5: 8939051452728522804
+      bat_idle_6: -587093967069140200
+      bat_idle_7: -4784695335049408318
+      bat_idle_8: -4475225989153881433
+      bat_idle_9: -1444968794862352212
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
