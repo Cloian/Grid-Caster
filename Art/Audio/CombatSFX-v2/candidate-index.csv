@@ -1,0 +1,65 @@
+﻿ID,종류,후보명,길이(초),파일
+M1,마법 발사·비행,유리 결정,0.331,candidates/01_magic/M1.wav
+M2,마법 발사·비행,공기 탄,0.275,candidates/01_magic/M2.wav
+M3,마법 발사·비행,책장 시전,0.342,candidates/01_magic/M3.wav
+M4,마법 발사·비행,전기 스파크,0.226,candidates/01_magic/M4.wav
+M5,마법 발사·비행,맑은 종,0.336,candidates/01_magic/M5.wav
+M6,마법 발사·비행,암흑 파동,0.44,candidates/01_magic/M6.wav
+M7,마법 발사·비행,유기적인 맥동,0.373,candidates/01_magic/M7.wav
+M8,마법 발사·비행,룬 연타,0.282,candidates/01_magic/M8.wav
+S1,생물에게 마법 명중,천의 둔탁함,0.135,candidates/02_soft_hit/S1.wav
+S2,생물에게 마법 명중,가죽 충격,0.253,candidates/02_soft_hit/S2.wav
+S3,생물에게 마법 명중,촉촉한 충격,0.218,candidates/02_soft_hit/S3.wav
+S4,생물에게 마법 명중,찰싹 타격,0.217,candidates/02_soft_hit/S4.wav
+S5,생물에게 마법 명중,바람 관통,0.308,candidates/02_soft_hit/S5.wav
+S6,생물에게 마법 명중,작은 마법 파열,0.325,candidates/02_soft_hit/S6.wav
+S7,생물에게 마법 명중,묵직한 몸 충격,0.328,candidates/02_soft_hit/S7.wav
+S8,생물에게 마법 명중,가벼운 톡,0.186,candidates/02_soft_hit/S8.wav
+H1,단단한 대상에게 명중,철판,0.246,candidates/03_hard_hit/H1.wav
+H2,단단한 대상에게 명중,갑주,0.358,candidates/03_hard_hit/H2.wav
+H3,단단한 대상에게 명중,돌,0.352,candidates/03_hard_hit/H3.wav
+H4,단단한 대상에게 명중,도자기 질감,0.263,candidates/03_hard_hit/H4.wav
+H5,단단한 대상에게 명중,청동 울림,0.353,candidates/03_hard_hit/H5.wav
+H6,단단한 대상에게 명중,쇠테,0.18,candidates/03_hard_hit/H6.wav
+H7,단단한 대상에게 명중,유리 갑주,0.283,candidates/03_hard_hit/H7.wav
+H8,단단한 대상에게 명중,둔한 금속,0.221,candidates/03_hard_hit/H8.wav
+P1,플레이어 피격,몸과 천,0.25,candidates/04_player_hurt/P1.wav
+P2,플레이어 피격,짧은 찌름,0.188,candidates/04_player_hurt/P2.wav
+P3,플레이어 피격,마법 충격,0.252,candidates/04_player_hurt/P3.wav
+P4,플레이어 피격,둔타,0.295,candidates/04_player_hurt/P4.wav
+P5,플레이어 피격,낮은 경고,0.181,candidates/04_player_hurt/P5.wav
+P6,플레이어 피격,가죽과 몸,0.283,candidates/04_player_hurt/P6.wav
+P7,플레이어 피격,날카로운 스침,0.293,candidates/04_player_hurt/P7.wav
+P8,플레이어 피격,게임형 하강,0.258,candidates/04_player_hurt/P8.wav
+K1,기갑기마 착지,갑주와 쿵,0.309,candidates/05_knight_land/K1.wav
+K2,기갑기마 착지,발굽 이중 착지,0.261,candidates/05_knight_land/K2.wav
+K3,기갑기마 착지,쇳덩이,0.369,candidates/05_knight_land/K3.wav
+K4,기갑기마 착지,돌바닥 착지,0.42,candidates/05_knight_land/K4.wav
+K5,기갑기마 착지,가죽 갑주,0.303,candidates/05_knight_land/K5.wav
+K6,기갑기마 착지,먼지 착지,0.308,candidates/05_knight_land/K6.wav
+K7,기갑기마 착지,짧은 착지,0.169,candidates/05_knight_land/K7.wav
+K8,기갑기마 착지,육중한 갑주,0.368,candidates/05_knight_land/K8.wav
+F1,불길 펼침,횃불 스윽,0.394,candidates/06_fire/F1.wav
+F2,불길 펼침,불꽃 파도,0.463,candidates/06_fire/F2.wav
+F3,불길 펼침,짧은 점화,0.288,candidates/06_fire/F3.wav
+F4,불길 펼침,회전 불길,0.541,candidates/06_fire/F4.wav
+F5,불길 펼침,불씨 연속,0.489,candidates/06_fire/F5.wav
+F6,불길 펼침,터지는 불길,0.33,candidates/06_fire/F6.wav
+F7,불길 펼침,부드러운 화르륵,0.587,candidates/06_fire/F7.wav
+F8,불길 펼침,거친 부채질,0.447,candidates/06_fire/F8.wav
+C1,쇠뇌 장전,걸쇠,0.313,candidates/07_rook_charge/C1.wav
+C2,쇠뇌 장전,목재 장력,0.402,candidates/07_rook_charge/C2.wav
+C3,쇠뇌 장전,금속 톱니,0.303,candidates/07_rook_charge/C3.wav
+C4,쇠뇌 장전,가죽줄 당김,0.431,candidates/07_rook_charge/C4.wav
+C5,쇠뇌 장전,짧은 잠금,0.216,candidates/07_rook_charge/C5.wav
+C6,쇠뇌 장전,큰 쇠뇌,0.48,candidates/07_rook_charge/C6.wav
+C7,쇠뇌 장전,정밀 기계,0.3,candidates/07_rook_charge/C7.wav
+C8,쇠뇌 장전,장력 후 잠금,0.512,candidates/07_rook_charge/C8.wav
+R1,쇠뇌 발사,목재 쇠뇌,0.337,candidates/08_rook_fire/R1.wav
+R2,쇠뇌 발사,강철 쇠뇌,0.335,candidates/08_rook_fire/R2.wav
+R3,쇠뇌 발사,날카로운 현,0.336,candidates/08_rook_fire/R3.wav
+R4,쇠뇌 발사,묵직한 볼트,0.337,candidates/08_rook_fire/R4.wav
+R5,쇠뇌 발사,가벼운 휙,0.329,candidates/08_rook_fire/R5.wav
+R6,쇠뇌 발사,쇠기구 반동,0.337,candidates/08_rook_fire/R6.wav
+R7,쇠뇌 발사,공기 절단,0.335,candidates/08_rook_fire/R7.wav
+R8,쇠뇌 발사,짧은 잔향,0.337,candidates/08_rook_fire/R8.wav

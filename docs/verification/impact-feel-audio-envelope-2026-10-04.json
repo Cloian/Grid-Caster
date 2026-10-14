@@ -1,0 +1,44 @@
+[
+  {
+    "file": "Assets/Resources/CombatSFX/01_magic_soft_laser.wav",
+    "duration_ms": 421.12,
+    "rms_onset_above_minus40dbfs_ms": 0.0,
+    "max_5ms_rms_at_ms": 25.0,
+    "sample_peak_dbfs": -6.39
+  },
+  {
+    "file": "Assets/Resources/CombatSFX/02_magic_hit_soft.wav",
+    "duration_ms": 135.38,
+    "rms_onset_above_minus40dbfs_ms": 0.0,
+    "max_5ms_rms_at_ms": 5.0,
+    "sample_peak_dbfs": -6.63
+  },
+  {
+    "file": "Assets/Resources/CombatSFX/03_magic_hit_hard.wav",
+    "duration_ms": 263.08,
+    "rms_onset_above_minus40dbfs_ms": 0.0,
+    "max_5ms_rms_at_ms": 10.0,
+    "sample_peak_dbfs": -2.39
+  },
+  {
+    "file": "Assets/Resources/CombatSFX/04_player_hurt.wav",
+    "duration_ms": 295.27,
+    "rms_onset_above_minus40dbfs_ms": 15.0,
+    "max_5ms_rms_at_ms": 30.0,
+    "sample_peak_dbfs": -4.99
+  },
+  {
+    "file": "Assets/Resources/CombatSFX/05_knight_land.wav",
+    "duration_ms": 303.35,
+    "rms_onset_above_minus40dbfs_ms": 10.0,
+    "max_5ms_rms_at_ms": 165.0,
+    "sample_peak_dbfs": -6.05
+  },
+  {
+    "file": "Assets/Resources/CombatSFX/06_fire_trail.wav",
+    "duration_ms": 463.27,
+    "rms_onset_above_minus40dbfs_ms": 0.0,
+    "max_5ms_rms_at_ms": 105.0,
+    "sample_peak_dbfs": -4.04
+  }
+]

@@ -1,0 +1,282 @@
+{
+  "date": "2026-10-03",
+  "selected_candidates": [
+    "M4",
+    "S1",
+    "H4",
+    "P4",
+    "K5",
+    "F2"
+  ],
+  "active_sound_count": 6,
+  "pending": [
+    "rook_charge",
+    "rook_fire"
+  ],
+  "game_integrated": true,
+  "selection_authority": "latest user selection in this chat",
+  "magic_revision": {
+    "base": "M4",
+    "original_seconds": 0.226,
+    "revised_seconds": 0.421,
+    "changes": [
+      "rounded 14ms onset",
+      "slower 100ms pitch curve",
+      "reduced FM sharpness",
+      "longer 78ms body decay",
+      "motion noise reduced",
+      "4700Hz upper filtering"
+    ],
+    "note": "Audio timing only; projectile/game timing has not been changed."
+  },
+  "assets": [
+    {
+      "file": "01_magic_soft_laser.wav",
+      "selected_candidate": "M4",
+      "category": "마법 발사·비행",
+      "status": "user_authorized_trial_in_game",
+      "source_file": "Art/Audio/CombatSFX-v2/candidates/01_magic/M4.wav",
+      "sha256": "999990e9b2fde96901734f01bc9f6f7f3cb645598c24aac31044e5a4d406d99c",
+      "sources": [
+        "r:cloth4"
+      ],
+      "layers": [
+        {
+          "role": "rounded laser body",
+          "source": "original synthesis",
+          "gain": 0.46,
+          "at_seconds": 0
+        },
+        {
+          "role": "soft motion",
+          "source": "r:cloth4",
+          "gain": 0.09,
+          "at_seconds": 0.024
+        },
+        {
+          "role": "subtle tail",
+          "source": "original synthesis",
+          "gain": 0.026,
+          "at_seconds": 0.015
+        },
+        {
+          "role": "short reflection",
+          "source": "original synthesis",
+          "gain": 0.035,
+          "at_seconds": 0.01
+        }
+      ],
+      "duration_seconds": 0.421,
+      "peak_dbfs": -6.39,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -240.0,
+      "spectral_centroid_hz": 1192,
+      "dc_offset": 1.26e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0,
+      "runtime_file": "Assets/Resources/CombatSFX/01_magic_soft_laser.wav"
+    },
+    {
+      "file": "02_magic_hit_soft.wav",
+      "selected_candidate": "S1",
+      "category": "생물에게 마법 명중",
+      "status": "user_selected",
+      "source_file": "Art/Audio/CombatSFX-v2/candidates/02_soft_hit/S1.wav",
+      "sha256": "8364dda91abec84c98f5f42c5e7b9c8c8c8173a2851cb1a9035c716c52cfbe8b",
+      "sources": [
+        "i:impactSoft_medium_000",
+        "r:cloth2"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "i:impactSoft_medium_000",
+          "gain": 0.83,
+          "at_seconds": 0
+        },
+        {
+          "role": "attack",
+          "source": "r:cloth2",
+          "gain": 0.19,
+          "at_seconds": 0.008
+        }
+      ],
+      "duration_seconds": 0.135,
+      "peak_dbfs": -6.63,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -100.59,
+      "spectral_centroid_hz": 3383,
+      "dc_offset": 0.0003549,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0,
+      "runtime_file": "Assets/Resources/CombatSFX/02_magic_hit_soft.wav"
+    },
+    {
+      "file": "03_magic_hit_hard.wav",
+      "selected_candidate": "H4",
+      "category": "단단한 대상에게 명중",
+      "status": "user_selected",
+      "source_file": "Art/Audio/CombatSFX-v2/candidates/03_hard_hit/H4.wav",
+      "sha256": "1c48dfb2c4a6a2241afea9761c1b78857b83076d63f81c33e804beed8234dce9",
+      "sources": [
+        "i:impactPlate_medium_002"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "i:impactPlate_medium_002",
+          "gain": 0.81,
+          "at_seconds": 0
+        },
+        {
+          "role": "tail",
+          "source": "original synthesis",
+          "gain": 0.1,
+          "at_seconds": 0.008
+        }
+      ],
+      "duration_seconds": 0.263,
+      "peak_dbfs": -2.39,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -240.0,
+      "spectral_centroid_hz": 1415,
+      "dc_offset": 0.0001502,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0,
+      "runtime_file": "Assets/Resources/CombatSFX/03_magic_hit_hard.wav"
+    },
+    {
+      "file": "04_player_hurt.wav",
+      "selected_candidate": "P4",
+      "category": "플레이어 피격",
+      "status": "user_selected",
+      "source_file": "Art/Audio/CombatSFX-v2/candidates/04_player_hurt/P4.wav",
+      "sha256": "77c8a5691e910b35acd0b42104ac9333e6cb55ac1693bc221e3a91d43a89f7bf",
+      "sources": [
+        "i:impactPunch_heavy_003",
+        "r:clothBelt2"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "i:impactPunch_heavy_003",
+          "gain": 0.78,
+          "at_seconds": 0
+        },
+        {
+          "role": "tail",
+          "source": "r:clothBelt2",
+          "gain": 0.22,
+          "at_seconds": 0.018
+        }
+      ],
+      "duration_seconds": 0.295,
+      "peak_dbfs": -4.99,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -240.0,
+      "spectral_centroid_hz": 4413,
+      "dc_offset": -0.0002091,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0,
+      "runtime_file": "Assets/Resources/CombatSFX/04_player_hurt.wav"
+    },
+    {
+      "file": "05_knight_land.wav",
+      "selected_candidate": "K5",
+      "category": "기갑기마 착지",
+      "status": "user_selected",
+      "source_file": "Art/Audio/CombatSFX-v2/candidates/05_knight_land/K5.wav",
+      "sha256": "294c067ba15aa53b2b298164b46bac2852c07d7ae79eed1357e52549ff0eb9bb",
+      "sources": [
+        "r:clothBelt",
+        "r:dropLeather",
+        "r:footstep00"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "r:dropLeather",
+          "gain": 0.6,
+          "at_seconds": 0
+        },
+        {
+          "role": "attack",
+          "source": "r:footstep00",
+          "gain": 0.58,
+          "at_seconds": 0.016
+        },
+        {
+          "role": "gear",
+          "source": "r:clothBelt",
+          "gain": 0.23,
+          "at_seconds": 0.048
+        }
+      ],
+      "duration_seconds": 0.303,
+      "peak_dbfs": -6.05,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -240.0,
+      "spectral_centroid_hz": 2917,
+      "dc_offset": 6.99e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0,
+      "runtime_file": "Assets/Resources/CombatSFX/05_knight_land.wav"
+    },
+    {
+      "file": "06_fire_trail.wav",
+      "selected_candidate": "F2",
+      "category": "불길 펼침",
+      "status": "user_selected",
+      "source_file": "Art/Audio/CombatSFX-v2/candidates/06_fire/F2.wav",
+      "sha256": "e7c377a54bb3f4c46223f67af1dd27878d944c472dc89535daa27ced1b68282f",
+      "sources": [
+        "f:fire",
+        "r:cloth1"
+      ],
+      "layers": [
+        {
+          "role": "crackle",
+          "source": "f:fire",
+          "gain": 0.85,
+          "at_seconds": 0
+        },
+        {
+          "role": "roar",
+          "source": "original synthesis",
+          "gain": 0.44,
+          "at_seconds": 0
+        },
+        {
+          "role": "motion",
+          "source": "r:cloth1",
+          "gain": 0.21,
+          "at_seconds": 0.025
+        }
+      ],
+      "duration_seconds": 0.463,
+      "peak_dbfs": -4.04,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -98.99,
+      "spectral_centroid_hz": 2987,
+      "dc_offset": -6.18e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0,
+      "runtime_file": "Assets/Resources/CombatSFX/06_fire_trail.wav"
+    }
+  ],
+  "source_license": "CC0 samples + original synthesis; see CREDITS.md",
+  "integration_date": "2026-10-04",
+  "runtime_folder": "Assets/Resources/CombatSFX",
+  "verification": {
+    "report": "docs/verification/combat-audio-20261004-000338.txt",
+    "environment": "Unity 6000.4.0f1 batch Play Mode, temporary copy of current source and SampleScene",
+    "human_listening": false,
+    "original_open_editor_play_verified": false
+  }
+}

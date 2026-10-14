@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "decoded_wav": 64,
+  "unique_files": 64,
+  "clipped_samples": 0,
+  "sample_rate": 48000,
+  "channels": 1,
+  "bit_depth": 16,
+  "limits": "Signal checks do not prove perceptual quality or gameplay fit."
+}

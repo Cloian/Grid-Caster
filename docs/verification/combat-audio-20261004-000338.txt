@@ -1,0 +1,41 @@
+COMBAT_AUDIO_PASS
+Controlled actual SampleScene fixtures; not human listening or normal stage completion.
+Unity 6000.4.0f1; 2026-10-04T00:03:38.0080780+09:00
+PASS one scene audio controller, three general voices + reserved hurt voice
+PASS selected WAV imported without lossy encoding: 01_magic_soft_laser
+PASS selected WAV imported without lossy encoding: 02_magic_hit_soft
+PASS selected WAV imported without lossy encoding: 03_magic_hit_hard
+PASS selected WAV imported without lossy encoding: 04_player_hurt
+PASS selected WAV imported without lossy encoding: 05_knight_land
+PASS selected WAV imported without lossy encoding: 06_fire_trail
+PASS one active AudioListener
+PASS ESC menu pauses combat
+PASS actual GraphicRaycaster reaches SfxVolumeSlider; top hit=SfxVolumeSlider
+PASS slider pointer adjusts percentage: SfxVolumeSlider
+PASS actual GraphicRaycaster reaches MusicVolumeSlider; top hit=MusicVolumeSlider
+PASS slider pointer adjusts percentage: MusicVolumeSlider
+PASS independent SFX/music controls update live sources while paused
+PASS plus control adjusts five percent
+PASS focused slider arrow key adjusts one percent
+PASS volume changes never advance board
+PASS volume label fits: Label
+PASS volume label fits: Value
+PASS volume label fits: Label
+PASS volume label fits: Label
+PASS closing pause keeps startup choice locked
+PASS initial trait/upgrade still unlocks normal combat
+PASS real player attack accepted
+PASS actual launch + impact, with exactly one world turn after full-path projectile
+PASS zero damage has no hit sound
+PASS lethal impact sounds once; dead target stays silent
+PASS armored target uses selected hard hit
+PASS knight landing sound waits for actual landing
+PASS knight plays once at landing
+PASS bishop fire sounds once per action, never per fire tile
+PASS zero player damage silent
+PASS actual HP loss uses selected player hurt
+PASS twenty simultaneous fire events produce one voice
+PASS player hurt remains audible with all general voices busy
+PASS zero percent mutes active and future SFX/music
+PASS scene restart preserves audio prefs and resets run
+PASS death review/pause callbacks cannot resume ended combat
