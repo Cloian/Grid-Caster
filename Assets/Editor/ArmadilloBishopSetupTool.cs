@@ -18,8 +18,8 @@ public static class ArmadilloBishopSetupTool
         "Assets/Monsters/Controllers/ArmadilloBishop.controller";
     private const string SampleScenePath = "Assets/Scenes/SampleScene.unity";
     private const string ChessScenePath = "Assets/Scenes/ChessPlaytest.unity";
-    private const int FrameWidth = 70;
-    private const int FrameHeight = 70;
+    private const int FrameWidth = 64;
+    private const int FrameHeight = 64;
     private const int FrameCount = 4;
     private const float FramesPerSecond = 5f;
 

@@ -1,0 +1,1233 @@
+{
+  "engine": "Chrome desktop, SwiftShader",
+  "checks": [
+    "PASS desktop Web starts PC selection with world frozen",
+    "PASS real mouse selects starting trait",
+    "PASS reward details block combat",
+    "PASS real mouse reward starts PC combat without turn",
+    "PASS square full board 1920x1080",
+    "PASS board remains fixed at composition center",
+    "PASS HUD exists: BuildHudPanel",
+    "PASS HUD inside screen: BuildHudPanel",
+    "PASS HUD outside full board: BuildHudPanel",
+    "PASS HUD exists: RelicHudPanel",
+    "PASS HUD inside screen: RelicHudPanel",
+    "PASS HUD outside full board: RelicHudPanel",
+    "PASS HUD exists: WaveHud",
+    "PASS HUD inside screen: WaveHud",
+    "PASS HUD outside full board: WaveHud",
+    "PASS HUD exists: TimeHud",
+    "PASS HUD inside screen: TimeHud",
+    "PASS HUD outside full board: TimeHud",
+    "PASS HUD exists: HealthHud",
+    "PASS HUD inside screen: HealthHud",
+    "PASS HUD outside full board: HealthHud",
+    "PASS HUD exists: UltimateFrame",
+    "PASS HUD inside screen: UltimateFrame",
+    "PASS HUD outside full board: UltimateFrame",
+    "PASS HUD exists: TraitHud",
+    "PASS HUD inside screen: TraitHud",
+    "PASS HUD outside full board: TraitHud",
+    "PASS HUD exists: AttackActionFrame",
+    "PASS HUD inside screen: AttackActionFrame",
+    "PASS HUD outside full board: AttackActionFrame",
+    "PASS HUD exists: MoveActionFrame",
+    "PASS HUD inside screen: MoveActionFrame",
+    "PASS HUD outside full board: MoveActionFrame",
+    "PASS HUD exists: ActionModeHud",
+    "PASS HUD inside screen: ActionModeHud",
+    "PASS HUD outside full board: ActionModeHud",
+    "PASS side panels share common scale",
+    "PASS side gaps stay proportional to board",
+    "PASS unready F does not consume a turn",
+    "PASS A and hover preview do not consume turn",
+    "PASS right-click cancels for free",
+    "PASS S and click move exactly one tile and world turn",
+    "PASS attack card and click finish exactly one world turn",
+    "PASS build detail click blocks board",
+    "PASS detail dialog cannot click through into combat",
+    "PASS Escape pauses PC",
+    "PASS mouse resumes without turn",
+    "PASS browser background hook pauses PC without a turn",
+    "PASS foreground does not resume without consent",
+    "PASS square full board 1280x720",
+    "PASS board remains fixed at composition center",
+    "PASS HUD exists: BuildHudPanel",
+    "PASS HUD inside screen: BuildHudPanel",
+    "PASS HUD outside full board: BuildHudPanel",
+    "PASS HUD exists: RelicHudPanel",
+    "PASS HUD inside screen: RelicHudPanel",
+    "PASS HUD outside full board: RelicHudPanel",
+    "PASS HUD exists: WaveHud",
+    "PASS HUD inside screen: WaveHud",
+    "PASS HUD outside full board: WaveHud",
+    "PASS HUD exists: TimeHud",
+    "PASS HUD inside screen: TimeHud",
+    "PASS HUD outside full board: TimeHud",
+    "PASS HUD exists: HealthHud",
+    "PASS HUD inside screen: HealthHud",
+    "PASS HUD outside full board: HealthHud",
+    "PASS HUD exists: UltimateFrame",
+    "PASS HUD inside screen: UltimateFrame",
+    "PASS HUD outside full board: UltimateFrame",
+    "PASS HUD exists: TraitHud",
+    "PASS HUD inside screen: TraitHud",
+    "PASS HUD outside full board: TraitHud",
+    "PASS HUD exists: AttackActionFrame",
+    "PASS HUD inside screen: AttackActionFrame",
+    "PASS HUD outside full board: AttackActionFrame",
+    "PASS HUD exists: MoveActionFrame",
+    "PASS HUD inside screen: MoveActionFrame",
+    "PASS HUD outside full board: MoveActionFrame",
+    "PASS HUD exists: ActionModeHud",
+    "PASS HUD inside screen: ActionModeHud",
+    "PASS HUD outside full board: ActionModeHud",
+    "PASS side panels share common scale",
+    "PASS side gaps stay proportional to board",
+    "PASS resize does not advance world",
+    "PASS desktop is not blocked by phone rotation overlay",
+    "PASS resized attack card still clickable",
+    "PASS resized move card still clickable",
+    "PASS square full board 1024x768",
+    "PASS board remains fixed at composition center",
+    "PASS HUD exists: BuildHudPanel",
+    "PASS HUD inside screen: BuildHudPanel",
+    "PASS HUD outside full board: BuildHudPanel",
+    "PASS HUD exists: RelicHudPanel",
+    "PASS HUD inside screen: RelicHudPanel",
+    "PASS HUD outside full board: RelicHudPanel",
+    "PASS HUD exists: WaveHud",
+    "PASS HUD inside screen: WaveHud",
+    "PASS HUD outside full board: WaveHud",
+    "PASS HUD exists: TimeHud",
+    "PASS HUD inside screen: TimeHud",
+    "PASS HUD outside full board: TimeHud",
+    "PASS HUD exists: HealthHud",
+    "PASS HUD inside screen: HealthHud",
+    "PASS HUD outside full board: HealthHud",
+    "PASS HUD exists: UltimateFrame",
+    "PASS HUD inside screen: UltimateFrame",
+    "PASS HUD outside full board: UltimateFrame",
+    "PASS HUD exists: TraitHud",
+    "PASS HUD inside screen: TraitHud",
+    "PASS HUD outside full board: TraitHud",
+    "PASS HUD exists: AttackActionFrame",
+    "PASS HUD inside screen: AttackActionFrame",
+    "PASS HUD outside full board: AttackActionFrame",
+    "PASS HUD exists: MoveActionFrame",
+    "PASS HUD inside screen: MoveActionFrame",
+    "PASS HUD outside full board: MoveActionFrame",
+    "PASS HUD exists: ActionModeHud",
+    "PASS HUD inside screen: ActionModeHud",
+    "PASS HUD outside full board: ActionModeHud",
+    "PASS side panels share common scale",
+    "PASS side gaps stay proportional to board",
+    "PASS resize does not advance world",
+    "PASS desktop is not blocked by phone rotation overlay",
+    "PASS resized attack card still clickable",
+    "PASS resized move card still clickable",
+    "PASS square full board 2560x1080",
+    "PASS board remains fixed at composition center",
+    "PASS HUD exists: BuildHudPanel",
+    "PASS HUD inside screen: BuildHudPanel",
+    "PASS HUD outside full board: BuildHudPanel",
+    "PASS HUD exists: RelicHudPanel",
+    "PASS HUD inside screen: RelicHudPanel",
+    "PASS HUD outside full board: RelicHudPanel",
+    "PASS HUD exists: WaveHud",
+    "PASS HUD inside screen: WaveHud",
+    "PASS HUD outside full board: WaveHud",
+    "PASS HUD exists: TimeHud",
+    "PASS HUD inside screen: TimeHud",
+    "PASS HUD outside full board: TimeHud",
+    "PASS HUD exists: HealthHud",
+    "PASS HUD inside screen: HealthHud",
+    "PASS HUD outside full board: HealthHud",
+    "PASS HUD exists: UltimateFrame",
+    "PASS HUD inside screen: UltimateFrame",
+    "PASS HUD outside full board: UltimateFrame",
+    "PASS HUD exists: TraitHud",
+    "PASS HUD inside screen: TraitHud",
+    "PASS HUD outside full board: TraitHud",
+    "PASS HUD exists: AttackActionFrame",
+    "PASS HUD inside screen: AttackActionFrame",
+    "PASS HUD outside full board: AttackActionFrame",
+    "PASS HUD exists: MoveActionFrame",
+    "PASS HUD inside screen: MoveActionFrame",
+    "PASS HUD outside full board: MoveActionFrame",
+    "PASS HUD exists: ActionModeHud",
+    "PASS HUD inside screen: ActionModeHud",
+    "PASS HUD outside full board: ActionModeHud",
+    "PASS side panels share common scale",
+    "PASS side gaps stay proportional to board",
+    "PASS resize does not advance world",
+    "PASS desktop is not blocked by phone rotation overlay",
+    "PASS resized attack card still clickable",
+    "PASS resized move card still clickable",
+    "PASS square full board 3840x2160",
+    "PASS board remains fixed at composition center",
+    "PASS HUD exists: BuildHudPanel",
+    "PASS HUD inside screen: BuildHudPanel",
+    "PASS HUD outside full board: BuildHudPanel",
+    "PASS HUD exists: RelicHudPanel",
+    "PASS HUD inside screen: RelicHudPanel",
+    "PASS HUD outside full board: RelicHudPanel",
+    "PASS HUD exists: WaveHud",
+    "PASS HUD inside screen: WaveHud",
+    "PASS HUD outside full board: WaveHud",
+    "PASS HUD exists: TimeHud",
+    "PASS HUD inside screen: TimeHud",
+    "PASS HUD outside full board: TimeHud",
+    "PASS HUD exists: HealthHud",
+    "PASS HUD inside screen: HealthHud",
+    "PASS HUD outside full board: HealthHud",
+    "PASS HUD exists: UltimateFrame",
+    "PASS HUD inside screen: UltimateFrame",
+    "PASS HUD outside full board: UltimateFrame",
+    "PASS HUD exists: TraitHud",
+    "PASS HUD inside screen: TraitHud",
+    "PASS HUD outside full board: TraitHud",
+    "PASS HUD exists: AttackActionFrame",
+    "PASS HUD inside screen: AttackActionFrame",
+    "PASS HUD outside full board: AttackActionFrame",
+    "PASS HUD exists: MoveActionFrame",
+    "PASS HUD inside screen: MoveActionFrame",
+    "PASS HUD outside full board: MoveActionFrame",
+    "PASS HUD exists: ActionModeHud",
+    "PASS HUD inside screen: ActionModeHud",
+    "PASS HUD outside full board: ActionModeHud",
+    "PASS side panels share common scale",
+    "PASS side gaps stay proportional to board",
+    "PASS resize does not advance world",
+    "PASS desktop is not blocked by phone rotation overlay",
+    "PASS resized attack card still clickable",
+    "PASS resized move card still clickable",
+    "PASS square full board 800x1200",
+    "PASS board remains fixed at composition center",
+    "PASS HUD exists: BuildHudPanel",
+    "PASS HUD inside screen: BuildHudPanel",
+    "PASS HUD outside full board: BuildHudPanel",
+    "PASS HUD exists: RelicHudPanel",
+    "PASS HUD inside screen: RelicHudPanel",
+    "PASS HUD outside full board: RelicHudPanel",
+    "PASS HUD exists: WaveHud",
+    "PASS HUD inside screen: WaveHud",
+    "PASS HUD outside full board: WaveHud",
+    "PASS HUD exists: TimeHud",
+    "PASS HUD inside screen: TimeHud",
+    "PASS HUD outside full board: TimeHud",
+    "PASS HUD exists: HealthHud",
+    "PASS HUD inside screen: HealthHud",
+    "PASS HUD outside full board: HealthHud",
+    "PASS HUD exists: UltimateFrame",
+    "PASS HUD inside screen: UltimateFrame",
+    "PASS HUD outside full board: UltimateFrame",
+    "PASS HUD exists: TraitHud",
+    "PASS HUD inside screen: TraitHud",
+    "PASS HUD outside full board: TraitHud",
+    "PASS HUD exists: AttackActionFrame",
+    "PASS HUD inside screen: AttackActionFrame",
+    "PASS HUD outside full board: AttackActionFrame",
+    "PASS HUD exists: MoveActionFrame",
+    "PASS HUD inside screen: MoveActionFrame",
+    "PASS HUD outside full board: MoveActionFrame",
+    "PASS HUD exists: ActionModeHud",
+    "PASS HUD inside screen: ActionModeHud",
+    "PASS HUD outside full board: ActionModeHud",
+    "PASS side panels share common scale",
+    "PASS side gaps stay proportional to board",
+    "PASS resize does not advance world",
+    "PASS desktop is not blocked by phone rotation overlay",
+    "PASS resized attack card still clickable",
+    "PASS resized move card still clickable",
+    "PASS square full board 960x540",
+    "PASS board remains fixed at composition center",
+    "PASS HUD exists: BuildHudPanel",
+    "PASS HUD inside screen: BuildHudPanel",
+    "PASS HUD outside full board: BuildHudPanel",
+    "PASS HUD exists: RelicHudPanel",
+    "PASS HUD inside screen: RelicHudPanel",
+    "PASS HUD outside full board: RelicHudPanel",
+    "PASS HUD exists: WaveHud",
+    "PASS HUD inside screen: WaveHud",
+    "PASS HUD outside full board: WaveHud",
+    "PASS HUD exists: TimeHud",
+    "PASS HUD inside screen: TimeHud",
+    "PASS HUD outside full board: TimeHud",
+    "PASS HUD exists: HealthHud",
+    "PASS HUD inside screen: HealthHud",
+    "PASS HUD outside full board: HealthHud",
+    "PASS HUD exists: UltimateFrame",
+    "PASS HUD inside screen: UltimateFrame",
+    "PASS HUD outside full board: UltimateFrame",
+    "PASS HUD exists: TraitHud",
+    "PASS HUD inside screen: TraitHud",
+    "PASS HUD outside full board: TraitHud",
+    "PASS HUD exists: AttackActionFrame",
+    "PASS HUD inside screen: AttackActionFrame",
+    "PASS HUD outside full board: AttackActionFrame",
+    "PASS HUD exists: MoveActionFrame",
+    "PASS HUD inside screen: MoveActionFrame",
+    "PASS HUD outside full board: MoveActionFrame",
+    "PASS HUD exists: ActionModeHud",
+    "PASS HUD inside screen: ActionModeHud",
+    "PASS HUD outside full board: ActionModeHud",
+    "PASS side panels share common scale",
+    "PASS side gaps stay proportional to board",
+    "PASS resize does not advance world",
+    "PASS desktop is not blocked by phone rotation overlay",
+    "PASS resized attack card still clickable",
+    "PASS resized move card still clickable",
+    "PASS square full board 1920x1080",
+    "PASS board remains fixed at composition center",
+    "PASS HUD exists: BuildHudPanel",
+    "PASS HUD inside screen: BuildHudPanel",
+    "PASS HUD outside full board: BuildHudPanel",
+    "PASS HUD exists: RelicHudPanel",
+    "PASS HUD inside screen: RelicHudPanel",
+    "PASS HUD outside full board: RelicHudPanel",
+    "PASS HUD exists: WaveHud",
+    "PASS HUD inside screen: WaveHud",
+    "PASS HUD outside full board: WaveHud",
+    "PASS HUD exists: TimeHud",
+    "PASS HUD inside screen: TimeHud",
+    "PASS HUD outside full board: TimeHud",
+    "PASS HUD exists: HealthHud",
+    "PASS HUD inside screen: HealthHud",
+    "PASS HUD outside full board: HealthHud",
+    "PASS HUD exists: UltimateFrame",
+    "PASS HUD inside screen: UltimateFrame",
+    "PASS HUD outside full board: UltimateFrame",
+    "PASS HUD exists: TraitHud",
+    "PASS HUD inside screen: TraitHud",
+    "PASS HUD outside full board: TraitHud",
+    "PASS HUD exists: AttackActionFrame",
+    "PASS HUD inside screen: AttackActionFrame",
+    "PASS HUD outside full board: AttackActionFrame",
+    "PASS HUD exists: MoveActionFrame",
+    "PASS HUD inside screen: MoveActionFrame",
+    "PASS HUD outside full board: MoveActionFrame",
+    "PASS HUD exists: ActionModeHud",
+    "PASS HUD inside screen: ActionModeHud",
+    "PASS HUD outside full board: ActionModeHud",
+    "PASS side panels share common scale",
+    "PASS side gaps stay proportional to board",
+    "PASS resize does not advance world",
+    "PASS desktop is not blocked by phone rotation overlay",
+    "PASS resized attack card still clickable",
+    "PASS resized move card still clickable",
+    "PASS no browser/runtime error logged"
+  ],
+  "sizes": [
+    {
+      "width": 1920,
+      "height": 1080,
+      "board": [
+        560,
+        100,
+        800,
+        800
+      ],
+      "ui": [
+        {
+          "name": "UltimateFrame",
+          "x": 658.5599365234375,
+          "y": 1015.9199829101562,
+          "width": 92.15997314453125,
+          "height": 92.15999603271484
+        },
+        {
+          "name": "HealthHud",
+          "x": 865.9200439453125,
+          "y": 1031.280029296875,
+          "width": 307.20001220703125,
+          "height": 61.44000244140625
+        },
+        {
+          "name": "TraitHud",
+          "x": 1071.35986328125,
+          "y": 1015.9199829101562,
+          "width": 88.3199462890625,
+          "height": 92.15999603271484
+        },
+        {
+          "name": "SelectedTraitIconFrame",
+          "x": 1071.3599853515625,
+          "y": 1016.8800048828125,
+          "width": 55.679931640625,
+          "height": 55.68000030517578
+        },
+        {
+          "name": "AttackActionFrame",
+          "x": 1167.35986328125,
+          "y": 1015.9199829101562,
+          "width": 88.3199462890625,
+          "height": 92.15999603271484
+        },
+        {
+          "name": "MoveActionFrame",
+          "x": 1263.35986328125,
+          "y": 1015.9199829101562,
+          "width": 88.3199462890625,
+          "height": 92.15999603271484
+        },
+        {
+          "name": "ActionModeHud",
+          "x": 960,
+          "y": 943.9199829101562,
+          "width": 695.0400390625,
+          "height": 51.839996337890625
+        },
+        {
+          "name": "BuildHudPanel",
+          "x": 377,
+          "y": 500,
+          "width": 330,
+          "height": 820
+        },
+        {
+          "name": "MovementArtDetails",
+          "x": 377,
+          "y": 204,
+          "width": 302,
+          "height": 48
+        },
+        {
+          "name": "RelicHudPanel",
+          "x": 1543,
+          "y": 500,
+          "width": 330,
+          "height": 820
+        },
+        {
+          "name": "WaveHud",
+          "x": 869,
+          "y": 53,
+          "width": 150,
+          "height": 58
+        },
+        {
+          "name": "TimeHud",
+          "x": 1039,
+          "y": 53,
+          "width": 174,
+          "height": 58
+        }
+      ]
+    },
+    {
+      "width": 1280,
+      "height": 720,
+      "board": [
+        373.3332824707031,
+        66.66668701171875,
+        533.33349609375,
+        533.3333740234375
+      ],
+      "ui": [
+        {
+          "name": "UltimateFrame",
+          "x": 439.04010009765625,
+          "y": 677.280029296875,
+          "width": 61.439971923828125,
+          "height": 61.439971923828125
+        },
+        {
+          "name": "HealthHud",
+          "x": 577.280029296875,
+          "y": 687.52001953125,
+          "width": 204.7999267578125,
+          "height": 40.959983825683594
+        },
+        {
+          "name": "TraitHud",
+          "x": 714.239990234375,
+          "y": 677.280029296875,
+          "width": 58.8800048828125,
+          "height": 61.439971923828125
+        },
+        {
+          "name": "SelectedTraitIconFrame",
+          "x": 714.239990234375,
+          "y": 677.9200439453125,
+          "width": 37.1199951171875,
+          "height": 37.1199836730957
+        },
+        {
+          "name": "AttackActionFrame",
+          "x": 778.239990234375,
+          "y": 677.280029296875,
+          "width": 58.8800048828125,
+          "height": 61.439971923828125
+        },
+        {
+          "name": "MoveActionFrame",
+          "x": 842.2399291992188,
+          "y": 677.280029296875,
+          "width": 58.8800048828125,
+          "height": 61.439971923828125
+        },
+        {
+          "name": "ActionModeHud",
+          "x": 640,
+          "y": 629.280029296875,
+          "width": 463.3598327636719,
+          "height": 34.55998229980469
+        },
+        {
+          "name": "BuildHudPanel",
+          "x": 251.33331298828125,
+          "y": 333.3333435058594,
+          "width": 220,
+          "height": 546.6666870117188
+        },
+        {
+          "name": "MovementArtDetails",
+          "x": 251.3333282470703,
+          "y": 136,
+          "width": 201.33334350585938,
+          "height": 32
+        },
+        {
+          "name": "RelicHudPanel",
+          "x": 1028.666748046875,
+          "y": 333.3333435058594,
+          "width": 220.00006103515625,
+          "height": 546.6666870117188
+        },
+        {
+          "name": "WaveHud",
+          "x": 579.3333129882812,
+          "y": 35.3333740234375,
+          "width": 100,
+          "height": 38.66668701171875
+        },
+        {
+          "name": "TimeHud",
+          "x": 692.6666870117188,
+          "y": 35.3333740234375,
+          "width": 116,
+          "height": 38.66668701171875
+        }
+      ]
+    },
+    {
+      "width": 1024,
+      "height": 768,
+      "board": [
+        298.6666564941406,
+        149.33331298828125,
+        426.6666564941406,
+        426.6667175292969
+      ],
+      "ui": [
+        {
+          "name": "UltimateFrame",
+          "x": 344.5332946777344,
+          "y": 640,
+          "width": 51.20001220703125,
+          "height": 51.20001220703125
+        },
+        {
+          "name": "HealthHud",
+          "x": 459.7333068847656,
+          "y": 648.5333251953125,
+          "width": 170.66668701171875,
+          "height": 34.133331298828125
+        },
+        {
+          "name": "TraitHud",
+          "x": 573.8666381835938,
+          "y": 640,
+          "width": 49.066650390625,
+          "height": 51.20001220703125
+        },
+        {
+          "name": "SelectedTraitIconFrame",
+          "x": 573.8666381835938,
+          "y": 640.5333862304688,
+          "width": 30.933349609375,
+          "height": 30.933334350585938
+        },
+        {
+          "name": "AttackActionFrame",
+          "x": 627.199951171875,
+          "y": 640,
+          "width": 49.066650390625,
+          "height": 51.20001220703125
+        },
+        {
+          "name": "MoveActionFrame",
+          "x": 680.5333251953125,
+          "y": 640,
+          "width": 49.066650390625,
+          "height": 51.20001220703125
+        },
+        {
+          "name": "ActionModeHud",
+          "x": 511.9999694824219,
+          "y": 600,
+          "width": 386.13336181640625,
+          "height": 28.79998779296875
+        },
+        {
+          "name": "BuildHudPanel",
+          "x": 201.066650390625,
+          "y": 362.6666564941406,
+          "width": 176.00001525878906,
+          "height": 437.33331298828125
+        },
+        {
+          "name": "MovementArtDetails",
+          "x": 201.06666564941406,
+          "y": 204.79998779296875,
+          "width": 161.06668090820312,
+          "height": 25.5999755859375
+        },
+        {
+          "name": "RelicHudPanel",
+          "x": 822.933349609375,
+          "y": 362.6666564941406,
+          "width": 176,
+          "height": 437.33331298828125
+        },
+        {
+          "name": "WaveHud",
+          "x": 463.4666748046875,
+          "y": 124.26666259765625,
+          "width": 80,
+          "height": 30.933349609375
+        },
+        {
+          "name": "TimeHud",
+          "x": 554.13330078125,
+          "y": 124.26666259765625,
+          "width": 92.79998779296875,
+          "height": 30.933349609375
+        }
+      ]
+    },
+    {
+      "width": 2560,
+      "height": 1080,
+      "board": [
+        880,
+        100,
+        800,
+        800
+      ],
+      "ui": [
+        {
+          "name": "UltimateFrame",
+          "x": 978.5599975585938,
+          "y": 1015.9199829101562,
+          "width": 92.1600341796875,
+          "height": 92.15999603271484
+        },
+        {
+          "name": "HealthHud",
+          "x": 1185.9200439453125,
+          "y": 1031.280029296875,
+          "width": 307.199951171875,
+          "height": 61.44000244140625
+        },
+        {
+          "name": "TraitHud",
+          "x": 1391.35986328125,
+          "y": 1015.9199829101562,
+          "width": 88.3199462890625,
+          "height": 92.15999603271484
+        },
+        {
+          "name": "SelectedTraitIconFrame",
+          "x": 1391.3599853515625,
+          "y": 1016.8800048828125,
+          "width": 55.679931640625,
+          "height": 55.68000030517578
+        },
+        {
+          "name": "AttackActionFrame",
+          "x": 1487.35986328125,
+          "y": 1015.9199829101562,
+          "width": 88.3199462890625,
+          "height": 92.15999603271484
+        },
+        {
+          "name": "MoveActionFrame",
+          "x": 1583.35986328125,
+          "y": 1015.9199829101562,
+          "width": 88.3199462890625,
+          "height": 92.15999603271484
+        },
+        {
+          "name": "ActionModeHud",
+          "x": 1280,
+          "y": 943.9199829101562,
+          "width": 695.0400390625,
+          "height": 51.839996337890625
+        },
+        {
+          "name": "BuildHudPanel",
+          "x": 697,
+          "y": 500,
+          "width": 330,
+          "height": 820
+        },
+        {
+          "name": "MovementArtDetails",
+          "x": 697,
+          "y": 204,
+          "width": 302,
+          "height": 48
+        },
+        {
+          "name": "RelicHudPanel",
+          "x": 1863,
+          "y": 500,
+          "width": 330,
+          "height": 820
+        },
+        {
+          "name": "WaveHud",
+          "x": 1189,
+          "y": 53,
+          "width": 150,
+          "height": 58
+        },
+        {
+          "name": "TimeHud",
+          "x": 1359,
+          "y": 53,
+          "width": 174,
+          "height": 58
+        }
+      ]
+    },
+    {
+      "width": 3840,
+      "height": 2160,
+      "board": [
+        1120,
+        200,
+        1600,
+        1600
+      ],
+      "ui": [
+        {
+          "name": "UltimateFrame",
+          "x": 1317.119873046875,
+          "y": 2031.8399658203125,
+          "width": 184.3199462890625,
+          "height": 184.3199920654297
+        },
+        {
+          "name": "HealthHud",
+          "x": 1731.840087890625,
+          "y": 2062.56005859375,
+          "width": 614.4000244140625,
+          "height": 122.8800048828125
+        },
+        {
+          "name": "TraitHud",
+          "x": 2142.7197265625,
+          "y": 2031.8399658203125,
+          "width": 176.639892578125,
+          "height": 184.3199920654297
+        },
+        {
+          "name": "SelectedTraitIconFrame",
+          "x": 2142.719970703125,
+          "y": 2033.760009765625,
+          "width": 111.35986328125,
+          "height": 111.36000061035156
+        },
+        {
+          "name": "AttackActionFrame",
+          "x": 2334.7197265625,
+          "y": 2031.8399658203125,
+          "width": 176.639892578125,
+          "height": 184.3199920654297
+        },
+        {
+          "name": "MoveActionFrame",
+          "x": 2526.7197265625,
+          "y": 2031.8399658203125,
+          "width": 176.639892578125,
+          "height": 184.3199920654297
+        },
+        {
+          "name": "ActionModeHud",
+          "x": 1920,
+          "y": 1887.8399658203125,
+          "width": 1390.080078125,
+          "height": 103.67999267578125
+        },
+        {
+          "name": "BuildHudPanel",
+          "x": 754,
+          "y": 1000,
+          "width": 660,
+          "height": 1640
+        },
+        {
+          "name": "MovementArtDetails",
+          "x": 754,
+          "y": 408,
+          "width": 604,
+          "height": 96
+        },
+        {
+          "name": "RelicHudPanel",
+          "x": 3086,
+          "y": 1000,
+          "width": 660,
+          "height": 1640
+        },
+        {
+          "name": "WaveHud",
+          "x": 1738,
+          "y": 106,
+          "width": 300,
+          "height": 116
+        },
+        {
+          "name": "TimeHud",
+          "x": 2078,
+          "y": 106,
+          "width": 348,
+          "height": 116
+        }
+      ]
+    },
+    {
+      "width": 800,
+      "height": 1200,
+      "board": [
+        233.33334350585938,
+        416.6666259765625,
+        333.3332824707031,
+        333.3333740234375
+      ],
+      "ui": [
+        {
+          "name": "UltimateFrame",
+          "x": 269.1666259765625,
+          "y": 800,
+          "width": 39.99998474121094,
+          "height": 40
+        },
+        {
+          "name": "HealthHud",
+          "x": 359.1666259765625,
+          "y": 806.6666870117188,
+          "width": 133.33334350585938,
+          "height": 26.666656494140625
+        },
+        {
+          "name": "TraitHud",
+          "x": 448.33331298828125,
+          "y": 800,
+          "width": 38.333343505859375,
+          "height": 40
+        },
+        {
+          "name": "SelectedTraitIconFrame",
+          "x": 448.33331298828125,
+          "y": 800.4166259765625,
+          "width": 24.16668701171875,
+          "height": 24.166656494140625
+        },
+        {
+          "name": "AttackActionFrame",
+          "x": 490,
+          "y": 800,
+          "width": 38.333343505859375,
+          "height": 40
+        },
+        {
+          "name": "MoveActionFrame",
+          "x": 531.6666259765625,
+          "y": 800,
+          "width": 38.33331298828125,
+          "height": 40
+        },
+        {
+          "name": "ActionModeHud",
+          "x": 399.9999694824219,
+          "y": 768.75,
+          "width": 301.66668701171875,
+          "height": 22.5
+        },
+        {
+          "name": "BuildHudPanel",
+          "x": 157.08334350585938,
+          "y": 583.3333129882812,
+          "width": 137.5,
+          "height": 341.6666259765625
+        },
+        {
+          "name": "MovementArtDetails",
+          "x": 157.08334350585938,
+          "y": 460,
+          "width": 125.83332824707031,
+          "height": 20
+        },
+        {
+          "name": "RelicHudPanel",
+          "x": 642.9166259765625,
+          "y": 583.3333129882812,
+          "width": 137.5,
+          "height": 341.6666259765625
+        },
+        {
+          "name": "WaveHud",
+          "x": 362.0833435058594,
+          "y": 397.083251953125,
+          "width": 62.5,
+          "height": 24.16668701171875
+        },
+        {
+          "name": "TimeHud",
+          "x": 432.9166564941406,
+          "y": 397.083251953125,
+          "width": 72.5,
+          "height": 24.16668701171875
+        }
+      ]
+    },
+    {
+      "width": 960,
+      "height": 540,
+      "board": [
+        280,
+        50,
+        400,
+        400
+      ],
+      "ui": [
+        {
+          "name": "UltimateFrame",
+          "x": 329.27996826171875,
+          "y": 507.9599914550781,
+          "width": 46.079986572265625,
+          "height": 46.07999801635742
+        },
+        {
+          "name": "HealthHud",
+          "x": 432.96002197265625,
+          "y": 515.6400146484375,
+          "width": 153.60000610351562,
+          "height": 30.720001220703125
+        },
+        {
+          "name": "TraitHud",
+          "x": 535.679931640625,
+          "y": 507.9599914550781,
+          "width": 44.15997314453125,
+          "height": 46.07999801635742
+        },
+        {
+          "name": "SelectedTraitIconFrame",
+          "x": 535.6799926757812,
+          "y": 508.44000244140625,
+          "width": 27.8399658203125,
+          "height": 27.84000015258789
+        },
+        {
+          "name": "AttackActionFrame",
+          "x": 583.679931640625,
+          "y": 507.9599914550781,
+          "width": 44.15997314453125,
+          "height": 46.07999801635742
+        },
+        {
+          "name": "MoveActionFrame",
+          "x": 631.679931640625,
+          "y": 507.9599914550781,
+          "width": 44.15997314453125,
+          "height": 46.07999801635742
+        },
+        {
+          "name": "ActionModeHud",
+          "x": 480,
+          "y": 471.9599914550781,
+          "width": 347.52001953125,
+          "height": 25.919998168945312
+        },
+        {
+          "name": "BuildHudPanel",
+          "x": 188.5,
+          "y": 250,
+          "width": 165,
+          "height": 410
+        },
+        {
+          "name": "MovementArtDetails",
+          "x": 188.5,
+          "y": 102,
+          "width": 151,
+          "height": 24
+        },
+        {
+          "name": "RelicHudPanel",
+          "x": 771.5,
+          "y": 250,
+          "width": 165,
+          "height": 410
+        },
+        {
+          "name": "WaveHud",
+          "x": 434.5,
+          "y": 26.5,
+          "width": 75,
+          "height": 29
+        },
+        {
+          "name": "TimeHud",
+          "x": 519.5,
+          "y": 26.5,
+          "width": 87,
+          "height": 29
+        }
+      ]
+    },
+    {
+      "width": 1920,
+      "height": 1080,
+      "board": [
+        560,
+        100,
+        800,
+        800
+      ],
+      "ui": [
+        {
+          "name": "UltimateFrame",
+          "x": 658.5599365234375,
+          "y": 1015.9199829101562,
+          "width": 92.15997314453125,
+          "height": 92.15999603271484
+        },
+        {
+          "name": "HealthHud",
+          "x": 865.9200439453125,
+          "y": 1031.280029296875,
+          "width": 307.20001220703125,
+          "height": 61.44000244140625
+        },
+        {
+          "name": "TraitHud",
+          "x": 1071.35986328125,
+          "y": 1015.9199829101562,
+          "width": 88.3199462890625,
+          "height": 92.15999603271484
+        },
+        {
+          "name": "SelectedTraitIconFrame",
+          "x": 1071.3599853515625,
+          "y": 1016.8800048828125,
+          "width": 55.679931640625,
+          "height": 55.68000030517578
+        },
+        {
+          "name": "AttackActionFrame",
+          "x": 1167.35986328125,
+          "y": 1015.9199829101562,
+          "width": 88.3199462890625,
+          "height": 92.15999603271484
+        },
+        {
+          "name": "MoveActionFrame",
+          "x": 1263.35986328125,
+          "y": 1015.9199829101562,
+          "width": 88.3199462890625,
+          "height": 92.15999603271484
+        },
+        {
+          "name": "ActionModeHud",
+          "x": 960,
+          "y": 943.9199829101562,
+          "width": 695.0400390625,
+          "height": 51.839996337890625
+        },
+        {
+          "name": "BuildHudPanel",
+          "x": 377,
+          "y": 500,
+          "width": 330,
+          "height": 820
+        },
+        {
+          "name": "MovementArtDetails",
+          "x": 377,
+          "y": 204,
+          "width": 302,
+          "height": 48
+        },
+        {
+          "name": "RelicHudPanel",
+          "x": 1543,
+          "y": 500,
+          "width": 330,
+          "height": 820
+        },
+        {
+          "name": "WaveHud",
+          "x": 869,
+          "y": 53,
+          "width": 150,
+          "height": 58
+        },
+        {
+          "name": "TimeHud",
+          "x": 1039,
+          "y": 53,
+          "width": 174,
+          "height": 58
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "logs": [
+    "[.WebGL-0x10c000da200]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "[UnityCache] 'http://127.0.0.1:8770/Build/PcBoardWeb.data' successfully downloaded and stored in the browser cache",
+    "[UnityMemory] Configuration Parameters - Can be set up in boot.config\n",
+    "    \"memorysetup-bucket-allocator-granularity=16\"\n",
+    "    \"memorysetup-bucket-allocator-bucket-count=8\"\n",
+    "    \"memorysetup-bucket-allocator-block-size=4194304\"\n",
+    "    \"memorysetup-bucket-allocator-block-count=1\"\n",
+    "    \"memorysetup-main-allocator-block-size=16777216\"\n",
+    "    \"memorysetup-thread-allocator-block-size=16777216\"\n",
+    "    \"memorysetup-gfx-main-allocator-block-size=16777216\"\n",
+    "    \"memorysetup-gfx-thread-allocator-block-size=16777216\"\n",
+    "    \"memorysetup-cache-allocator-block-size=4194304\"\n",
+    "    \"memorysetup-typetree-allocator-block-size=2097152\"\n",
+    "    \"memorysetup-profiler-bucket-allocator-granularity=16\"\n",
+    "    \"memorysetup-profiler-bucket-allocator-bucket-count=8\"\n",
+    "    \"memorysetup-profiler-bucket-allocator-block-size=4194304\"\n",
+    "    \"memorysetup-profiler-bucket-allocator-block-count=1\"\n",
+    "    \"memorysetup-profiler-allocator-block-size=16777216\"\n",
+    "    \"memorysetup-profiler-editor-allocator-block-size=1048576\"\n",
+    "    \"memorysetup-temp-allocator-size-main=4194304\"\n",
+    "    \"memorysetup-job-temp-allocator-block-size=2097152\"\n",
+    "    \"memorysetup-job-temp-allocator-block-size-background=1048576\"\n",
+    "    \"memorysetup-job-temp-allocator-reduction-small-platforms=262144\"\n",
+    "    \"memorysetup-allocator-temp-initial-block-size-main=262144\"\n",
+    "    \"memorysetup-allocator-temp-initial-block-size-worker=262144\"\n",
+    "    \"memorysetup-temp-allocator-size-audio-worker=65536\"\n",
+    "    \"memorysetup-temp-allocator-size-background-worker=32768\"\n",
+    "CodeReloadManager initialized\n",
+    "Input System module state changed to: Initialized.\n",
+    "[Physics::Module] Initialized fallback backend.\n",
+    "[Physics::Module] Id: 0xdecafbad\n",
+    "Loading player data from data.unity3d\n",
+    "Initialize engine version: 6000.4.0f1 (8cf496087c8f)\n",
+    "[Subsystems] Discovering subsystems at path UnitySubsystems\n",
+    "Creating WebGL 2.0 context.",
+    "Renderer: WebKit WebGL\n",
+    "Vendor:   WebKit\n",
+    "Version:  OpenGL ES 3.0 (WebGL 2.0 (OpenGL ES 3.0 Chromium))\n",
+    "GLES:     3\n",
+    " EXT_clip_control EXT_color_buffer_float EXT_color_buffer_half_float EXT_conservative_depth EXT_depth_clamp EXT_disjoint_timer_query_webgl2 EXT_float_blend EXT_polygon_offset_clamp EXT_texture_compression_bptc EXT_texture_compression_rgtc EXT_texture_filter_anisotropic EXT_texture_mirror_clamp_to_edge NV_shader_noperspective_interpolation OES_draw_buffers_indexed OES_sample_variables OES_shader_multisample_interpolation OES_texture_float_linear OVR_multiview2 WEBGL_clip_cull_distance WEBGL_compressed_texture_astc WEBGL_compressed_texture_etc WEBGL_compressed_texture_etc1 WEBGL_compressed_texture_s3tc WEBGL_compressed_texture_s3tc_srgb WEBGL_debug_renderer_info WEBGL_debug_shaders WEBGL_lose_context WEBGL_multi_draw WEBGL_polygon_mode WEBGL_stencil_texturing GL_EXT_clip_control GL_EXT_color_buffer_float GL_EXT_color_buffer_half_float GL_EXT_conservative_depth GL_EXT_depth_clamp GL_EXT_disjoint_timer_query_webgl2 GL_EXT_float_blend GL_EXT_polygon_offset_clamp GL_EXT_texture_compression_bptc GL_EXT_texture_comp\n",
+    "ression_rgtc GL_EXT_texture_filter_anisotropic GL_EXT_texture_mirror_clamp_to_edge GL_NV_shader_noperspective_interpolation GL_OES_draw_buffers_indexed GL_OES_sample_variables GL_OES_shader_multisample_interpolation GL_OES_texture_float_linear GL_OVR_multiview2 GL_WEBGL_clip_cull_distance GL_WEBGL_compressed_texture_astc GL_WEBGL_compressed_texture_etc GL_WEBGL_compressed_texture_etc1 GL_WEBGL_compressed_texture_s3tc GL_WEBGL_compressed_texture_s3tc_srgb GL_WEBGL_debug_renderer_info GL_WEBGL_debug_shaders GL_WEBGL_lose_context GL_WEBGL_multi_draw GL_WEBGL_polygon_mode GL_WEBGL_stencil_texturing\n",
+    "OPENGL LOG: Creating OpenGL ES 3.0 graphics device ; Context level  <OpenGL ES 3.0> ; Context handle 1\n",
+    "[Physics::Module] Selected backend.\n",
+    "[Physics::Module] Name: PhysX\n",
+    "[Physics::Module] Id: 0xf2b8ea05\n",
+    "[Physics::Module] SDK Version: 4.1.2\n",
+    "[Physics::Module] Integration Version: 1.0.0\n",
+    "[Physics::Module] Threading Mode: Single-Threaded\n",
+    "ERROR: Shader ",
+    "Hidden/CoreSRP/CoreCopy shader is not supported on this GPU (none of subshaders/fallbacks are suitable)\n",
+    "ERROR: Shader ",
+    "Hidden/Universal/HDRDebugView shader is not supported on this GPU (none of subshaders/fallbacks are suitable)\n",
+    "Input System initialize...\n",
+    "Trying to get length of sound which is not loaded yet.",
+    "Trying to get metadata of sound which is not loaded.",
+    "UnloadTime: 1.200000 ms\n",
+    "[.WebGL-0x10c000eb000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "Audio context resumed after 0.231 seconds.",
+    "[.WebGL-0x10c000eb000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels",
+    "[.WebGL-0x10c000eb000]GL Driver Message (OpenGL, Performance, GL_CLOSE_PATH_NV, High): GPU stall due to ReadPixels (this message will no longer repeat)",
+    "웨이브 1 · 추적의 시작: 난이도 1단계, 총 3마리 (특수: False, 유물: False, 중간보스: False)\n",
+    "Shader 'Hidden/Universal Render Pipeline/Edge Adaptive Spatial Upsampling' is not supported (in 'Blit FSR Upscaling'). PostProcessing render passes will not execute.\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":-1,\"hp\":10,\"wave\":1,\"worldTurns\":0,\"charge\":0,\"mobile\":false,\"startSelection\":true,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":false,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":500.0,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0},{\"name\":\"TraitCard_1\",\"x\":780.0,\"y\":438.0,\"width\":340.0,\"height\":244.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":-1,\"hp\":10,\"wave\":1,\"worldTurns\":0,\"charge\":0,\"mobile\":false,\"startSelection\":true,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":false,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":500.0,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0},{\"name\":\"TraitCard_1\",\"x\":780.0,\"y\":438.0,\"width\":340.0,\"height\":244.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":-1,\"hp\":10,\"wave\":1,\"worldTurns\":0,\"charge\":0,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":true,\"detailOpen\":false,\"canAct\":false,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":500.0,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"UpgradeChoice_1\",\"x\":634.0,\"y\":550.0,\"width\":306.0,\"height\":470.0},{\"name\":\"Details\",\"x\":732.0,\"y\":355.0,\"width\":74.0,\"height\":32.0},{\"name\":\"Details\",\"x\":1058.0,\"y\":355.0,\"width\":74.0,\"height\":32.0},{\"name\":\"Details\",\"x\":1384.0,\"y\":355.0,\"width\":74.0,\"height\":32.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":-1,\"hp\":10,\"wave\":1,\"worldTurns\":0,\"charge\":0,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":true,\"detailOpen\":false,\"canAct\":false,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":500.0,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"UpgradeChoice_1\",\"x\":634.0,\"y\":550.0,\"width\":306.0,\"height\":470.0},{\"name\":\"Details\",\"x\":732.0,\"y\":355.0,\"width\":74.0,\"height\":32.0},{\"name\":\"Details\",\"x\":1058.0,\"y\":355.0,\"width\":74.0,\"height\":32.0},{\"name\":\"Details\",\"x\":1384.0,\"y\":355.0,\"width\":74.0,\"height\":32.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":-1,\"hp\":10,\"wave\":1,\"worldTurns\":0,\"charge\":0,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":true,\"detailOpen\":true,\"canAct\":false,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":500.0,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"UpgradeChoice_1\",\"x\":634.0,\"y\":550.0,\"width\":306.0,\"height\":470.0},{\"name\":\"Details\",\"x\":732.0,\"y\":355.0,\"width\":74.0,\"height\":32.0},{\"name\":\"Details\",\"x\":1058.0,\"y\":355.0,\"width\":74.0,\"height\":32.0},{\"name\":\"Details\",\"x\":1384.0,\"y\":355.0,\"width\":74.0,\"height\":32.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0},{\"name\":\"CloseDetails\",\"x\":960.0,\"y\":788.0,\"width\":270.0,\"height\":48.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":-1,\"hp\":10,\"wave\":1,\"worldTurns\":0,\"charge\":0,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":true,\"detailOpen\":true,\"canAct\":false,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":500.0,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"UpgradeChoice_1\",\"x\":634.0,\"y\":550.0,\"width\":306.0,\"height\":470.0},{\"name\":\"Details\",\"x\":732.0,\"y\":355.0,\"width\":74.0,\"height\":32.0},{\"name\":\"Details\",\"x\":1058.0,\"y\":355.0,\"width\":74.0,\"height\":32.0},{\"name\":\"Details\",\"x\":1384.0,\"y\":355.0,\"width\":74.0,\"height\":32.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0},{\"name\":\"CloseDetails\",\"x\":960.0,\"y\":788.0,\"width\":270.0,\"height\":48.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":-1,\"hp\":10,\"wave\":1,\"worldTurns\":0,\"charge\":0,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":true,\"detailOpen\":false,\"canAct\":false,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":500.0,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"UpgradeChoice_1\",\"x\":634.0,\"y\":550.0,\"width\":306.0,\"height\":470.0},{\"name\":\"Details\",\"x\":732.0,\"y\":355.0,\"width\":74.0,\"height\":32.0},{\"name\":\"Details\",\"x\":1058.0,\"y\":355.0,\"width\":74.0,\"height\":32.0},{\"name\":\"Details\",\"x\":1384.0,\"y\":355.0,\"width\":74.0,\"height\":32.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":-1,\"hp\":10,\"wave\":1,\"worldTurns\":0,\"charge\":0,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":true,\"detailOpen\":false,\"canAct\":false,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":500.0,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"UpgradeChoice_1\",\"x\":634.0,\"y\":550.0,\"width\":306.0,\"height\":470.0},{\"name\":\"Details\",\"x\":732.0,\"y\":355.0,\"width\":74.0,\"height\":32.0},{\"name\":\"Details\",\"x\":1058.0,\"y\":355.0,\"width\":74.0,\"height\":32.0},{\"name\":\"Details\",\"x\":1384.0,\"y\":355.0,\"width\":74.0,\"height\":32.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":-1,\"hp\":10,\"wave\":1,\"worldTurns\":0,\"charge\":0,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":500.0,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":-1,\"hp\":10,\"wave\":1,\"worldTurns\":0,\"charge\":0,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":500.0,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":-1,\"hp\":10,\"wave\":1,\"worldTurns\":0,\"charge\":0,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Attack\",\"playerX\":960.0,\"playerY\":500.0,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":-1,\"hp\":10,\"wave\":1,\"worldTurns\":0,\"charge\":0,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Attack\",\"playerX\":960.0,\"playerY\":500.0,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":-1,\"hp\":10,\"wave\":1,\"worldTurns\":0,\"charge\":0,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":500.0,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":-1,\"hp\":10,\"wave\":1,\"worldTurns\":0,\"charge\":0,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Move\",\"playerX\":960.0,\"playerY\":500.0,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":0,\"charge\":0,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":false,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":0,\"charge\":0,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":false,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":0,\"charge\":0,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":false,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":0,\"charge\":0,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":false,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":0,\"charge\":0,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":false,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":1,\"charge\":0,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":1,\"charge\":0,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":1,\"charge\":0,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Attack\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":1,\"charge\":0,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Attack\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "Snake_03: 피해 1, 체력 2/3\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":1,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":false,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":1,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":false,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":1,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":false,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":1,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":false,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":1,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":false,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":true,\"canAct\":false,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0},{\"name\":\"CloseDetails\",\"x\":960.0,\"y\":788.0,\"width\":270.0,\"height\":48.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":true,\"canAct\":false,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0},{\"name\":\"CloseDetails\",\"x\":960.0,\"y\":788.0,\"width\":270.0,\"height\":48.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":false,\"paused\":true,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"ContinueButton\",\"x\":960.0,\"y\":508.0,\"width\":288.0,\"height\":64.0},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":false,\"paused\":true,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"ContinueButton\",\"x\":960.0,\"y\":508.0,\"width\":288.0,\"height\":64.0},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":false,\"paused\":true,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"ContinueButton\",\"x\":960.0,\"y\":508.0,\"width\":288.0,\"height\":64.0},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":false,\"paused\":true,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"ContinueButton\",\"x\":960.0,\"y\":508.0,\"width\":288.0,\"height\":64.0},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":false,\"paused\":true,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"ContinueButton\",\"x\":960.0,\"y\":508.0,\"width\":288.0,\"height\":64.0},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1280,\"height\":720,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":640.0,\"playerY\":297.77777099609377,\"tilePixels\":35.5555419921875,\"board\":[373.3332824707031,66.66668701171875,533.33349609375,533.3333740234375],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":439.04010009765627,\"y\":677.280029296875,\"width\":61.439971923828128,\"height\":61.439971923828128},{\"name\":\"HealthHud\",\"x\":577.280029296875,\"y\":687.52001953125,\"width\":204.7999267578125,\"height\":40.959983825683597},{\"name\":\"TraitHud\",\"x\":714.239990234375,\"y\":677.280029296875,\"width\":58.8800048828125,\"height\":61.439971923828128},{\"name\":\"SelectedTraitIconFrame\",\"x\":714.239990234375,\"y\":677.9200439453125,\"width\":37.1199951171875,\"height\":37.1199836730957},{\"name\":\"AttackActionFrame\",\"x\":778.239990234375,\"y\":677.280029296875,\"width\":58.8800048828125,\"height\":61.439971923828128},{\"name\":\"MoveActionFrame\",\"x\":842.2399291992188,\"y\":677.280029296875,\"width\":58.8800048828125,\"height\":61.439971923828128},{\"name\":\"ActionModeHud\",\"x\":640.0,\"y\":629.280029296875,\"width\":463.3598327636719,\"height\":34.55998229980469},{\"name\":\"BuildHudPanel\",\"x\":251.33331298828126,\"y\":333.3333435058594,\"width\":220.0,\"height\":546.6666870117188},{\"name\":\"MovementArtDetails\",\"x\":251.3333282470703,\"y\":136.0,\"width\":201.33334350585938,\"height\":32.0},{\"name\":\"RelicHudPanel\",\"x\":1028.666748046875,\"y\":333.3333435058594,\"width\":220.00006103515626,\"height\":546.6666870117188},{\"name\":\"WaveHud\",\"x\":579.3333129882813,\"y\":35.3333740234375,\"width\":100.0,\"height\":38.66668701171875},{\"name\":\"TimeHud\",\"x\":692.6666870117188,\"y\":35.3333740234375,\"width\":116.0,\"height\":38.66668701171875}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1280,\"height\":720,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"None\",\"playerX\":640.0,\"playerY\":297.77777099609377,\"tilePixels\":35.5555419921875,\"board\":[373.3332824707031,66.66668701171875,533.33349609375,533.3333740234375],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":439.04010009765627,\"y\":677.280029296875,\"width\":61.439971923828128,\"height\":61.439971923828128},{\"name\":\"HealthHud\",\"x\":577.280029296875,\"y\":687.52001953125,\"width\":204.7999267578125,\"height\":40.959983825683597},{\"name\":\"TraitHud\",\"x\":714.239990234375,\"y\":677.280029296875,\"width\":58.8800048828125,\"height\":61.439971923828128},{\"name\":\"SelectedTraitIconFrame\",\"x\":714.239990234375,\"y\":677.9200439453125,\"width\":37.1199951171875,\"height\":37.1199836730957},{\"name\":\"AttackActionFrame\",\"x\":778.239990234375,\"y\":677.280029296875,\"width\":58.8800048828125,\"height\":61.439971923828128},{\"name\":\"MoveActionFrame\",\"x\":842.2399291992188,\"y\":677.280029296875,\"width\":58.8800048828125,\"height\":61.439971923828128},{\"name\":\"ActionModeHud\",\"x\":640.0,\"y\":629.280029296875,\"width\":463.3598327636719,\"height\":34.55998229980469},{\"name\":\"BuildHudPanel\",\"x\":251.33331298828126,\"y\":333.3333435058594,\"width\":220.0,\"height\":546.6666870117188},{\"name\":\"MovementArtDetails\",\"x\":251.3333282470703,\"y\":136.0,\"width\":201.33334350585938,\"height\":32.0},{\"name\":\"RelicHudPanel\",\"x\":1028.666748046875,\"y\":333.3333435058594,\"width\":220.00006103515626,\"height\":546.6666870117188},{\"name\":\"WaveHud\",\"x\":579.3333129882813,\"y\":35.3333740234375,\"width\":100.0,\"height\":38.66668701171875},{\"name\":\"TimeHud\",\"x\":692.6666870117188,\"y\":35.3333740234375,\"width\":116.0,\"height\":38.66668701171875}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1280,\"height\":720,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Attack\",\"playerX\":640.0,\"playerY\":297.77777099609377,\"tilePixels\":35.5555419921875,\"board\":[373.3332824707031,66.66668701171875,533.33349609375,533.3333740234375],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":439.04010009765627,\"y\":677.280029296875,\"width\":61.439971923828128,\"height\":61.439971923828128},{\"name\":\"HealthHud\",\"x\":577.280029296875,\"y\":687.52001953125,\"width\":204.7999267578125,\"height\":40.959983825683597},{\"name\":\"TraitHud\",\"x\":714.239990234375,\"y\":677.280029296875,\"width\":58.8800048828125,\"height\":61.439971923828128},{\"name\":\"SelectedTraitIconFrame\",\"x\":714.239990234375,\"y\":677.9200439453125,\"width\":37.1199951171875,\"height\":37.1199836730957},{\"name\":\"AttackActionFrame\",\"x\":778.239990234375,\"y\":677.280029296875,\"width\":58.8800048828125,\"height\":61.439971923828128},{\"name\":\"MoveActionFrame\",\"x\":842.2399291992188,\"y\":677.280029296875,\"width\":58.8800048828125,\"height\":61.439971923828128},{\"name\":\"ActionModeHud\",\"x\":640.0,\"y\":629.280029296875,\"width\":463.3598327636719,\"height\":34.55998229980469},{\"name\":\"BuildHudPanel\",\"x\":251.33331298828126,\"y\":333.3333435058594,\"width\":220.0,\"height\":546.6666870117188},{\"name\":\"MovementArtDetails\",\"x\":251.3333282470703,\"y\":136.0,\"width\":201.33334350585938,\"height\":32.0},{\"name\":\"RelicHudPanel\",\"x\":1028.666748046875,\"y\":333.3333435058594,\"width\":220.00006103515626,\"height\":546.6666870117188},{\"name\":\"WaveHud\",\"x\":579.3333129882813,\"y\":35.3333740234375,\"width\":100.0,\"height\":38.66668701171875},{\"name\":\"TimeHud\",\"x\":692.6666870117188,\"y\":35.3333740234375,\"width\":116.0,\"height\":38.66668701171875}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1280,\"height\":720,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Attack\",\"playerX\":640.0,\"playerY\":297.77777099609377,\"tilePixels\":35.5555419921875,\"board\":[373.3332824707031,66.66668701171875,533.33349609375,533.3333740234375],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":439.04010009765627,\"y\":677.280029296875,\"width\":61.439971923828128,\"height\":61.439971923828128},{\"name\":\"HealthHud\",\"x\":577.280029296875,\"y\":687.52001953125,\"width\":204.7999267578125,\"height\":40.959983825683597},{\"name\":\"TraitHud\",\"x\":714.239990234375,\"y\":677.280029296875,\"width\":58.8800048828125,\"height\":61.439971923828128},{\"name\":\"SelectedTraitIconFrame\",\"x\":714.239990234375,\"y\":677.9200439453125,\"width\":37.1199951171875,\"height\":37.1199836730957},{\"name\":\"AttackActionFrame\",\"x\":778.239990234375,\"y\":677.280029296875,\"width\":58.8800048828125,\"height\":61.439971923828128},{\"name\":\"MoveActionFrame\",\"x\":842.2399291992188,\"y\":677.280029296875,\"width\":58.8800048828125,\"height\":61.439971923828128},{\"name\":\"ActionModeHud\",\"x\":640.0,\"y\":629.280029296875,\"width\":463.3598327636719,\"height\":34.55998229980469},{\"name\":\"BuildHudPanel\",\"x\":251.33331298828126,\"y\":333.3333435058594,\"width\":220.0,\"height\":546.6666870117188},{\"name\":\"MovementArtDetails\",\"x\":251.3333282470703,\"y\":136.0,\"width\":201.33334350585938,\"height\":32.0},{\"name\":\"RelicHudPanel\",\"x\":1028.666748046875,\"y\":333.3333435058594,\"width\":220.00006103515626,\"height\":546.6666870117188},{\"name\":\"WaveHud\",\"x\":579.3333129882813,\"y\":35.3333740234375,\"width\":100.0,\"height\":38.66668701171875},{\"name\":\"TimeHud\",\"x\":692.6666870117188,\"y\":35.3333740234375,\"width\":116.0,\"height\":38.66668701171875}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1280,\"height\":720,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Move\",\"playerX\":640.0,\"playerY\":297.77777099609377,\"tilePixels\":35.5555419921875,\"board\":[373.3332824707031,66.66668701171875,533.33349609375,533.3333740234375],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":439.04010009765627,\"y\":677.280029296875,\"width\":61.439971923828128,\"height\":61.439971923828128},{\"name\":\"HealthHud\",\"x\":577.280029296875,\"y\":687.52001953125,\"width\":204.7999267578125,\"height\":40.959983825683597},{\"name\":\"TraitHud\",\"x\":714.239990234375,\"y\":677.280029296875,\"width\":58.8800048828125,\"height\":61.439971923828128},{\"name\":\"SelectedTraitIconFrame\",\"x\":714.239990234375,\"y\":677.9200439453125,\"width\":37.1199951171875,\"height\":37.1199836730957},{\"name\":\"AttackActionFrame\",\"x\":778.239990234375,\"y\":677.280029296875,\"width\":58.8800048828125,\"height\":61.439971923828128},{\"name\":\"MoveActionFrame\",\"x\":842.2399291992188,\"y\":677.280029296875,\"width\":58.8800048828125,\"height\":61.439971923828128},{\"name\":\"ActionModeHud\",\"x\":640.0,\"y\":629.280029296875,\"width\":463.3598327636719,\"height\":34.55998229980469},{\"name\":\"BuildHudPanel\",\"x\":251.33331298828126,\"y\":333.3333435058594,\"width\":220.0,\"height\":546.6666870117188},{\"name\":\"MovementArtDetails\",\"x\":251.3333282470703,\"y\":136.0,\"width\":201.33334350585938,\"height\":32.0},{\"name\":\"RelicHudPanel\",\"x\":1028.666748046875,\"y\":333.3333435058594,\"width\":220.00006103515626,\"height\":546.6666870117188},{\"name\":\"WaveHud\",\"x\":579.3333129882813,\"y\":35.3333740234375,\"width\":100.0,\"height\":38.66668701171875},{\"name\":\"TimeHud\",\"x\":692.6666870117188,\"y\":35.3333740234375,\"width\":116.0,\"height\":38.66668701171875}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1024,\"height\":768,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Move\",\"playerX\":512.0,\"playerY\":334.22222900390627,\"tilePixels\":28.4444580078125,\"board\":[298.6666564941406,149.33331298828126,426.6666564941406,426.6667175292969],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":344.5332946777344,\"y\":640.0,\"width\":51.20001220703125,\"height\":51.20001220703125},{\"name\":\"HealthHud\",\"x\":459.7333068847656,\"y\":648.5333251953125,\"width\":170.66668701171876,\"height\":34.133331298828128},{\"name\":\"TraitHud\",\"x\":573.8666381835938,\"y\":640.0,\"width\":49.066650390625,\"height\":51.20001220703125},{\"name\":\"SelectedTraitIconFrame\",\"x\":573.8666381835938,\"y\":640.5333862304688,\"width\":30.933349609375,\"height\":30.933334350585939},{\"name\":\"AttackActionFrame\",\"x\":627.199951171875,\"y\":640.0,\"width\":49.066650390625,\"height\":51.20001220703125},{\"name\":\"MoveActionFrame\",\"x\":680.5333251953125,\"y\":640.0,\"width\":49.066650390625,\"height\":51.20001220703125},{\"name\":\"ActionModeHud\",\"x\":511.9999694824219,\"y\":600.0,\"width\":386.13336181640627,\"height\":28.79998779296875},{\"name\":\"BuildHudPanel\",\"x\":201.066650390625,\"y\":362.6666564941406,\"width\":176.00001525878907,\"height\":437.33331298828127},{\"name\":\"MovementArtDetails\",\"x\":201.06666564941407,\"y\":204.79998779296876,\"width\":161.06668090820313,\"height\":25.5999755859375},{\"name\":\"RelicHudPanel\",\"x\":822.933349609375,\"y\":362.6666564941406,\"width\":176.0,\"height\":437.33331298828127},{\"name\":\"WaveHud\",\"x\":463.4666748046875,\"y\":124.26666259765625,\"width\":80.0,\"height\":30.933349609375},{\"name\":\"TimeHud\",\"x\":554.13330078125,\"y\":124.26666259765625,\"width\":92.79998779296875,\"height\":30.933349609375}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1024,\"height\":768,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Move\",\"playerX\":512.0,\"playerY\":334.22222900390627,\"tilePixels\":28.4444580078125,\"board\":[298.6666564941406,149.33331298828126,426.6666564941406,426.6667175292969],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":344.5332946777344,\"y\":640.0,\"width\":51.20001220703125,\"height\":51.20001220703125},{\"name\":\"HealthHud\",\"x\":459.7333068847656,\"y\":648.5333251953125,\"width\":170.66668701171876,\"height\":34.133331298828128},{\"name\":\"TraitHud\",\"x\":573.8666381835938,\"y\":640.0,\"width\":49.066650390625,\"height\":51.20001220703125},{\"name\":\"SelectedTraitIconFrame\",\"x\":573.8666381835938,\"y\":640.5333862304688,\"width\":30.933349609375,\"height\":30.933334350585939},{\"name\":\"AttackActionFrame\",\"x\":627.199951171875,\"y\":640.0,\"width\":49.066650390625,\"height\":51.20001220703125},{\"name\":\"MoveActionFrame\",\"x\":680.5333251953125,\"y\":640.0,\"width\":49.066650390625,\"height\":51.20001220703125},{\"name\":\"ActionModeHud\",\"x\":511.9999694824219,\"y\":600.0,\"width\":386.13336181640627,\"height\":28.79998779296875},{\"name\":\"BuildHudPanel\",\"x\":201.066650390625,\"y\":362.6666564941406,\"width\":176.00001525878907,\"height\":437.33331298828127},{\"name\":\"MovementArtDetails\",\"x\":201.06666564941407,\"y\":204.79998779296876,\"width\":161.06668090820313,\"height\":25.5999755859375},{\"name\":\"RelicHudPanel\",\"x\":822.933349609375,\"y\":362.6666564941406,\"width\":176.0,\"height\":437.33331298828127},{\"name\":\"WaveHud\",\"x\":463.4666748046875,\"y\":124.26666259765625,\"width\":80.0,\"height\":30.933349609375},{\"name\":\"TimeHud\",\"x\":554.13330078125,\"y\":124.26666259765625,\"width\":92.79998779296875,\"height\":30.933349609375}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1024,\"height\":768,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Attack\",\"playerX\":512.0,\"playerY\":334.22222900390627,\"tilePixels\":28.4444580078125,\"board\":[298.6666564941406,149.33331298828126,426.6666564941406,426.6667175292969],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":344.5332946777344,\"y\":640.0,\"width\":51.20001220703125,\"height\":51.20001220703125},{\"name\":\"HealthHud\",\"x\":459.7333068847656,\"y\":648.5333251953125,\"width\":170.66668701171876,\"height\":34.133331298828128},{\"name\":\"TraitHud\",\"x\":573.8666381835938,\"y\":640.0,\"width\":49.066650390625,\"height\":51.20001220703125},{\"name\":\"SelectedTraitIconFrame\",\"x\":573.8666381835938,\"y\":640.5333862304688,\"width\":30.933349609375,\"height\":30.933334350585939},{\"name\":\"AttackActionFrame\",\"x\":627.199951171875,\"y\":640.0,\"width\":49.066650390625,\"height\":51.20001220703125},{\"name\":\"MoveActionFrame\",\"x\":680.5333251953125,\"y\":640.0,\"width\":49.066650390625,\"height\":51.20001220703125},{\"name\":\"ActionModeHud\",\"x\":511.9999694824219,\"y\":600.0,\"width\":386.13336181640627,\"height\":28.79998779296875},{\"name\":\"BuildHudPanel\",\"x\":201.066650390625,\"y\":362.6666564941406,\"width\":176.00001525878907,\"height\":437.33331298828127},{\"name\":\"MovementArtDetails\",\"x\":201.06666564941407,\"y\":204.79998779296876,\"width\":161.06668090820313,\"height\":25.5999755859375},{\"name\":\"RelicHudPanel\",\"x\":822.933349609375,\"y\":362.6666564941406,\"width\":176.0,\"height\":437.33331298828127},{\"name\":\"WaveHud\",\"x\":463.4666748046875,\"y\":124.26666259765625,\"width\":80.0,\"height\":30.933349609375},{\"name\":\"TimeHud\",\"x\":554.13330078125,\"y\":124.26666259765625,\"width\":92.79998779296875,\"height\":30.933349609375}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1024,\"height\":768,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Attack\",\"playerX\":512.0,\"playerY\":334.22222900390627,\"tilePixels\":28.4444580078125,\"board\":[298.6666564941406,149.33331298828126,426.6666564941406,426.6667175292969],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":344.5332946777344,\"y\":640.0,\"width\":51.20001220703125,\"height\":51.20001220703125},{\"name\":\"HealthHud\",\"x\":459.7333068847656,\"y\":648.5333251953125,\"width\":170.66668701171876,\"height\":34.133331298828128},{\"name\":\"TraitHud\",\"x\":573.8666381835938,\"y\":640.0,\"width\":49.066650390625,\"height\":51.20001220703125},{\"name\":\"SelectedTraitIconFrame\",\"x\":573.8666381835938,\"y\":640.5333862304688,\"width\":30.933349609375,\"height\":30.933334350585939},{\"name\":\"AttackActionFrame\",\"x\":627.199951171875,\"y\":640.0,\"width\":49.066650390625,\"height\":51.20001220703125},{\"name\":\"MoveActionFrame\",\"x\":680.5333251953125,\"y\":640.0,\"width\":49.066650390625,\"height\":51.20001220703125},{\"name\":\"ActionModeHud\",\"x\":511.9999694824219,\"y\":600.0,\"width\":386.13336181640627,\"height\":28.79998779296875},{\"name\":\"BuildHudPanel\",\"x\":201.066650390625,\"y\":362.6666564941406,\"width\":176.00001525878907,\"height\":437.33331298828127},{\"name\":\"MovementArtDetails\",\"x\":201.06666564941407,\"y\":204.79998779296876,\"width\":161.06668090820313,\"height\":25.5999755859375},{\"name\":\"RelicHudPanel\",\"x\":822.933349609375,\"y\":362.6666564941406,\"width\":176.0,\"height\":437.33331298828127},{\"name\":\"WaveHud\",\"x\":463.4666748046875,\"y\":124.26666259765625,\"width\":80.0,\"height\":30.933349609375},{\"name\":\"TimeHud\",\"x\":554.13330078125,\"y\":124.26666259765625,\"width\":92.79998779296875,\"height\":30.933349609375}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1024,\"height\":768,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Move\",\"playerX\":512.0,\"playerY\":334.22222900390627,\"tilePixels\":28.4444580078125,\"board\":[298.6666564941406,149.33331298828126,426.6666564941406,426.6667175292969],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":344.5332946777344,\"y\":640.0,\"width\":51.20001220703125,\"height\":51.20001220703125},{\"name\":\"HealthHud\",\"x\":459.7333068847656,\"y\":648.5333251953125,\"width\":170.66668701171876,\"height\":34.133331298828128},{\"name\":\"TraitHud\",\"x\":573.8666381835938,\"y\":640.0,\"width\":49.066650390625,\"height\":51.20001220703125},{\"name\":\"SelectedTraitIconFrame\",\"x\":573.8666381835938,\"y\":640.5333862304688,\"width\":30.933349609375,\"height\":30.933334350585939},{\"name\":\"AttackActionFrame\",\"x\":627.199951171875,\"y\":640.0,\"width\":49.066650390625,\"height\":51.20001220703125},{\"name\":\"MoveActionFrame\",\"x\":680.5333251953125,\"y\":640.0,\"width\":49.066650390625,\"height\":51.20001220703125},{\"name\":\"ActionModeHud\",\"x\":511.9999694824219,\"y\":600.0,\"width\":386.13336181640627,\"height\":28.79998779296875},{\"name\":\"BuildHudPanel\",\"x\":201.066650390625,\"y\":362.6666564941406,\"width\":176.00001525878907,\"height\":437.33331298828127},{\"name\":\"MovementArtDetails\",\"x\":201.06666564941407,\"y\":204.79998779296876,\"width\":161.06668090820313,\"height\":25.5999755859375},{\"name\":\"RelicHudPanel\",\"x\":822.933349609375,\"y\":362.6666564941406,\"width\":176.0,\"height\":437.33331298828127},{\"name\":\"WaveHud\",\"x\":463.4666748046875,\"y\":124.26666259765625,\"width\":80.0,\"height\":30.933349609375},{\"name\":\"TimeHud\",\"x\":554.13330078125,\"y\":124.26666259765625,\"width\":92.79998779296875,\"height\":30.933349609375}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":2560,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Move\",\"playerX\":1280.0,\"playerY\":446.66668701171877,\"tilePixels\":53.333251953125,\"board\":[880.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":978.5599975585938,\"y\":1015.9199829101563,\"width\":92.1600341796875,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":1185.9200439453125,\"y\":1031.280029296875,\"width\":307.199951171875,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1391.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1391.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1487.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1583.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":1280.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":697.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":697.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1863.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":1189.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1359.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":2560,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Move\",\"playerX\":1280.0,\"playerY\":446.66668701171877,\"tilePixels\":53.333251953125,\"board\":[880.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":978.5599975585938,\"y\":1015.9199829101563,\"width\":92.1600341796875,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":1185.9200439453125,\"y\":1031.280029296875,\"width\":307.199951171875,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1391.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1391.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1487.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1583.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":1280.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":697.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":697.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1863.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":1189.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1359.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":2560,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Attack\",\"playerX\":1280.0,\"playerY\":446.66668701171877,\"tilePixels\":53.333251953125,\"board\":[880.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":978.5599975585938,\"y\":1015.9199829101563,\"width\":92.1600341796875,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":1185.9200439453125,\"y\":1031.280029296875,\"width\":307.199951171875,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1391.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1391.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1487.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1583.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":1280.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":697.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":697.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1863.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":1189.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1359.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":2560,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Attack\",\"playerX\":1280.0,\"playerY\":446.66668701171877,\"tilePixels\":53.333251953125,\"board\":[880.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":978.5599975585938,\"y\":1015.9199829101563,\"width\":92.1600341796875,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":1185.9200439453125,\"y\":1031.280029296875,\"width\":307.199951171875,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1391.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1391.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1487.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1583.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":1280.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":697.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":697.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1863.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":1189.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1359.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":2560,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Move\",\"playerX\":1280.0,\"playerY\":446.66668701171877,\"tilePixels\":53.333251953125,\"board\":[880.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":978.5599975585938,\"y\":1015.9199829101563,\"width\":92.1600341796875,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":1185.9200439453125,\"y\":1031.280029296875,\"width\":307.199951171875,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1391.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1391.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1487.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1583.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":1280.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":697.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":697.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1863.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":1189.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1359.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":3840,\"height\":2160,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Move\",\"playerX\":1920.0,\"playerY\":893.3333740234375,\"tilePixels\":106.666748046875,\"board\":[1120.0,200.0,1600.0,1600.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":1317.119873046875,\"y\":2031.8399658203125,\"width\":184.3199462890625,\"height\":184.3199920654297},{\"name\":\"HealthHud\",\"x\":1731.840087890625,\"y\":2062.56005859375,\"width\":614.4000244140625,\"height\":122.8800048828125},{\"name\":\"TraitHud\",\"x\":2142.7197265625,\"y\":2031.8399658203125,\"width\":176.639892578125,\"height\":184.3199920654297},{\"name\":\"SelectedTraitIconFrame\",\"x\":2142.719970703125,\"y\":2033.760009765625,\"width\":111.35986328125,\"height\":111.36000061035156},{\"name\":\"AttackActionFrame\",\"x\":2334.7197265625,\"y\":2031.8399658203125,\"width\":176.639892578125,\"height\":184.3199920654297},{\"name\":\"MoveActionFrame\",\"x\":2526.7197265625,\"y\":2031.8399658203125,\"width\":176.639892578125,\"height\":184.3199920654297},{\"name\":\"ActionModeHud\",\"x\":1920.0,\"y\":1887.8399658203125,\"width\":1390.080078125,\"height\":103.67999267578125},{\"name\":\"BuildHudPanel\",\"x\":754.0,\"y\":1000.0,\"width\":660.0,\"height\":1640.0},{\"name\":\"MovementArtDetails\",\"x\":754.0,\"y\":408.0,\"width\":604.0,\"height\":96.0},{\"name\":\"RelicHudPanel\",\"x\":3086.0,\"y\":1000.0,\"width\":660.0,\"height\":1640.0},{\"name\":\"WaveHud\",\"x\":1738.0,\"y\":106.0,\"width\":300.0,\"height\":116.0},{\"name\":\"TimeHud\",\"x\":2078.0,\"y\":106.0,\"width\":348.0,\"height\":116.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":3840,\"height\":2160,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Move\",\"playerX\":1920.0,\"playerY\":893.3333740234375,\"tilePixels\":106.666748046875,\"board\":[1120.0,200.0,1600.0,1600.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":1317.119873046875,\"y\":2031.8399658203125,\"width\":184.3199462890625,\"height\":184.3199920654297},{\"name\":\"HealthHud\",\"x\":1731.840087890625,\"y\":2062.56005859375,\"width\":614.4000244140625,\"height\":122.8800048828125},{\"name\":\"TraitHud\",\"x\":2142.7197265625,\"y\":2031.8399658203125,\"width\":176.639892578125,\"height\":184.3199920654297},{\"name\":\"SelectedTraitIconFrame\",\"x\":2142.719970703125,\"y\":2033.760009765625,\"width\":111.35986328125,\"height\":111.36000061035156},{\"name\":\"AttackActionFrame\",\"x\":2334.7197265625,\"y\":2031.8399658203125,\"width\":176.639892578125,\"height\":184.3199920654297},{\"name\":\"MoveActionFrame\",\"x\":2526.7197265625,\"y\":2031.8399658203125,\"width\":176.639892578125,\"height\":184.3199920654297},{\"name\":\"ActionModeHud\",\"x\":1920.0,\"y\":1887.8399658203125,\"width\":1390.080078125,\"height\":103.67999267578125},{\"name\":\"BuildHudPanel\",\"x\":754.0,\"y\":1000.0,\"width\":660.0,\"height\":1640.0},{\"name\":\"MovementArtDetails\",\"x\":754.0,\"y\":408.0,\"width\":604.0,\"height\":96.0},{\"name\":\"RelicHudPanel\",\"x\":3086.0,\"y\":1000.0,\"width\":660.0,\"height\":1640.0},{\"name\":\"WaveHud\",\"x\":1738.0,\"y\":106.0,\"width\":300.0,\"height\":116.0},{\"name\":\"TimeHud\",\"x\":2078.0,\"y\":106.0,\"width\":348.0,\"height\":116.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":3840,\"height\":2160,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Attack\",\"playerX\":1920.0,\"playerY\":893.3333740234375,\"tilePixels\":106.666748046875,\"board\":[1120.0,200.0,1600.0,1600.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":1317.119873046875,\"y\":2031.8399658203125,\"width\":184.3199462890625,\"height\":184.3199920654297},{\"name\":\"HealthHud\",\"x\":1731.840087890625,\"y\":2062.56005859375,\"width\":614.4000244140625,\"height\":122.8800048828125},{\"name\":\"TraitHud\",\"x\":2142.7197265625,\"y\":2031.8399658203125,\"width\":176.639892578125,\"height\":184.3199920654297},{\"name\":\"SelectedTraitIconFrame\",\"x\":2142.719970703125,\"y\":2033.760009765625,\"width\":111.35986328125,\"height\":111.36000061035156},{\"name\":\"AttackActionFrame\",\"x\":2334.7197265625,\"y\":2031.8399658203125,\"width\":176.639892578125,\"height\":184.3199920654297},{\"name\":\"MoveActionFrame\",\"x\":2526.7197265625,\"y\":2031.8399658203125,\"width\":176.639892578125,\"height\":184.3199920654297},{\"name\":\"ActionModeHud\",\"x\":1920.0,\"y\":1887.8399658203125,\"width\":1390.080078125,\"height\":103.67999267578125},{\"name\":\"BuildHudPanel\",\"x\":754.0,\"y\":1000.0,\"width\":660.0,\"height\":1640.0},{\"name\":\"MovementArtDetails\",\"x\":754.0,\"y\":408.0,\"width\":604.0,\"height\":96.0},{\"name\":\"RelicHudPanel\",\"x\":3086.0,\"y\":1000.0,\"width\":660.0,\"height\":1640.0},{\"name\":\"WaveHud\",\"x\":1738.0,\"y\":106.0,\"width\":300.0,\"height\":116.0},{\"name\":\"TimeHud\",\"x\":2078.0,\"y\":106.0,\"width\":348.0,\"height\":116.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":3840,\"height\":2160,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Attack\",\"playerX\":1920.0,\"playerY\":893.3333740234375,\"tilePixels\":106.666748046875,\"board\":[1120.0,200.0,1600.0,1600.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":1317.119873046875,\"y\":2031.8399658203125,\"width\":184.3199462890625,\"height\":184.3199920654297},{\"name\":\"HealthHud\",\"x\":1731.840087890625,\"y\":2062.56005859375,\"width\":614.4000244140625,\"height\":122.8800048828125},{\"name\":\"TraitHud\",\"x\":2142.7197265625,\"y\":2031.8399658203125,\"width\":176.639892578125,\"height\":184.3199920654297},{\"name\":\"SelectedTraitIconFrame\",\"x\":2142.719970703125,\"y\":2033.760009765625,\"width\":111.35986328125,\"height\":111.36000061035156},{\"name\":\"AttackActionFrame\",\"x\":2334.7197265625,\"y\":2031.8399658203125,\"width\":176.639892578125,\"height\":184.3199920654297},{\"name\":\"MoveActionFrame\",\"x\":2526.7197265625,\"y\":2031.8399658203125,\"width\":176.639892578125,\"height\":184.3199920654297},{\"name\":\"ActionModeHud\",\"x\":1920.0,\"y\":1887.8399658203125,\"width\":1390.080078125,\"height\":103.67999267578125},{\"name\":\"BuildHudPanel\",\"x\":754.0,\"y\":1000.0,\"width\":660.0,\"height\":1640.0},{\"name\":\"MovementArtDetails\",\"x\":754.0,\"y\":408.0,\"width\":604.0,\"height\":96.0},{\"name\":\"RelicHudPanel\",\"x\":3086.0,\"y\":1000.0,\"width\":660.0,\"height\":1640.0},{\"name\":\"WaveHud\",\"x\":1738.0,\"y\":106.0,\"width\":300.0,\"height\":116.0},{\"name\":\"TimeHud\",\"x\":2078.0,\"y\":106.0,\"width\":348.0,\"height\":116.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":3840,\"height\":2160,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Move\",\"playerX\":1920.0,\"playerY\":893.3333740234375,\"tilePixels\":106.666748046875,\"board\":[1120.0,200.0,1600.0,1600.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":1317.119873046875,\"y\":2031.8399658203125,\"width\":184.3199462890625,\"height\":184.3199920654297},{\"name\":\"HealthHud\",\"x\":1731.840087890625,\"y\":2062.56005859375,\"width\":614.4000244140625,\"height\":122.8800048828125},{\"name\":\"TraitHud\",\"x\":2142.7197265625,\"y\":2031.8399658203125,\"width\":176.639892578125,\"height\":184.3199920654297},{\"name\":\"SelectedTraitIconFrame\",\"x\":2142.719970703125,\"y\":2033.760009765625,\"width\":111.35986328125,\"height\":111.36000061035156},{\"name\":\"AttackActionFrame\",\"x\":2334.7197265625,\"y\":2031.8399658203125,\"width\":176.639892578125,\"height\":184.3199920654297},{\"name\":\"MoveActionFrame\",\"x\":2526.7197265625,\"y\":2031.8399658203125,\"width\":176.639892578125,\"height\":184.3199920654297},{\"name\":\"ActionModeHud\",\"x\":1920.0,\"y\":1887.8399658203125,\"width\":1390.080078125,\"height\":103.67999267578125},{\"name\":\"BuildHudPanel\",\"x\":754.0,\"y\":1000.0,\"width\":660.0,\"height\":1640.0},{\"name\":\"MovementArtDetails\",\"x\":754.0,\"y\":408.0,\"width\":604.0,\"height\":96.0},{\"name\":\"RelicHudPanel\",\"x\":3086.0,\"y\":1000.0,\"width\":660.0,\"height\":1640.0},{\"name\":\"WaveHud\",\"x\":1738.0,\"y\":106.0,\"width\":300.0,\"height\":116.0},{\"name\":\"TimeHud\",\"x\":2078.0,\"y\":106.0,\"width\":348.0,\"height\":116.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":800,\"height\":1200,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Move\",\"playerX\":400.0,\"playerY\":561.1111450195313,\"tilePixels\":22.22222900390625,\"board\":[233.33334350585938,416.6666259765625,333.3332824707031,333.3333740234375],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":269.1666259765625,\"y\":800.0,\"width\":39.99998474121094,\"height\":40.0},{\"name\":\"HealthHud\",\"x\":359.1666259765625,\"y\":806.6666870117188,\"width\":133.33334350585938,\"height\":26.666656494140626},{\"name\":\"TraitHud\",\"x\":448.33331298828127,\"y\":800.0,\"width\":38.333343505859378,\"height\":40.0},{\"name\":\"SelectedTraitIconFrame\",\"x\":448.33331298828127,\"y\":800.4166259765625,\"width\":24.16668701171875,\"height\":24.166656494140626},{\"name\":\"AttackActionFrame\",\"x\":490.0,\"y\":800.0,\"width\":38.333343505859378,\"height\":40.0},{\"name\":\"MoveActionFrame\",\"x\":531.6666259765625,\"y\":800.0,\"width\":38.33331298828125,\"height\":40.0},{\"name\":\"ActionModeHud\",\"x\":399.9999694824219,\"y\":768.75,\"width\":301.66668701171877,\"height\":22.5},{\"name\":\"BuildHudPanel\",\"x\":157.08334350585938,\"y\":583.3333129882813,\"width\":137.5,\"height\":341.6666259765625},{\"name\":\"MovementArtDetails\",\"x\":157.08334350585938,\"y\":460.0,\"width\":125.83332824707031,\"height\":20.0},{\"name\":\"RelicHudPanel\",\"x\":642.9166259765625,\"y\":583.3333129882813,\"width\":137.5,\"height\":341.6666259765625},{\"name\":\"WaveHud\",\"x\":362.0833435058594,\"y\":397.083251953125,\"width\":62.5,\"height\":24.16668701171875},{\"name\":\"TimeHud\",\"x\":432.9166564941406,\"y\":397.083251953125,\"width\":72.5,\"height\":24.16668701171875}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":800,\"height\":1200,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Move\",\"playerX\":400.0,\"playerY\":561.1111450195313,\"tilePixels\":22.22222900390625,\"board\":[233.33334350585938,416.6666259765625,333.3332824707031,333.3333740234375],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":269.1666259765625,\"y\":800.0,\"width\":39.99998474121094,\"height\":40.0},{\"name\":\"HealthHud\",\"x\":359.1666259765625,\"y\":806.6666870117188,\"width\":133.33334350585938,\"height\":26.666656494140626},{\"name\":\"TraitHud\",\"x\":448.33331298828127,\"y\":800.0,\"width\":38.333343505859378,\"height\":40.0},{\"name\":\"SelectedTraitIconFrame\",\"x\":448.33331298828127,\"y\":800.4166259765625,\"width\":24.16668701171875,\"height\":24.166656494140626},{\"name\":\"AttackActionFrame\",\"x\":490.0,\"y\":800.0,\"width\":38.333343505859378,\"height\":40.0},{\"name\":\"MoveActionFrame\",\"x\":531.6666259765625,\"y\":800.0,\"width\":38.33331298828125,\"height\":40.0},{\"name\":\"ActionModeHud\",\"x\":399.9999694824219,\"y\":768.75,\"width\":301.66668701171877,\"height\":22.5},{\"name\":\"BuildHudPanel\",\"x\":157.08334350585938,\"y\":583.3333129882813,\"width\":137.5,\"height\":341.6666259765625},{\"name\":\"MovementArtDetails\",\"x\":157.08334350585938,\"y\":460.0,\"width\":125.83332824707031,\"height\":20.0},{\"name\":\"RelicHudPanel\",\"x\":642.9166259765625,\"y\":583.3333129882813,\"width\":137.5,\"height\":341.6666259765625},{\"name\":\"WaveHud\",\"x\":362.0833435058594,\"y\":397.083251953125,\"width\":62.5,\"height\":24.16668701171875},{\"name\":\"TimeHud\",\"x\":432.9166564941406,\"y\":397.083251953125,\"width\":72.5,\"height\":24.16668701171875}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":800,\"height\":1200,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Attack\",\"playerX\":400.0,\"playerY\":561.1111450195313,\"tilePixels\":22.22222900390625,\"board\":[233.33334350585938,416.6666259765625,333.3332824707031,333.3333740234375],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":269.1666259765625,\"y\":800.0,\"width\":39.99998474121094,\"height\":40.0},{\"name\":\"HealthHud\",\"x\":359.1666259765625,\"y\":806.6666870117188,\"width\":133.33334350585938,\"height\":26.666656494140626},{\"name\":\"TraitHud\",\"x\":448.33331298828127,\"y\":800.0,\"width\":38.333343505859378,\"height\":40.0},{\"name\":\"SelectedTraitIconFrame\",\"x\":448.33331298828127,\"y\":800.4166259765625,\"width\":24.16668701171875,\"height\":24.166656494140626},{\"name\":\"AttackActionFrame\",\"x\":490.0,\"y\":800.0,\"width\":38.333343505859378,\"height\":40.0},{\"name\":\"MoveActionFrame\",\"x\":531.6666259765625,\"y\":800.0,\"width\":38.33331298828125,\"height\":40.0},{\"name\":\"ActionModeHud\",\"x\":399.9999694824219,\"y\":768.75,\"width\":301.66668701171877,\"height\":22.5},{\"name\":\"BuildHudPanel\",\"x\":157.08334350585938,\"y\":583.3333129882813,\"width\":137.5,\"height\":341.6666259765625},{\"name\":\"MovementArtDetails\",\"x\":157.08334350585938,\"y\":460.0,\"width\":125.83332824707031,\"height\":20.0},{\"name\":\"RelicHudPanel\",\"x\":642.9166259765625,\"y\":583.3333129882813,\"width\":137.5,\"height\":341.6666259765625},{\"name\":\"WaveHud\",\"x\":362.0833435058594,\"y\":397.083251953125,\"width\":62.5,\"height\":24.16668701171875},{\"name\":\"TimeHud\",\"x\":432.9166564941406,\"y\":397.083251953125,\"width\":72.5,\"height\":24.16668701171875}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":800,\"height\":1200,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Attack\",\"playerX\":400.0,\"playerY\":561.1111450195313,\"tilePixels\":22.22222900390625,\"board\":[233.33334350585938,416.6666259765625,333.3332824707031,333.3333740234375],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":269.1666259765625,\"y\":800.0,\"width\":39.99998474121094,\"height\":40.0},{\"name\":\"HealthHud\",\"x\":359.1666259765625,\"y\":806.6666870117188,\"width\":133.33334350585938,\"height\":26.666656494140626},{\"name\":\"TraitHud\",\"x\":448.33331298828127,\"y\":800.0,\"width\":38.333343505859378,\"height\":40.0},{\"name\":\"SelectedTraitIconFrame\",\"x\":448.33331298828127,\"y\":800.4166259765625,\"width\":24.16668701171875,\"height\":24.166656494140626},{\"name\":\"AttackActionFrame\",\"x\":490.0,\"y\":800.0,\"width\":38.333343505859378,\"height\":40.0},{\"name\":\"MoveActionFrame\",\"x\":531.6666259765625,\"y\":800.0,\"width\":38.33331298828125,\"height\":40.0},{\"name\":\"ActionModeHud\",\"x\":399.9999694824219,\"y\":768.75,\"width\":301.66668701171877,\"height\":22.5},{\"name\":\"BuildHudPanel\",\"x\":157.08334350585938,\"y\":583.3333129882813,\"width\":137.5,\"height\":341.6666259765625},{\"name\":\"MovementArtDetails\",\"x\":157.08334350585938,\"y\":460.0,\"width\":125.83332824707031,\"height\":20.0},{\"name\":\"RelicHudPanel\",\"x\":642.9166259765625,\"y\":583.3333129882813,\"width\":137.5,\"height\":341.6666259765625},{\"name\":\"WaveHud\",\"x\":362.0833435058594,\"y\":397.083251953125,\"width\":62.5,\"height\":24.16668701171875},{\"name\":\"TimeHud\",\"x\":432.9166564941406,\"y\":397.083251953125,\"width\":72.5,\"height\":24.16668701171875}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":800,\"height\":1200,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Move\",\"playerX\":400.0,\"playerY\":561.1111450195313,\"tilePixels\":22.22222900390625,\"board\":[233.33334350585938,416.6666259765625,333.3332824707031,333.3333740234375],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":269.1666259765625,\"y\":800.0,\"width\":39.99998474121094,\"height\":40.0},{\"name\":\"HealthHud\",\"x\":359.1666259765625,\"y\":806.6666870117188,\"width\":133.33334350585938,\"height\":26.666656494140626},{\"name\":\"TraitHud\",\"x\":448.33331298828127,\"y\":800.0,\"width\":38.333343505859378,\"height\":40.0},{\"name\":\"SelectedTraitIconFrame\",\"x\":448.33331298828127,\"y\":800.4166259765625,\"width\":24.16668701171875,\"height\":24.166656494140626},{\"name\":\"AttackActionFrame\",\"x\":490.0,\"y\":800.0,\"width\":38.333343505859378,\"height\":40.0},{\"name\":\"MoveActionFrame\",\"x\":531.6666259765625,\"y\":800.0,\"width\":38.33331298828125,\"height\":40.0},{\"name\":\"ActionModeHud\",\"x\":399.9999694824219,\"y\":768.75,\"width\":301.66668701171877,\"height\":22.5},{\"name\":\"BuildHudPanel\",\"x\":157.08334350585938,\"y\":583.3333129882813,\"width\":137.5,\"height\":341.6666259765625},{\"name\":\"MovementArtDetails\",\"x\":157.08334350585938,\"y\":460.0,\"width\":125.83332824707031,\"height\":20.0},{\"name\":\"RelicHudPanel\",\"x\":642.9166259765625,\"y\":583.3333129882813,\"width\":137.5,\"height\":341.6666259765625},{\"name\":\"WaveHud\",\"x\":362.0833435058594,\"y\":397.083251953125,\"width\":62.5,\"height\":24.16668701171875},{\"name\":\"TimeHud\",\"x\":432.9166564941406,\"y\":397.083251953125,\"width\":72.5,\"height\":24.16668701171875}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":960,\"height\":540,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Move\",\"playerX\":480.0,\"playerY\":223.33334350585938,\"tilePixels\":26.66668701171875,\"board\":[280.0,50.0,400.0,400.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":329.27996826171877,\"y\":507.9599914550781,\"width\":46.079986572265628,\"height\":46.07999801635742},{\"name\":\"HealthHud\",\"x\":432.96002197265627,\"y\":515.6400146484375,\"width\":153.60000610351563,\"height\":30.720001220703126},{\"name\":\"TraitHud\",\"x\":535.679931640625,\"y\":507.9599914550781,\"width\":44.15997314453125,\"height\":46.07999801635742},{\"name\":\"SelectedTraitIconFrame\",\"x\":535.6799926757813,\"y\":508.44000244140627,\"width\":27.8399658203125,\"height\":27.84000015258789},{\"name\":\"AttackActionFrame\",\"x\":583.679931640625,\"y\":507.9599914550781,\"width\":44.15997314453125,\"height\":46.07999801635742},{\"name\":\"MoveActionFrame\",\"x\":631.679931640625,\"y\":507.9599914550781,\"width\":44.15997314453125,\"height\":46.07999801635742},{\"name\":\"ActionModeHud\",\"x\":480.0,\"y\":471.9599914550781,\"width\":347.52001953125,\"height\":25.919998168945314},{\"name\":\"BuildHudPanel\",\"x\":188.5,\"y\":250.0,\"width\":165.0,\"height\":410.0},{\"name\":\"MovementArtDetails\",\"x\":188.5,\"y\":102.0,\"width\":151.0,\"height\":24.0},{\"name\":\"RelicHudPanel\",\"x\":771.5,\"y\":250.0,\"width\":165.0,\"height\":410.0},{\"name\":\"WaveHud\",\"x\":434.5,\"y\":26.5,\"width\":75.0,\"height\":29.0},{\"name\":\"TimeHud\",\"x\":519.5,\"y\":26.5,\"width\":87.0,\"height\":29.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":960,\"height\":540,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Move\",\"playerX\":480.0,\"playerY\":223.33334350585938,\"tilePixels\":26.66668701171875,\"board\":[280.0,50.0,400.0,400.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":329.27996826171877,\"y\":507.9599914550781,\"width\":46.079986572265628,\"height\":46.07999801635742},{\"name\":\"HealthHud\",\"x\":432.96002197265627,\"y\":515.6400146484375,\"width\":153.60000610351563,\"height\":30.720001220703126},{\"name\":\"TraitHud\",\"x\":535.679931640625,\"y\":507.9599914550781,\"width\":44.15997314453125,\"height\":46.07999801635742},{\"name\":\"SelectedTraitIconFrame\",\"x\":535.6799926757813,\"y\":508.44000244140627,\"width\":27.8399658203125,\"height\":27.84000015258789},{\"name\":\"AttackActionFrame\",\"x\":583.679931640625,\"y\":507.9599914550781,\"width\":44.15997314453125,\"height\":46.07999801635742},{\"name\":\"MoveActionFrame\",\"x\":631.679931640625,\"y\":507.9599914550781,\"width\":44.15997314453125,\"height\":46.07999801635742},{\"name\":\"ActionModeHud\",\"x\":480.0,\"y\":471.9599914550781,\"width\":347.52001953125,\"height\":25.919998168945314},{\"name\":\"BuildHudPanel\",\"x\":188.5,\"y\":250.0,\"width\":165.0,\"height\":410.0},{\"name\":\"MovementArtDetails\",\"x\":188.5,\"y\":102.0,\"width\":151.0,\"height\":24.0},{\"name\":\"RelicHudPanel\",\"x\":771.5,\"y\":250.0,\"width\":165.0,\"height\":410.0},{\"name\":\"WaveHud\",\"x\":434.5,\"y\":26.5,\"width\":75.0,\"height\":29.0},{\"name\":\"TimeHud\",\"x\":519.5,\"y\":26.5,\"width\":87.0,\"height\":29.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":960,\"height\":540,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Attack\",\"playerX\":480.0,\"playerY\":223.33334350585938,\"tilePixels\":26.66668701171875,\"board\":[280.0,50.0,400.0,400.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":329.27996826171877,\"y\":507.9599914550781,\"width\":46.079986572265628,\"height\":46.07999801635742},{\"name\":\"HealthHud\",\"x\":432.96002197265627,\"y\":515.6400146484375,\"width\":153.60000610351563,\"height\":30.720001220703126},{\"name\":\"TraitHud\",\"x\":535.679931640625,\"y\":507.9599914550781,\"width\":44.15997314453125,\"height\":46.07999801635742},{\"name\":\"SelectedTraitIconFrame\",\"x\":535.6799926757813,\"y\":508.44000244140627,\"width\":27.8399658203125,\"height\":27.84000015258789},{\"name\":\"AttackActionFrame\",\"x\":583.679931640625,\"y\":507.9599914550781,\"width\":44.15997314453125,\"height\":46.07999801635742},{\"name\":\"MoveActionFrame\",\"x\":631.679931640625,\"y\":507.9599914550781,\"width\":44.15997314453125,\"height\":46.07999801635742},{\"name\":\"ActionModeHud\",\"x\":480.0,\"y\":471.9599914550781,\"width\":347.52001953125,\"height\":25.919998168945314},{\"name\":\"BuildHudPanel\",\"x\":188.5,\"y\":250.0,\"width\":165.0,\"height\":410.0},{\"name\":\"MovementArtDetails\",\"x\":188.5,\"y\":102.0,\"width\":151.0,\"height\":24.0},{\"name\":\"RelicHudPanel\",\"x\":771.5,\"y\":250.0,\"width\":165.0,\"height\":410.0},{\"name\":\"WaveHud\",\"x\":434.5,\"y\":26.5,\"width\":75.0,\"height\":29.0},{\"name\":\"TimeHud\",\"x\":519.5,\"y\":26.5,\"width\":87.0,\"height\":29.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":960,\"height\":540,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Attack\",\"playerX\":480.0,\"playerY\":223.33334350585938,\"tilePixels\":26.66668701171875,\"board\":[280.0,50.0,400.0,400.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":329.27996826171877,\"y\":507.9599914550781,\"width\":46.079986572265628,\"height\":46.07999801635742},{\"name\":\"HealthHud\",\"x\":432.96002197265627,\"y\":515.6400146484375,\"width\":153.60000610351563,\"height\":30.720001220703126},{\"name\":\"TraitHud\",\"x\":535.679931640625,\"y\":507.9599914550781,\"width\":44.15997314453125,\"height\":46.07999801635742},{\"name\":\"SelectedTraitIconFrame\",\"x\":535.6799926757813,\"y\":508.44000244140627,\"width\":27.8399658203125,\"height\":27.84000015258789},{\"name\":\"AttackActionFrame\",\"x\":583.679931640625,\"y\":507.9599914550781,\"width\":44.15997314453125,\"height\":46.07999801635742},{\"name\":\"MoveActionFrame\",\"x\":631.679931640625,\"y\":507.9599914550781,\"width\":44.15997314453125,\"height\":46.07999801635742},{\"name\":\"ActionModeHud\",\"x\":480.0,\"y\":471.9599914550781,\"width\":347.52001953125,\"height\":25.919998168945314},{\"name\":\"BuildHudPanel\",\"x\":188.5,\"y\":250.0,\"width\":165.0,\"height\":410.0},{\"name\":\"MovementArtDetails\",\"x\":188.5,\"y\":102.0,\"width\":151.0,\"height\":24.0},{\"name\":\"RelicHudPanel\",\"x\":771.5,\"y\":250.0,\"width\":165.0,\"height\":410.0},{\"name\":\"WaveHud\",\"x\":434.5,\"y\":26.5,\"width\":75.0,\"height\":29.0},{\"name\":\"TimeHud\",\"x\":519.5,\"y\":26.5,\"width\":87.0,\"height\":29.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":960,\"height\":540,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Move\",\"playerX\":480.0,\"playerY\":223.33334350585938,\"tilePixels\":26.66668701171875,\"board\":[280.0,50.0,400.0,400.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":329.27996826171877,\"y\":507.9599914550781,\"width\":46.079986572265628,\"height\":46.07999801635742},{\"name\":\"HealthHud\",\"x\":432.96002197265627,\"y\":515.6400146484375,\"width\":153.60000610351563,\"height\":30.720001220703126},{\"name\":\"TraitHud\",\"x\":535.679931640625,\"y\":507.9599914550781,\"width\":44.15997314453125,\"height\":46.07999801635742},{\"name\":\"SelectedTraitIconFrame\",\"x\":535.6799926757813,\"y\":508.44000244140627,\"width\":27.8399658203125,\"height\":27.84000015258789},{\"name\":\"AttackActionFrame\",\"x\":583.679931640625,\"y\":507.9599914550781,\"width\":44.15997314453125,\"height\":46.07999801635742},{\"name\":\"MoveActionFrame\",\"x\":631.679931640625,\"y\":507.9599914550781,\"width\":44.15997314453125,\"height\":46.07999801635742},{\"name\":\"ActionModeHud\",\"x\":480.0,\"y\":471.9599914550781,\"width\":347.52001953125,\"height\":25.919998168945314},{\"name\":\"BuildHudPanel\",\"x\":188.5,\"y\":250.0,\"width\":165.0,\"height\":410.0},{\"name\":\"MovementArtDetails\",\"x\":188.5,\"y\":102.0,\"width\":151.0,\"height\":24.0},{\"name\":\"RelicHudPanel\",\"x\":771.5,\"y\":250.0,\"width\":165.0,\"height\":410.0},{\"name\":\"WaveHud\",\"x\":434.5,\"y\":26.5,\"width\":75.0,\"height\":29.0},{\"name\":\"TimeHud\",\"x\":519.5,\"y\":26.5,\"width\":87.0,\"height\":29.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Move\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Move\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Attack\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Attack\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n",
+    "PC_PLAYTEST_STATE {\"width\":1920,\"height\":1080,\"x\":-1,\"y\":0,\"hp\":10,\"wave\":1,\"worldTurns\":2,\"charge\":1,\"mobile\":false,\"startSelection\":false,\"rewardSelection\":false,\"detailOpen\":false,\"canAct\":true,\"paused\":false,\"ready\":false,\"action\":\"Move\",\"playerX\":960.0,\"playerY\":446.66668701171877,\"tilePixels\":53.3333740234375,\"board\":[560.0,100.0,800.0,800.0],\"ui\":[{\"name\":\"UltimateFrame\",\"x\":658.5599365234375,\"y\":1015.9199829101563,\"width\":92.15997314453125,\"height\":92.15999603271485},{\"name\":\"HealthHud\",\"x\":865.9200439453125,\"y\":1031.280029296875,\"width\":307.20001220703127,\"height\":61.44000244140625},{\"name\":\"TraitHud\",\"x\":1071.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"SelectedTraitIconFrame\",\"x\":1071.3599853515625,\"y\":1016.8800048828125,\"width\":55.679931640625,\"height\":55.68000030517578},{\"name\":\"AttackActionFrame\",\"x\":1167.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"MoveActionFrame\",\"x\":1263.35986328125,\"y\":1015.9199829101563,\"width\":88.3199462890625,\"height\":92.15999603271485},{\"name\":\"ActionModeHud\",\"x\":960.0,\"y\":943.9199829101563,\"width\":695.0400390625,\"height\":51.839996337890628},{\"name\":\"BuildHudPanel\",\"x\":377.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"MovementArtDetails\",\"x\":377.0,\"y\":204.0,\"width\":302.0,\"height\":48.0},{\"name\":\"RelicHudPanel\",\"x\":1543.0,\"y\":500.0,\"width\":330.0,\"height\":820.0},{\"name\":\"WaveHud\",\"x\":869.0,\"y\":53.0,\"width\":150.0,\"height\":58.0},{\"name\":\"TimeHud\",\"x\":1039.0,\"y\":53.0,\"width\":174.0,\"height\":58.0}]}\n"
+  ]
+}

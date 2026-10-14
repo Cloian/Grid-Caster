@@ -41,6 +41,11 @@ public sealed class BishopFireTrail : MonoBehaviour
 
     private void OnPlayerMoved()
     {
+        ResolvePlayerEntry();
+    }
+
+    public void ResolvePlayerEntry()
+    {
         if (player.CurrentHealth > 0 && HasFire(player.GridPosition))
             player.TakeDamage(damage, PlayerDamageKind.Hazard);
     }

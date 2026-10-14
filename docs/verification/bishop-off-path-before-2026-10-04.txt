@@ -1,0 +1,57 @@
+CHESS_PLAYTEST_VALIDATION_FAIL
+OK 테스트 씬 초기화
+OK 외벽 포함 12×12
+OK 고정 배치 3종 및 플레이어
+OK 독립 테스트에서 다음 이동 예고 타일 없음
+OK 경계 벽 충돌
+OK 시작 전 입력 차단
+OK 실제 박쥐 프리팹은 8방향 이동 설정
+OK 일반 적 생성 순서 보존
+OK 포위된 목표에도 접근 후 배회 없이 대기
+OK 뱀은 우회 중에도 상하좌우 한 칸
+OK 장벽 우회 중 왕복 또는 정지 없음
+OK 뱀은 우회 중에도 상하좌우 한 칸
+OK 장벽 우회 중 왕복 또는 정지 없음
+OK 뱀은 우회 중에도 상하좌우 한 칸
+OK 장벽 우회 중 왕복 또는 정지 없음
+OK 뱀은 우회 중에도 상하좌우 한 칸
+OK 장벽 우회 중 왕복 또는 정지 없음
+OK 뱀은 우회 중에도 상하좌우 한 칸
+OK 장벽 우회 중 왕복 또는 정지 없음
+OK 뱀은 우회 중에도 상하좌우 한 칸
+OK 장벽 우회 중 왕복 또는 정지 없음
+OK 뱀은 우회 중에도 상하좌우 한 칸
+OK 장벽 우회 중 왕복 또는 정지 없음
+OK 뱀은 우회 중에도 상하좌우 한 칸
+OK 장벽 우회 중 왕복 또는 정지 없음
+OK 뱀은 우회 중에도 상하좌우 한 칸
+OK 장벽 우회 중 왕복 또는 정지 없음
+OK 뱀은 우회 중에도 상하좌우 한 칸
+OK 장벽 우회 중 왕복 또는 정지 없음
+OK 뱀은 우회 중에도 상하좌우 한 칸
+OK 장벽 우회 중 왕복 또는 정지 없음
+OK 뱀은 우회 중에도 상하좌우 한 칸
+OK 장벽 우회 중 왕복 또는 정지 없음
+OK 장벽을 돌아 공격 인접 칸까지 최단 12걸음
+OK 뱀은 같은 최단 경로라면 앞 적이 죽어 비운 칸으로 전진
+OK 비숍 대각선 경로 예약
+OK 뒤 적은 비숍 통과 칸 예약 불가
+OK 앞 적이 비운 출발 칸은 같은 턴 사용 가능
+OK 박쥐는 막힌 지형 모서리를 대각선으로 통과하지 않음
+OK 박쥐는 같은 열 목표로 직선 한 칸 이동
+OK 박쥐는 같은 행 목표로 직선 한 칸 이동
+OK 박쥐는 대각선 목표로 대각선 한 칸 이동
+OK 나이트 착지 전 피해 없음
+OK 나이트 빈 L자 착지 칸 선택
+OK 착지 십자 피해 1회
+OK 착지 대각선은 십자 피해 없음
+OK 착지 불가이면 범위공격 없음
+OK 비숍은 매 턴 최대 4칸 대각선 횡단
+OK 비숍 출발점/경로/도착점에 불길
+OK 비숍 출발점/경로/도착점에 불길
+OK 비숍 새 불길은 실제 이동 경로에만 생성: (2, 2, 0)
+OK 비숍 새 불길은 실제 이동 경로에만 생성: (3, 3, 0)
+System.InvalidOperationException: 비숍 새 불길은 실제 이동 경로에만 생성: (4, 4, 0)
+  at ChessPlaytestValidation.Check (System.Boolean value, System.String message) [0x0001f] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/ChessPlaytestValidation.cs:102 
+  at ChessPlaytestValidation+<Run>d__15.MoveNext () [0x00fe4] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/ChessPlaytestValidation.cs:258 
+  at ChessPlaytestValidation.Tick () [0x00036] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/ChessPlaytestValidation.cs:76 

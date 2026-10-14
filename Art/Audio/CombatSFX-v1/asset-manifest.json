@@ -1,0 +1,133 @@
+{
+  "version": "CombatSFX-v1",
+  "created": "2026-10-03",
+  "status": "listening_drafts_not_connected_to_game",
+  "method": "original deterministic procedural synthesis",
+  "source_samples": [],
+  "format": {
+    "sample_rate": 48000,
+    "channels": 1,
+    "bit_depth": 16,
+    "container": "WAV"
+  },
+  "generator": "generate_sfx.py",
+  "assets": [
+    {
+      "order": 1,
+      "file": "01_spell_cast.wav",
+      "title": "플레이어 마법 발사·비행",
+      "description": "짧은 마법음과 빠른 비행",
+      "duration_seconds": 0.36,
+      "peak_dbfs": -4.63,
+      "rms_dbfs": -20.0,
+      "tail_20ms_rms_dbfs": -59.66,
+      "dc_offset": 2.024e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "order": 2,
+      "file": "02_spell_hit_soft.wav",
+      "title": "생물에게 마법 명중",
+      "description": "부드러운 몸 충격과 작은 마법 파열",
+      "duration_seconds": 0.24,
+      "peak_dbfs": -5.15,
+      "rms_dbfs": -20.0,
+      "tail_20ms_rms_dbfs": -67.65,
+      "dc_offset": -2.954e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "order": 3,
+      "file": "03_spell_hit_hard.wav",
+      "title": "단단한 대상에게 마법 명중",
+      "description": "짧은 갑주 충격과 마법 파열",
+      "duration_seconds": 0.3,
+      "peak_dbfs": -2.16,
+      "rms_dbfs": -20.11,
+      "tail_20ms_rms_dbfs": -58.12,
+      "dc_offset": -3.471e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "order": 4,
+      "file": "04_player_hurt.wav",
+      "title": "플레이어 일반 피격",
+      "description": "낮은 충격과 짧은 하강음",
+      "duration_seconds": 0.32,
+      "peak_dbfs": -4.97,
+      "rms_dbfs": -20.0,
+      "tail_20ms_rms_dbfs": -67.34,
+      "dc_offset": -1.798e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "order": 5,
+      "file": "05_knight_land.wav",
+      "title": "기갑기마 착지",
+      "description": "무게 있는 착지와 갑주 흔들림",
+      "duration_seconds": 0.43,
+      "peak_dbfs": -5.6,
+      "rms_dbfs": -20.0,
+      "tail_20ms_rms_dbfs": -75.11,
+      "dc_offset": 7.737e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "order": 6,
+      "file": "06_fire_trail_sweep.wav",
+      "title": "아르마딜로 불길 펼침",
+      "description": "짧게 퍼지는 불꽃과 마찰",
+      "duration_seconds": 0.52,
+      "peak_dbfs": -3.24,
+      "rms_dbfs": -20.0,
+      "tail_20ms_rms_dbfs": -67.73,
+      "dc_offset": 6.04e-06,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "order": 7,
+      "file": "07_rook_charge.wav",
+      "title": "쇠뇌 장전",
+      "description": "줄 당김과 걸쇠 잠김",
+      "duration_seconds": 0.5,
+      "peak_dbfs": -3.37,
+      "rms_dbfs": -20.0,
+      "tail_20ms_rms_dbfs": -104.87,
+      "dc_offset": 7.33e-06,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "order": 8,
+      "file": "08_rook_fire.wav",
+      "title": "쇠뇌 발사",
+      "description": "빠른 줄 튕김과 날카로운 비행",
+      "duration_seconds": 0.37,
+      "peak_dbfs": -2.16,
+      "rms_dbfs": -22.24,
+      "tail_20ms_rms_dbfs": -108.83,
+      "dc_offset": -2.61e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    }
+  ],
+  "audition": {
+    "file": "00_audition_all_8.wav",
+    "order": "01 through 08; each sound repeated three times",
+    "duration_seconds": 23.02
+  }
+}

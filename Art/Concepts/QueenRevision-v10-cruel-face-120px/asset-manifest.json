@@ -1,0 +1,49 @@
+{
+  "asset": "queen boss",
+  "version": "v10-cruel-face-120px",
+  "status": "concept for review; not imported",
+  "generator": "built-in image_gen edit",
+  "generated_source": "/Users/gimdong-yun/.codex/generated_images/01a0ff99-6f40-7fa1-a793-093bdf079a2b/exec-802f99d0-171a-4f94-ba46-98d6ab28a4ae.png",
+  "approved_base": "Art/Concepts/QueenRevision-v9-presence-120px/queen-presence-120.png",
+  "reference": "Art/Concepts/QueenRevision-v9-presence-120px/queen-presence-120-6x.png",
+  "normalization": "Aseprite 1.3.18.6, fixed palette, nearest sampling; facial interior composited onto approved base; short mouth cluster cleanup",
+  "canvas": [
+    120,
+    120
+  ],
+  "opaque_colors": 16,
+  "alpha": "unchanged binary alpha",
+  "changed_pixels": 20,
+  "comparison": "left approved v9, right facial edit; native scale identical",
+  "target_import_settings": {
+    "ppu": 32,
+    "filter": "Point"
+  },
+  "pattern_proposal": "docs/design/queen-boss-pattern-proposal-2026-10-11.md",
+  "files": [
+    {
+      "file": "generated-edit-source.png",
+      "sha256": "b1c332e13d2dd3a58784c549e6800376f0112a37951a5a1e4c68ca6ce88c8af3"
+    },
+    {
+      "file": "generated-normalized-edit.png",
+      "sha256": "f771cea8f78d0ad8671acd5883d87056504722fe1e179d7641b3dd1b88d77588"
+    },
+    {
+      "file": "queen-cruel-face-120.png",
+      "sha256": "b86422d8aae0f4a1030cb6dc10b6a51ea87592be1ed7db55692329eb46badad5"
+    },
+    {
+      "file": "queen-cruel-face-120-6x.png",
+      "sha256": "23c8e73eaae37130c9afafba1b024d512d63ed7c410154c3c469367dc328a755"
+    },
+    {
+      "file": "queen-cruel-face-120.aseprite",
+      "sha256": "11ddc15b0786888c022e86fbcb899529c863ba95280fa3e847accf72ca617e7f"
+    },
+    {
+      "file": "queen-before-after-120-4x.png",
+      "sha256": "32aa4d21a27ca16cfac24904aceeb17dc9f53d1edb60d4e8856fb8f5fd32a2e2"
+    }
+  ]
+}

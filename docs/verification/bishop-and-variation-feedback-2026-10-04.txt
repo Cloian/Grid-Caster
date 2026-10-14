@@ -1,0 +1,47 @@
+COMBAT_FEEDBACK_PASS
+Controlled actual SampleScene fixtures; not human listening or normal stage completion.
+Unity 6000.4.0f1; 2026-10-04T14:56:47.9166530+09:00
+PASS zero damage creates no impact feedback
+PASS surviving hit recoils immediately without changing root or occupied cell
+PASS actual HP loss creates one spark
+PASS reaction returns original sprite and removes spark
+PASS camera reaction stays inside two display pixels: frame 0
+PASS camera reaction stays inside two display pixels: frame 1
+PASS camera reaction stays inside two display pixels: frame 2
+PASS camera reaction stays inside two display pixels: frame 3
+PASS camera reaction stays inside two display pixels: frame 4
+PASS camera reaction stays inside two display pixels: frame 5
+PASS camera reaction stays inside two display pixels: frame 6
+PASS camera reaction stays inside two display pixels: frame 7
+PASS camera reaction stays inside two display pixels: frame 8
+PASS camera reaction stays inside two display pixels: frame 9
+PASS camera reaction stays inside two display pixels: frame 10
+PASS camera reaction stays inside two display pixels: frame 11
+PASS camera visibly reacts then returns exactly to whole-board center
+PASS lethal damage releases occupancy immediately while an independent echo survives
+PASS death echo has no HP, actor, or collision rules
+PASS pause freezes death echo
+PASS death echo expires independently after its brief visual lifetime
+PASS legal knockback accepted
+PASS knockback updates occupancy immediately and presents movement from previous visual location
+PASS blocked knockback preserves existing collision rules
+PASS knockback presentation settles at the actual occupied cell
+PASS normal attack accepted
+PASS hit result holds before enemy turn and blocks repeated input
+PASS pause during recovery cannot advance an enemy turn
+PASS normal hit holds about 80ms, then exactly one world turn and one charge; measured ms=83.33337
+PASS far diagonal attack accepted
+PASS paused capped flight preserves damage and enemy-turn timing
+PASS far diagonal flight capped at 250ms plus frame quantization; ms=249.9999
+PASS capped flight still produces exactly one enemy turn
+PASS prepared penetrating attack accepted
+PASS both penetrating targets take damage within one shared 250ms cast cap; ms=250
+PASS penetrating segments create one world turn and do not recharge special attack
+PASS prepared double_cast attack accepted
+PASS additional cast direction confirmed without an extra world turn
+PASS double_cast finishes all casts/displacement before one enemy turn
+PASS prepared knockback attack accepted
+PASS knockback finishes all casts/displacement before one enemy turn
+PASS actual impact ducks active launch tail to 25 percent
+PASS new cast restores full launch gain
+PASS temporary hit effects clean up after combat

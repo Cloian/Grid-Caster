@@ -1,15 +1,33 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 [DisallowMultipleComponent]
 public sealed class GridManager : MonoBehaviour
 {
+    private static readonly Color DarkFloorColor = new Color(0.8f, 0.85f, 0.9f);
+    private const int GroundSortingOrder = -10;
     [Header("맵 설정")]
     [SerializeField] private Tilemap groundTilemap;
     [SerializeField, Min(1)] private int boundaryThickness = 1;
+    private readonly HashSet<Vector3Int> temporaryObstacles = new HashSet<Vector3Int>();
+
+    // 임시 성벽도 기본 이동·이동술·공격 경로가 공유하는 타일 판정에 포함한다.
+    public void SetTemporaryObstacles(IEnumerable<Vector3Int> cells)
+    {
+        temporaryObstacles.Clear();
+        if (cells != null) foreach (Vector3Int cell in cells) temporaryObstacles.Add(cell);
+    }
+    public bool HasTemporaryObstacle(Vector3Int cell) => temporaryObstacles.Contains(cell);
 
     public Tilemap GroundTilemap => groundTilemap;
     public bool IsReady => groundTilemap != null;
+
+    private void Start()
+    {
+        // Tile 에셋의 색/잠금이 씬 로드 중 복구되므로 첫 렌더 전에 다시 적용한다.
+        if (groundTilemap != null) ApplyCheckerboard();
+    }
 
     public void Initialize(Tilemap targetTilemap, int outerBoundaryThickness)
     {
@@ -20,6 +38,25 @@ public sealed class GridManager : MonoBehaviour
         {
             // 삭제된 타일 때문에 남은 빈 Bounds가 벽 안쪽 계산에 포함되지 않게 한다.
             groundTilemap.CompressBounds();
+            ApplyCheckerboard();
+        }
+    }
+
+    private void ApplyCheckerboard()
+    {
+        // 셀별 색을 표시하도록 렌더링하며 원본 에셋/외벽/셀 Transform은 보존한다.
+        TilemapRenderer renderer = groundTilemap.GetComponent<TilemapRenderer>();
+        if (renderer != null)
+        {
+            renderer.mode = TilemapRenderer.Mode.Individual;
+            // 캐릭터 그림자(캐릭터 순서 - 1)가 항상 바닥 위에 그려지도록 바닥을 충분히 아래로 둔다.
+            renderer.sortingOrder = Mathf.Min(renderer.sortingOrder, GroundSortingOrder);
+        }
+        foreach (Vector3Int cell in groundTilemap.cellBounds.allPositionsWithin)
+        {
+            if (!IsWalkableCell(cell)) continue;
+            groundTilemap.RemoveTileFlags(cell, TileFlags.LockColor);
+            groundTilemap.SetColor(cell, (cell.x + cell.y) % 2 == 0 ? Color.white : DarkFloorColor);
         }
     }
 
@@ -35,7 +72,8 @@ public sealed class GridManager : MonoBehaviour
 
     public bool IsWalkableCell(Vector3Int cellPosition)
     {
-        if (groundTilemap == null || !groundTilemap.HasTile(cellPosition))
+        if (groundTilemap == null || !groundTilemap.HasTile(cellPosition)
+            || temporaryObstacles.Contains(cellPosition))
             return false;
 
         BoundsInt bounds = groundTilemap.cellBounds;

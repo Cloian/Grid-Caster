@@ -1,0 +1,66 @@
+{
+  "unity": "6000.4.0f1",
+  "runtime_modified": false,
+  "entries": [
+    {
+      "path": "Assets/Codes/Move.cs",
+      "sha256": "0603b38f538b1fff236b08561f06324e4babb374268569dd34fea95fa8ef6730",
+      "matches_isolated_copy": true
+    },
+    {
+      "path": "Assets/Codes/MonsterMovement.cs",
+      "sha256": "e9b9aa852357958d0f82185e5c2c2c1bbe978cefcb45f4b0573bb81a5db38030",
+      "matches_isolated_copy": true
+    },
+    {
+      "path": "Assets/Codes/MonsterSpawner.cs",
+      "sha256": "9ce2086a70768c7cde3d077fdd31961607958a3059ebfd0239e03abf97837a4e",
+      "matches_isolated_copy": true
+    },
+    {
+      "path": "Assets/Codes/TurnProjectile.cs",
+      "sha256": "11d98340a5fd1a1c4bb2a766f8477413f5f297f0f379eb8296ad0cdad9b9fc2e",
+      "matches_isolated_copy": true
+    },
+    {
+      "path": "Assets/Codes/ProjectileManager.cs",
+      "sha256": "21c851bb8c94d312bca1a6e160d35a9ca6b7657e593994468568e538648c346e",
+      "matches_isolated_copy": true
+    },
+    {
+      "path": "Assets/Codes/DamageFlash.cs",
+      "sha256": "9b9277d992f74a130d0a59771fa133b690207c69177aa7164d9c714ad9ae933f",
+      "matches_isolated_copy": true
+    },
+    {
+      "path": "Assets/Codes/CharacterHealth.cs",
+      "sha256": "68163f6a61c8ef63eadd26723a529386fecc94a0ada7e591c08e8e2bb305d075",
+      "matches_isolated_copy": true
+    },
+    {
+      "path": "Assets/Codes/GameAudio.cs",
+      "sha256": "2539ed7d72dabbfe2abf04624707a1046a84129d4a69515d952ba5c38ae6b5d0",
+      "matches_isolated_copy": true
+    },
+    {
+      "path": "Assets/Codes/RunProgressionSystem.cs",
+      "sha256": "99a3feb26810963534f0afc3b361d398d8aa4fa8f3cbd15e12ad46cc5c838872",
+      "matches_isolated_copy": true
+    },
+    {
+      "path": "Assets/Scenes/SampleScene.unity",
+      "sha256": "516c9b73ab72d3ee9c49681c4ef0d2d0bde7f11dddc846da1274266a437edec7",
+      "matches_isolated_copy": true
+    },
+    {
+      "path": "Packages/manifest.json",
+      "sha256": "1af939a850e4520c936ae5fcc976b83cc9d0869bd8981163fe63b5f3c53c3618",
+      "matches_isolated_copy": true
+    },
+    {
+      "path": "ProjectSettings/ProjectVersion.txt",
+      "sha256": "8468d7add4c1613c42224053cb9c889688ccf141875f44065a40e6d133bc3ea7",
+      "matches_isolated_copy": true
+    }
+  ]
+}

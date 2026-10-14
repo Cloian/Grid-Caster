@@ -1,0 +1,32 @@
+{
+  "ok": true,
+  "assets": [
+    {
+      "path": "/Users/gimdong-yun/GitHub/Grid-Caster/Art/Concepts/QueenRevision-v9-presence-120px/queen-presence-120.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 120,
+      "height": 120,
+      "bytes": 3625,
+      "color_count": 17,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 9290,
+      "content_bounds": [
+        17,
+        4,
+        103,
+        116
+      ],
+      "problems": []
+    }
+  ],
+  "alpha_values": [
+    0,
+    255
+  ],
+  "binary_alpha": true,
+  "visual_review": "v9 native sprite, 6x nearest-neighbor preview and normalized queen comparison inspected",
+  "in_engine_validation": false
+}

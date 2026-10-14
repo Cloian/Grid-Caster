@@ -1,0 +1,69 @@
+KNOCKBACK_COLLISION_FAIL
+Controlled actual SampleScene fixtures; gameplay-rule validation, not human fun assessment.
+Unity 6000.4.0f1; 2026-10-05T22:09:05.0597150+09:00
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS wall collision damages direct survivor in direction (1, 0, 0)
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS wall collision damages direct survivor in direction (0, 1, 0)
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS wall collision damages direct survivor in direction (-1, 0, 0)
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS wall collision damages direct survivor in direction (0, -1, 0)
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS wall collision damages direct survivor in direction (1, 1, 0)
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS wall collision damages direct survivor in direction (-1, 1, 0)
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS wall collision damages direct survivor in direction (-1, -1, 0)
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS wall collision damages direct survivor in direction (1, -1, 0)
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS enemy collision damages both participants only
+PASS blocked enemies never overlap or retry movement
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears knockback preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS collision never adds charge or recharges a special attack
+PASS base knockback does not spread
+System.InvalidOperationException: spread preview shows hit-centered eight cells
+  at KnockbackCollisionValidation.Check (System.Boolean result, System.String description) [0x0001f] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/KnockbackCollisionValidation.cs:114 
+  at KnockbackCollisionValidation+<Run>d__34.MoveNext () [0x0060b] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/KnockbackCollisionValidation.cs:249 
+  at KnockbackCollisionValidation+<Flatten>d__26.MoveNext () [0x0009e] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/KnockbackCollisionValidation.cs:135 
+  at KnockbackCollisionValidation.Tick () [0x00048] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/KnockbackCollisionValidation.cs:75 

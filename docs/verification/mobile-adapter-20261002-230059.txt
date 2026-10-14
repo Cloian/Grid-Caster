@@ -1,0 +1,35 @@
+MOBILE_ADAPTER_PASS
+Controlled Editor fixtures + mathematical portrait layout checks. Not physical iPhone evidence.
+PASS mobile adapter automatically attached without scene edits
+PASS square full-board + separate 44pt controls/header at (375, 667)
+PASS square full-board + separate 44pt controls/header at (390, 660)
+PASS square full-board + separate 44pt controls/header at (390, 844)
+PASS square full-board + separate 44pt controls/header at (430, 932)
+PASS PC HUD hidden only in mobile mode
+PASS idle bottom has exactly three action buttons and no permanent confirm/cancel row
+INFO can=True mode=Attack modal=False pause=False point=(865.50, 402.17) viewport=(x:0.00, y:0.00, width:1731.00, height:1337.00)
+PASS far board tap previews nearest 8-direction; no damage/turn
+PASS cancel consumes neither turn nor charge
+PASS build drawer blocks board input
+PASS existing build list lives in masked scrolling drawer
+PASS close restores input on a later frame
+PASS preview confirm deals one hit, charges once, advances exactly one enemy turn
+PASS repeat confirm without draft does not duplicate action
+PASS move tap is preview only
+PASS selected landing cell displays player ghost without moving the entity
+PASS selected movement button becomes explicit execute button
+PASS move confirm = one tile + one enemy turn
+PASS movement commit clears visual ghost
+PASS prepared special previews with combined action/execute UI
+PASS reaim keeps attack execute available after special charge is consumed
+PASS reaim blocks movement and cancellation
+PASS reaim can preview a second direction
+PASS combined button finishes echo with one enemy turn, no move or recharge
+PASS background pause requires explicit resume
+PASS resume retains encounter
+PASS mobile clear uses shared result state, not death state
+PASS background pause cannot reopen a cleared run
+PASS raycast: ReviewBoard
+PASS mobile result review hides only overlay
+PASS raycast: Menu
+PASS mobile menu restores clear result instead of a resumable pause menu

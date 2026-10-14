@@ -9,16 +9,24 @@ public class CameraController : MonoBehaviour
 
     [Header("카메라 설정")]
     [SerializeField] private float cameraZ = -10f;
-    [SerializeField, Min(0f)] private float mapPadding = 0.5f;
+    // 기존 씬 직렬화 보존용. 화면 여백은 PcBoardLayout / 모바일 어댑터가 결정한다.
+    [SerializeField, Min(0f), HideInInspector] private float mapPadding = 0.5f;
+
+    [Header("명중 카메라 반응")]
+    [SerializeField, Range(0f, 4f)] private float impactShakePixels = 2f;
+    [SerializeField, Min(0.01f)] private float impactShakeSeconds = 0.07f;
+    private static CameraController instance;
+    private float shakeRemaining;
+    private Vector3 shakeDirection = Vector3.right;
 
     private Camera targetCamera;
     private Vector3 mapCenter;
     private Vector2Int lastScreenSize;
-    private float sideHudReferenceWidth;
-    private float verticalHudReferenceHeight;
+    private Rect lastSafeArea;
 
     private void Awake()
     {
+        instance = this;
         FindReferences();
 
         if (targetCamera == null)
@@ -44,7 +52,38 @@ public class CameraController : MonoBehaviour
     {
         RefreshViewportIfScreenSizeChanged();
         KeepMapCentered();
+        ApplyImpactShake();
     }
+
+    public static void PlayImpactShake(Vector3 direction)
+    {
+        if (instance == null || !instance.isActiveAndEnabled) return;
+        // 동시 명중은 강도를 더하지 않고 짧은 반응을 갱신한다. 게임 RNG는 사용하지 않는다.
+        instance.shakeRemaining = instance.impactShakeSeconds;
+        instance.shakeDirection = direction == Vector3.zero ? Vector3.right : direction.normalized;
+    }
+
+    private void ApplyImpactShake()
+    {
+        if (shakeRemaining <= 0f || targetCamera == null) return;
+        shakeRemaining = Mathf.Max(0f, shakeRemaining - Time.deltaTime);
+        float elapsed = impactShakeSeconds - shakeRemaining;
+        float strength = impactShakePixels * shakeRemaining / impactShakeSeconds;
+        Vector3 perpendicular = new Vector3(-shakeDirection.y, shakeDirection.x, 0f);
+        Vector3 pixels = Vector3.ClampMagnitude(shakeDirection * Mathf.Cos(elapsed * 110f)
+            + perpendicular * (0.45f * Mathf.Sin(elapsed * 90f)), 1f) * strength;
+        // 화면 픽셀 단위로 옮겨 샘플링 경계와 공통 PC 보드/HUD 배율을 유지한다.
+        float unitsPerPixel = targetCamera.orthographicSize * 2f / Mathf.Max(1f, targetCamera.pixelHeight);
+        targetCamera.transform.position += new Vector3(Mathf.Round(pixels.x), Mathf.Round(pixels.y), 0f) * unitsPerPixel;
+    }
+
+    private void OnDisable()
+    {
+        shakeRemaining = 0f;
+        KeepMapCentered();
+    }
+
+    private void OnDestroy() { if (instance == this) instance = null; }
 
     private void FindReferences()
     {
@@ -89,7 +128,7 @@ public class CameraController : MonoBehaviour
     {
         Vector2Int currentScreenSize = new Vector2Int(Screen.width, Screen.height);
 
-        if (currentScreenSize == lastScreenSize)
+        if (currentScreenSize == lastScreenSize && Screen.safeArea == lastSafeArea)
         {
             return;
         }
@@ -106,8 +145,13 @@ public class CameraController : MonoBehaviour
         }
 
         // 바둑판처럼 맵 전체를 화면 중앙에 보여 주기 위해 카메라가 전체 화면을 사용한다.
-        targetCamera.rect = new Rect(0f, 0f, 1f, 1f);
+        Rect board = MobilePlaytestController.IsActive
+            ? MobilePlaytestController.BoardPixelRect(Screen.width, Screen.height, Screen.safeArea)
+            : new Rect(0f, 0f, Screen.width, Screen.height);
+        targetCamera.rect = new Rect(board.x / Screen.width, board.y / Screen.height,
+            board.width / Screen.width, board.height / Screen.height);
         lastScreenSize = new Vector2Int(Screen.width, Screen.height);
+        lastSafeArea = Screen.safeArea;
     }
 
     private void CenterAndFitWholeMap()
@@ -124,43 +168,21 @@ public class CameraController : MonoBehaviour
         Vector3 worldMax = groundTilemap.CellToWorld(bounds.max);
         float mapWidth = Mathf.Abs(worldMax.x - worldMin.x);
         float mapHeight = Mathf.Abs(worldMax.y - worldMin.y);
-        float cameraAspect = targetCamera.pixelHeight > 0
-            ? (float)targetCamera.pixelWidth / targetCamera.pixelHeight
-            : targetCamera.aspect;
-
         mapCenter = (worldMin + worldMax) * 0.5f;
-        // 상하단 전투 HUD와 좌우 빌드 HUD가 사용하는 영역을 제외한 중앙 공간에 보드를 맞춘다.
-        float referenceScale = targetCamera.pixelHeight / 1080f;
-        float verticalHudPixels = verticalHudReferenceHeight * referenceScale;
-        float usableHeightRatio = targetCamera.pixelHeight > 0
-            ? Mathf.Clamp01((targetCamera.pixelHeight - verticalHudPixels * 2f)
-                / targetCamera.pixelHeight)
-            : 1f;
-        float verticalSize = (mapHeight * 0.5f + mapPadding)
-            / Mathf.Max(0.01f, usableHeightRatio);
-        float sideHudPixels = sideHudReferenceWidth * referenceScale;
-        float usableWidthRatio = targetCamera.pixelWidth > 0
-            ? Mathf.Clamp01((targetCamera.pixelWidth - sideHudPixels * 2f)
-                / targetCamera.pixelWidth)
-            : 1f;
-        float horizontalSize = (mapWidth * 0.5f + mapPadding)
-            / Mathf.Max(0.01f, cameraAspect * usableWidthRatio);
-        float wholeMapSize = Mathf.Max(verticalSize, horizontalSize);
-
-        targetCamera.orthographicSize = wholeMapSize;
+        if (MobilePlaytestController.IsActive)
+        {
+            float aspect = targetCamera.pixelWidth / Mathf.Max(1f, targetCamera.pixelHeight);
+            targetCamera.orthographicSize = Mathf.Max(mapHeight * 0.5f + 0.03f,
+                (mapWidth * 0.5f + 0.03f) / Mathf.Max(0.01f, aspect));
+        }
+        else
+        {
+            // 외벽을 포함한 전체 맵을 공통 PC 구성의 보드 영역에 맞춘다. UI별 예약 계산은 하지 않는다.
+            float boardPixels = PcBoardLayout.BoardPixelRect(targetCamera.pixelWidth, targetCamera.pixelHeight).height;
+            targetCamera.orthographicSize = Mathf.Max(mapWidth, mapHeight) * 0.5f
+                * targetCamera.pixelHeight / Mathf.Max(1f, boardPixels);
+        }
         KeepMapCentered();
-    }
-
-    public void SetSideHudReservation(float referenceWidth)
-    {
-        sideHudReferenceWidth = Mathf.Max(0f, referenceWidth);
-        CenterAndFitWholeMap();
-    }
-
-    public void SetVerticalHudReservation(float referenceHeight)
-    {
-        verticalHudReferenceHeight = Mathf.Max(0f, referenceHeight);
-        CenterAndFitWholeMap();
     }
 
     private void KeepMapCentered()
@@ -170,7 +192,17 @@ public class CameraController : MonoBehaviour
             return;
         }
 
-        targetCamera.transform.position = new Vector3(mapCenter.x, mapCenter.y, cameraZ);
+        if (MobilePlaytestController.IsActive)
+        {
+            targetCamera.transform.position = new Vector3(mapCenter.x, mapCenter.y, cameraZ);
+            return;
+        }
+        // 맵 중심을 PC 보드 영역 중심(정수 픽셀)에 놓는다. 그래야 타일 경계가 화면 픽셀과 맞는다.
+        Rect board = PcBoardLayout.BoardPixelRect(targetCamera.pixelWidth, targetCamera.pixelHeight);
+        float unitsPerPixel = targetCamera.orthographicSize * 2f / Mathf.Max(1f, targetCamera.pixelHeight);
+        Vector2 offset = (board.center - new Vector2(targetCamera.pixelWidth, targetCamera.pixelHeight) * 0.5f)
+            * unitsPerPixel;
+        targetCamera.transform.position = new Vector3(mapCenter.x - offset.x, mapCenter.y - offset.y, cameraZ);
     }
 
     private void OnValidate()

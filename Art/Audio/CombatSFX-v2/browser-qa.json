@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "decoded_candidates": 64,
+  "categories": 8,
+  "cards_per_category": 8,
+  "individual_playback": true,
+  "stop": true,
+  "selection_persistence": true,
+  "browser_errors": []
+}

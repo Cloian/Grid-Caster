@@ -1,0 +1,33 @@
+PC_BOARD_LAYOUT_PASS
+Actual Editor geometry/raycast + separately labelled layout calculations. Not human play evidence.
+PASS runtime pipeline detected as URP; render settings unchanged
+PASS desktop Web is not inherently mobile
+PASS phone/native/forced adapter retained
+PASS calculation: fixed composition + separate header/actions/side panels at (1024, 768)
+PASS calculation: fixed composition + separate header/actions/side panels at (1280, 720)
+PASS calculation: fixed composition + separate header/actions/side panels at (1920, 1080)
+PASS calculation: fixed composition + separate header/actions/side panels at (2560, 1080)
+PASS calculation: fixed composition + separate header/actions/side panels at (3840, 2160)
+PASS calculation: fixed composition + separate header/actions/side panels at (800, 1200)
+PASS calculation: fixed composition + separate header/actions/side panels at (960, 540)
+PASS native PC does not attach mobile adapter
+PASS 13x13 internal board plus outer walls preserved
+PASS actual GraphicRaycaster reaches UpgradeChoice_1
+PASS actual runtime viewport dimensions ((1731, 1337)); Editor callback Screen=1732x1384
+PASS actual full board matches common PC geometry
+PASS actual HUD outside board and inside screen: BuildHudPanel
+PASS actual HUD outside board and inside screen: RelicHudPanel
+PASS actual HUD outside board and inside screen: WaveHud
+PASS actual HUD outside board and inside screen: TimeHud
+PASS actual HUD outside board and inside screen: HealthHud
+PASS actual HUD outside board and inside screen: UltimateFrame
+PASS actual HUD outside board and inside screen: TraitHud
+PASS actual HUD outside board and inside screen: AttackActionFrame
+PASS actual HUD outside board and inside screen: MoveActionFrame
+PASS actual HUD outside board and inside screen: ActionModeHud
+PASS actual side panel keeps fixed wall gap
+PASS actual GraphicRaycaster reaches AttackActionFrame
+PASS attack UI opens eight directions
+PASS actual GraphicRaycaster reaches MoveActionFrame
+PASS movement UI remains usable
+PASS existing input UI infrastructure retained

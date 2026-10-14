@@ -1,0 +1,40 @@
+{
+  "ok": true,
+  "assets": [
+    {
+      "path": "/Users/gimdong-yun/GitHub/Grid-Caster/Art/Concepts/QueenRevision-v10-cruel-face-120px/queen-cruel-face-120.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 120,
+      "height": 120,
+      "bytes": 3646,
+      "color_count": 17,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 9290,
+      "content_bounds": [
+        17,
+        4,
+        103,
+        116
+      ],
+      "problems": []
+    }
+  ],
+  "binary_alpha": true,
+  "approved_base_preservation": {
+    "changed_pixels": 20,
+    "changed_bounds": [
+      53,
+      35,
+      69,
+      44
+    ],
+    "outside_facial_interior_changes": 0,
+    "alpha_changes": 0,
+    "crown_hair_body_costume_pose": "pixel-identical to v9 outside face mask"
+  },
+  "visual_review": "Native face pixel layout, 6x preview and before/after comparison inspected. Short mouth cluster restored in Aseprite after nearest sampling.",
+  "in_engine_validation": false
+}

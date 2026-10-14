@@ -1,0 +1,38 @@
+STAGE_END_PASS
+Controlled final-state fixtures + actual scene reload. NOT normal combat clears or human play.
+Executed 2026-10-02T22:48:00.0424190+09:00; Unity 6000.4.0f1
+PASS fresh scene resets build, charge, movement art, relics, wave and grave; trait=0
+PASS initial trait/upgrade still playable; trait=0
+PASS final clear occurs once and locks living player; trait=0
+PASS pause/resume cannot reopen combat after stage clear; trait=0
+PASS existing result panel clearly reports final-wave clear without a death claim
+PASS clear review hides only result UI
+PASS clear review freezes timer/board and never starts wave 21
+PASS review returns to result panel without resuming
+PASS fresh scene resets build, charge, movement art, relics, wave and grave; trait=1
+PASS initial trait/upgrade still playable; trait=1
+PASS final clear occurs once and locks living player; trait=1
+PASS pause/resume cannot reopen combat after stage clear; trait=1
+PASS existing result panel clearly reports final-wave clear without a death claim
+PASS clear review hides only result UI
+PASS clear review freezes timer/board and never starts wave 21
+PASS review returns to result panel without resuming
+PASS fresh scene resets build, charge, movement art, relics, wave and grave; trait=2
+PASS initial trait/upgrade still playable; trait=2
+PASS final clear occurs once and locks living player; trait=2
+PASS pause/resume cannot reopen combat after stage clear; trait=2
+PASS existing result panel clearly reports final-wave clear without a death claim
+PASS clear review hides only result UI
+PASS clear review freezes timer/board and never starts wave 21
+PASS review returns to result panel without resuming
+PASS fresh scene resets build, charge, movement art, relics, wave and grave; trait=3
+PASS initial trait/upgrade still playable; trait=3
+PASS final clear occurs once and locks living player; trait=3
+PASS pause/resume cannot reopen combat after stage clear; trait=3
+PASS existing result panel clearly reports final-wave clear without a death claim
+PASS clear review hides only result UI
+PASS clear review freezes timer/board and never starts wave 21
+PASS review returns to result panel without resuming
+PASS death result and grave remain distinct from clear result
+PASS death review never unlocks input
+PASS death replay starts clean trait selection with restored health/time

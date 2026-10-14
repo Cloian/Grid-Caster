@@ -21,6 +21,10 @@ public static class GameHudSetupTool
     private const string BasicAttackIconPath = "Assets/UI/Icons/Actions/BasicAttack.png";
     private const string MoveIconPath = "Assets/UI/Icons/Actions/Move.png";
     private const string TeleportIconPath = "Assets/UI/Icons/Traits/Teleport.png";
+    private const string KnightMovementIconPath = "Assets/UI/Icons/Movement/KnightMove.png";
+    private const string BishopMovementIconPath = "Assets/UI/Icons/Movement/BishopMove.png";
+    private const string RookMovementIconPath = "Assets/UI/Icons/Movement/RookMove.png";
+    private const string ProgressionIconFolder = "Assets/Resources/UI/ProgressionIcons/";
     private const string DoubleCastIconPath = "Assets/UI/Icons/Traits/DoubleCast.png";
     private const string PierceIconPath = "Assets/UI/Icons/Traits/Pierce.png";
     private const string DamageBoostIconPath = "Assets/UI/Icons/Traits/DamageBoost.png";
@@ -39,7 +43,7 @@ public static class GameHudSetupTool
     private static Font uiFont;
     private static Sprite uiSprite;
 
-    [MenuItem("Tools/UI/특성 및 필살기 HUD 만들기")]
+    [MenuItem("Tools/UI/특성 및 이동술 HUD 만들기")]
     public static void BuildGameHud()
     {
         Scene scene = SceneManager.GetSceneByPath(ScenePath);
@@ -527,7 +531,7 @@ public static class GameHudSetupTool
         CreateCenteredText(
             "UltimateShortcutKey",
             shortcutBadge.transform,
-            "F",
+            "S+",
             14,
             new Color32(12, 18, 34, 255)
         );
@@ -548,11 +552,12 @@ public static class GameHudSetupTool
         gaugeFill.fillMethod = Image.FillMethod.Horizontal;
         gaugeFill.fillOrigin = 0;
         gaugeFill.fillAmount = 0f;
+        gaugeBackground.gameObject.SetActive(false);
 
         gaugeValue = CreateText(
             "GaugeValue",
             iconBackground.transform,
-            "0%",
+            "미보유",
             11,
             FontStyle.Bold,
             TextAnchor.LowerRight,
@@ -899,7 +904,7 @@ public static class GameHudSetupTool
             new Vector2(0.5f, 0.5f),
             new Vector2(0.5f, 0.5f),
             Vector2.zero,
-            new Vector2(804f, 760f),
+            new Vector2(804f, 832f),
             PanelColor
         );
         AddOutline(panel, BorderColor, 3f);
@@ -953,15 +958,15 @@ public static class GameHudSetupTool
         names = new Text[4];
         descriptions = new Text[4];
 
-        string[] defaultNames = { "더블 캐스트", "관통", "데미지 강화", "넉백" };
+        string[] defaultNames = { "더블 캐스트", "관통", "범위 공격", "넉백" };
         string[] defaultDescriptions =
         {
             "20% · 기본 공격을\n한 번 더 연속 시전",
             "33% · 첫 대상을 넘어\n다음 대상 1명까지 관통",
-            "25% · 이번 기본공격의\n피해량을 1 증가",
-            "25% · 살아남은 적을\n한 타일 밀어냄"
+            "적중 주변 8칸 공격\n직격 피해 +1",
+            "생존한 적 1칸 밀기\n벽·적 충돌 피해 1"
         };
-        string[] defaultPlaceholders = { "×2", "P", "DMG", "KB" };
+        string[] defaultPlaceholders = { "×2", "P", "AOE", "KB" };
 
         for (int i = 0; i < 4; i++)
         {
@@ -985,16 +990,16 @@ public static class GameHudSetupTool
         CreateText(
             "SelectionFooter",
             panel.transform,
-            "카드를 클릭하거나 숫자 키  1 · 2 · 3 · 4  로 선택",
-            14,
-            FontStyle.Bold,
+            GameHudController.StartupControlsText,
+            18,
+            FontStyle.Normal,
             TextAnchor.MiddleCenter,
             new Color32(194, 211, 235, 255),
             new Vector2(0.5f, 0f),
             new Vector2(0.5f, 0f),
             new Vector2(0.5f, 0f),
-            new Vector2(0f, 20f),
-            new Vector2(650f, 28f)
+            new Vector2(0f, 18f),
+            new Vector2(744f, 104f)
         );
     }
 
@@ -1410,6 +1415,9 @@ public static class GameHudSetupTool
         Sprite basicAttackSprite = LoadIcon(BasicAttackIconPath);
         Sprite moveSprite = LoadIcon(MoveIconPath);
         Sprite ultimateSprite = LoadIcon(TeleportIconPath);
+        Sprite knightMovementSprite = LoadIcon(KnightMovementIconPath);
+        Sprite bishopMovementSprite = LoadIcon(BishopMovementIconPath);
+        Sprite rookMovementSprite = LoadIcon(RookMovementIconPath);
         Sprite[] traitSprites =
         {
             LoadIcon(DoubleCastIconPath),
@@ -1430,6 +1438,9 @@ public static class GameHudSetupTool
         serializedController.FindProperty("basicAttackIcon").objectReferenceValue = basicAttackSprite;
         serializedController.FindProperty("moveIcon").objectReferenceValue = moveSprite;
         serializedController.FindProperty("ultimateIcon").objectReferenceValue = ultimateSprite;
+        serializedController.FindProperty("knightMovementIcon").objectReferenceValue = knightMovementSprite;
+        serializedController.FindProperty("bishopMovementIcon").objectReferenceValue = bishopMovementSprite;
+        serializedController.FindProperty("rookMovementIcon").objectReferenceValue = rookMovementSprite;
         serializedController.FindProperty("layoutVersion").intValue = CurrentLayoutVersion;
         serializedController.FindProperty("typographyVersion").intValue = CurrentTypographyVersion;
         serializedController.FindProperty("selectionOverlay").objectReferenceValue = selectionOverlay;
@@ -1476,8 +1487,8 @@ public static class GameHudSetupTool
         traits.arraySize = 4;
         SetTrait(traits.GetArrayElementAtIndex(0), "double_cast", "더블 캐스트", "20% · 기본 공격을\n한 번 더 연속 시전", "×2", traitSprites[0], 5);
         SetTrait(traits.GetArrayElementAtIndex(1), "pierce", "관통", "33% · 첫 대상을 넘어\n다음 대상 1명까지 관통", "P", traitSprites[1], 3);
-        SetTrait(traits.GetArrayElementAtIndex(2), "damage_boost", "데미지 강화", "25% · 이번 기본공격의\n피해량을 1 증가", "DMG", traitSprites[2], 4);
-        SetTrait(traits.GetArrayElementAtIndex(3), "knockback", "넉백", "25% · 살아남은 적을\n한 타일 밀어냄", "KB", traitSprites[3], 4);
+        SetTrait(traits.GetArrayElementAtIndex(2), "damage_boost", "범위 공격", "적중 주변 기본 8칸 피해 1 · 직격 피해 +1", "AOE", traitSprites[2], 4);
+        SetTrait(traits.GetArrayElementAtIndex(3), "knockback", "넉백", "생존한 적 1칸 밀기\n벽·적 충돌 피해 1", "KB", traitSprites[3], 4);
         serializedController.ApplyModifiedPropertiesWithoutUndo();
 
         AssignPreviewIcon(attackIcon, attackPlaceholder, basicAttackSprite);
@@ -1590,6 +1601,15 @@ public static class GameHudSetupTool
             BasicAttackIconPath,
             MoveIconPath,
             TeleportIconPath,
+            KnightMovementIconPath,
+            BishopMovementIconPath,
+            RookMovementIconPath,
+            ProgressionIconFolder + "KnightMove.png",
+            ProgressionIconFolder + "BishopMove.png",
+            ProgressionIconFolder + "RookMove.png",
+            ProgressionIconFolder + "ChainBurst.png",
+            ProgressionIconFolder + "BindingLanding.png",
+            ProgressionIconFolder + "EchoPressure.png",
             DoubleCastIconPath,
             PierceIconPath,
             DamageBoostIconPath,
@@ -1626,10 +1646,19 @@ public static class GameHudSetupTool
             importer.SaveAndReimport();
         }
 
-        AssetDatabase.ImportAsset(AsepriteSourcePath, ImportAssetOptions.ForceSynchronousImport);
-
-        if (AssetImporter.GetAtPath(AsepriteSourcePath) is AsepriteImporter asepriteImporter)
+        // PNG와 함께 보관하는 정적 아이콘 원본도 동일한 픽셀 기준을 유지한다.
+        string[] asepritePaths =
         {
+            AsepriteSourcePath,
+            "Assets/UI/Icons/Movement/KnightMove.aseprite",
+            "Assets/UI/Icons/Movement/BishopMove.aseprite",
+            "Assets/UI/Icons/Movement/RookMove.aseprite"
+        };
+        foreach (string path in asepritePaths)
+        {
+            AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceSynchronousImport);
+            if (AssetImporter.GetAtPath(path) is not AsepriteImporter asepriteImporter)
+                throw new InvalidOperationException($"UI 아이콘 원본을 불러올 수 없습니다: {path}");
             bool changed = !Mathf.Approximately(asepriteImporter.spritePixelsPerUnit, 32f)
                 || asepriteImporter.filterMode != FilterMode.Point
                 || asepriteImporter.mipmapEnabled
@@ -2028,11 +2057,8 @@ public static class GameHudSetupTool
         {
             if (text.text == "20% · 기본 공격을 한 번 더\n연속으로 시전")
                 text.text = "20% · 기본 공격을\n한 번 더 연속 시전";
-            // 제목 아래에서 시작하도록 위쪽 피벗을 사용한다. 기존 중앙 피벗은 제목과 겹쳤다.
-            text.rectTransform.pivot = new Vector2(0f, 1f);
-            text.rectTransform.anchoredPosition = new Vector2(138f, 8f);
-            text.rectTransform.sizeDelta = new Vector2(186f, 110f);
-            text.fontSize = 18;
+            // 카드 안 배치·크기는 런타임(GameHudController.PolishTraitCards, 모바일 어댑터)이 맡는다.
+            // Play 진입 때마다 여기서 위치를 덮어쓰면 PC 카드 배치가 되돌아갔다.
             text.lineSpacing = 1.15f;
         }
     }

@@ -1,0 +1,10 @@
+{
+  "kind": "in-conversation graybox model",
+  "source_path": "/Users/gimdong-yun/.codex/visualizations/2026/10/03/01a0ff99-6f40-7fa1-a793-093bdf079a2b/queen-checkmate-graybox.html",
+  "sha256": "db90130bae3e0d94e4d09b9b783766315ffbe415e171b1b7f670215695bdf580",
+  "bytes": 22985,
+  "runtime": "vanilla browser JavaScript; visualize sandbox",
+  "implementation_scope": "isolated comparison model, not Unity integration",
+  "verification": "queen-graybox-2026-10-12.json",
+  "engine_settings_reference": "Unity 6000.4.0f1, URP/Input System observed in project; unchanged"
+}

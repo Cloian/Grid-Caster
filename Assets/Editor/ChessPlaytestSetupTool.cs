@@ -80,7 +80,7 @@ public static class ChessPlaytestSetupTool
             camera.orthographic = true;
             camera.orthographicSize = 6.5f;
             camera.rect = new Rect(0, 0, 0.72f, 1);
-            camera.backgroundColor = new Color(0.055f, 0.065f, 0.09f);
+            camera.backgroundColor = new Color(30f / 255f, 22f / 255f, 34f / 255f);
 
             GameObject playerObject = UnityEngine.Object.Instantiate(sourcePlayer.gameObject);
             SceneManager.MoveGameObjectToScene(playerObject, created);

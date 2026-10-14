@@ -1,0 +1,19 @@
+PC_BOARD_LAYOUT_FAIL
+Actual Editor geometry/raycast + separately labelled layout calculations. Not human play evidence.
+PASS runtime pipeline detected as URP; render settings unchanged
+PASS desktop Web is not inherently mobile
+PASS phone/native/forced adapter retained
+PASS calculation: fixed composition + separate header/actions/side panels at (1024, 768)
+PASS calculation: fixed composition + separate header/actions/side panels at (1280, 720)
+PASS calculation: fixed composition + separate header/actions/side panels at (1920, 1080)
+PASS calculation: fixed composition + separate header/actions/side panels at (2560, 1080)
+PASS calculation: fixed composition + separate header/actions/side panels at (3840, 2160)
+PASS calculation: fixed composition + separate header/actions/side panels at (800, 1200)
+PASS calculation: fixed composition + separate header/actions/side panels at (960, 540)
+PASS native PC does not attach mobile adapter
+PASS 13x13 internal board plus outer walls preserved
+PASS actual GraphicRaycaster reaches UpgradeChoice_1
+System.InvalidOperationException: actual full board matches common PC geometry
+  at PcBoardLayoutValidation.Check (System.Boolean ok, System.String description) [0x0001f] in /Users/gimdong-yun/GitHub/Grid-Caster/Assets/Editor/PcBoardLayoutValidation.cs:95 
+  at PcBoardLayoutValidation+<Run>d__16.MoveNext () [0x003e1] in /Users/gimdong-yun/GitHub/Grid-Caster/Assets/Editor/PcBoardLayoutValidation.cs:153 
+  at PcBoardLayoutValidation.Tick () [0x0003b] in /Users/gimdong-yun/GitHub/Grid-Caster/Assets/Editor/PcBoardLayoutValidation.cs:71 

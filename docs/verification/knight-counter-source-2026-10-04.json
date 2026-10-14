@@ -1,0 +1,28 @@
+{
+  "unity": "6000.4.0f1",
+  "scope": "Explicit related files, not a full repository hash. Existing regressions preceded tooltip line shortening; gameplay files stayed identical and final counter validation verified the tooltip.",
+  "sharedGameplayAndFeedbackFiles": {
+    "Assets/Codes/Move.cs": "a74766b474bb551a67cd888f242ee2dadcba69494718de32a2a4d84e04d59d48",
+    "Assets/Codes/ChessMonsterBehaviour.cs": "297278bf923343fd112a296bfef32de762ab3c30522d53e8b180336cbcfa6d50",
+    "Assets/Codes/MonsterSpawner.cs": "c99a6fec138093e0a9faf866815fb88c0116db1d29c2462a6e3e40b9fd0f99a9",
+    "Assets/Codes/MonsterMovement.cs": "69e1a45aac8b36c76b395343deb56d17c18c2fdeec250e687504138b928f7d0b",
+    "Assets/Codes/ChessWaveDisplay.cs": "86cdba5666a6f48f32a183eb5f6a9f6e86f6e3c071f2105d6184149d1be33a24",
+    "Assets/Codes/CharacterHealth.cs": "0f2e37640607c0d39d786f175bd7956231632f97bb115acb4dfdb2563e1cd6d1",
+    "Assets/Codes/PlayerTraitSystem.cs": "eaed087fa89ca1a9566eb957bc5e9a0fbe02487cdd8b3c31ccd7c73b5828b73e",
+    "Assets/Codes/ProjectileManager.cs": "98db1a88cc7001d50cae451035961db5d1a80af2d356c5093f793568eddd768c",
+    "Assets/Codes/TurnProjectile.cs": "f03100ae11cee7dfade259a924061b24b8010196155ec4e65e267a15b826d3c2",
+    "Assets/Codes/RunProgressionSystem.cs": "a0c89b270d637042a5128156fb75dfd9602c4162b85f5c80dac74de5b84cee6e",
+    "Assets/Codes/CombatFeedback.cs": "e5e6dff450ae06f27e9e18ea9bced7b0372017e74a859ff414281d60b9840ac5",
+    "Assets/Codes/GameAudio.cs": "994ae39471d6709a0a3563983ae200eb098f63157db4c60597a5bab24980f70b",
+    "Assets/Codes/CameraController.cs": "984b75a682d8a90b4144b2680469bbe7f5e710a0ffb1b79ebe3c83414ffe1764"
+  },
+  "finalCounterValidationAndUiFiles": {
+    "Assets/Codes/EnemyThreatPreview.cs": "cf554af5337403f3d10b03289e991cc85dac32e1dc020d57cc7896c165a62795",
+    "Assets/Editor/KnightCounterValidation.cs": "f4fd674941e0d11c40ccb84718dec86710c166cf8380ac33688faa2b890fc88e",
+    "Assets/Editor/KnightCounterValidation.cs.meta": "664301b0f9460afeafdd2ba13a7862d80d6066880e7340b90831685dbafc51b5"
+  },
+  "regressionValidators": {
+    "Assets/Editor/ChessPlaytestValidation.cs": "f69a7551af11531abd74d11685406fc17aaa629b4eda6badf7f28bcd655fe46a",
+    "Assets/Editor/CombatFeedbackValidation.cs": "a0fa4c9e5078e32b18741fcc2d3c58b42eb40843946f980a17e63d4598b53fd4"
+  }
+}

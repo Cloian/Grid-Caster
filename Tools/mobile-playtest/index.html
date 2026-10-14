@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Grid Caster">
+  <title>Grid Caster · Playtest</title>
+  <link rel="icon" href="data:,">
+  <style>
+    *{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:#080d17;color:#edf4ff;font-family:system-ui,sans-serif;overflow:hidden;overscroll-behavior:none}
+    #host{position:fixed;inset:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+    #game{display:block;width:100%;height:100%;touch-action:none;outline:none}
+    #launch,#rotate{position:fixed;inset:0;background:#080d17;display:flex;align-items:center;justify-content:center;text-align:center;padding:24px;z-index:2}
+    button{min-height:52px;border:1px solid #628ccb;background:#264564;color:white;border-radius:4px;font-size:18px;padding:14px 28px}
+    p{line-height:1.7;color:#bdcde5}#rotate{display:none;z-index:3}progress{width:100%;margin-top:20px}
+    @media(orientation:landscape) and (max-height:600px){body.mobile #rotate{display:flex}}
+  </style>
+</head>
+<body>
+  <div id="host"><canvas id="game" tabindex="-1"></canvas></div>
+  <div id="launch"><div><h1>GRID CASTER</h1><p id="controls">13×13 보드 · PC 키보드와 마우스<br>A 일반 공격 · S 이동/이동술 · F 준비한 특수공격<br>마우스로 경로 확인 · 좌클릭 실행 · 우클릭 취소</p><p id="mobile-guide" hidden>큰 보드 화면은 Safari에서 열어 주세요.<br>Safari에서 홈 화면에 추가하면<br>브라우저 도구 막대 없이 열 수 있습니다.</p><button id="start">클릭하여 시작</button><progress id="progress" max="1" value="0" hidden></progress><p id="status">브라우저 새로고침 시 이번 플레이가 초기화됩니다.</p></div></div>
+  <div id="rotate"><div><h2>휴대폰을 세로로 돌려주세요</h2><p>이번 테스트는 세로 보드 화면을 기준으로 합니다.</p></div></div>
+  <script>
+    let instance;
+    // 화면이 작은 PC나 터치 모니터는 PC UI를 유지한다. Unity의 WebGL 플러그인과 같은 기기 판별이다.
+    const mobile=/Android|iPhone|iPad|iPod/i.test(navigator.userAgent)||
+      (navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+    if(mobile){
+      document.body.classList.add('mobile');
+      document.querySelector('#controls').innerHTML='13×13 보드 · 세로 화면<br>행동 선택 → 칸 탭 → 같은 버튼으로 실행<br>탭만으로는 턴이 진행되지 않습니다.';
+      document.querySelector('#mobile-guide').hidden=false;
+      document.querySelector('#start').textContent='터치하여 시작';
+    }
+    const canvas=document.querySelector('#game'),launch=document.querySelector('#launch'),status=document.querySelector('#status'),progress=document.querySelector('#progress');
+    document.querySelector('#start').onclick=async function(){
+      this.disabled=true;progress.hidden=false;status.textContent='게임을 불러오는 중… 처음 접속에는 잠시 시간이 걸립니다.';
+      try{
+        const response=await fetch('build-manifest.json',{cache:'no-store'});
+        if(!response.ok)throw new Error('빌드 정보를 찾을 수 없습니다');
+        const config=await response.json();
+        const script=document.createElement('script');script.src=config.loaderUrl;
+        await new Promise((resolve,reject)=>{script.onload=resolve;script.onerror=()=>reject(new Error('게임 로더를 읽지 못했습니다'));document.body.appendChild(script);});
+        config.devicePixelRatio=Math.min(window.devicePixelRatio||1,2);
+        config.streamingAssetsUrl='StreamingAssets';
+        config.matchWebGLToCanvasSize=true;
+        config.showBanner=(message,type)=>{if(type==='error'){status.textContent=message;launch.style.display='flex';}};
+        instance=await createUnityInstance(canvas,config,value=>progress.value=value);
+        launch.style.display='none';canvas.focus();
+      }catch(error){status.textContent='시작하지 못했습니다. 브라우저를 새로고침해 주세요. '+error.message;this.disabled=false;}
+    };
+    document.addEventListener('visibilitychange',()=>{if(document.hidden&&instance)instance.SendMessage('GameHUD','PauseFromBrowser');});
+    canvas.addEventListener('contextmenu',event=>event.preventDefault());
+  </script>
+</body>
+</html>

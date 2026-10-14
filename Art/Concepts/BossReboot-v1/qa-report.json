@@ -1,0 +1,28 @@
+{
+  "actual_size": [
+    1254,
+    1254
+  ],
+  "target_logical_size": [
+    120,
+    120
+  ],
+  "alpha_extrema": [
+    0,
+    255
+  ],
+  "semi_transparent_pixels": 902097,
+  "opaque_rgb_colors": 167,
+  "visible_bounds_alpha_over_128": [
+    70,
+    54,
+    1209,
+    1225
+  ],
+  "production_checks": {
+    "native_120_size": false,
+    "palette_at_most_12": false,
+    "no_semi_transparency": false
+  },
+  "status": "concept only; native grid, palette and edge cleanup required before sprite production"
+}

@@ -108,3 +108,7 @@ InitTestScene*.unity*
 
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
+
+# Unity Editor recovery backups stay on the developer's machine.
+/Assets/_Recovery/
+/Assets/_Recovery.meta

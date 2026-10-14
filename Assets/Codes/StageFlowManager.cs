@@ -25,7 +25,7 @@ public sealed class StageFlowManager : MonoBehaviour
     [Header("스테이지 흐름")]
     [SerializeField, Min(1)] private int finalWave = WaveTemplateCatalog.FinalWave;
     [SerializeField, Min(0f)] private float fallbackAdvanceDelay = 1f;
-    [SerializeField, Range(0f, 1f)] private float waveClearHealRatio = 0.1f;
+    [SerializeField, Range(0f, 1f)] private float waveClearHealRatio = 0.3f;
 
     private MonsterSpawner monsterSpawner;
     private Move playerMovement;
@@ -152,13 +152,13 @@ public sealed class StageFlowManager : MonoBehaviour
     private void HealAfterWave()
     {
         RunProgressionSystem progression = playerMovement.GetComponent<RunProgressionSystem>();
-        float healRatio = waveClearHealRatio
-            + (progression != null ? progression.WaveHealRatioBonus : 0f);
-        int requestedHeal = Mathf.CeilToInt(playerHealth.MaxHealth * healRatio);
+        float healRatio = waveClearHealRatio;
+        int requestedHeal = Mathf.CeilToInt(playerHealth.MaxHealth * healRatio)
+            + (progression != null ? progression.WaveHealFlatBonus : 0);
         int healedAmount = playerHealth.Heal(requestedHeal);
 
         Debug.Log(
-            $"웨이브 {CurrentWave} 클리어: 최대 체력의 {healRatio * 100f:0.#}% 회복 "
+            $"웨이브 {CurrentWave} 클리어: 기본 {healRatio * 100f:0.#}% + 강화 추가 회복 "
             + $"({healedAmount}/{requestedHeal})",
             this
         );

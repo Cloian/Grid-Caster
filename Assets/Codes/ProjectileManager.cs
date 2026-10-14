@@ -11,6 +11,10 @@ public sealed class ProjectileManager : MonoBehaviour
     [SerializeField] private Color projectileColor = Color.white;
     [SerializeField] private int sortingOrder = 15;
 
+    [Header("플레이어 시전 비행 시간")]
+    [SerializeField, Min(0.01f)] private float minimumFlightSeconds = 0.06f;
+    [SerializeField, Min(0.01f)] private float maximumFlightSeconds = 0.25f;
+
     [Header("투사체 애니메이션")]
     [SerializeField] private Sprite projectileSprite;
     [SerializeField] private RuntimeAnimatorController projectileAnimatorController;
@@ -86,7 +90,8 @@ public sealed class ProjectileManager : MonoBehaviour
         int penetrationCount,
         Action<MonsterMovement> onHitConfirmed,
         Action onTravelCompleted,
-        Func<int, int> damageForHitIndex = null
+        Func<int, int> damageForHitIndex = null,
+        bool empoweredVisual = false
     )
     {
         ResolveReferences();
@@ -107,6 +112,14 @@ public sealed class ProjectileManager : MonoBehaviour
         if (!HasProjectileVisual())
             return false;
 
+        // 예측은 연출 속도에만 쓰며 피해/불길/점유를 변경하지 않는다.
+        // 관통마다 상한을 새로 부여하지 않고 전체 시전의 경로와 마감 시간을 공유한다.
+        float distance = PredictFlightDistance(originCell, normalizedDirection, Mathf.Max(0, penetrationCount));
+        float minimum = Mathf.Max(0.01f, minimumFlightSeconds);
+        float seconds = Mathf.Clamp(distance / Mathf.Max(0.01f, moveSpeed), minimum,
+            Mathf.Max(minimum, maximumFlightSeconds));
+        float visualSpeed = Mathf.Max(0.01f, distance / seconds);
+
         return SpawnPlayerProjectileSegment(
             originCell,
             normalizedDirection,
@@ -115,8 +128,24 @@ public sealed class ProjectileManager : MonoBehaviour
             0,
             onHitConfirmed,
             onTravelCompleted,
-            damageForHitIndex
+            damageForHitIndex,
+            visualSpeed,
+            Time.time + seconds,
+            empoweredVisual
         );
+    }
+
+    private float PredictFlightDistance(Vector3Int origin, Vector3Int direction, int penetrations)
+    {
+        float distance = 0f;
+        for (int hit = 0; hit <= penetrations; hit++)
+        {
+            Vector3Int impact = TurnProjectile.FindImpact(gridManager, monsterSpawner, origin, direction, out MonsterMovement target);
+            distance += Vector3.Distance(gridManager.GetCellCenterWorld(origin), gridManager.GetCellCenterWorld(impact));
+            if (target == null || impact == origin) break;
+            origin = impact;
+        }
+        return distance;
     }
 
     private bool SpawnPlayerProjectileSegment(
@@ -127,7 +156,10 @@ public sealed class ProjectileManager : MonoBehaviour
         int hitIndex,
         Action<MonsterMovement> onHitConfirmed,
         Action onTravelCompleted,
-        Func<int, int> damageForHitIndex
+        Func<int, int> damageForHitIndex,
+        float visualSpeed,
+        float completionDeadline,
+        bool empoweredVisual
     )
     {
         GameObject projectileObject = new GameObject("PlayerProjectile");
@@ -151,6 +183,7 @@ public sealed class ProjectileManager : MonoBehaviour
         animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
         animator.Rebind();
         animator.Update(0f);
+        if (empoweredVisual) CombatFeedback.StyleEmpoweredProjectile(spriteRenderer);
 
         MonsterMovement hitMonster = null;
         TurnProjectile projectile = projectileObject.AddComponent<TurnProjectile>();
@@ -159,7 +192,7 @@ public sealed class ProjectileManager : MonoBehaviour
             monsterSpawner,
             originCell,
             normalizedDirection,
-            moveSpeed,
+            visualSpeed,
             damageForHitIndex != null ? Mathf.Max(1, damageForHitIndex(hitIndex)) : damage,
             targetMonster =>
             {
@@ -188,7 +221,10 @@ public sealed class ProjectileManager : MonoBehaviour
                     hitIndex + 1,
                     onHitConfirmed,
                     onTravelCompleted,
-                    damageForHitIndex
+                    damageForHitIndex,
+                    visualSpeed,
+                    completionDeadline,
+                    empoweredVisual
                 );
 
                 if (continuationCreated)
@@ -196,7 +232,7 @@ public sealed class ProjectileManager : MonoBehaviour
             }
 
             onTravelCompleted?.Invoke();
-        });
+        }, completionDeadline);
         return true;
     }
 

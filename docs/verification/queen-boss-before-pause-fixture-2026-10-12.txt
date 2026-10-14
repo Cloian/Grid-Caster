@@ -1,0 +1,346 @@
+QUEEN_PLAYTEST_FAIL
+2026-10-12T15:34:25.0485500+09:00 Unity 6000.4.0f1
+Actual player actions + UI raycasts; controlled pattern/death fixtures. Not a human balance assessment.
+PASS separate scene starts in setup, no wave / reward loop
+PASS 13×13 interior with boundary
+PASS one input system and HUD raycaster
+PASS HUD GraphicRaycaster reaches StartEncounter
+PASS start button begins actual boss combat
+PASS boss occupies body tile 6,10
+PASS boss occupies body tile 7,10
+PASS boss occupies body tile 8,10
+PASS boss occupies body tile 6,11
+PASS boss occupies body tile 7,11
+PASS boss occupies body tile 8,11
+PASS boss occupies body tile 6,12
+PASS boss occupies body tile 7,12
+PASS boss occupies body tile 8,12
+PASS no-input frames and selection/cancel do not advance rules
+PASS restart configuration double_cast / Knight / 1
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen double_cast
+PASS restart configuration double_cast / Knight / 2
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen double_cast
+PASS restart configuration double_cast / Knight / 3
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen double_cast
+PASS restart configuration double_cast / Bishop / 1
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen double_cast
+PASS restart configuration double_cast / Bishop / 2
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen double_cast
+PASS restart configuration double_cast / Bishop / 3
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen double_cast
+PASS restart configuration double_cast / Rook / 1
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen double_cast
+PASS restart configuration double_cast / Rook / 2
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen double_cast
+PASS restart configuration double_cast / Rook / 3
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen double_cast
+PASS restart configuration pierce / Knight / 1
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen pierce
+PASS restart configuration pierce / Knight / 2
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen pierce
+PASS restart configuration pierce / Knight / 3
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen pierce
+PASS restart configuration pierce / Bishop / 1
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen pierce
+PASS restart configuration pierce / Bishop / 2
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen pierce
+PASS restart configuration pierce / Bishop / 3
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen pierce
+PASS restart configuration pierce / Rook / 1
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen pierce
+PASS restart configuration pierce / Rook / 2
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen pierce
+PASS restart configuration pierce / Rook / 3
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen pierce
+PASS restart configuration damage_boost / Knight / 1
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen damage_boost
+PASS restart configuration damage_boost / Knight / 2
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen damage_boost
+PASS restart configuration damage_boost / Knight / 3
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen damage_boost
+PASS restart configuration damage_boost / Bishop / 1
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen damage_boost
+PASS restart configuration damage_boost / Bishop / 2
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen damage_boost
+PASS restart configuration damage_boost / Bishop / 3
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen damage_boost
+PASS restart configuration damage_boost / Rook / 1
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen damage_boost
+PASS restart configuration damage_boost / Rook / 2
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen damage_boost
+PASS restart configuration damage_boost / Rook / 3
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen damage_boost
+PASS restart configuration knockback / Knight / 1
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen knockback
+PASS restart configuration knockback / Knight / 2
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen knockback
+PASS restart configuration knockback / Knight / 3
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen knockback
+PASS restart configuration knockback / Bishop / 1
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen knockback
+PASS restart configuration knockback / Bishop / 2
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen knockback
+PASS restart configuration knockback / Bishop / 3
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen knockback
+PASS restart configuration knockback / Rook / 1
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen knockback
+PASS restart configuration knockback / Rook / 2
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen knockback
+PASS restart configuration knockback / Rook / 3
+PASS preset charge and movement stage reset
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS real trait attack damages queen knockback
+PASS strong preset starts
+PASS strong preset uses fixed health and capped upgrades
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS pierce hits 3×3 queen once and continues to distinct target
+PASS area edge fixture starts
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS area originates at actual body impact; primary queen not splashed again
+PASS secondary footprint fixture starts
+PASS actual action accepted Attack (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS secondary area tests entire boss footprint, once per actor
+PASS phase-two mobility fixture None1
+PASS reachable ultimate is selected for None1
+PASS A / B each have eight disjoint cells
+PASS actual movement rules admit two actions to A then one to B
+PASS actual action accepted Move (-1, 1, 0)
+PASS one completed action advances boss exactly once
+PASS actual action accepted Move (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS actual action accepted Move (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS actual A→B movement avoids both strikes and opens two recovery actions
+PASS guards stay fixed during ultimate
+PASS next A excludes previous B, no camping
+PASS phase-two mobility fixture None3
+PASS reachable ultimate is selected for None3
+PASS A / B each have eight disjoint cells
+PASS actual movement rules admit two actions to A then one to B
+PASS actual action accepted Move (-1, 1, 0)
+PASS one completed action advances boss exactly once
+PASS actual action accepted Move (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS actual action accepted Move (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS actual A→B movement avoids both strikes and opens two recovery actions
+PASS guards stay fixed during ultimate
+PASS next A excludes previous B, no camping
+PASS phase-two mobility fixture Knight1
+PASS reachable ultimate is selected for Knight1
+PASS A / B each have eight disjoint cells
+PASS actual movement rules admit two actions to A then one to B
+PASS actual action accepted Move (-1, -1, 0)
+PASS one completed action advances boss exactly once
+PASS actual action accepted Move (1, 2, 0)
+PASS one completed action advances boss exactly once
+PASS actual action accepted Move (-1, 2, 0)
+PASS one completed action advances boss exactly once
+PASS actual A→B movement avoids both strikes and opens two recovery actions
+PASS guards stay fixed during ultimate
+PASS next A excludes previous B, no camping
+PASS phase-two mobility fixture Knight3
+PASS reachable ultimate is selected for Knight3
+PASS A / B each have eight disjoint cells
+PASS actual movement rules admit two actions to A then one to B
+PASS actual action accepted Move (-1, -1, 0)
+PASS one completed action advances boss exactly once
+PASS actual action accepted Move (1, 2, 0)
+PASS one completed action advances boss exactly once
+PASS actual action accepted Move (-1, 2, 0)
+PASS one completed action advances boss exactly once
+PASS actual A→B movement avoids both strikes and opens two recovery actions
+PASS guards stay fixed during ultimate
+PASS next A excludes previous B, no camping
+PASS phase-two mobility fixture Bishop1
+PASS reachable ultimate is selected for Bishop1
+PASS A / B each have eight disjoint cells
+PASS actual movement rules admit two actions to A then one to B
+PASS actual action accepted Move (1, 0, 0)
+PASS one completed action advances boss exactly once
+PASS actual action accepted Move (-2, 2, 0)
+PASS one completed action advances boss exactly once
+PASS actual action accepted Move (0, 1, 0)
+PASS one completed action advances boss exactly once
+PASS actual A→B movement avoids both strikes and opens two recovery actions
+PASS guards stay fixed during ultimate
+PASS next A excludes previous B, no camping
+PASS phase-two mobility fixture Bishop3
+PASS reachable ultimate is selected for Bishop3
+PASS A / B each have eight disjoint cells
+PASS actual movement rules admit two actions to A then one to B
+PASS actual action accepted Move (2, -2, 0)
+PASS one completed action advances boss exactly once
+PASS actual action accepted Move (4, 4, 0)
+PASS one completed action advances boss exactly once
+PASS actual action accepted Move (-1, 1, 0)
+PASS one completed action advances boss exactly once
+PASS actual A→B movement avoids both strikes and opens two recovery actions
+PASS guards stay fixed during ultimate
+PASS next A excludes previous B, no camping
+PASS phase-two mobility fixture Rook1
+PASS reachable ultimate is selected for Rook1
+PASS A / B each have eight disjoint cells
+PASS actual movement rules admit two actions to A then one to B
+PASS actual action accepted Move (0, -2, 0)
+PASS one completed action advances boss exactly once
+PASS actual action accepted Move (0, 4, 0)
+PASS one completed action advances boss exactly once
+PASS actual action accepted Move (-1, 1, 0)
+PASS one completed action advances boss exactly once
+PASS actual A→B movement avoids both strikes and opens two recovery actions
+PASS guards stay fixed during ultimate
+PASS next A excludes previous B, no camping
+PASS phase-two mobility fixture Rook3
+PASS reachable ultimate is selected for Rook3
+PASS A / B each have eight disjoint cells
+PASS actual movement rules admit two actions to A then one to B
+PASS actual action accepted Move (0, -2, 0)
+PASS one completed action advances boss exactly once
+PASS actual action accepted Move (0, 4, 0)
+PASS one completed action advances boss exactly once
+PASS actual action accepted Move (-1, 1, 0)
+PASS one completed action advances boss exactly once
+PASS actual A→B movement avoids both strikes and opens two recovery actions
+PASS guards stay fixed during ultimate
+PASS next A excludes previous B, no camping
+PASS fortress fixture starts
+PASS temporary walls share actual walkability
+PASS bishop cannot pass through the temporary wall
+PASS blocked selection cannot consume an action
+PASS actual wait accepted
+PASS wait consumes one action
+PASS actual wait accepted
+PASS wait consumes one action
+PASS actual wait accepted
+PASS wait consumes one action
+PASS wall removed after recovery
+PASS large-damage fixture starts
+PASS checkmate deals fixed 8, full-health failure is not instant death
+PASS victory fixture starts
+PASS actual wait accepted
+PASS wait consumes one action
+PASS kill before enemy phase ends fight without retaliation
+PASS closing pause cannot reopen a finished fight
+PASS restart after victory
+PASS actual wait accepted
+PASS wait consumes one action
+PASS actual wait accepted
+PASS wait consumes one action
+PASS death closes combat input
+PASS restart clears death, guards, charge and pattern state
+PASS ESC pause freezes presentation and combat input
+System.InvalidOperationException: HUD GraphicRaycaster reaches Resume
+  at QueenBossPlaytestValidation.Check (System.Boolean value, System.String message) [0x0001f] in /Users/gimdong-yun/GitHub/Grid-Caster/Assets/Editor/QueenBossPlaytestValidation.cs:64 
+  at QueenBossPlaytestValidation.Click (UnityEngine.UI.Button button) [0x00054] in /Users/gimdong-yun/GitHub/Grid-Caster/Assets/Editor/QueenBossPlaytestValidation.cs:96 
+  at QueenBossPlaytestValidation+<Run>d__19.MoveNext () [0x014c7] in /Users/gimdong-yun/GitHub/Grid-Caster/Assets/Editor/QueenBossPlaytestValidation.cs:196 
+  at QueenBossPlaytestValidation.Tick () [0x00048] in /Users/gimdong-yun/GitHub/Grid-Caster/Assets/Editor/QueenBossPlaytestValidation.cs:51 

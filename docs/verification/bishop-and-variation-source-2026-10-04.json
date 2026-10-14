@@ -1,0 +1,16 @@
+{
+  "unity": "6000.4.0f1",
+  "files": {
+    "Assets/Codes/ChessMonsterBehaviour.cs": "599ee1b316b97f4b3fb85e155ac03c35d0bc229c6d56d4c4e8c13719e8fcad49",
+    "Assets/Codes/EnemyThreatPreview.cs": "72bf43008347ed9ec7c3e0abd297e2d96b6cb885d986ff6151c1a87215fb37a0",
+    "Assets/Codes/RunProgressionCatalog.cs": "b281a55344fc661b2f17968343d8346d71a38ebd4d2c38cc5f032e1b79e3831e",
+    "Assets/Codes/RunProgressionSystem.cs": "a0c89b270d637042a5128156fb75dfd9602c4162b85f5c80dac74de5b84cee6e",
+    "Assets/Codes/WaveTemplate.cs": "c77075caf15c8189e9e36b8fbab2263ec01b887c444f5d79f02ec99b24d769ef",
+    "Assets/Codes/MonsterSpawner.cs": "d27ce0656891b8332b1136fc95291936efee2c928ac116d0f1c588a5e5342dc3",
+    "Assets/Codes/CombatFeedback.cs": "e5e6dff450ae06f27e9e18ea9bced7b0372017e74a859ff414281d60b9840ac5",
+    "Assets/Codes/CameraController.cs": "984b75a682d8a90b4144b2680469bbe7f5e710a0ffb1b79ebe3c83414ffe1764",
+    "Assets/Editor/BuildVariationValidation.cs": "17a84683c4e7d0e18d7e509b18dc02d0b922746478c850f5c6f5c5c5f4c88ef0",
+    "Assets/Editor/ChessPlaytestValidation.cs": "f69a7551af11531abd74d11685406fc17aaa629b4eda6badf7f28bcd655fe46a",
+    "Assets/Editor/CombatFeedbackValidation.cs": "a0fa4c9e5078e32b18741fcc2d3c58b42eb40843946f980a17e63d4598b53fd4"
+  }
+}

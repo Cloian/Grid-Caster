@@ -1,0 +1,234 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using UnityEditor;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
+// 실제 SampleScene 재생/판정/레이캐스트 검사. 음색 선호도와 사람의 청취 평가는 별도다.
+[InitializeOnLoad]
+public static class ImpactHypothesisValidation
+{
+    private const string Pending = "GridCaster.ImpactHypothesisValidation";
+    private static readonly List<string> checks = new List<string>();
+    private const BindingFlags Private = BindingFlags.Instance | BindingFlags.NonPublic;
+    private static IEnumerator routine;
+    private static double deadline;
+    private static int frame;
+    private static bool previousRunInBackground;
+    private static string runtimeError;
+
+    static ImpactHypothesisValidation()
+    {
+        EditorApplication.playModeStateChanged += state =>
+        {
+            if (state != PlayModeStateChange.EnteredPlayMode || !SessionState.GetBool(Pending, false)) return;
+            SessionState.SetBool(Pending, false);
+            checks.Clear(); frame = -1; runtimeError = null;
+            previousRunInBackground = Application.runInBackground;
+            Application.runInBackground = true;
+            deadline = EditorApplication.timeSinceStartup + 90;
+            Application.logMessageReceived += Error;
+            routine = Flatten(Run()); EditorApplication.update += Tick;
+        };
+    }
+
+    [MenuItem("Tools/Playtest/Validate Combat Audio and Volume %#&v")]
+    public static void RunBatch()
+    {
+        if (Application.isBatchMode)
+            UnityEditor.SceneManagement.EditorSceneManager.OpenScene("Assets/Scenes/SampleScene.unity");
+        if (EditorApplication.isPlaying || UnityEngine.SceneManagement.SceneManager.GetActiveScene().isDirty)
+            throw new InvalidOperationException("검사 전에 Play를 종료하고 씬을 저장하세요.");
+        if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().path != "Assets/Scenes/SampleScene.unity")
+            throw new InvalidOperationException("원본 SampleScene을 열어 검사하세요.");
+        // Inspect existing import settings without changing them.
+        foreach (string key in new[] { GameAudio.SfxVolumeKey, GameAudio.MusicVolumeKey })
+        {
+            SessionState.SetBool(Pending + key, PlayerPrefs.HasKey(key));
+            SessionState.SetFloat(Pending + key, PlayerPrefs.GetFloat(key));
+        }
+        SessionState.SetBool(Pending, true);
+        EditorApplication.isPlaying = true;
+    }
+
+    private static void Error(string message, string stack, LogType type)
+    {
+        if ((type == LogType.Exception || type == LogType.Error || type == LogType.Assert)
+            && (stack.Contains("Assets/Codes/") || stack.Contains(nameof(ImpactHypothesisValidation))))
+            runtimeError = message + "\n" + stack;
+    }
+
+    private static void Tick()
+    {
+        try
+        {
+            if (!EditorApplication.isPlaying || EditorApplication.timeSinceStartup > deadline)
+                throw new TimeoutException("전투 오디오 검사 시간 초과/중단");
+            if (runtimeError != null) throw new InvalidOperationException(runtimeError);
+            if (frame == Time.frameCount) return;
+            frame = Time.frameCount;
+            if (!routine.MoveNext()) Finish(true);
+        }
+        catch (Exception error) { checks.Add(error.ToString()); Finish(false); }
+    }
+
+    private static void Finish(bool passed)
+    {
+        EditorApplication.update -= Tick;
+        Application.logMessageReceived -= Error;
+        Application.runInBackground = previousRunInBackground;
+        foreach (string key in new[] { GameAudio.SfxVolumeKey, GameAudio.MusicVolumeKey })
+        {
+            if (SessionState.GetBool(Pending + key, false)) PlayerPrefs.SetFloat(key, SessionState.GetFloat(Pending + key, 0f));
+            else PlayerPrefs.DeleteKey(key);
+        }
+        PlayerPrefs.Save();
+        // OnDisable 시 검사 중 볼륨을 다시 저장하지 않도록 원래 값을 복원한다.
+        GameAudio audio = UnityEngine.Object.FindAnyObjectByType<GameAudio>();
+        if (audio != null)
+        {
+            audio.SetSfxVolume(PlayerPrefs.GetFloat(GameAudio.SfxVolumeKey, GameAudio.DefaultSfxVolume));
+            audio.SetMusicVolume(PlayerPrefs.GetFloat(GameAudio.MusicVolumeKey, GameAudio.DefaultMusicVolume));
+        }
+        string directory = Path.Combine(Path.GetDirectoryName(Application.dataPath), "docs/verification");
+        Directory.CreateDirectory(directory);
+        string report = "IMPACT_PROBE_" + (passed ? "PASS" : "FAIL") + "\n"
+            + "Controlled actual SampleScene fixtures; not human listening or normal stage completion.\n"
+            + "Unity " + Application.unityVersion + "; " + DateTime.Now.ToString("O") + "\n" + string.Join("\n", checks);
+        File.WriteAllText(Path.Combine(directory, "impact-probe-" + DateTime.Now.ToString("yyyyMMdd-HHmmss") + ".txt"), report);
+        if (passed) Debug.Log(report); else Debug.LogError(report);
+        EditorApplication.isPlaying = false;
+        if (Application.isBatchMode) EditorApplication.Exit(passed ? 0 : 1);
+    }
+
+    private static void Check(bool result, string description)
+    {
+        if (!result) throw new InvalidOperationException(description);
+        checks.Add("PASS " + description);
+    }
+    private static int Count(GameAudio audio, CombatSound kind) =>
+        ((int[])typeof(GameAudio).GetField("playedCounts", Private).GetValue(audio))[(int)kind];
+    private static IEnumerator QuietGap()
+    {
+        float until = Time.realtimeSinceStartup + 0.6f;
+        while (Time.realtimeSinceStartup < until) yield return null;
+    }
+
+    private static IEnumerator Flatten(IEnumerator source)
+    {
+        while (source.MoveNext())
+        {
+            if (source.Current is IEnumerator nested)
+            {
+                IEnumerator child = Flatten(nested);
+                while (child.MoveNext()) yield return child.Current;
+            }
+            else yield return source.Current;
+        }
+    }
+
+    private static void PointerDown(Slider slider, float proportion)
+    {
+        Canvas.ForceUpdateCanvases();
+        RectTransform rect = slider.GetComponent<RectTransform>();
+        var pointer = new PointerEventData(EventSystem.current) {
+            position = rect.TransformPoint(new Vector3(Mathf.Lerp(rect.rect.xMin + 12, rect.rect.xMax - 12, proportion), rect.rect.center.y, 0)),
+            button = PointerEventData.InputButton.Left
+        };
+        var hits = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointer, hits);
+        Check(hits.Count > 0 && hits[0].gameObject.GetComponentInParent<Slider>() == slider,
+            "actual GraphicRaycaster reaches " + slider.name + "; top hit=" + (hits.Count > 0 ? hits[0].gameObject.name : "none"));
+        slider.OnPointerDown(pointer);
+        Check(Mathf.Abs(slider.value - proportion * 100f) <= 1, "slider pointer adjusts percentage: " + slider.name);
+    }
+
+    private static IEnumerator Run()
+    {
+        yield return null; yield return null; yield return null;
+        PlaySessionRecorder.MarkControlledValidation();
+        GameHudController hud = UnityEngine.Object.FindAnyObjectByType<GameHudController>();
+        Move player = UnityEngine.Object.FindAnyObjectByType<Move>();
+        MonsterSpawner spawner = UnityEngine.Object.FindAnyObjectByType<MonsterSpawner>();
+        GridManager grid = UnityEngine.Object.FindAnyObjectByType<GridManager>();
+        GameAudio audio = UnityEngine.Object.FindAnyObjectByType<GameAudio>();
+        audio.SetSfxVolume(0.6f);
+        hud.SelectTrait(0); yield return null;
+        GameObject.Find("UpgradeChoice_1").GetComponent<Button>().onClick.Invoke(); yield return null;
+        Check(player.CanAct, "normal combat unlocked");
+        BoundsInt bounds=grid.GroundTilemap.cellBounds;
+        Vector3Int origin=new Vector3Int((bounds.xMin+bounds.xMax-1)/2,(bounds.yMin+bounds.yMax-1)/2,0);
+        checks.Add("OBS walkable board center="+origin+"; bounds="+bounds);
+        float speed = (float)typeof(ProjectileManager).GetField("moveSpeed", Private)
+            .GetValue(UnityEngine.Object.FindAnyObjectByType<ProjectileManager>());
+        checks.Add("OBS serialized projectile speed=" + speed + "; cell world size="
+            + (grid.GetCellCenterWorld(Vector3Int.right)-grid.GetCellCenterWorld(Vector3Int.zero)).magnitude);
+        foreach (Vector3Int target in new[] { Vector3Int.right, Vector3Int.right*2,
+            Vector3Int.right*6, new Vector3Int(1,1,0), new Vector3Int(6,6,0) })
+        {
+            spawner.ResetPlaytestEncounter(); yield return null;
+            player.ResetPlaytest(origin);
+            MonsterMovement monster = spawner.SpawnPlaytestMonster(MonsterMovementPattern.CardinalFour,
+                origin+target, player.GetComponent<SpriteRenderer>().sprite, Color.white, 20, 0, 1, 4, 2);
+            int impactFrame=-1, enemyFrame=-1, turns=0;
+            float impactTime=-1, enemyTime=-1;
+            Action impact = () => { impactFrame=Time.frameCount; impactTime=Time.time; };
+            Action enemy = () => { enemyFrame=Time.frameCount; enemyTime=Time.time; };
+            Action world = () => turns++;
+            player.AttackHit += impact; player.MoveCompleted += enemy; spawner.WorldTurnCompleted += world;
+            float start=Time.time;
+            Check(player.TryPerformAction(PlayerActionSelectionMode.Attack,
+                new Vector3Int(Math.Sign(target.x),Math.Sign(target.y),0)), "attack accepted at " + target);
+            while (!player.CanAct) yield return null;
+            Check(impactFrame>=0 && turns==1, "hit then exactly one world turn at " + target);
+            checks.Add("OBS target="+target+" time-to-hit-ms="+((impactTime-start)*1000).ToString("F2")
+                +" impact-to-enemy-start-ms="+((enemyTime-impactTime)*1000).ToString("F2")
+                +" impact-to-enemy-start-frames="+(enemyFrame-impactFrame));
+            player.AttackHit -= impact; player.MoveCompleted -= enemy; spawner.WorldTurnCompleted -= world;
+        }
+        spawner.ResetPlaytestEncounter(); yield return null;
+        player.ResetPlaytest(origin);
+        MonsterMovement survivor=spawner.SpawnPlaytestMonster(MonsterMovementPattern.CardinalFour,
+            origin+Vector3Int.right*2,player.GetComponent<SpriteRenderer>().sprite,Color.white,20,0,1,4,2);
+        survivor.TakeDamage(1);
+        Check(survivor.GetComponent<DamageFlash>().IsFlashing, "nonlethal hit starts flash");
+        yield return null;
+        Check(survivor!=null && survivor.GetComponent<DamageFlash>().IsFlashing,
+            "nonlethal target and flash survive to next frame");
+        Vector3 old=survivor.transform.position;
+        bool moved=spawner.TryKnockbackMonster(survivor,Vector3Int.right);
+        Check(moved && survivor.transform.position!=old
+            && survivor.transform.position==grid.GetCellCenterWorld(survivor.GridPosition),
+            "knockback transform reaches new cell synchronously; no travel phase");
+        spawner.SpawnPlaytestMonster(MonsterMovementPattern.CardinalFour,
+            origin+Vector3Int.left*4,player.GetComponent<SpriteRenderer>().sprite,Color.white,20,9,1,4,2);
+        Vector3Int lethalCell=survivor.GridPosition;
+        survivor.TakeDamage(1000);
+        checks.Add("OBS after lethal TakeDamage: dead="+survivor.IsDead+"; flash active="+survivor.GetComponent<DamageFlash>().IsFlashing+"; occupied="+spawner.TryGetMonsterAtCell(lethalCell,out _));
+        Check(survivor.IsDead && !spawner.TryGetMonsterAtCell(lethalCell,out _),
+            "lethal hit releases occupancy immediately");
+        yield return null;
+        Check(survivor==null,"lethal target removed before next frame probe; cannot finish 220ms flash");
+        yield return QuietGap();
+        spawner.ResetPlaytestEncounter(); yield return null;
+        var batch=new List<MonsterMovement>();
+        for(int i=1;i<=4;i++) batch.Add(spawner.SpawnPlaytestMonster(MonsterMovementPattern.CardinalFour,
+            origin+Vector3Int.right*i,player.GetComponent<SpriteRenderer>().sprite,Color.white,20,i,1,4,2));
+        int before=Count(audio,CombatSound.SoftHit);
+        foreach(var m in batch) m.TakeDamage(1);
+        int sounds=Count(audio,CombatSound.SoftHit)-before;
+        Check(batch.All(m=>m.GetComponent<CharacterHealth>().CurrentHealth==19),"all four same-frame targets lose HP");
+        checks.Add("OBS four same-frame soft hits accepted sounds="+sounds+" (35ms limiter)");
+        yield return QuietGap();
+        int accepted=0;
+        foreach(var kind in new[]{CombatSound.MagicLaunch,CombatSound.SoftHit,CombatSound.HardHit,CombatSound.MagicLaunch})
+            if(GameAudio.Play(kind)) accepted++;
+        checks.Add("OBS mixed combat requests=4; accepted="+accepted+"; normal voices=3");
+        checks.Add("LIMIT headless code/timing probe only; not displayed-frame QA, hardware audio latency, preference or fun validation.");
+    }
+}

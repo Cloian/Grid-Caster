@@ -24,6 +24,7 @@ public sealed class RelicOffer
 public sealed class RunProgressionSystem : MonoBehaviour
 {
     public const int MaxRelicSlots = 4;
+    public const int MaxMovementArtLevel = 3;
 
     public event Action<IReadOnlyList<UpgradeDefinition>> UpgradeOptionsReady;
     public event Action UpgradesChanged;
@@ -49,7 +50,6 @@ public sealed class RunProgressionSystem : MonoBehaviour
     private Move playerMovement;
     private CharacterHealth playerHealth;
     private PlayerTraitSystem traitSystem;
-    private UltimateGauge ultimateGauge;
     private MonsterSpawner monsterSpawner;
     private GridManager gridManager;
     private StageFlowManager stageFlow;
@@ -61,23 +61,38 @@ public sealed class RunProgressionSystem : MonoBehaviour
     private bool firstDamageBlocked;
     private bool firstHazardBlocked;
     private bool firstKillHealed;
-    private bool stitchHealed;
+    private int stitchHeals;
     private bool kingsTurnUsed;
     private bool movementLandingGuard;
     private bool attackHunterBonus;
-    private bool attackStoredBonus;
-    private bool storedAttackBonus;
+    private int attackStoredSources;
+    private int storedAttackSources;
     private bool firstCastKilled;
+    private bool echoDirectionChanged;
     private bool attackKilledAny;
-    private bool recoveryGranted;
     private bool relicAcquiredThisWave;
     private bool starterSelectionPending;
     private int attackHitCount;
+    private int alternatingBurstDamage;
     private bool initialized;
+    private const int KnightCharge = 1;
+    private const int AmbushCharge = 2;
+    private const int ExcessCharge = 4;
+    private bool overflowTransferred;
+    private readonly HashSet<int> rewardedKills = new HashSet<int>();
+    private readonly Dictionary<string, HashSet<int>> areaHitTargets =
+        new Dictionary<string, HashSet<int>>();
 
     public PlayerMovementArt ActiveMovementArt { get; private set; }
     public int MovementArtLevel { get; private set; }
     public bool HasMovementArt => ActiveMovementArt != PlayerMovementArt.None;
+    public string SelectedTraitId => traitSystem != null ? traitSystem.SelectedTraitId : string.Empty;
+    public int TraitActivationInterval => traitSystem != null ? traitSystem.ActivationBagSize : 1;
+    public int TraitChargeRequired => traitSystem != null ? traitSystem.ChargeRequired : 1;
+    public int DamageBoostAreaLevel => Mathf.Clamp(Stack("afterglow_recovery"), 0, 2);
+    public int DamageBoostSplashDamage => 1 + Stack("trait_mastery");
+    public int DamageBoostSplashDamageFor(bool directKill) => DamageBoostSplashDamage
+        + (directKill && HasRelic("blast_core") ? 1 : 0);
     public string MovementArtName => ActiveMovementArt switch
     {
         PlayerMovementArt.Knight => "나이트 도약",
@@ -91,21 +106,17 @@ public sealed class RunProgressionSystem : MonoBehaviour
     public IReadOnlyList<RelicOffer> ActiveAltars => activeAltars;
     public IReadOnlyList<UpgradeDefinition> CurrentUpgradeOptions => currentUpgradeOptions;
     public bool IsStarterUpgradeSelection => starterSelectionPending;
-    public int MoveGaugeBonus => Stack("mana_circulation")
-        + (Stack("rapid_cycle") > 0 ? 2 : 0);
-    public int HitGaugeBonus => Stack("mana_circulation") * 2
-        + (Stack("rapid_cycle") > 0 ? 5 : 0)
-        + (Stack("trait_mastery") > 0 ? 3 : 0);
-    public float WaveHealRatioBonus => Stack("healing_breath") * 0.05f
-        + (Stack("immortal_cycle") > 0 ? 0.1f : 0f);
-    public bool HasRotatingMirror => HasRelic("rotating_mirror");
+    // 이전 게이지 컴포넌트와 저장 씬의 호환만 유지한다. 이동술은 이제 충전 자원을 쓰지 않는다.
+    public int MoveGaugeBonus => 0;
+    public int HitGaugeBonus => 0;
+    public int WaveHealFlatBonus => Stack("healing_breath");
+    public bool HasRotatingMirror => Stack("echo_recovery") > 0 || HasRelic("rotating_mirror");
 
     private void Awake()
     {
         playerMovement = GetComponent<Move>();
         playerHealth = GetComponent<CharacterHealth>();
         traitSystem = GetComponent<PlayerTraitSystem>();
-        ultimateGauge = GetComponent<UltimateGauge>();
     }
 
     private void Start()
@@ -171,42 +182,83 @@ public sealed class RunProgressionSystem : MonoBehaviour
 
     private void BuildUpgradeOptions(int clearedWave)
     {
-        currentUpgradeOptions.Clear();
-        string traitId = traitSystem != null ? traitSystem.SelectedTraitId : string.Empty;
-        List<UpgradeDefinition> eligible = RunProgressionCatalog.Upgrades
-            .Where(item => (!item.IsTraitUpgrade || item.RequiredTrait == traitId)
-                && Stack(item.Id) < item.MaxStacks)
-            .ToList();
-        List<UpgradeDefinition> traitEligible = eligible
-            .Where(item => item.RequiredTrait == traitId).ToList();
-
-        if (clearedWave == 2 && !HasMovementArt)
-        {
-            // 첫 특수 웨이브 전에 이동 선택지가 생기도록 2웨이브에서 반드시 제시한다.
-            UpgradeDefinition movementUnlock = eligible
-                .FirstOrDefault(item => item.Id == "movement_knight");
-            if (movementUnlock != null)
-            {
-                currentUpgradeOptions.Add(movementUnlock);
-                eligible.Remove(movementUnlock);
-            }
-        }
-
-        if (traitEligible.Count > 0)
-        {
-            AddRandomAndRemove(traitEligible, eligible, currentUpgradeOptions);
-        }
-        while (currentUpgradeOptions.Count < 3 && eligible.Count > 0)
-        {
-            AddRandomAndRemove(eligible, eligible, currentUpgradeOptions);
-        }
+        BuildWeightedUpgradeOptions(0);
     }
 
     private void BuildAdvancedUpgradeOptions(int rewardTier)
     {
+        BuildWeightedUpgradeOptions(rewardTier);
+    }
+
+    private void BuildWeightedUpgradeOptions(int advancedTier)
+    {
         currentUpgradeOptions.Clear();
-        currentUpgradeOptions.AddRange(RunProgressionCatalog.AdvancedUpgrades
-            .Where(item => item.RewardTier == rewardTier && Stack(item.Id) == 0));
+        IEnumerable<UpgradeDefinition> pool = RunProgressionCatalog.Upgrades;
+        if (advancedTier > 0)
+            pool = pool.Concat(RunProgressionCatalog.AdvancedUpgrades
+                .Where(item => item.RewardTier <= advancedTier));
+        // 같은 이동술 습득/연마 결과는 단계 ID가 달라도 한 후보로 취급한다.
+        List<UpgradeDefinition> eligible = pool.Where(CanSelectUpgrade)
+            .GroupBy(UpgradeChoiceKey)
+            .Select(group => group.OrderByDescending(item => item.IsAdvanced)
+                .ThenBy(item => item.RewardTier).First()).ToList();
+
+        // 유물을 획득한 보상의 상급 품질은 유지하되 세 장의 내용은 고정하지 않는다.
+        if (advancedTier > 0)
+        {
+            List<UpgradeDefinition> advanced = eligible.Where(item => item.IsAdvanced).ToList();
+            if (advanced.Count > 0) AddWeightedAndRemove(advanced, eligible);
+        }
+        while (currentUpgradeOptions.Count < 3 && eligible.Count > 0)
+            AddWeightedAndRemove(eligible, eligible);
+    }
+
+    private float UpgradeOfferWeight(UpgradeDefinition item)
+    {
+        float weight = item.IsAdvanced ? 2f : 1f;
+        if (item.IsTraitUpgrade && item.RequiredTrait == SelectedTraitId) weight *= 3f;
+        if (Stack(item.Id) > 0) weight *= 1.5f;
+        if (HasMovementArt && (item.Id.StartsWith("movement_training_") || item.Id == "movement_breath"))
+            weight *= 2f;
+        else if (!HasMovementArt && RunProgressionDescriptions.IsMovementUpgrade(item.Id))
+            weight *= 1.5f;
+        return weight;
+    }
+
+    private void AddWeightedAndRemove(List<UpgradeDefinition> source, List<UpgradeDefinition> eligible)
+    {
+        float roll = UnityEngine.Random.value * source.Sum(UpgradeOfferWeight);
+        UpgradeDefinition selected = source[source.Count - 1];
+        foreach (UpgradeDefinition item in source)
+        {
+            roll -= UpgradeOfferWeight(item);
+            if (roll < 0f) { selected = item; break; }
+        }
+        currentUpgradeOptions.Add(selected.Id == "trait_mastery"
+            ? new UpgradeDefinition(selected.Id, selected.Name, TraitMasteryDescription(), 1,
+                isAdvanced: true, rewardTier: selected.RewardTier) : selected);
+        string key = UpgradeChoiceKey(selected);
+        eligible.RemoveAll(item => UpgradeChoiceKey(item) == key);
+    }
+
+    private string UpgradeChoiceKey(UpgradeDefinition item)
+    {
+        if (!RunProgressionDescriptions.IsMovementUpgrade(item.Id)) return item.Id;
+        // 단계 ID가 달라도 이번 선택의 결과가 같으면 같은 카드로 취급한다.
+        if (HasMovementArt && item.Id.StartsWith("movement_training_")) return "train_current_art";
+        return "grant_art_" + RunProgressionDescriptions.GrantedMovementArt(item.Id);
+    }
+
+    private string TraitMasteryDescription()
+    {
+        switch (traitSystem.SelectedTraitId)
+        {
+            case "double_cast": return "추가 시전의 모든 직격 피해 +1";
+            case "pierce": return "추가 관통 대상의 직격 피해 +1";
+            case "damage_boost": return "특성 공격 주변 피해 +1";
+            case "knockback": return "넉백 직격 및 첫 충돌 상대 피해 +1";
+            default: return "시작 특성에 맞는 완성 효과";
+        }
     }
 
     private IEnumerator AdvanceWithoutReward()
@@ -219,15 +271,6 @@ public sealed class RunProgressionSystem : MonoBehaviour
         }
     }
 
-    private static void AddRandomAndRemove(List<UpgradeDefinition> source,
-        List<UpgradeDefinition> all, List<UpgradeDefinition> destination)
-    {
-        UpgradeDefinition selected = source[UnityEngine.Random.Range(0, source.Count)];
-        destination.Add(selected);
-        source.Remove(selected);
-        if (!ReferenceEquals(source, all)) all.Remove(selected);
-    }
-
     public bool SelectUpgrade(int index)
     {
         bool isWaveReward = stageFlow != null && stageFlow.IsWaitingForUpgrade;
@@ -236,6 +279,8 @@ public sealed class RunProgressionSystem : MonoBehaviour
             return false;
 
         UpgradeDefinition selected = currentUpgradeOptions[index];
+        // 이미 최대인 카드나 효과가 없는 이동술 카드는 오래된 UI 호출로도 적용하지 않는다.
+        if (!CanSelectUpgrade(selected)) return false;
         upgradeStacks[selected.Id] = Stack(selected.Id) + 1;
         ApplyImmediateUpgrade(selected.Id);
         UpgradesChanged?.Invoke();
@@ -249,6 +294,19 @@ public sealed class RunProgressionSystem : MonoBehaviour
         }
 
         return stageFlow.CompleteUpgradeSelection();
+    }
+
+    public bool CanSelectUpgrade(UpgradeDefinition item)
+    {
+        if (item == null || Stack(item.Id) >= item.MaxStacks) return false;
+        if (item.IsTraitUpgrade && item.RequiredTrait != SelectedTraitId) return false;
+        if (item.Id.StartsWith("movement_training_"))
+            return !HasMovementArt || MovementArtLevel < MaxMovementArtLevel;
+        if (item.Id == "movement_knight") return ActiveMovementArt != PlayerMovementArt.Knight;
+        if (item.Id == "movement_bishop") return ActiveMovementArt != PlayerMovementArt.Bishop;
+        if (item.Id == "movement_rook") return ActiveMovementArt != PlayerMovementArt.Rook;
+        if (item.Id == "movement_breath") return HasMovementArt;
+        return true;
     }
 
     private void ApplyImmediateUpgrade(string upgradeId)
@@ -294,8 +352,8 @@ public sealed class RunProgressionSystem : MonoBehaviour
 
     private void SetMovementArt(PlayerMovementArt movementArt)
     {
+        MovementArtLevel = HasMovementArt ? Mathf.Max(1, MovementArtLevel) : 1;
         ActiveMovementArt = movementArt;
-        MovementArtLevel = 1;
         MovementArtChanged?.Invoke(ActiveMovementArt, MovementArtLevel);
     }
 
@@ -307,35 +365,51 @@ public sealed class RunProgressionSystem : MonoBehaviour
             return;
         }
 
-        MovementArtLevel = Mathf.Min(3, MovementArtLevel + 1);
+        MovementArtLevel = Mathf.Min(MaxMovementArtLevel, MovementArtLevel + 1);
         MovementArtChanged?.Invoke(ActiveMovementArt, MovementArtLevel);
     }
 
     public void SetMovementArtForPlaytest(PlayerMovementArt movementArt, int level = 1)
     {
         ActiveMovementArt = movementArt;
-        MovementArtLevel = movementArt == PlayerMovementArt.None ? 0 : Mathf.Clamp(level, 1, 3);
+        MovementArtLevel = movementArt == PlayerMovementArt.None ? 0 : Mathf.Clamp(level, 1, MaxMovementArtLevel);
         MovementArtChanged?.Invoke(ActiveMovementArt, MovementArtLevel);
+    }
+
+    public void SetUpgradesForPlaytest(IEnumerable<string> upgradeIds)
+    {
+        upgradeStacks.Clear();
+        relics.Clear();
+        currentUpgradeOptions.Clear();
+        firstDamageBlocked = firstHazardBlocked = firstKillHealed = kingsTurnUsed = movementLandingGuard = false;
+        stitchHeals = storedAttackSources = attackStoredSources = alternatingBurstDamage = 0;
+        lastBasicAction = BasicActionType.None;
+        foreach (string id in upgradeIds)
+        {
+            UpgradeDefinition upgrade = RunProgressionCatalog.Upgrade(id);
+            if (!string.IsNullOrEmpty(upgrade.RequiredTrait) && upgrade.RequiredTrait != SelectedTraitId) continue;
+            upgradeStacks[id] = Mathf.Min(upgrade.MaxStacks, Stack(id) + 1);
+        }
+        ApplyTraitBagSize();
+        UpgradesChanged?.Invoke();
     }
 
     public void NotifyMovementArtUsed()
     {
-        int returnedGauge = Stack("movement_breath") * 5;
-        if (returnedGauge > 0) ultimateGauge?.AddGauge(returnedGauge);
+        int lockCount = Stack("movement_breath");
+        if (lockCount > 0)
+            LockAdjacentEnemies(playerMovement.GridPosition, lockCount, null);
         if (HasRelic("landing_ward")) movementLandingGuard = true;
-        if (HasRelic("ambush_crest")
-            || (ActiveMovementArt == PlayerMovementArt.Knight && MovementArtLevel >= 3))
-            storedAttackBonus = true;
+        if (HasRelic("ambush_crest")) storedAttackSources |= AmbushCharge;
+        if (ActiveMovementArt == PlayerMovementArt.Knight && MovementArtLevel >= 3)
+            storedAttackSources |= KnightCharge;
     }
 
     private void HandleTraitSelected(string traitId)
     {
         ApplyTraitBagSize();
 
-        currentUpgradeOptions.Clear();
-        currentUpgradeOptions.AddRange(RunProgressionCatalog.Upgrades
-            .Where(item => item.RequiredTrait == traitId && Stack(item.Id) < item.MaxStacks)
-            .Take(3));
+        BuildUpgradeOptions(0);
 
         if (currentUpgradeOptions.Count == 0)
             return;
@@ -364,7 +438,7 @@ public sealed class RunProgressionSystem : MonoBehaviour
             case "knockback": baseSize = 4; reduction = Stack("compressed_impact"); break;
             default: return;
         }
-        reduction += Stack("trait_acceleration") + Stack("trait_mastery");
+        reduction += Stack("trait_acceleration");
         traitSystem.SetActivationBagSize(Mathf.Max(2, baseSize - reduction));
     }
 
@@ -373,10 +447,12 @@ public sealed class RunProgressionSystem : MonoBehaviour
         firstDamageBlocked = false;
         firstHazardBlocked = false;
         firstKillHealed = false;
-        stitchHealed = false;
+        stitchHeals = 0;
         kingsTurnUsed = false;
         movementLandingGuard = false;
         relicAcquiredThisWave = false;
+        storedAttackSources = 0;
+        lastBasicAction = BasicActionType.None;
 
         if (WaveTemplateCatalog.Get(waveNumber).IsRelicWave)
         {
@@ -386,6 +462,9 @@ public sealed class RunProgressionSystem : MonoBehaviour
 
     private void HandleWaveCleared(int waveNumber)
     {
+        if (waveNumber >= WaveTemplateCatalog.FinalWave) traitSystem?.ResetCharge();
+        storedAttackSources = 0;
+        lastBasicAction = BasicActionType.None;
         ClearAltars();
     }
 
@@ -417,14 +496,39 @@ public sealed class RunProgressionSystem : MonoBehaviour
         string traitId = traitSystem != null ? traitSystem.SelectedTraitId : string.Empty;
         List<RelicDefinition> eligible = RunProgressionCatalog.Relics
             .Where(item => item.MinimumWave <= waveNumber && !shownRelics.Contains(item.Id)
+                && (waveNumber < 16 || item.Rarity >= RelicRarity.Rare)
                 && (!item.IsTraitRelic || item.RequiredTrait == traitId)).ToList();
         if (eligible.Count == 0) return;
 
         RelicRarity rolled = RollRarity(waveNumber, risky);
+        RelicRarity minimumRarity = waveNumber >= 16 ? RelicRarity.Rare : RelicRarity.Common;
+        if (!risky)
+        {
+            // 안전 제단이 마지막 최고 등급을 소진하지 않게 위험 제단의 후보를 남긴다.
+            eligible = eligible.Where(item => eligible.Any(other => other.Id != item.Id
+                && other.Rarity >= item.Rarity)).ToList();
+            if (eligible.Count == 0) return;
+        }
+        else
+        {
+            RelicOffer safeOffer = activeAltars.FirstOrDefault(item => !item.IsRisky);
+            if (safeOffer != null) minimumRarity = safeOffer.Relic.Rarity;
+            // 원칙적으로 한 단계 높은 등급을 보장하고, 후보 소진 시에만 같은 등급을 허용한다.
+            int preferredGrade = Math.Min((int)RelicRarity.Legendary,
+                Math.Max((int)RelicRarity.Rare, (int)minimumRarity + 1));
+            rolled = (RelicRarity)Math.Max((int)rolled, preferredGrade);
+            eligible = eligible.Where(item => item.Rarity >= minimumRarity).ToList();
+            if (eligible.Count == 0) return;
+            if (eligible.Any(item => (int)item.Rarity >= preferredGrade))
+                eligible = eligible.Where(item => (int)item.Rarity >= preferredGrade).ToList();
+        }
         List<RelicDefinition> rarityPool = eligible.Where(item => item.Rarity == rolled).ToList();
         if (rarityPool.Count == 0)
         {
-            rarityPool = eligible.OrderBy(item => Mathf.Abs((int)item.Rarity - (int)rolled)).ToList();
+            // 등급 후보가 소진돼도 위험 제단의 최소 품질을 낮추지 않는다.
+            int nearestDistance = eligible.Min(item => Mathf.Abs((int)item.Rarity - (int)rolled));
+            rarityPool = eligible.Where(item =>
+                Mathf.Abs((int)item.Rarity - (int)rolled) == nearestDistance).ToList();
         }
         RelicDefinition selected = rarityPool[UnityEngine.Random.Range(0, rarityPool.Count)];
         shownRelics.Add(selected.Id);
@@ -565,12 +669,12 @@ public sealed class RunProgressionSystem : MonoBehaviour
 
     private void ApplyRelicEffects(RelicDefinition relic)
     {
-        if (relic.Id == "glass_heart") playerHealth.AdjustMaxHealth(-3);
+        if (relic.Id == "glass_heart") playerHealth.AdjustMaxHealth(-2);
     }
 
     private void RemoveRelicEffects(RelicDefinition relic)
     {
-        if (relic.Id == "glass_heart") playerHealth.AdjustMaxHealth(3);
+        if (relic.Id == "glass_heart") playerHealth.AdjustMaxHealth(2);
     }
 
     private void NotifyRelicsChanged()
@@ -588,58 +692,67 @@ public sealed class RunProgressionSystem : MonoBehaviour
 
     public void NotifyMoveAction()
     {
-        if (lastBasicAction == BasicActionType.Attack)
-        {
-            int alternatingGain = (HasRelic("alternating_gear") ? 5 : 0)
-                + (Stack("alternating_overload") > 0 ? 10 : 0);
-            if (alternatingGain > 0 && ultimateGauge != null)
-            {
-                ultimateGauge.AddGauge(alternatingGain);
-            }
-        }
         lastBasicAction = BasicActionType.Move;
     }
 
     public void BeginAttack(PlayerAttackTraitRoll roll)
     {
-        if (lastBasicAction == BasicActionType.Move)
-        {
-            int alternatingGain = (HasRelic("alternating_gear") ? 5 : 0)
-                + (Stack("alternating_overload") > 0 ? 10 : 0);
-            if (alternatingGain > 0 && ultimateGauge != null)
-            {
-                ultimateGauge.AddGauge(alternatingGain);
-            }
-        }
+        alternatingBurstDamage = lastBasicAction == BasicActionType.Move
+            ? (HasRelic("alternating_gear") ? 1 : 0)
+            : 0;
         attackHunterBonus = lastBasicAction == BasicActionType.Move
             && (HasRelic("hunters_mark") || Stack("hunter_instinct") > 0);
-        attackStoredBonus = storedAttackBonus;
-        storedAttackBonus = false;
+        attackStoredSources = storedAttackSources;
+        storedAttackSources = 0;
         lastBasicAction = BasicActionType.Attack;
         firstCastKilled = false;
+        echoDirectionChanged = false;
         attackKilledAny = false;
-        recoveryGranted = false;
         attackHitCount = 0;
+        overflowTransferred = false;
+        rewardedKills.Clear();
+        foreach (HashSet<int> targets in areaHitTargets.Values) targets.Clear();
     }
 
-    public int ModifyAttackDamage(int baseDamage, PlayerAttackTraitRoll roll, int castIndex)
+    public int ModifyAttackDamage(int baseDamage, PlayerAttackTraitRoll roll, int castIndex,
+        int hitIndex = 0)
     {
         int damage = baseDamage;
-        if (roll.DamageBoost) damage += 1 + Stack("overcharge");
+        if (roll.DamageBoost) damage += 1 + Stack("overcharge") + Stack("rapid_cycle");
+        if (roll.Knockback && Stack("trait_mastery") > 0) damage++;
+        if (roll.DoubleCast && castIndex > 0)
+        {
+            damage += Stack("echo_warhead") + Stack("rapid_cycle");
+            if (Stack("echo_recovery") > 0 && echoDirectionChanged) damage++;
+            if (Stack("echo_recovery") > 0 && HasRelic("rotating_mirror")) damage++;
+        }
         if (HasRelic("glass_heart")) damage++;
-        if (Stack("keen_magic") > 0) damage++;
         if (Stack("arcane_overdrive") > 0) damage++;
-        if (attackHunterBonus) damage++;
-        if (attackStoredBonus) damage++;
+        // 예약 보너스는 공격 행동의 첫 실제 직격에만 적용한다.
+        if (attackHitCount == 0 && hitIndex == 0)
+        {
+            if (Stack("keen_magic") > 0
+                && (roll.DoubleCast || roll.Pierce || roll.DamageBoost || roll.Knockback)) damage++;
+            if (attackHunterBonus) damage++;
+            if ((attackStoredSources & KnightCharge) != 0) damage++;
+            if ((attackStoredSources & AmbushCharge) != 0) damage++;
+            if ((attackStoredSources & ExcessCharge) != 0) damage++;
+        }
         if (castIndex > 0 && firstCastKilled && HasRelic("twin_focus")) damage++;
+        if (roll.DoubleCast && castIndex > 0 && Stack("trait_mastery") > 0) damage++;
         return damage;
+    }
+
+    public void NotifyEchoDirectionSelected(bool changed)
+    {
+        echoDirectionChanged = changed;
     }
 
     public int ModifyPenetrations(PlayerAttackTraitRoll roll)
     {
         if (!roll.Pierce) return 0;
         if (HasRelic("infinite_orbit")) return 99;
-        return 1 + Stack("long_needle");
+        return 1 + Stack("long_needle") + Stack("rapid_cycle");
     }
 
     public int AttackCastCount(PlayerAttackTraitRoll roll)
@@ -650,59 +763,80 @@ public sealed class RunProgressionSystem : MonoBehaviour
 
     public int ModifyPenetrationDamage(int damage, PlayerAttackTraitRoll roll, int hitIndex)
     {
+        if (roll.Pierce && hitIndex > 0) damage += Stack("pierce_recovery");
+        if (roll.Pierce && hitIndex > 0 && Stack("trait_mastery") > 0) damage++;
         return roll.Pierce && hitIndex == 1 && HasRelic("thorn_needle") ? damage + 1 : damage;
     }
 
     public void NotifyAttackHit(MonsterMovement target, PlayerAttackTraitRoll roll,
-        int castIndex, int hitIndex)
+        int castIndex, int hitIndex, Vector3Int? impactCell = null)
     {
         attackHitCount++;
-        if (!recoveryGranted && roll.DoubleCast && Stack("echo_recovery") > 0)
+        if (target == null) return;
+        Vector3Int center = impactCell ?? target.GridPosition;
+        if (target != null && alternatingBurstDamage > 0)
         {
-            ultimateGauge.AddGauge(5 * Stack("echo_recovery"));
-            recoveryGranted = true;
+            DamageAdjacentEnemies(center, alternatingBurstDamage, target, "alternating");
+            alternatingBurstDamage = 0;
         }
-        if (roll.Pierce && hitIndex > 0 && Stack("pierce_recovery") > 0)
-            ultimateGauge.AddGauge(3 * Stack("pierce_recovery"));
-        if (!recoveryGranted && roll.DamageBoost)
-        {
-            ultimateGauge.AddGauge(5 * Stack("afterglow_recovery")
-                + (HasRelic("hot_afterglow") ? 10 : 0));
-            recoveryGranted = true;
-        }
+        if (attackHitCount == 1 && (attackStoredSources & AmbushCharge) != 0)
+            DamageAdjacentEnemies(center, 1, target, "ambush");
 
-        if (roll.DamageBoost && HasRelic("blast_core") && target != null)
-        {
-            MonsterMovement[] snapshot = monsterSpawner.ActiveMonsters.ToArray();
-            foreach (MonsterMovement other in snapshot)
-                if (other != null && other != target && !other.IsDead
-                    && Chebyshev(other.GridPosition, target.GridPosition) == 1)
-                    other.TakeDamage(1);
-        }
+        // 처치·초과 피해와 무관하게 특성 공격의 첫 직격 위치에서 한 번 폭발한다.
+        if (roll.DamageBoost && attackHitCount == 1)
+            DamageAdjacentEnemies(center, DamageBoostSplashDamageFor(target.IsDead), target, "damage_boost");
 
-        if (target == null || !target.IsDead) return;
+        if (roll.DamageBoost && !target.IsDead && HasRelic("hot_afterglow"))
+            storedAttackSources |= ExcessCharge;
+        TransferOverflow(target);
+        NotifyDirectKill(target, roll, castIndex);
+    }
+
+    private void TransferOverflow(MonsterMovement target)
+    {
+        int cap = HasRelic("glass_heart") ? 2 : 0;
+        int budget = Mathf.Min(cap, target.LastDamageOverflow);
+        if (!target.IsDead || overflowTransferred || budget <= 0) return;
+        // 유리 심장의 범용 초과 전달만 유지한다. 특성 전용 전달은 폭발로 교체했다.
+        foreach (MonsterMovement overflowTarget in monsterSpawner.ActiveMonsters
+            .Where(other => other != null && other != target && !other.IsDead
+                && Chebyshev(other.GridPosition, target.GridPosition) == 1)
+            .OrderBy(other => other.GetComponent<CharacterHealth>().CurrentHealth)
+            .ThenBy(other => Chebyshev(other.GridPosition, playerMovement.GridPosition))
+            .ThenBy(other => other.SpawnOrder).Take(1).ToArray())
+        {
+            overflowTransferred = true;
+            int damage = budget;
+            overflowTarget.TakeDamage(damage, overflowTarget.GridPosition - target.GridPosition);
+            budget -= damage;
+            if (budget <= 0) break;
+        }
+    }
+
+    // 충돌까지 완료된 직접 처치만 알린다. 범위 처치는 이 진입점을 호출하지 않는다.
+    public void NotifyDirectKill(MonsterMovement target, PlayerAttackTraitRoll roll, int castIndex)
+    {
+        if (target == null || !target.IsDead || !rewardedKills.Add(target.GetInstanceID())) return;
         attackKilledAny = true;
         if (castIndex == 0) firstCastKilled = true;
         if (!firstKillHealed)
         {
-            int heal = (HasRelic("blood_knot") ? 1 : 0)
-                + (Stack("combat_regeneration") > 0 ? 1 : 0)
-                + (Stack("immortal_cycle") > 0 ? 2 : 0);
+            firstKillHealed = true;
+            int heal = HasRelic("blood_knot") ? 2 : 0;
             if (heal > 0)
             {
-                firstKillHealed = true;
                 playerHealth.Heal(heal);
             }
         }
-        if (roll.DamageBoost && HasRelic("excess_reservoir")) storedAttackBonus = true;
+        if (roll.DamageBoost && HasRelic("excess_reservoir")) storedAttackSources |= ExcessCharge;
     }
 
     public bool CompleteAttack(PlayerAttackTraitRoll roll)
     {
-        if (roll.Pierce && attackHitCount >= 2 && !stitchHealed
+        if (roll.Pierce && attackHitCount >= 2 && stitchHeals < 2
             && HasRelic("suture_needle"))
         {
-            stitchHealed = true;
+            stitchHeals++;
             playerHealth.Heal(1);
         }
         bool livingEnemyRemains = monsterSpawner.ActiveMonsters.Any(
@@ -719,33 +853,108 @@ public sealed class RunProgressionSystem : MonoBehaviour
     public int ModifyIncomingDamage(int damage, PlayerDamageKind kind)
     {
         if (Stack("arcane_overdrive") > 0) damage++;
-        if (movementLandingGuard)
-        {
-            movementLandingGuard = false;
-            return Mathf.Max(0, damage - 1);
-        }
+        if (damage <= 0) return 0;
         if (kind == PlayerDamageKind.Hazard && !firstHazardBlocked
             && (HasRelic("ash_boots") || Stack("flame_adaptation") > 0))
         {
             firstHazardBlocked = true;
             return 0;
         }
-        if (!firstDamageBlocked
+        if (movementLandingGuard)
+        {
+            movementLandingGuard = false;
+            damage = Mathf.Max(0, damage - 1);
+        }
+        if (damage > 0 && !firstDamageBlocked
             && (HasRelic("vanguard_shield") || Stack("barrier_shell") > 0))
         {
             firstDamageBlocked = true;
-            return Mathf.Max(0, damage - 1);
+            damage = Mathf.Max(0, damage - 1);
         }
         return damage;
     }
 
-    public int KnockbackDistance => HasRelic("battering_ram")
-        ? 3 : 1 + Stack("long_impact");
+    public int KnockbackDistance => Mathf.Max(HasRelic("battering_ram") ? 3 : 1,
+        1 + Stack("rapid_cycle"));
+    public bool HasKnockbackSpread => Stack("long_impact") > 0;
 
-    public void NotifyKnockbackSuccess()
+    public void NotifyKnockbackSuccess(MonsterMovement target, MonsterMovement collision)
     {
-        int stacks = Stack("impact_recovery");
-        if (stacks > 0) ultimateGauge.AddGauge(5 * stacks);
+        if (target != null) NotifyKnockbackResult(target, collision, target.GridPosition);
+    }
+
+    public void NotifyKnockbackResult(MonsterMovement target, MonsterMovement collision,
+        Vector3Int impactCell, bool pathBlocked = false)
+    {
+        // 봉쇄는 직접 대상·그 첫 충돌 상대에만 적용한다. 광역 밀기의 피해와 분리한다.
+        if (Stack("impact_recovery") >= 1 && target != null && !target.IsDead)
+            target.SkipTurns(2);
+        if (Stack("impact_recovery") >= 2 && collision != null && !collision.IsDead)
+            collision.SkipNextTurn();
+        if (HasRelic("battering_ram"))
+        {
+            if (target != null && !target.IsDead) target.SkipNextTurn();
+            if (collision != null && !collision.IsDead) collision.SkipNextTurn();
+        }
+    }
+
+    private void DamageAdjacentEnemies(Vector3Int center, int damage,
+        MonsterMovement excluded, string effectId)
+    {
+        if (damage <= 0 || monsterSpawner == null) return;
+        if (!areaHitTargets.TryGetValue(effectId, out HashSet<int> affected))
+        {
+            affected = new HashSet<int>();
+            areaHitTargets.Add(effectId, affected);
+        }
+        MonsterMovement[] snapshot = monsterSpawner.ActiveMonsters.ToArray();
+        foreach (MonsterMovement monster in snapshot)
+        {
+            if (monster == null || monster == excluded || monster.IsDead) continue;
+            bool inArea = monsterSpawner.OccupiedCellsOf(monster).Any(cell => effectId == "damage_boost"
+                ? DamageBoostArea.Contains(cell - center, DamageBoostAreaLevel)
+                : Chebyshev(cell, center) == 1);
+            if (inArea && affected.Add(monster.GetInstanceID()))
+            {
+                if (effectId == "damage_boost")
+                {
+                    CombatFeedback.EmitResidualFragment(gridManager.GetCellCenterWorld(center), monster);
+                    CombatFeedback.DamageVisualDelay = CombatFeedback.FragmentArrivalSeconds;
+                }
+                try { monster.TakeDamage(damage, monster.GridPosition - center); }
+                finally { CombatFeedback.DamageVisualDelay = 0f; }
+            }
+        }
+    }
+
+    private void LockAdjacentEnemies(Vector3Int center, int maximumTargets,
+        MonsterMovement excluded)
+    {
+        if (maximumTargets <= 0 || monsterSpawner == null) return;
+        foreach (MonsterMovement monster in monsterSpawner.ActiveMonsters
+            .Where(item => item != null && item != excluded && !item.IsDead
+                && !item.IsActionBlocked
+                && Chebyshev(item.GridPosition, center) == 1)
+            .OrderByDescending(ThreatensPlayer)
+            .ThenBy(item => Chebyshev(item.GridPosition, playerMovement.GridPosition))
+            .ThenBy(item => item.SpawnOrder)
+            .Take(maximumTargets)
+            .ToArray())
+        {
+            monster.SkipNextTurn();
+        }
+    }
+
+    private bool ThreatensPlayer(MonsterMovement monster)
+    {
+        Vector3Int delta = monster.GridPosition - playerMovement.GridPosition;
+        if (monster.MovementPattern == MonsterMovementPattern.EightDirection)
+            return Chebyshev(monster.GridPosition, playerMovement.GridPosition) == 1;
+        if (monster.MovementPattern == MonsterMovementPattern.CardinalFour)
+            return Mathf.Abs(delta.x) + Mathf.Abs(delta.y) == 1;
+        ChessMonsterBehaviour behaviour = monster.GetComponent<ChessMonsterBehaviour>();
+        return behaviour != null && behaviour.IsRookCharged
+            && behaviour.RookTargetColumn == playerMovement.GridPosition.x;
     }
 
     private void OnDestroy()

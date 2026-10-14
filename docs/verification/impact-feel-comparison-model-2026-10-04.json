@@ -1,0 +1,22 @@
+{
+  "scope": "Browser functional checks of graybox comparison model, not Unity regression or human preference tests",
+  "factor_cases": 8,
+  "all_A_baseline_B_single_factor_completed": true,
+  "same_scene_within_each_pair": true,
+  "audio_enabled_pair_completed_without_console_errors": true,
+  "viewport_checks": [
+    {
+      "width": 736,
+      "root_width": 704,
+      "scroll_width": 704
+    },
+    {
+      "width": 320,
+      "root_width": 273,
+      "scroll_width": 273
+    }
+  ],
+  "console_errors": [],
+  "ranking": "provisional design inference; no measured preference scores",
+  "fragment_sha256": "1dd7a52a8fac5d47c08f189a230f5aa4d51938637a4decb9ab80b0624b91ce75"
+}

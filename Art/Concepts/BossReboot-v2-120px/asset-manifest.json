@@ -1,0 +1,52 @@
+{
+  "asset": "black-iron-colossus",
+  "version": "v2-120px",
+  "status": "concept draft",
+  "generator": "built-in image_gen",
+  "generated_source": "/Users/gimdong-yun/.codex/generated_images/01a0ff99-6f40-7fa1-a793-093bdf079a2b/exec-75fcae1f-c044-4e41-b2d6-a650b3e27c06.png",
+  "references": [
+    "Art/Concepts/BossReboot-v1/black-iron-colossus-concept.png",
+    "Art/Concepts/QueenRevision-v7/queen-original-c-face.png"
+  ],
+  "normalization": "Aseprite 1.3.18.6; normalize_aseprite.lua; nearest sampling, fixed 10-color palette, binary alpha, isolated interior pixel cleanup",
+  "canvas": [
+    120,
+    120
+  ],
+  "opaque_colors": 10,
+  "content_bounds": [
+    4,
+    6,
+    116,
+    116
+  ],
+  "preview_scale": 6,
+  "queen_comparison": "both on 120x120 canvases at common bottom anchor y=116; body heights boss 110px, queen 112px",
+  "target_import_settings": {
+    "ppu": 32,
+    "filter": "Point"
+  },
+  "imported_into_game": false,
+  "files": [
+    {
+      "file": "generated-redraw-source.png",
+      "sha256": "af2905d43b84d4d23e6e4be7fc61d41f7993f1294bd0ed921dedc5ffe1d26ba9"
+    },
+    {
+      "file": "black-iron-colossus-120.png",
+      "sha256": "9e03650e46a20c212ae9327fd9aecb9dc281aef10ea0383cec0246484619ce63"
+    },
+    {
+      "file": "black-iron-colossus-120.aseprite",
+      "sha256": "814735e8fa8bb138ef0e2fe9b6e0819b880fb7fa85d4aa919d16748ad52024e8"
+    },
+    {
+      "file": "black-iron-colossus-120-6x.png",
+      "sha256": "1dcaf2683537d19c84f074ad6f6c7e376e6b31026155a112dc951b0de6389ad5"
+    },
+    {
+      "file": "queen-boss-same-120px-comparison-4x.png",
+      "sha256": "539ec88c8af4b709e3ddb927281c3008aeabb433679f66e315927f94bb3a0470"
+    }
+  ]
+}

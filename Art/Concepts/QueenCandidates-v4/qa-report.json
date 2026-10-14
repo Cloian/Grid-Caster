@@ -1,0 +1,84 @@
+{
+  "ok": false,
+  "assets": [
+    {
+      "path": "Art/Concepts/QueenCandidates-v4/A-mask-queen.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 488104,
+      "color_count": ">12",
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 1105287,
+      "content_bounds": [
+        97,
+        19,
+        1121,
+        1222
+      ],
+      "problems": [
+        "size is 1254x1254; expected 120x120",
+        "image has more than 12 colors",
+        "contains partial alpha pixels; final sprite requires alpha 0 or 255"
+      ],
+      "partial_alpha_pixels": 465544,
+      "distinct_opaque_rgb_colors": 224
+    },
+    {
+      "path": "Art/Concepts/QueenCandidates-v4/B-crown-moth.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 597110,
+      "color_count": ">12",
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 969862,
+      "content_bounds": [
+        0,
+        49,
+        1210,
+        1230
+      ],
+      "problems": [
+        "size is 1254x1254; expected 120x120",
+        "image has more than 12 colors",
+        "contains partial alpha pixels; final sprite requires alpha 0 or 255"
+      ],
+      "partial_alpha_pixels": 600641,
+      "distinct_opaque_rgb_colors": 204
+    },
+    {
+      "path": "Art/Concepts/QueenCandidates-v4/C-throne-queen.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 531016,
+      "color_count": ">12",
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 1030343,
+      "content_bounds": [
+        67,
+        52,
+        1210,
+        1182
+      ],
+      "problems": [
+        "size is 1254x1254; expected 120x120",
+        "image has more than 12 colors",
+        "contains partial alpha pixels; final sprite requires alpha 0 or 255"
+      ],
+      "partial_alpha_pixels": 540485,
+      "distinct_opaque_rgb_colors": 108
+    }
+  ],
+  "scope": "generated design drafts; failed production gate is expected and recorded, no normalization applied"
+}

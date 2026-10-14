@@ -1,0 +1,191 @@
+KNIGHT_COUNTER_FAIL
+Controlled actual SampleScene fixtures; gameplay-rule validation, not human fun assessment.
+Unity 6000.4.0f1; 2026-10-04T15:36:26.1368240+09:00
+PASS reserved landing is not vulnerable or damaging before arrival (1, 0, 0)
+PASS landing opens vulnerability before next preparation turn (1, 0, 0)
+PASS original cardinal cross damage remains; diagonal landing is safe (1, 0, 0)
+PASS vulnerability and next-turn danger are explained in public state
+PASS cancel and invalid attack preserve opportunity
+PASS occupied move preserves opportunity
+PASS inspection blocks action without consuming opportunity
+PASS disabled input does not consume opportunity
+PASS attack accepted (1, 0, 0)
+PASS accepted attack immediately consumes the window
+PASS attack advances enemies exactly once
+PASS adjacent first normal hit is 1+1 with one charge (1, 0, 0)
+PASS reserved landing is not vulnerable or damaging before arrival (0, 1, 0)
+PASS landing opens vulnerability before next preparation turn (0, 1, 0)
+PASS original cardinal cross damage remains; diagonal landing is safe (0, 1, 0)
+PASS vulnerability and next-turn danger are explained in public state
+PASS cancel and invalid attack preserve opportunity
+PASS occupied move preserves opportunity
+PASS inspection blocks action without consuming opportunity
+PASS disabled input does not consume opportunity
+PASS attack accepted (0, 1, 0)
+PASS accepted attack immediately consumes the window
+PASS attack advances enemies exactly once
+PASS adjacent first normal hit is 1+1 with one charge (0, 1, 0)
+PASS reserved landing is not vulnerable or damaging before arrival (-1, 0, 0)
+PASS landing opens vulnerability before next preparation turn (-1, 0, 0)
+PASS original cardinal cross damage remains; diagonal landing is safe (-1, 0, 0)
+PASS vulnerability and next-turn danger are explained in public state
+PASS cancel and invalid attack preserve opportunity
+PASS occupied move preserves opportunity
+PASS inspection blocks action without consuming opportunity
+PASS disabled input does not consume opportunity
+PASS attack accepted (-1, 0, 0)
+PASS accepted attack immediately consumes the window
+PASS attack advances enemies exactly once
+PASS adjacent first normal hit is 1+1 with one charge (-1, 0, 0)
+PASS reserved landing is not vulnerable or damaging before arrival (0, -1, 0)
+PASS landing opens vulnerability before next preparation turn (0, -1, 0)
+PASS original cardinal cross damage remains; diagonal landing is safe (0, -1, 0)
+PASS vulnerability and next-turn danger are explained in public state
+PASS cancel and invalid attack preserve opportunity
+PASS occupied move preserves opportunity
+PASS inspection blocks action without consuming opportunity
+PASS disabled input does not consume opportunity
+PASS attack accepted (0, -1, 0)
+PASS accepted attack immediately consumes the window
+PASS attack advances enemies exactly once
+PASS adjacent first normal hit is 1+1 with one charge (0, -1, 0)
+PASS reserved landing is not vulnerable or damaging before arrival (1, 1, 0)
+PASS landing opens vulnerability before next preparation turn (1, 1, 0)
+PASS original cardinal cross damage remains; diagonal landing is safe (1, 1, 0)
+PASS vulnerability and next-turn danger are explained in public state
+PASS cancel and invalid attack preserve opportunity
+PASS occupied move preserves opportunity
+PASS inspection blocks action without consuming opportunity
+PASS disabled input does not consume opportunity
+PASS attack accepted (1, 1, 0)
+PASS accepted attack immediately consumes the window
+PASS attack advances enemies exactly once
+PASS adjacent first normal hit is 1+1 with one charge (1, 1, 0)
+PASS reserved landing is not vulnerable or damaging before arrival (-1, 1, 0)
+PASS landing opens vulnerability before next preparation turn (-1, 1, 0)
+PASS original cardinal cross damage remains; diagonal landing is safe (-1, 1, 0)
+PASS vulnerability and next-turn danger are explained in public state
+PASS cancel and invalid attack preserve opportunity
+PASS occupied move preserves opportunity
+PASS inspection blocks action without consuming opportunity
+PASS disabled input does not consume opportunity
+PASS attack accepted (-1, 1, 0)
+PASS accepted attack immediately consumes the window
+PASS attack advances enemies exactly once
+PASS adjacent first normal hit is 1+1 with one charge (-1, 1, 0)
+PASS reserved landing is not vulnerable or damaging before arrival (-1, -1, 0)
+PASS landing opens vulnerability before next preparation turn (-1, -1, 0)
+PASS original cardinal cross damage remains; diagonal landing is safe (-1, -1, 0)
+PASS vulnerability and next-turn danger are explained in public state
+PASS cancel and invalid attack preserve opportunity
+PASS occupied move preserves opportunity
+PASS inspection blocks action without consuming opportunity
+PASS disabled input does not consume opportunity
+PASS attack accepted (-1, -1, 0)
+PASS accepted attack immediately consumes the window
+PASS attack advances enemies exactly once
+PASS adjacent first normal hit is 1+1 with one charge (-1, -1, 0)
+PASS reserved landing is not vulnerable or damaging before arrival (1, -1, 0)
+PASS landing opens vulnerability before next preparation turn (1, -1, 0)
+PASS original cardinal cross damage remains; diagonal landing is safe (1, -1, 0)
+PASS vulnerability and next-turn danger are explained in public state
+PASS cancel and invalid attack preserve opportunity
+PASS occupied move preserves opportunity
+PASS inspection blocks action without consuming opportunity
+PASS disabled input does not consume opportunity
+PASS attack accepted (1, -1, 0)
+PASS accepted attack immediately consumes the window
+PASS attack advances enemies exactly once
+PASS adjacent first normal hit is 1+1 with one charge (1, -1, 0)
+PASS reserved landing is not vulnerable or damaging before arrival (1, 0, 0)
+PASS landing opens vulnerability before next preparation turn (1, 0, 0)
+PASS original cardinal cross damage remains; diagonal landing is safe (1, 0, 0)
+PASS valid basic movement consumes opportunity immediately
+PASS move advances enemies exactly once
+PASS move grants no damage or charge and preparation does not reopen window
+PASS attack accepted (1, 0, 0)
+PASS accepted attack immediately consumes the window
+PASS attack advances enemies exactly once
+PASS opportunity cannot be saved until an attack after movement
+PASS reserved landing is not vulnerable or damaging before arrival (1, 0, 0)
+PASS landing opens vulnerability before next preparation turn (1, 0, 0)
+PASS original cardinal cross damage remains; diagonal landing is safe (1, 0, 0)
+PASS attack accepted (0, 1, 0)
+PASS accepted attack immediately consumes the window
+PASS attack advances enemies exactly once
+PASS miss consumes opportunity without damage or charge
+PASS attack accepted (1, 0, 0)
+PASS accepted attack immediately consumes the window
+PASS attack advances enemies exactly once
+PASS missed opportunity does not increase later damage
+PASS reserved landing is not vulnerable or damaging before arrival (1, -1, 0)
+PASS landing opens vulnerability before next preparation turn (1, -1, 0)
+PASS original cardinal cross damage remains; diagonal landing is safe (1, -1, 0)
+PASS attack accepted (-1, 0, 0)
+PASS accepted attack immediately consumes the window
+PASS attack advances enemies exactly once
+PASS attacking another enemy consumes opportunity with ordinary damage
+PASS reserved landing is not vulnerable or damaging before arrival (3, 0, 0)
+PASS landing opens vulnerability before next preparation turn (3, 0, 0)
+PASS original cardinal cross damage remains; diagonal landing is safe (3, 0, 0)
+PASS attack accepted (1, 0, 0)
+PASS accepted attack immediately consumes the window
+PASS attack advances enemies exactly once
+PASS ranged hit on vulnerable Knight receives no bonus
+PASS reserved landing is not vulnerable or damaging before arrival (1, 0, 0)
+PASS landing opens vulnerability before next preparation turn (1, 0, 0)
+PASS original cardinal cross damage remains; diagonal landing is safe (1, 0, 0)
+PASS movement art consumes opportunity
+PASS movement art advances enemies exactly once
+PASS movement art receives no attack charge
+PASS reserved landing is not vulnerable or damaging before arrival (1, 0, 0)
+PASS landing opens vulnerability before next preparation turn (1, 0, 0)
+PASS original cardinal cross damage remains; diagonal landing is safe (1, 0, 0)
+PASS ready trait attack selectable
+PASS attack accepted (1, 0, 0)
+PASS accepted attack immediately consumes the window
+PASS attack advances enemies exactly once
+PASS double_cast adds vulnerability once and does not recharge a trait attack
+PASS reserved landing is not vulnerable or damaging before arrival (1, 0, 0)
+PASS landing opens vulnerability before next preparation turn (1, 0, 0)
+PASS original cardinal cross damage remains; diagonal landing is safe (1, 0, 0)
+PASS ready trait attack selectable
+PASS attack accepted (1, 0, 0)
+PASS accepted attack immediately consumes the window
+PASS attack advances enemies exactly once
+PASS pierce adds vulnerability once and does not recharge a trait attack
+PASS later penetration target receives no vulnerability bonus
+PASS reserved landing is not vulnerable or damaging before arrival (1, 0, 0)
+PASS landing opens vulnerability before next preparation turn (1, 0, 0)
+PASS original cardinal cross damage remains; diagonal landing is safe (1, 0, 0)
+PASS ready trait attack selectable
+PASS attack accepted (1, 0, 0)
+PASS accepted attack immediately consumes the window
+PASS attack advances enemies exactly once
+PASS damage_boost adds vulnerability once and does not recharge a trait attack
+PASS reserved landing is not vulnerable or damaging before arrival (1, 0, 0)
+PASS landing opens vulnerability before next preparation turn (1, 0, 0)
+PASS original cardinal cross damage remains; diagonal landing is safe (1, 0, 0)
+PASS ready trait attack selectable
+PASS attack accepted (1, 0, 0)
+PASS accepted attack immediately consumes the window
+PASS attack advances enemies exactly once
+PASS knockback adds vulnerability once and does not recharge a trait attack
+PASS counter damage preserves existing logical knockback
+PASS reserved landing is not vulnerable or damaging before arrival (1, 0, 0)
+PASS landing opens vulnerability before next preparation turn (1, 0, 0)
+PASS original cardinal cross damage remains; diagonal landing is safe (1, 0, 0)
+PASS move before blocked Knight accepted
+PASS blocked turn advances enemies exactly once
+PASS blocked Knight does not keep the consumed window
+PASS reserved landing is not vulnerable or damaging before arrival (1, 0, 0)
+PASS landing opens vulnerability before next preparation turn (1, 0, 0)
+PASS original cardinal cross damage remains; diagonal landing is safe (1, 0, 0)
+PASS attack accepted (1, 0, 0)
+PASS accepted attack immediately consumes the window
+PASS attack advances enemies exactly once
+System.InvalidOperationException: lethal counter frees occupancy and charges once
+  at KnightCounterValidation.Check (System.Boolean result, System.String description) [0x0001f] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/KnightCounterValidation.cs:114 
+  at KnightCounterValidation+<Run>d__32.MoveNext () [0x00a19] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/KnightCounterValidation.cs:318 
+  at KnightCounterValidation+<Flatten>d__25.MoveNext () [0x0009e] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/KnightCounterValidation.cs:139 
+  at KnightCounterValidation.Tick () [0x00048] in /private/tmp/grid-caster-impact-implementation-20261004/Assets/Editor/KnightCounterValidation.cs:75 

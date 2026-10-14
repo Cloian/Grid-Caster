@@ -1,0 +1,67 @@
+Source: /Users/gimdong-yun/Desktop/aseprite-practice/new_wizard.aseprite
+Export: first 8 frames; crop each 50x50 frame at (5,5), 40x40; sheet 320x40
+Sprite: Assets/Player/new_wizard-Sheet.png; original GUID / slice rects / pivots / 32 PPU / Point preserved
+Movement art: 0.4 second visual travel; walking animation; landing effects before one enemy turn
+
+TACTICAL_CORE_PASS
+Executed 2026-10-14T16:10:12.9953380+09:00; Unity 6000.4.0f1
+Controlled fixtures; not normal-run survival or human enjoyment evidence.
+PASS UI raycast reaches UpgradeChoice_1 at (321.29, 324.93) screen=1948x1414 hits=UpgradeChoice_1,UpgradeSelectionPanel
+PASS initial build selection through actual UI callback
+INFO Runtime pipeline=URP; no render settings/assets changed
+INFO Existing fixture sprite: Frame_2, PPU=40, filter=Point; not modified
+PASS unready manual selection rejected
+PASS F does not select special attack before charge is ready
+PASS ordinary miss via screen click
+PASS miss does not charge; one world turn (charge=0, turns=0->1)
+PASS ordinary hit via screen click 1
+PASS one completed normal hit = one charge 1
+PASS ordinary hit via screen click 2
+PASS one completed normal hit = one charge 2
+PASS two ordinary hits prepare pierce
+PASS normal attack holds ready trait and does not auto-pierce
+PASS F command selects special aim without consuming charge
+PASS aim cancellation does not consume readiness
+PASS A switches special aim back to ordinary attack and preserves readiness
+PASS visible, untruncated action hint: manual attack (17.75951/54)
+PASS prepared pierce preview includes second target but no wall
+PASS manual pierce via screen click
+PASS manual pierce hits aligned pair, no self recharge, one enemy turn
+PASS UI raycast reaches SelectedTraitIconFrame at (545.29, 86.24) screen=1948x1414 hits=SelectedTraitIconFrame,TraitHud
+PASS existing trait icon selects manual attack
+PASS committed manual miss consumes one use
+PASS partial charge carries across ordinary wave events
+PASS lower requirement immediately prepares existing charge
+PASS stage clear resets charge
+PASS double cast = two hits, zero charge, one world turn
+PASS visible, untruncated action hint: reaim (17.75951/54)
+PASS reaim blocks direct move API
+PASS reaim blocks S and cancel
+PASS prepared damage attack gives two direct damage, no automatic recharge
+PASS prepared knockback moves surviving target one cell without recharging
+PASS visible, untruncated action hint: free king step (17.75951/54)
+PASS king bonus occurs before original attack enemy turn
+PASS F cannot interrupt king free movement with special attack
+PASS free step rejects A/direct attack/manual trait attack
+PASS right click skips bonus and resumes exactly one enemy turn
+PASS Knight starts walking at departure and blocks extra input/enemy turns
+PASS Knight keeps world and landing effects waiting during travel
+PASS Knight visibly travels through intermediate positions with changing walk frames
+PASS Knight lands once, returns to idle, and resolves exactly one enemy turn
+PASS Bishop starts walking at departure and blocks extra input/enemy turns
+PASS Bishop keeps world and landing effects waiting during travel
+PASS Bishop visibly travels through intermediate positions with changing walk frames
+PASS Bishop lands once, returns to idle, and resolves exactly one enemy turn
+PASS Rook starts walking at departure and blocks extra input/enemy turns
+PASS Rook keeps world and landing effects waiting during travel
+PASS Rook visibly travels through intermediate positions with changing walk frames
+PASS Rook lands once, returns to idle, and resolves exactly one enemy turn
+PASS rook cannot cross occupied intermediate tile to empty target
+PASS rook fire destination remains selectable via mouse
+PASS rook can cross fire, landing on fire hurts (not blocked by fire)
+PASS rook Lv.1 cannot move beyond four cells
+PASS knight shows possible cross threats, not exact future landing
+PASS new threat border uses 32 PPU / Point
+PASS hover query leaves position, pattern, and RNG unchanged
+PASS bishop separates possible creation from entry damage
+PASS death resets charge and stops input

@@ -1,0 +1,19 @@
+MOBILE_ADAPTER_PASS
+Controlled Editor fixtures + mathematical portrait layout checks. Not physical iPhone evidence.
+PASS mobile adapter automatically attached without scene edits
+PASS square full-board + separate 44pt controls/header at (375, 667)
+PASS square full-board + separate 44pt controls/header at (390, 844)
+PASS square full-board + separate 44pt controls/header at (430, 932)
+PASS PC HUD hidden only in mobile mode
+INFO can=True mode=Attack modal=False pause=False point=(320.00, 150.00) viewport=(x:0.00, y:0.00, width:640.00, height:480.00)
+PASS far board tap previews nearest 8-direction; no damage/turn
+PASS cancel consumes neither turn nor charge
+PASS build drawer blocks board input
+PASS existing build list lives in masked scrolling drawer
+PASS close restores input on a later frame
+PASS preview confirm deals one hit, charges once, advances exactly one enemy turn
+PASS repeat confirm without draft does not duplicate action
+PASS move tap is preview only
+PASS move confirm = one tile + one enemy turn
+PASS background pause requires explicit resume
+PASS resume retains encounter

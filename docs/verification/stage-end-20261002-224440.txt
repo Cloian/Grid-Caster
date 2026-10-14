@@ -1,0 +1,10 @@
+STAGE_END_FAIL
+Controlled final-state fixtures + actual scene reload. NOT normal combat clears or human play.
+Executed 2026-10-02T22:44:40.8340010+09:00; Unity 6000.4.0f1
+PASS fresh scene resets build, charge, movement art, relics, wave and grave; trait=0
+PASS initial trait/upgrade still playable; trait=0
+PASS final clear occurs once and locks living player; trait=0
+System.InvalidOperationException: pause/resume cannot reopen combat after stage clear; trait=0
+  at StageEndValidation.Check (System.Boolean result, System.String description) [0x0001f] in /Users/gimdong-yun/GitHub/Grid-Caster/Assets/Editor/StageEndValidation.cs:96 
+  at StageEndValidation+<Run>d__15.MoveNext () [0x00489] in /Users/gimdong-yun/GitHub/Grid-Caster/Assets/Editor/StageEndValidation.cs:142 
+  at StageEndValidation.Tick () [0x00048] in /Users/gimdong-yun/GitHub/Grid-Caster/Assets/Editor/StageEndValidation.cs:69 

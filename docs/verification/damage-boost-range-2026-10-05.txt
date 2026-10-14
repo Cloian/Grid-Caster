@@ -1,0 +1,205 @@
+DAMAGE_BOOST_SPLASH_PASS
+Controlled actual SampleScene fixtures; gameplay-rule validation, not human fun assessment.
+Unity 6000.4.0f1; 2026-10-05T15:05:00.5005650+09:00
+PASS current scene uses URP; no rendering package change
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS surviving impact: direct two, splash one at (1, 0, 0), radius two untouched and player unharmed
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS surviving impact: direct two, splash one at (0, 1, 0), radius two untouched and player unharmed
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS surviving impact: direct two, splash one at (-1, 0, 0), radius two untouched and player unharmed
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS surviving impact: direct two, splash one at (0, -1, 0), radius two untouched and player unharmed
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS surviving impact: direct two, splash one at (1, 1, 0), radius two untouched and player unharmed
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS surviving impact: direct two, splash one at (-1, 1, 0), radius two untouched and player unharmed
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS surviving impact: direct two, splash one at (-1, -1, 0), radius two untouched and player unharmed
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS surviving impact: direct two, splash one at (1, -1, 0), radius two untouched and player unharmed
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS ordinary A attack has no splash
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS ordinary A attack while F is prepared retains charge and does not explode
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS missed prepared F attack is consumed with no wall explosion
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS lethal impact still splashes, splash kill frees occupancy and never chains
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS splash-only kill triggers neither direct-kill heal nor king free move
+PASS splash-only kill creates no excess-reservoir storage
+PASS F preview includes eight surrounding cells before action commitment
+PASS cancel clears area preview without spending prepared attack
+PASS ordinary A preview has no blast footprint
+PASS miss preview has no blast footprint
+PASS adjacent blast preview excludes player cell
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS adjacent blast excludes player and never double-hits its direct target
+PASS wall-mounted fixture uses actual top boundary
+PASS splash preview includes a neighboring wall-mounted Rook
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS wall impact splashes adjacent Rook with the same preview footprint
+PASS grown F preview accepted at level 0
+PASS preview exactly matches grown shape, excluding player and center: 0
+PASS integer shape agrees with preview and leaves outer knight-shaped gaps: 0
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS actual area damage hits precisely 8/12/16 footprint, gaps and radius three remain untouched: 0
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS grown range never leaks into ordinary A attack: 0
+PASS grown F preview accepted at level 1
+PASS preview exactly matches grown shape, excluding player and center: 1
+PASS integer shape agrees with preview and leaves outer knight-shaped gaps: 1
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS actual area damage hits precisely 8/12/16 footprint, gaps and radius three remain untouched: 1
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS grown range never leaks into ordinary A attack: 1
+PASS grown F preview accepted at level 2
+PASS preview exactly matches grown shape, excluding player and center: 2
+PASS integer shape agrees with preview and leaves outer knight-shaped gaps: 2
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS actual area damage hits precisely 8/12/16 footprint, gaps and radius three remain untouched: 2
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS grown range never leaks into ordinary A attack: 2
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS side-only kill never activates blast core or recursively changes remaining fragments
+PASS growth separates range, power and conditional core: 0/0/0/0
+PASS growth separates range, power and conditional core: 0/0/0/1
+PASS growth separates range, power and conditional core: 0/0/1/0
+PASS growth separates range, power and conditional core: 0/0/1/1
+PASS growth separates range, power and conditional core: 0/1/0/0
+PASS growth separates range, power and conditional core: 0/1/0/1
+PASS growth separates range, power and conditional core: 0/1/1/0
+PASS growth separates range, power and conditional core: 0/1/1/1
+PASS growth separates range, power and conditional core: 1/0/0/0
+PASS growth separates range, power and conditional core: 1/0/0/1
+PASS growth separates range, power and conditional core: 1/0/1/0
+PASS growth separates range, power and conditional core: 1/0/1/1
+PASS growth separates range, power and conditional core: 1/1/0/0
+PASS growth separates range, power and conditional core: 1/1/0/1
+PASS growth separates range, power and conditional core: 1/1/1/0
+PASS growth separates range, power and conditional core: 1/1/1/1
+PASS growth separates range, power and conditional core: 2/0/0/0
+PASS growth separates range, power and conditional core: 2/0/0/1
+PASS growth separates range, power and conditional core: 2/0/1/0
+PASS growth separates range, power and conditional core: 2/0/1/1
+PASS growth separates range, power and conditional core: 2/1/0/0
+PASS growth separates range, power and conditional core: 2/1/0/1
+PASS growth separates range, power and conditional core: 2/1/1/0
+PASS growth separates range, power and conditional core: 2/1/1/1
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS grown surviving impact has direct five and splash two; core cannot trigger
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS direct center kill boosts both inner and added outer fragments to three
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS double_cast special retains no free splash
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS pierce special retains no free splash
+PASS prepared special selectable
+PASS actual attack accepted
+PASS confirmed attack clears splash preview
+PASS one attack gives exactly one enemy and projectile turn
+PASS splash never adds charge or recharges a special attack
+PASS knockback special retains no free splash
+PASS repeated direct notifications in same action cannot create another blast
+PASS glass heart retains its independent capped surplus transfer on normal attacks
+PASS trait and renamed growth explain the applied splash rule

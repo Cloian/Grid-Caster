@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-04",
+  "name": "흑철 거체",
+  "scope": "new muscular dark boss concept, previous queen identity discarded",
+  "status": "unapproved design draft",
+  "file": "black-iron-colossus-concept.png",
+  "source_tool": "built-in image_gen",
+  "source_path": "/Users/gimdong-yun/.codex/generated_images/01a0ff99-6f40-7fa1-a793-093bdf079a2b/exec-49482896-aafe-444c-a6a7-e417b0c051fd.png",
+  "sha256": "ca1934c46559e1ae54fc56646dd10589fbd4a1d377f79dca098665de049acf01",
+  "target_logical_size": [
+    120,
+    120
+  ],
+  "actual_size": [
+    1254,
+    1254
+  ],
+  "pixels_per_unit_target": 32,
+  "game_imported": false,
+  "collision_footprint": "not decided",
+  "prompt": "prompt.md",
+  "qa": "qa-report.json",
+  "provenance": "AI-generated draft; no source image artwork copied as an asset",
+  "references": [
+    {
+      "path": "/Users/gimdong-yun/Documents/Codex/2026-09-27/referenced-chatgpt-conversation-this-is-an/work/aseprite_exports/jaguar_preview.png",
+      "role": "existing pixel-cluster economy"
+    },
+    {
+      "path": "/Users/gimdong-yun/GitHub/Grid-Caster/docs/verification/captures/pc-screen-2026-10-02.png",
+      "role": "game-view context"
+    }
+  ]
+}

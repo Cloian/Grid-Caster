@@ -1,0 +1,2950 @@
+{
+  "version": "CombatSFX-v2",
+  "date": "2026-10-03",
+  "status": "audition-concepts-not-game-integrated",
+  "method": "source editing + material layering + original synthesis + gain control",
+  "format": {
+    "container": "WAV",
+    "sample_rate": 48000,
+    "channels": 1,
+    "bit_depth": 16
+  },
+  "sources": [
+    {
+      "id": "r",
+      "title": "Kenney RPG Audio",
+      "license": "CC0",
+      "url": "https://kenney.nl/assets/rpg-audio"
+    },
+    {
+      "id": "i",
+      "title": "Kenney Impact Sounds",
+      "license": "CC0",
+      "url": "https://kenney.nl/assets/impact-sounds"
+    },
+    {
+      "id": "f",
+      "title": "Fire Crackling",
+      "author": "AntumDeluge",
+      "license": "CC0",
+      "url": "https://opengameart.org/content/fire-crackling/"
+    }
+  ],
+  "groups": [
+    {
+      "id": "M",
+      "title": "마법 발사·비행",
+      "file": "auditions/M_all_8.wav",
+      "candidate_count": 8,
+      "duration_seconds": 15.461,
+      "order": [
+        {
+          "id": "M1",
+          "name": "유리 결정",
+          "start_seconds": 0.25
+        },
+        {
+          "id": "M2",
+          "name": "공기 탄",
+          "start_seconds": 2.162
+        },
+        {
+          "id": "M3",
+          "name": "책장 시전",
+          "start_seconds": 3.962
+        },
+        {
+          "id": "M4",
+          "name": "전기 스파크",
+          "start_seconds": 5.897
+        },
+        {
+          "id": "M5",
+          "name": "맑은 종",
+          "start_seconds": 7.598
+        },
+        {
+          "id": "M6",
+          "name": "암흑 파동",
+          "start_seconds": 9.52
+        },
+        {
+          "id": "M7",
+          "name": "유기적인 맥동",
+          "start_seconds": 11.651
+        },
+        {
+          "id": "M8",
+          "name": "룬 연타",
+          "start_seconds": 13.647
+        }
+      ],
+      "repeats_per_candidate": 2
+    },
+    {
+      "id": "S",
+      "title": "생물에게 마법 명중",
+      "file": "auditions/S_all_8.wav",
+      "candidate_count": 8,
+      "duration_seconds": 14.19,
+      "order": [
+        {
+          "id": "S1",
+          "name": "천의 둔탁함",
+          "start_seconds": 0.25
+        },
+        {
+          "id": "S2",
+          "name": "가죽 충격",
+          "start_seconds": 1.771
+        },
+        {
+          "id": "S3",
+          "name": "촉촉한 충격",
+          "start_seconds": 3.526
+        },
+        {
+          "id": "S4",
+          "name": "찰싹 타격",
+          "start_seconds": 5.213
+        },
+        {
+          "id": "S5",
+          "name": "바람 관통",
+          "start_seconds": 6.896
+        },
+        {
+          "id": "S6",
+          "name": "작은 마법 파열",
+          "start_seconds": 8.762
+        },
+        {
+          "id": "S7",
+          "name": "묵직한 몸 충격",
+          "start_seconds": 10.661
+        },
+        {
+          "id": "S8",
+          "name": "가벼운 톡",
+          "start_seconds": 12.568
+        }
+      ],
+      "repeats_per_candidate": 2
+    },
+    {
+      "id": "H",
+      "title": "단단한 대상에게 명중",
+      "file": "auditions/H_all_8.wav",
+      "candidate_count": 8,
+      "duration_seconds": 14.761,
+      "order": [
+        {
+          "id": "H1",
+          "name": "철판",
+          "start_seconds": 0.25
+        },
+        {
+          "id": "H2",
+          "name": "갑주",
+          "start_seconds": 1.992
+        },
+        {
+          "id": "H3",
+          "name": "돌",
+          "start_seconds": 3.957
+        },
+        {
+          "id": "H4",
+          "name": "도자기 질감",
+          "start_seconds": 5.911
+        },
+        {
+          "id": "H5",
+          "name": "청동 울림",
+          "start_seconds": 7.687
+        },
+        {
+          "id": "H6",
+          "name": "쇠테",
+          "start_seconds": 9.643
+        },
+        {
+          "id": "H7",
+          "name": "유리 갑주",
+          "start_seconds": 11.254
+        },
+        {
+          "id": "H8",
+          "name": "둔한 금속",
+          "start_seconds": 13.069
+        }
+      ],
+      "repeats_per_candidate": 2
+    },
+    {
+      "id": "P",
+      "title": "플레이어 피격",
+      "file": "auditions/P_all_8.wav",
+      "candidate_count": 8,
+      "duration_seconds": 14.251,
+      "order": [
+        {
+          "id": "P1",
+          "name": "몸과 천",
+          "start_seconds": 0.25
+        },
+        {
+          "id": "P2",
+          "name": "짧은 찌름",
+          "start_seconds": 1.999
+        },
+        {
+          "id": "P3",
+          "name": "마법 충격",
+          "start_seconds": 3.626
+        },
+        {
+          "id": "P4",
+          "name": "둔타",
+          "start_seconds": 5.38
+        },
+        {
+          "id": "P5",
+          "name": "낮은 경고",
+          "start_seconds": 7.22
+        },
+        {
+          "id": "P6",
+          "name": "가죽과 몸",
+          "start_seconds": 8.832
+        },
+        {
+          "id": "P7",
+          "name": "날카로운 스침",
+          "start_seconds": 10.648
+        },
+        {
+          "id": "P8",
+          "name": "게임형 하강",
+          "start_seconds": 12.484
+        }
+      ],
+      "repeats_per_candidate": 2
+    },
+    {
+      "id": "K",
+      "title": "기갑기마 착지",
+      "file": "auditions/K_all_8.wav",
+      "candidate_count": 8,
+      "duration_seconds": 15.266,
+      "order": [
+        {
+          "id": "K1",
+          "name": "갑주와 쿵",
+          "start_seconds": 0.25
+        },
+        {
+          "id": "K2",
+          "name": "발굽 이중 착지",
+          "start_seconds": 2.118
+        },
+        {
+          "id": "K3",
+          "name": "쇳덩이",
+          "start_seconds": 3.891
+        },
+        {
+          "id": "K4",
+          "name": "돌바닥 착지",
+          "start_seconds": 5.879
+        },
+        {
+          "id": "K5",
+          "name": "가죽 갑주",
+          "start_seconds": 7.969
+        },
+        {
+          "id": "K6",
+          "name": "먼지 착지",
+          "start_seconds": 9.826
+        },
+        {
+          "id": "K7",
+          "name": "짧은 착지",
+          "start_seconds": 11.692
+        },
+        {
+          "id": "K8",
+          "name": "육중한 갑주",
+          "start_seconds": 13.28
+        }
+      ],
+      "repeats_per_candidate": 2
+    },
+    {
+      "id": "F",
+      "title": "불길 펼침",
+      "file": "auditions/F_all_8.wav",
+      "candidate_count": 8,
+      "duration_seconds": 17.326,
+      "order": [
+        {
+          "id": "F1",
+          "name": "횃불 스윽",
+          "start_seconds": 0.25
+        },
+        {
+          "id": "F2",
+          "name": "불꽃 파도",
+          "start_seconds": 2.288
+        },
+        {
+          "id": "F3",
+          "name": "짧은 점화",
+          "start_seconds": 4.465
+        },
+        {
+          "id": "F4",
+          "name": "회전 불길",
+          "start_seconds": 6.291
+        },
+        {
+          "id": "F5",
+          "name": "불씨 연속",
+          "start_seconds": 8.622
+        },
+        {
+          "id": "F6",
+          "name": "터지는 불길",
+          "start_seconds": 10.849
+        },
+        {
+          "id": "F7",
+          "name": "부드러운 화르륵",
+          "start_seconds": 12.759
+        },
+        {
+          "id": "F8",
+          "name": "거친 부채질",
+          "start_seconds": 15.183
+        }
+      ],
+      "repeats_per_candidate": 2
+    },
+    {
+      "id": "C",
+      "title": "쇠뇌 장전",
+      "file": "auditions/C_all_8.wav",
+      "candidate_count": 8,
+      "duration_seconds": 16.164,
+      "order": [
+        {
+          "id": "C1",
+          "name": "걸쇠",
+          "start_seconds": 0.25
+        },
+        {
+          "id": "C2",
+          "name": "목재 장력",
+          "start_seconds": 2.126
+        },
+        {
+          "id": "C3",
+          "name": "금속 톱니",
+          "start_seconds": 4.18
+        },
+        {
+          "id": "C4",
+          "name": "가죽줄 당김",
+          "start_seconds": 6.035
+        },
+        {
+          "id": "C5",
+          "name": "짧은 잠금",
+          "start_seconds": 8.148
+        },
+        {
+          "id": "C6",
+          "name": "큰 쇠뇌",
+          "start_seconds": 9.83
+        },
+        {
+          "id": "C7",
+          "name": "정밀 기계",
+          "start_seconds": 12.039
+        },
+        {
+          "id": "C8",
+          "name": "장력 후 잠금",
+          "start_seconds": 13.889
+        }
+      ],
+      "repeats_per_candidate": 2
+    },
+    {
+      "id": "R",
+      "title": "쇠뇌 발사",
+      "file": "auditions/R_all_8.wav",
+      "candidate_count": 8,
+      "duration_seconds": 15.615,
+      "order": [
+        {
+          "id": "R1",
+          "name": "목재 쇠뇌",
+          "start_seconds": 0.25
+        },
+        {
+          "id": "R2",
+          "name": "강철 쇠뇌",
+          "start_seconds": 2.174
+        },
+        {
+          "id": "R3",
+          "name": "날카로운 현",
+          "start_seconds": 4.093
+        },
+        {
+          "id": "R4",
+          "name": "묵직한 볼트",
+          "start_seconds": 6.016
+        },
+        {
+          "id": "R5",
+          "name": "가벼운 휙",
+          "start_seconds": 7.94
+        },
+        {
+          "id": "R6",
+          "name": "쇠기구 반동",
+          "start_seconds": 9.847
+        },
+        {
+          "id": "R7",
+          "name": "공기 절단",
+          "start_seconds": 11.771
+        },
+        {
+          "id": "R8",
+          "name": "짧은 잔향",
+          "start_seconds": 13.692
+        }
+      ],
+      "repeats_per_candidate": 2
+    }
+  ],
+  "assets": [
+    {
+      "id": "M1",
+      "group": "M",
+      "category": "마법 발사·비행",
+      "name": "유리 결정",
+      "file": "candidates/01_magic/M1.wav",
+      "sources": [
+        "i:impactGlass_light_000",
+        "r:cloth1"
+      ],
+      "layers": [
+        {
+          "role": "motion",
+          "source": "r:cloth1",
+          "gain": 0.3,
+          "at_seconds": 0
+        },
+        {
+          "role": "attack",
+          "source": "i:impactGlass_light_000",
+          "gain": 0.28,
+          "at_seconds": 0.02
+        },
+        {
+          "role": "tail",
+          "source": "original synthesis",
+          "gain": 0.27,
+          "at_seconds": 0.025
+        }
+      ],
+      "sha256": "2e77334b9c774d854a900171b5b7789e55aeff0cdc274c4e548d1c1bb83282b1",
+      "duration_seconds": 0.331,
+      "peak_dbfs": -3.78,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -77.59,
+      "spectral_centroid_hz": 2289,
+      "dc_offset": 0.0001318,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "M2",
+      "group": "M",
+      "category": "마법 발사·비행",
+      "name": "공기 탄",
+      "file": "candidates/01_magic/M2.wav",
+      "sources": [
+        "r:knifeSlice"
+      ],
+      "layers": [
+        {
+          "role": "motion",
+          "source": "r:knifeSlice",
+          "gain": 0.43,
+          "at_seconds": 0
+        },
+        {
+          "role": "body",
+          "source": "original synthesis",
+          "gain": 0.52,
+          "at_seconds": 0
+        },
+        {
+          "role": "attack",
+          "source": "original synthesis",
+          "gain": 0.11,
+          "at_seconds": 0.012
+        }
+      ],
+      "sha256": "3bb6a03ff9432df3e19d3afcb81e506af1e62684acc1c5349ee743fc373719fb",
+      "duration_seconds": 0.275,
+      "peak_dbfs": -6.54,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -162.93,
+      "spectral_centroid_hz": 6327,
+      "dc_offset": 8.99e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "M3",
+      "group": "M",
+      "category": "마법 발사·비행",
+      "name": "책장 시전",
+      "file": "candidates/01_magic/M3.wav",
+      "sources": [
+        "i:impactGlass_light_002",
+        "r:bookFlip2",
+        "r:bookOpen"
+      ],
+      "layers": [
+        {
+          "role": "attack",
+          "source": "r:bookOpen",
+          "gain": 0.25,
+          "at_seconds": 0
+        },
+        {
+          "role": "motion",
+          "source": "r:bookFlip2",
+          "gain": 0.32,
+          "at_seconds": 0.055
+        },
+        {
+          "role": "tail",
+          "source": "original synthesis",
+          "gain": 0.34,
+          "at_seconds": 0.025
+        }
+      ],
+      "sha256": "801af51d538cbc39c70ce712f539ddbadacb4fd2a117b549e6eab5748d9dec0e",
+      "duration_seconds": 0.342,
+      "peak_dbfs": -2.9,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -85.79,
+      "spectral_centroid_hz": 7229,
+      "dc_offset": -9.95e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "M4",
+      "group": "M",
+      "category": "마법 발사·비행",
+      "name": "전기 스파크",
+      "file": "candidates/01_magic/M4.wav",
+      "sources": [
+        "r:cloth4"
+      ],
+      "layers": [
+        {
+          "role": "attack",
+          "source": "original synthesis",
+          "gain": 0.44,
+          "at_seconds": 0
+        },
+        {
+          "role": "motion",
+          "source": "r:cloth4",
+          "gain": 0.24,
+          "at_seconds": 0.018
+        },
+        {
+          "role": "tail",
+          "source": "original synthesis",
+          "gain": 0.06,
+          "at_seconds": 0.01
+        }
+      ],
+      "sha256": "673c5c72b844bd54dfdfede431a2f50b90ca15d1a4c723cf1c99ab9a8b729917",
+      "duration_seconds": 0.226,
+      "peak_dbfs": -6.66,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -93.23,
+      "spectral_centroid_hz": 5105,
+      "dc_offset": 2.2e-06,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "M5",
+      "group": "M",
+      "category": "마법 발사·비행",
+      "name": "맑은 종",
+      "file": "candidates/01_magic/M5.wav",
+      "sources": [
+        "i:impactBell_heavy_001",
+        "r:cloth2"
+      ],
+      "layers": [
+        {
+          "role": "attack",
+          "source": "i:impactBell_heavy_001",
+          "gain": 0.5,
+          "at_seconds": 0
+        },
+        {
+          "role": "motion",
+          "source": "r:cloth2",
+          "gain": 0.24,
+          "at_seconds": 0.018
+        },
+        {
+          "role": "tail",
+          "source": "original synthesis",
+          "gain": 0.13,
+          "at_seconds": 0.015
+        }
+      ],
+      "sha256": "cad6b07bf89313fba9e95b0c87821fb24099fdaf8681c3b2dc682999df3082a0",
+      "duration_seconds": 0.336,
+      "peak_dbfs": -4.77,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -89.96,
+      "spectral_centroid_hz": 2165,
+      "dc_offset": -3.34e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "M6",
+      "group": "M",
+      "category": "마법 발사·비행",
+      "name": "암흑 파동",
+      "file": "candidates/01_magic/M6.wav",
+      "sources": [
+        "r:cloth3",
+        "r:creak1"
+      ],
+      "layers": [
+        {
+          "role": "motion",
+          "source": "r:cloth3",
+          "gain": 0.38,
+          "at_seconds": 0
+        },
+        {
+          "role": "body",
+          "source": "original synthesis",
+          "gain": 0.37,
+          "at_seconds": 0.015
+        },
+        {
+          "role": "tail",
+          "source": "original synthesis",
+          "gain": 0.2,
+          "at_seconds": 0.02
+        }
+      ],
+      "sha256": "0293f6c4d0b79cc01e2eafca21115eda4fb0365183571322dc2e3125b2adea8d",
+      "duration_seconds": 0.44,
+      "peak_dbfs": -6.37,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -102.87,
+      "spectral_centroid_hz": 1034,
+      "dc_offset": -7.71e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "M7",
+      "group": "M",
+      "category": "마법 발사·비행",
+      "name": "유기적인 맥동",
+      "file": "candidates/01_magic/M7.wav",
+      "sources": [
+        "r:clothBelt",
+        "r:handleSmallLeather2"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "original synthesis",
+          "gain": 0.65,
+          "at_seconds": 0
+        },
+        {
+          "role": "tail",
+          "source": "original synthesis",
+          "gain": 0.16,
+          "at_seconds": 0.015
+        },
+        {
+          "role": "attack",
+          "source": "r:clothBelt",
+          "gain": 0.16,
+          "at_seconds": 0
+        }
+      ],
+      "sha256": "3b2b8779e683445e313c5ee6423f2ba6fbf26c8e7dc5673410ccc4d3e9cdc266",
+      "duration_seconds": 0.373,
+      "peak_dbfs": -2.89,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -99.76,
+      "spectral_centroid_hz": 5993,
+      "dc_offset": 4.42e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "M8",
+      "group": "M",
+      "category": "마법 발사·비행",
+      "name": "룬 연타",
+      "file": "candidates/01_magic/M8.wav",
+      "sources": [
+        "r:handleCoins2",
+        "r:knifeSlice2"
+      ],
+      "layers": [
+        {
+          "role": "attack",
+          "source": "r:handleCoins2",
+          "gain": 0.24,
+          "at_seconds": 0
+        },
+        {
+          "role": "body",
+          "source": "original synthesis",
+          "gain": 0.25,
+          "at_seconds": 0.03
+        },
+        {
+          "role": "body",
+          "source": "original synthesis",
+          "gain": 0.25,
+          "at_seconds": 0.067
+        },
+        {
+          "role": "body",
+          "source": "original synthesis",
+          "gain": 0.25,
+          "at_seconds": 0.11
+        },
+        {
+          "role": "motion",
+          "source": "r:knifeSlice2",
+          "gain": 0.27,
+          "at_seconds": 0.035
+        }
+      ],
+      "sha256": "f57ff25149f937077e5cbc019288e80dc42eabf3aa8920e985870992334c71ec",
+      "duration_seconds": 0.282,
+      "peak_dbfs": -6.57,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -134.35,
+      "spectral_centroid_hz": 6774,
+      "dc_offset": 2.71e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "S1",
+      "group": "S",
+      "category": "생물에게 마법 명중",
+      "name": "천의 둔탁함",
+      "file": "candidates/02_soft_hit/S1.wav",
+      "sources": [
+        "i:impactSoft_medium_000",
+        "r:cloth2"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "i:impactSoft_medium_000",
+          "gain": 0.83,
+          "at_seconds": 0
+        },
+        {
+          "role": "attack",
+          "source": "r:cloth2",
+          "gain": 0.19,
+          "at_seconds": 0.008
+        }
+      ],
+      "sha256": "8364dda91abec84c98f5f42c5e7b9c8c8c8173a2851cb1a9035c716c52cfbe8b",
+      "duration_seconds": 0.135,
+      "peak_dbfs": -6.63,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -102.5,
+      "spectral_centroid_hz": 3382,
+      "dc_offset": 0.0003551,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "S2",
+      "group": "S",
+      "category": "생물에게 마법 명중",
+      "name": "가죽 충격",
+      "file": "candidates/02_soft_hit/S2.wav",
+      "sources": [
+        "r:dropLeather",
+        "r:handleSmallLeather"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "r:dropLeather",
+          "gain": 0.83,
+          "at_seconds": 0
+        },
+        {
+          "role": "tail",
+          "source": "r:handleSmallLeather",
+          "gain": 0.33,
+          "at_seconds": 0.025
+        }
+      ],
+      "sha256": "8fba74c10020e02ff1dbfab0949438afebd426e3babcf062c5af3ced9bf399d0",
+      "duration_seconds": 0.253,
+      "peak_dbfs": -5.09,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -122.96,
+      "spectral_centroid_hz": 1728,
+      "dc_offset": -5.51e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "S3",
+      "group": "S",
+      "category": "생물에게 마법 명중",
+      "name": "촉촉한 충격",
+      "file": "candidates/02_soft_hit/S3.wav",
+      "sources": [
+        "i:impactPunch_medium_002",
+        "r:cloth1"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "i:impactPunch_medium_002",
+          "gain": 0.83,
+          "at_seconds": 0
+        },
+        {
+          "role": "body",
+          "source": "original synthesis",
+          "gain": 0.14,
+          "at_seconds": 0.005
+        },
+        {
+          "role": "tail",
+          "source": "original synthesis",
+          "gain": 0.13,
+          "at_seconds": 0.02
+        }
+      ],
+      "sha256": "bb5be6483572ff151c20a1b33b587408a61573bf3cc8eb9b1f6652c83a115589",
+      "duration_seconds": 0.218,
+      "peak_dbfs": -5.9,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -108.88,
+      "spectral_centroid_hz": 996,
+      "dc_offset": -0.000116,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "S4",
+      "group": "S",
+      "category": "생물에게 마법 명중",
+      "name": "찰싹 타격",
+      "file": "candidates/02_soft_hit/S4.wav",
+      "sources": [
+        "i:impactSoft_medium_003",
+        "r:chop"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "r:chop",
+          "gain": 0.83,
+          "at_seconds": 0
+        },
+        {
+          "role": "attack",
+          "source": "i:impactSoft_medium_003",
+          "gain": 0.35,
+          "at_seconds": 0.015
+        }
+      ],
+      "sha256": "7a9a9852cde883ee2b4e0ab8a4a53e08736d84544e91c9f83d5337cbf529cdaf",
+      "duration_seconds": 0.217,
+      "peak_dbfs": -2.92,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -126.9,
+      "spectral_centroid_hz": 1973,
+      "dc_offset": 0.0003735,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "S5",
+      "group": "S",
+      "category": "생물에게 마법 명중",
+      "name": "바람 관통",
+      "file": "candidates/02_soft_hit/S5.wav",
+      "sources": [
+        "r:clothBelt2",
+        "r:knifeSlice"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "r:clothBelt2",
+          "gain": 0.83,
+          "at_seconds": 0
+        },
+        {
+          "role": "motion",
+          "source": "r:knifeSlice",
+          "gain": 0.47,
+          "at_seconds": 0
+        }
+      ],
+      "sha256": "d6e0e8c5c8bf3562249552955dc961e4fa28b0d9b27a1451d9a05ee6f43cd81f",
+      "duration_seconds": 0.308,
+      "peak_dbfs": -2.78,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -123.97,
+      "spectral_centroid_hz": 7728,
+      "dc_offset": 8.82e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "S6",
+      "group": "S",
+      "category": "생물에게 마법 명중",
+      "name": "작은 마법 파열",
+      "file": "candidates/02_soft_hit/S6.wav",
+      "sources": [
+        "i:impactSoft_heavy_003"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "i:impactSoft_heavy_003",
+          "gain": 0.83,
+          "at_seconds": 0
+        },
+        {
+          "role": "tail",
+          "source": "original synthesis",
+          "gain": 0.16,
+          "at_seconds": 0.012
+        }
+      ],
+      "sha256": "6e8643c98ec0b5c290cf631374b038824d5949e1b00735ea8c20e3412d36ee46",
+      "duration_seconds": 0.325,
+      "peak_dbfs": -6.99,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -107.6,
+      "spectral_centroid_hz": 200,
+      "dc_offset": -3.36e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "S7",
+      "group": "S",
+      "category": "생물에게 마법 명중",
+      "name": "묵직한 몸 충격",
+      "file": "candidates/02_soft_hit/S7.wav",
+      "sources": [
+        "i:impactPunch_heavy_001",
+        "i:impactSoft_heavy_001"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "i:impactPunch_heavy_001",
+          "gain": 0.83,
+          "at_seconds": 0
+        },
+        {
+          "role": "body",
+          "source": "i:impactSoft_heavy_001",
+          "gain": 0.31,
+          "at_seconds": 0.031
+        }
+      ],
+      "sha256": "449bc2dde5df207e8222f06b29e8b58c94ed73995f57cbb9457ca48cf9eed0fe",
+      "duration_seconds": 0.328,
+      "peak_dbfs": -8.13,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -113.2,
+      "spectral_centroid_hz": 419,
+      "dc_offset": -1.22e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "S8",
+      "group": "S",
+      "category": "생물에게 마법 명중",
+      "name": "가벼운 톡",
+      "file": "candidates/02_soft_hit/S8.wav",
+      "sources": [
+        "i:impactGeneric_light_003"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "i:impactGeneric_light_003",
+          "gain": 0.83,
+          "at_seconds": 0
+        },
+        {
+          "role": "tail",
+          "source": "original synthesis",
+          "gain": 0.14,
+          "at_seconds": 0.005
+        }
+      ],
+      "sha256": "f34584cd35deb52b9ccda4b37776472521c077cec25cf789b4898936bba9e001",
+      "duration_seconds": 0.186,
+      "peak_dbfs": -1.72,
+      "rms_dbfs": -19.94,
+      "tail_10ms_dbfs": -121.3,
+      "spectral_centroid_hz": 2612,
+      "dc_offset": -0.0001571,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "H1",
+      "group": "H",
+      "category": "단단한 대상에게 명중",
+      "name": "철판",
+      "file": "candidates/03_hard_hit/H1.wav",
+      "sources": [
+        "i:impactPlate_light_000",
+        "r:metalClick"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "i:impactPlate_light_000",
+          "gain": 0.81,
+          "at_seconds": 0
+        },
+        {
+          "role": "attack",
+          "source": "r:metalClick",
+          "gain": 0.16,
+          "at_seconds": 0
+        }
+      ],
+      "sha256": "685eeeac06747a1872f16c47bcfd96f3d8ba06aee794a45f37692f95cc2837b9",
+      "duration_seconds": 0.246,
+      "peak_dbfs": -2.5,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -94.82,
+      "spectral_centroid_hz": 2393,
+      "dc_offset": 2.05e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "H2",
+      "group": "H",
+      "category": "단단한 대상에게 명중",
+      "name": "갑주",
+      "file": "candidates/03_hard_hit/H2.wav",
+      "sources": [
+        "r:metalClick",
+        "r:metalPot1"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "r:metalPot1",
+          "gain": 0.81,
+          "at_seconds": 0
+        },
+        {
+          "role": "attack",
+          "source": "r:metalClick",
+          "gain": 0.16,
+          "at_seconds": 0
+        }
+      ],
+      "sha256": "44fa4b9fde8d6e3a301b5d829c12c6bf97c6a09e473f8ba2ab42d4d491435ff6",
+      "duration_seconds": 0.358,
+      "peak_dbfs": -8.27,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -131.79,
+      "spectral_centroid_hz": 2103,
+      "dc_offset": -2.22e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "H3",
+      "group": "H",
+      "category": "단단한 대상에게 명중",
+      "name": "돌",
+      "file": "candidates/03_hard_hit/H3.wav",
+      "sources": [
+        "i:impactMining_001",
+        "i:impactWood_medium_001"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "i:impactMining_001",
+          "gain": 0.81,
+          "at_seconds": 0
+        },
+        {
+          "role": "attack",
+          "source": "i:impactWood_medium_001",
+          "gain": 0.25,
+          "at_seconds": 0
+        }
+      ],
+      "sha256": "030dbe0a52583225ea101e570d6c2433d9a9e7c373f517bdba7c20401cfad24f",
+      "duration_seconds": 0.352,
+      "peak_dbfs": -3.97,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -120.76,
+      "spectral_centroid_hz": 571,
+      "dc_offset": 0.0002854,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "H4",
+      "group": "H",
+      "category": "단단한 대상에게 명중",
+      "name": "도자기 질감",
+      "file": "candidates/03_hard_hit/H4.wav",
+      "sources": [
+        "i:impactPlate_medium_002"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "i:impactPlate_medium_002",
+          "gain": 0.81,
+          "at_seconds": 0
+        },
+        {
+          "role": "tail",
+          "source": "original synthesis",
+          "gain": 0.1,
+          "at_seconds": 0.008
+        }
+      ],
+      "sha256": "1c48dfb2c4a6a2241afea9761c1b78857b83076d63f81c33e804beed8234dce9",
+      "duration_seconds": 0.263,
+      "peak_dbfs": -2.39,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -118.72,
+      "spectral_centroid_hz": 1410,
+      "dc_offset": 0.0001501,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "H5",
+      "group": "H",
+      "category": "단단한 대상에게 명중",
+      "name": "청동 울림",
+      "file": "candidates/03_hard_hit/H5.wav",
+      "sources": [
+        "i:impactBell_heavy_002",
+        "i:impactPunch_medium_003"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "i:impactBell_heavy_002",
+          "gain": 0.81,
+          "at_seconds": 0
+        },
+        {
+          "role": "attack",
+          "source": "i:impactPunch_medium_003",
+          "gain": 0.18,
+          "at_seconds": 0
+        }
+      ],
+      "sha256": "cd6e1bbb0ebbafaf6121e08f8f81a10d1af615d828f5c6ee0c19c44e2436bae5",
+      "duration_seconds": 0.353,
+      "peak_dbfs": -3.82,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -149.2,
+      "spectral_centroid_hz": 557,
+      "dc_offset": 0.0003181,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "H6",
+      "group": "H",
+      "category": "단단한 대상에게 명중",
+      "name": "쇠테",
+      "file": "candidates/03_hard_hit/H6.wav",
+      "sources": [
+        "i:impactMetal_medium_003",
+        "r:metalClick"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "i:impactMetal_medium_003",
+          "gain": 0.81,
+          "at_seconds": 0
+        },
+        {
+          "role": "attack",
+          "source": "r:metalClick",
+          "gain": 0.16,
+          "at_seconds": 0
+        }
+      ],
+      "sha256": "abac205868e72c0c983ffc27aa92b0e5a9aacd2b280944962f31acae58a48ff0",
+      "duration_seconds": 0.18,
+      "peak_dbfs": -4.78,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -141.09,
+      "spectral_centroid_hz": 5996,
+      "dc_offset": -8.86e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "H7",
+      "group": "H",
+      "category": "단단한 대상에게 명중",
+      "name": "유리 갑주",
+      "file": "candidates/03_hard_hit/H7.wav",
+      "sources": [
+        "i:impactGlass_heavy_001",
+        "i:impactGlass_light_004"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "i:impactGlass_heavy_001",
+          "gain": 0.81,
+          "at_seconds": 0
+        },
+        {
+          "role": "tail",
+          "source": "original synthesis",
+          "gain": 0.15,
+          "at_seconds": 0.025
+        }
+      ],
+      "sha256": "e579a1646e1f37bc3c545594a295d205a5c26918fc50bb778204b310b1aac0d5",
+      "duration_seconds": 0.283,
+      "peak_dbfs": -2.87,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -148.33,
+      "spectral_centroid_hz": 1452,
+      "dc_offset": -0.0006975,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "H8",
+      "group": "H",
+      "category": "단단한 대상에게 명중",
+      "name": "둔한 금속",
+      "file": "candidates/03_hard_hit/H8.wav",
+      "sources": [
+        "i:impactMetal_heavy_004",
+        "i:impactPlate_heavy_003"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "i:impactMetal_heavy_004",
+          "gain": 0.81,
+          "at_seconds": 0
+        },
+        {
+          "role": "tail",
+          "source": "i:impactPlate_heavy_003",
+          "gain": 0.24,
+          "at_seconds": 0
+        }
+      ],
+      "sha256": "825890bb99c6805a35ae04a52a3f53f79f65dfb226379ac69c9dd3e9e25f8e2a",
+      "duration_seconds": 0.221,
+      "peak_dbfs": -4.02,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -83.08,
+      "spectral_centroid_hz": 751,
+      "dc_offset": -0.0001048,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "P1",
+      "group": "P",
+      "category": "플레이어 피격",
+      "name": "몸과 천",
+      "file": "candidates/04_player_hurt/P1.wav",
+      "sources": [
+        "i:impactPunch_medium_000",
+        "r:cloth3"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "i:impactPunch_medium_000",
+          "gain": 0.78,
+          "at_seconds": 0
+        },
+        {
+          "role": "tail",
+          "source": "r:cloth3",
+          "gain": 0.24,
+          "at_seconds": 0.012
+        }
+      ],
+      "sha256": "2e647e0529d35d5370ce0bc53590a6bfa793ac4cbdc3e050a58152c06a181c8b",
+      "duration_seconds": 0.25,
+      "peak_dbfs": -6.51,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -101.77,
+      "spectral_centroid_hz": 1704,
+      "dc_offset": -0.0002448,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "P2",
+      "group": "P",
+      "category": "플레이어 피격",
+      "name": "짧은 찌름",
+      "file": "candidates/04_player_hurt/P2.wav",
+      "sources": [
+        "i:impactSoft_medium_004"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "i:impactSoft_medium_004",
+          "gain": 0.78,
+          "at_seconds": 0
+        },
+        {
+          "role": "feedback",
+          "source": "original synthesis",
+          "gain": 0.17,
+          "at_seconds": 0.008
+        }
+      ],
+      "sha256": "443ac62ffc16a9cee0291f4e892fe124f4cd53a9943d013d98b12d8ac2a87585",
+      "duration_seconds": 0.188,
+      "peak_dbfs": -5.52,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -76.08,
+      "spectral_centroid_hz": 156,
+      "dc_offset": 0.0010333,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "P3",
+      "group": "P",
+      "category": "플레이어 피격",
+      "name": "마법 충격",
+      "file": "candidates/04_player_hurt/P3.wav",
+      "sources": [
+        "i:impactPunch_medium_004"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "i:impactPunch_medium_004",
+          "gain": 0.78,
+          "at_seconds": 0
+        },
+        {
+          "role": "feedback",
+          "source": "original synthesis",
+          "gain": 0.22,
+          "at_seconds": 0.014
+        }
+      ],
+      "sha256": "26226d1461f128e1b10740201122aeffa312893bdcbc46b135f7737d436109d3",
+      "duration_seconds": 0.252,
+      "peak_dbfs": -5.19,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -98.85,
+      "spectral_centroid_hz": 582,
+      "dc_offset": -0.0003599,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "P4",
+      "group": "P",
+      "category": "플레이어 피격",
+      "name": "둔타",
+      "file": "candidates/04_player_hurt/P4.wav",
+      "sources": [
+        "i:impactPunch_heavy_003",
+        "r:clothBelt2"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "i:impactPunch_heavy_003",
+          "gain": 0.78,
+          "at_seconds": 0
+        },
+        {
+          "role": "tail",
+          "source": "r:clothBelt2",
+          "gain": 0.22,
+          "at_seconds": 0.018
+        }
+      ],
+      "sha256": "77c8a5691e910b35acd0b42104ac9333e6cb55ac1693bc221e3a91d43a89f7bf",
+      "duration_seconds": 0.295,
+      "peak_dbfs": -4.99,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -105.56,
+      "spectral_centroid_hz": 4413,
+      "dc_offset": -0.0002094,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "P5",
+      "group": "P",
+      "category": "플레이어 피격",
+      "name": "낮은 경고",
+      "file": "candidates/04_player_hurt/P5.wav",
+      "sources": [
+        "r:chop"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "r:chop",
+          "gain": 0.78,
+          "at_seconds": 0
+        },
+        {
+          "role": "feedback",
+          "source": "original synthesis",
+          "gain": 0.16,
+          "at_seconds": 0.012
+        }
+      ],
+      "sha256": "8e86e21c54eb13652646f4820fc37eeac471335260832f9ca23210df5a05791c",
+      "duration_seconds": 0.181,
+      "peak_dbfs": -3.13,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -82.29,
+      "spectral_centroid_hz": 2290,
+      "dc_offset": 0.0001961,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "P6",
+      "group": "P",
+      "category": "플레이어 피격",
+      "name": "가죽과 몸",
+      "file": "candidates/04_player_hurt/P6.wav",
+      "sources": [
+        "r:beltHandle2",
+        "r:dropLeather"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "r:dropLeather",
+          "gain": 0.78,
+          "at_seconds": 0
+        },
+        {
+          "role": "tail",
+          "source": "r:beltHandle2",
+          "gain": 0.32,
+          "at_seconds": 0.03
+        }
+      ],
+      "sha256": "9b1517ca12cc327e46c39ae8e91015658d137366d87b5e730ab3522195327c65",
+      "duration_seconds": 0.283,
+      "peak_dbfs": -5.39,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -115.66,
+      "spectral_centroid_hz": 3391,
+      "dc_offset": 9.74e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "P7",
+      "group": "P",
+      "category": "플레이어 피격",
+      "name": "날카로운 스침",
+      "file": "candidates/04_player_hurt/P7.wav",
+      "sources": [
+        "i:impactPunch_medium_001",
+        "r:knifeSlice2"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "r:knifeSlice2",
+          "gain": 0.78,
+          "at_seconds": 0
+        },
+        {
+          "role": "body",
+          "source": "i:impactPunch_medium_001",
+          "gain": 0.4,
+          "at_seconds": 0.055
+        }
+      ],
+      "sha256": "9e484451e46179d3cc92869d01b916a7ed5296d980851b2b1664c86cf52aadee",
+      "duration_seconds": 0.293,
+      "peak_dbfs": -3.97,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -146.15,
+      "spectral_centroid_hz": 5846,
+      "dc_offset": -0.0001065,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "P8",
+      "group": "P",
+      "category": "플레이어 피격",
+      "name": "게임형 하강",
+      "file": "candidates/04_player_hurt/P8.wav",
+      "sources": [
+        "i:impactGeneric_light_001"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "i:impactGeneric_light_001",
+          "gain": 0.78,
+          "at_seconds": 0
+        },
+        {
+          "role": "feedback",
+          "source": "original synthesis",
+          "gain": 0.27,
+          "at_seconds": 0.006
+        },
+        {
+          "role": "feedback",
+          "source": "original synthesis",
+          "gain": 0.1,
+          "at_seconds": 0.075
+        }
+      ],
+      "sha256": "fa7208ea4624d874b7b15dee6ca846baf5df2775ec8a430a8a7c5e8c7888e341",
+      "duration_seconds": 0.258,
+      "peak_dbfs": -3.26,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -102.91,
+      "spectral_centroid_hz": 271,
+      "dc_offset": -0.0001129,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "K1",
+      "group": "K",
+      "category": "기갑기마 착지",
+      "name": "갑주와 쿵",
+      "file": "candidates/05_knight_land/K1.wav",
+      "sources": [
+        "i:impactMetal_medium_000",
+        "i:impactPunch_heavy_002"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "i:impactPunch_heavy_002",
+          "gain": 0.78,
+          "at_seconds": 0
+        },
+        {
+          "role": "gear",
+          "source": "i:impactMetal_medium_000",
+          "gain": 0.28,
+          "at_seconds": 0.018
+        },
+        {
+          "role": "weight",
+          "source": "original synthesis",
+          "gain": 0.11,
+          "at_seconds": 0.005
+        }
+      ],
+      "sha256": "d1e8c44e530aa579a9a37cb2b8a56238f6eec3bb9b4d77f37281f8e97b0d1d30",
+      "duration_seconds": 0.309,
+      "peak_dbfs": -4.63,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -109.88,
+      "spectral_centroid_hz": 346,
+      "dc_offset": -0.0001136,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "K2",
+      "group": "K",
+      "category": "기갑기마 착지",
+      "name": "발굽 이중 착지",
+      "file": "candidates/05_knight_land/K2.wav",
+      "sources": [
+        "i:footstep_concrete_004",
+        "i:footstep_wood_002",
+        "r:handleCoins"
+      ],
+      "layers": [
+        {
+          "role": "front-foot",
+          "source": "i:footstep_wood_002",
+          "gain": 0.7,
+          "at_seconds": 0
+        },
+        {
+          "role": "rear-foot",
+          "source": "i:footstep_concrete_004",
+          "gain": 0.79,
+          "at_seconds": 0.042
+        },
+        {
+          "role": "gear",
+          "source": "r:handleCoins",
+          "gain": 0.2,
+          "at_seconds": 0.06
+        }
+      ],
+      "sha256": "7e7886b13e62bb25ec61a6b61bb6930810e760fa7eb82f51f1f3333215e7bd00",
+      "duration_seconds": 0.261,
+      "peak_dbfs": -5.13,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -142.83,
+      "spectral_centroid_hz": 4055,
+      "dc_offset": 0.0002746,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "K3",
+      "group": "K",
+      "category": "기갑기마 착지",
+      "name": "쇳덩이",
+      "file": "candidates/05_knight_land/K3.wav",
+      "sources": [
+        "i:impactMetal_light_002",
+        "i:impactPlate_heavy_000"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "i:impactPlate_heavy_000",
+          "gain": 0.8,
+          "at_seconds": 0
+        },
+        {
+          "role": "gear",
+          "source": "i:impactMetal_light_002",
+          "gain": 0.24,
+          "at_seconds": 0.041
+        },
+        {
+          "role": "weight",
+          "source": "original synthesis",
+          "gain": 0.11,
+          "at_seconds": 0.005
+        }
+      ],
+      "sha256": "93e92931cb24c491836e17baffb3b6508f0cf5f5d3cae349e29b174e2ecde21d",
+      "duration_seconds": 0.369,
+      "peak_dbfs": -4.0,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -106.3,
+      "spectral_centroid_hz": 1119,
+      "dc_offset": -0.0003584,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "K4",
+      "group": "K",
+      "category": "기갑기마 착지",
+      "name": "돌바닥 착지",
+      "file": "candidates/05_knight_land/K4.wav",
+      "sources": [
+        "i:footstep_concrete_000",
+        "i:impactMining_004"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "i:impactMining_004",
+          "gain": 0.72,
+          "at_seconds": 0
+        },
+        {
+          "role": "attack",
+          "source": "i:footstep_concrete_000",
+          "gain": 0.53,
+          "at_seconds": 0.016
+        }
+      ],
+      "sha256": "1b89ff3c84dcf18b6425602bd9f9fcb7721e21888bb1af72830c11312c23db82",
+      "duration_seconds": 0.42,
+      "peak_dbfs": -5.39,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -105.71,
+      "spectral_centroid_hz": 453,
+      "dc_offset": 2.12e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "K5",
+      "group": "K",
+      "category": "기갑기마 착지",
+      "name": "가죽 갑주",
+      "file": "candidates/05_knight_land/K5.wav",
+      "sources": [
+        "r:clothBelt",
+        "r:dropLeather",
+        "r:footstep00"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "r:dropLeather",
+          "gain": 0.6,
+          "at_seconds": 0
+        },
+        {
+          "role": "attack",
+          "source": "r:footstep00",
+          "gain": 0.58,
+          "at_seconds": 0.016
+        },
+        {
+          "role": "gear",
+          "source": "r:clothBelt",
+          "gain": 0.23,
+          "at_seconds": 0.048
+        }
+      ],
+      "sha256": "294c067ba15aa53b2b298164b46bac2852c07d7ae79eed1357e52549ff0eb9bb",
+      "duration_seconds": 0.303,
+      "peak_dbfs": -6.05,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -121.17,
+      "spectral_centroid_hz": 2917,
+      "dc_offset": 7.02e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "K6",
+      "group": "K",
+      "category": "기갑기마 착지",
+      "name": "먼지 착지",
+      "file": "candidates/05_knight_land/K6.wav",
+      "sources": [
+        "i:footstep_grass_003",
+        "i:impactSoft_heavy_004"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "i:impactSoft_heavy_004",
+          "gain": 0.71,
+          "at_seconds": 0
+        },
+        {
+          "role": "dust",
+          "source": "i:footstep_grass_003",
+          "gain": 0.33,
+          "at_seconds": 0.027
+        },
+        {
+          "role": "dust",
+          "source": "original synthesis",
+          "gain": 0.1,
+          "at_seconds": 0.013
+        }
+      ],
+      "sha256": "a3cbdf51f0f8f1e7bc361f6d4e7242b06b07e27cbd9db06378575bdcb2040fca",
+      "duration_seconds": 0.308,
+      "peak_dbfs": -6.36,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -108.88,
+      "spectral_centroid_hz": 2177,
+      "dc_offset": -0.0001854,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "K7",
+      "group": "K",
+      "category": "기갑기마 착지",
+      "name": "짧은 착지",
+      "file": "candidates/05_knight_land/K7.wav",
+      "sources": [
+        "i:footstep_concrete_001",
+        "r:metalLatch"
+      ],
+      "layers": [
+        {
+          "role": "attack",
+          "source": "i:footstep_concrete_001",
+          "gain": 0.8,
+          "at_seconds": 0
+        },
+        {
+          "role": "gear",
+          "source": "r:metalLatch",
+          "gain": 0.25,
+          "at_seconds": 0.018
+        }
+      ],
+      "sha256": "a552c6795290d924045b723f5d56aa48a07c488efa4406af5e14c5855e25c6a0",
+      "duration_seconds": 0.169,
+      "peak_dbfs": -3.47,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -116.68,
+      "spectral_centroid_hz": 5399,
+      "dc_offset": -0.0005028,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "K8",
+      "group": "K",
+      "category": "기갑기마 착지",
+      "name": "육중한 갑주",
+      "file": "candidates/05_knight_land/K8.wav",
+      "sources": [
+        "i:impactMetal_heavy_001",
+        "i:impactWood_heavy_004",
+        "r:metalPot2"
+      ],
+      "layers": [
+        {
+          "role": "body",
+          "source": "i:impactWood_heavy_004",
+          "gain": 0.57,
+          "at_seconds": 0
+        },
+        {
+          "role": "gear",
+          "source": "i:impactMetal_heavy_001",
+          "gain": 0.65,
+          "at_seconds": 0.02
+        },
+        {
+          "role": "tail",
+          "source": "r:metalPot2",
+          "gain": 0.17,
+          "at_seconds": 0.08
+        },
+        {
+          "role": "weight",
+          "source": "original synthesis",
+          "gain": 0.11,
+          "at_seconds": 0.005
+        }
+      ],
+      "sha256": "38ff12f353afbdee7cb016738907fb71c2c3db7ad7ab64119c892bab52c4961c",
+      "duration_seconds": 0.368,
+      "peak_dbfs": -6.0,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -116.13,
+      "spectral_centroid_hz": 1612,
+      "dc_offset": 0.0003039,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "F1",
+      "group": "F",
+      "category": "불길 펼침",
+      "name": "횃불 스윽",
+      "file": "candidates/06_fire/F1.wav",
+      "sources": [
+        "f:fire",
+        "r:cloth4"
+      ],
+      "layers": [
+        {
+          "role": "crackle",
+          "source": "f:fire",
+          "gain": 0.85,
+          "at_seconds": 0
+        },
+        {
+          "role": "motion",
+          "source": "r:cloth4",
+          "gain": 0.38,
+          "at_seconds": 0
+        }
+      ],
+      "sha256": "eb5ef0ee5c19463b09d5940bb20315aa9f44bb8e4ed89acfdc022c806f9adcdd",
+      "duration_seconds": 0.394,
+      "peak_dbfs": -2.16,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -114.33,
+      "spectral_centroid_hz": 4173,
+      "dc_offset": 0.0001642,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "F2",
+      "group": "F",
+      "category": "불길 펼침",
+      "name": "불꽃 파도",
+      "file": "candidates/06_fire/F2.wav",
+      "sources": [
+        "f:fire",
+        "r:cloth1"
+      ],
+      "layers": [
+        {
+          "role": "crackle",
+          "source": "f:fire",
+          "gain": 0.85,
+          "at_seconds": 0
+        },
+        {
+          "role": "roar",
+          "source": "original synthesis",
+          "gain": 0.44,
+          "at_seconds": 0
+        },
+        {
+          "role": "motion",
+          "source": "r:cloth1",
+          "gain": 0.21,
+          "at_seconds": 0.025
+        }
+      ],
+      "sha256": "e7c377a54bb3f4c46223f67af1dd27878d944c472dc89535daa27ced1b68282f",
+      "duration_seconds": 0.463,
+      "peak_dbfs": -4.04,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -99.9,
+      "spectral_centroid_hz": 2987,
+      "dc_offset": -6.17e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "F3",
+      "group": "F",
+      "category": "불길 펼침",
+      "name": "짧은 점화",
+      "file": "candidates/06_fire/F3.wav",
+      "sources": [
+        "f:fire",
+        "r:bookFlip3"
+      ],
+      "layers": [
+        {
+          "role": "crackle",
+          "source": "f:fire",
+          "gain": 0.85,
+          "at_seconds": 0
+        },
+        {
+          "role": "ignition",
+          "source": "r:bookFlip3",
+          "gain": 0.43,
+          "at_seconds": 0
+        },
+        {
+          "role": "roar",
+          "source": "original synthesis",
+          "gain": 0.25,
+          "at_seconds": 0
+        }
+      ],
+      "sha256": "1c73bcd833282b01c79aff61a88c0cb347225dd0ba7e92c7fdb0f5d0dfa3298d",
+      "duration_seconds": 0.288,
+      "peak_dbfs": -2.22,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -134.03,
+      "spectral_centroid_hz": 5437,
+      "dc_offset": -0.0002289,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "F4",
+      "group": "F",
+      "category": "불길 펼침",
+      "name": "회전 불길",
+      "file": "candidates/06_fire/F4.wav",
+      "sources": [
+        "f:fire",
+        "r:knifeSlice",
+        "r:knifeSlice2"
+      ],
+      "layers": [
+        {
+          "role": "crackle",
+          "source": "f:fire",
+          "gain": 0.85,
+          "at_seconds": 0
+        },
+        {
+          "role": "motion",
+          "source": "r:knifeSlice",
+          "gain": 0.35,
+          "at_seconds": 0
+        },
+        {
+          "role": "second sweep",
+          "source": "r:knifeSlice2",
+          "gain": 0.24,
+          "at_seconds": 0.1
+        }
+      ],
+      "sha256": "62dcdd6b89b6e9c3e3bc7e0c749aff014c593d924c7f500e84a1e26a68081a80",
+      "duration_seconds": 0.541,
+      "peak_dbfs": -4.21,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -133.94,
+      "spectral_centroid_hz": 7738,
+      "dc_offset": 3.44e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "F5",
+      "group": "F",
+      "category": "불길 펼침",
+      "name": "불씨 연속",
+      "file": "candidates/06_fire/F5.wav",
+      "sources": [
+        "f:fire",
+        "r:cloth2"
+      ],
+      "layers": [
+        {
+          "role": "crackle",
+          "source": "f:fire",
+          "gain": 0.85,
+          "at_seconds": 0
+        },
+        {
+          "role": "embers",
+          "source": "original synthesis",
+          "gain": 0.47,
+          "at_seconds": 0.035
+        },
+        {
+          "role": "motion",
+          "source": "r:cloth2",
+          "gain": 0.16,
+          "at_seconds": 0
+        }
+      ],
+      "sha256": "a37a02867fc87923515f8ca2dded1f5b5a4a2d1c67edf32400731d59359cd075",
+      "duration_seconds": 0.489,
+      "peak_dbfs": -1.72,
+      "rms_dbfs": -19.96,
+      "tail_10ms_dbfs": -118.82,
+      "spectral_centroid_hz": 2024,
+      "dc_offset": 8.2e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "F6",
+      "group": "F",
+      "category": "불길 펼침",
+      "name": "터지는 불길",
+      "file": "candidates/06_fire/F6.wav",
+      "sources": [
+        "f:fire",
+        "i:impactSoft_heavy_000"
+      ],
+      "layers": [
+        {
+          "role": "crackle",
+          "source": "f:fire",
+          "gain": 0.85,
+          "at_seconds": 0
+        },
+        {
+          "role": "roar",
+          "source": "original synthesis",
+          "gain": 0.68,
+          "at_seconds": 0
+        },
+        {
+          "role": "ignition",
+          "source": "i:impactSoft_heavy_000",
+          "gain": 0.13,
+          "at_seconds": 0
+        }
+      ],
+      "sha256": "f7cb5d9ac35bbbbc8897b8a5784dc3fb7db3dcb2c464f8044a12413b695ce4ea",
+      "duration_seconds": 0.33,
+      "peak_dbfs": -4.81,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -106.7,
+      "spectral_centroid_hz": 2328,
+      "dc_offset": -0.0001515,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "F7",
+      "group": "F",
+      "category": "불길 펼침",
+      "name": "부드러운 화르륵",
+      "file": "candidates/06_fire/F7.wav",
+      "sources": [
+        "f:fire",
+        "r:cloth3"
+      ],
+      "layers": [
+        {
+          "role": "crackle",
+          "source": "f:fire",
+          "gain": 0.85,
+          "at_seconds": 0
+        },
+        {
+          "role": "roar",
+          "source": "original synthesis",
+          "gain": 0.41,
+          "at_seconds": 0
+        },
+        {
+          "role": "motion",
+          "source": "r:cloth3",
+          "gain": 0.2,
+          "at_seconds": 0.032
+        }
+      ],
+      "sha256": "729168465bee2cb495d475a21bf62350d7dc7585839737f6f3db85011866ef5d",
+      "duration_seconds": 0.587,
+      "peak_dbfs": -4.55,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -114.31,
+      "spectral_centroid_hz": 2241,
+      "dc_offset": -0.0001102,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "F8",
+      "group": "F",
+      "category": "불길 펼침",
+      "name": "거친 부채질",
+      "file": "candidates/06_fire/F8.wav",
+      "sources": [
+        "f:fire",
+        "r:bookFlip1"
+      ],
+      "layers": [
+        {
+          "role": "crackle",
+          "source": "f:fire",
+          "gain": 0.85,
+          "at_seconds": 0
+        },
+        {
+          "role": "motion",
+          "source": "r:bookFlip1",
+          "gain": 0.43,
+          "at_seconds": 0
+        },
+        {
+          "role": "roar",
+          "source": "original synthesis",
+          "gain": 0.3,
+          "at_seconds": 0
+        }
+      ],
+      "sha256": "5b0c7d7b7624129b2cf1421e89536bf48bde2fadeaea7db2967b39d70284ed6a",
+      "duration_seconds": 0.447,
+      "peak_dbfs": -3.42,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -138.98,
+      "spectral_centroid_hz": 8049,
+      "dc_offset": 0.0001287,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "C1",
+      "group": "C",
+      "category": "쇠뇌 장전",
+      "name": "걸쇠",
+      "file": "candidates/07_rook_charge/C1.wav",
+      "sources": [
+        "r:creak1",
+        "r:metalClick",
+        "r:metalLatch"
+      ],
+      "layers": [
+        {
+          "role": "attack",
+          "source": "r:metalClick",
+          "gain": 0.55,
+          "at_seconds": 0
+        },
+        {
+          "role": "lock",
+          "source": "r:metalLatch",
+          "gain": 0.77,
+          "at_seconds": 0.13
+        },
+        {
+          "role": "tension",
+          "source": "r:creak1",
+          "gain": 0.19,
+          "at_seconds": 0.018
+        }
+      ],
+      "sha256": "b99ef89f752200e657cead330d7ddbb7b46ffd6528cdad8191c974de09c3c638",
+      "duration_seconds": 0.313,
+      "peak_dbfs": -1.72,
+      "rms_dbfs": -20.0,
+      "tail_10ms_dbfs": -137.6,
+      "spectral_centroid_hz": 7618,
+      "dc_offset": -0.0002163,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "C2",
+      "group": "C",
+      "category": "쇠뇌 장전",
+      "name": "목재 장력",
+      "file": "candidates/07_rook_charge/C2.wav",
+      "sources": [
+        "i:impactWood_light_002",
+        "r:creak2"
+      ],
+      "layers": [
+        {
+          "role": "tension",
+          "source": "r:creak2",
+          "gain": 0.75,
+          "at_seconds": 0
+        },
+        {
+          "role": "lock",
+          "source": "i:impactWood_light_002",
+          "gain": 0.32,
+          "at_seconds": 0.27
+        }
+      ],
+      "sha256": "3efac4f4ae5357b129f0a1f7300b94ff8aa05185767ed598426883dcfd635c27",
+      "duration_seconds": 0.402,
+      "peak_dbfs": -7.03,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -119.0,
+      "spectral_centroid_hz": 4739,
+      "dc_offset": 2.09e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "C3",
+      "group": "C",
+      "category": "쇠뇌 장전",
+      "name": "금속 톱니",
+      "file": "candidates/07_rook_charge/C3.wav",
+      "sources": [
+        "r:metalClick",
+        "r:metalLatch"
+      ],
+      "layers": [
+        {
+          "role": "ratchet",
+          "source": "r:metalClick",
+          "gain": 0.42,
+          "at_seconds": 0.0
+        },
+        {
+          "role": "ratchet",
+          "source": "r:metalLatch",
+          "gain": 0.42,
+          "at_seconds": 0.055
+        },
+        {
+          "role": "ratchet",
+          "source": "r:metalClick",
+          "gain": 0.31,
+          "at_seconds": 0.12
+        },
+        {
+          "role": "ratchet",
+          "source": "r:metalLatch",
+          "gain": 0.65,
+          "at_seconds": 0.19
+        }
+      ],
+      "sha256": "75803da6da1286c8e66a4175f733fba8f0aee2210a3932614183abe5ffd5c8b4",
+      "duration_seconds": 0.303,
+      "peak_dbfs": -1.72,
+      "rms_dbfs": -20.62,
+      "tail_10ms_dbfs": -138.04,
+      "spectral_centroid_hz": 9025,
+      "dc_offset": 4.27e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "C4",
+      "group": "C",
+      "category": "쇠뇌 장전",
+      "name": "가죽줄 당김",
+      "file": "candidates/07_rook_charge/C4.wav",
+      "sources": [
+        "r:beltHandle1",
+        "r:handleSmallLeather",
+        "r:metalLatch"
+      ],
+      "layers": [
+        {
+          "role": "tension",
+          "source": "r:beltHandle1",
+          "gain": 0.7,
+          "at_seconds": 0
+        },
+        {
+          "role": "tension",
+          "source": "r:handleSmallLeather",
+          "gain": 0.42,
+          "at_seconds": 0.065
+        },
+        {
+          "role": "lock",
+          "source": "r:metalLatch",
+          "gain": 0.38,
+          "at_seconds": 0.28
+        }
+      ],
+      "sha256": "a41d1aef70adfbf591caca0e679f39db984028c1311923d66a061f41f0408ea5",
+      "duration_seconds": 0.431,
+      "peak_dbfs": -1.72,
+      "rms_dbfs": -20.12,
+      "tail_10ms_dbfs": -140.06,
+      "spectral_centroid_hz": 7061,
+      "dc_offset": 0.0001534,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "C5",
+      "group": "C",
+      "category": "쇠뇌 장전",
+      "name": "짧은 잠금",
+      "file": "candidates/07_rook_charge/C5.wav",
+      "sources": [
+        "r:metalLatch"
+      ],
+      "layers": [
+        {
+          "role": "lock",
+          "source": "r:metalLatch",
+          "gain": 0.9,
+          "at_seconds": 0
+        },
+        {
+          "role": "string",
+          "source": "original synthesis",
+          "gain": 0.12,
+          "at_seconds": 0.005
+        }
+      ],
+      "sha256": "7b97e9d20c32c717c6c38a479fe73cccc32414af64a580ee94670221c8f83980",
+      "duration_seconds": 0.216,
+      "peak_dbfs": -1.72,
+      "rms_dbfs": -20.46,
+      "tail_10ms_dbfs": -113.47,
+      "spectral_centroid_hz": 7447,
+      "dc_offset": -0.0002346,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "C6",
+      "group": "C",
+      "category": "쇠뇌 장전",
+      "name": "큰 쇠뇌",
+      "file": "candidates/07_rook_charge/C6.wav",
+      "sources": [
+        "i:impactMetal_medium_004",
+        "i:impactWood_medium_003",
+        "r:creak3"
+      ],
+      "layers": [
+        {
+          "role": "tension",
+          "source": "r:creak3",
+          "gain": 0.68,
+          "at_seconds": 0
+        },
+        {
+          "role": "lock",
+          "source": "i:impactMetal_medium_004",
+          "gain": 0.43,
+          "at_seconds": 0.31
+        },
+        {
+          "role": "body",
+          "source": "i:impactWood_medium_003",
+          "gain": 0.22,
+          "at_seconds": 0.32
+        }
+      ],
+      "sha256": "1aa10cab8ca4984c6f0c7f2b4456495e5611e375e8c25895897b7bd2b3b7b2e2",
+      "duration_seconds": 0.48,
+      "peak_dbfs": -6.27,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -125.44,
+      "spectral_centroid_hz": 1450,
+      "dc_offset": 9.55e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "C7",
+      "group": "C",
+      "category": "쇠뇌 장전",
+      "name": "정밀 기계",
+      "file": "candidates/07_rook_charge/C7.wav",
+      "sources": [
+        "r:drawKnife2",
+        "r:metalClick"
+      ],
+      "layers": [
+        {
+          "role": "slide",
+          "source": "r:drawKnife2",
+          "gain": 0.46,
+          "at_seconds": 0
+        },
+        {
+          "role": "lock",
+          "source": "r:metalClick",
+          "gain": 0.63,
+          "at_seconds": 0.16
+        }
+      ],
+      "sha256": "beb8f15de6dd2f0082fb39fecf22daaf602fc72e7538fe1d74afa78c05bdc0cd",
+      "duration_seconds": 0.3,
+      "peak_dbfs": -3.01,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -118.77,
+      "spectral_centroid_hz": 7306,
+      "dc_offset": 9e-06,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "C8",
+      "group": "C",
+      "category": "쇠뇌 장전",
+      "name": "장력 후 잠금",
+      "file": "candidates/07_rook_charge/C8.wav",
+      "sources": [
+        "r:clothBelt2",
+        "r:creak1",
+        "r:metalLatch"
+      ],
+      "layers": [
+        {
+          "role": "tension",
+          "source": "r:clothBelt2",
+          "gain": 0.34,
+          "at_seconds": 0
+        },
+        {
+          "role": "tension",
+          "source": "r:creak1",
+          "gain": 0.5,
+          "at_seconds": 0.02
+        },
+        {
+          "role": "string tension",
+          "source": "original synthesis",
+          "gain": 0.22,
+          "at_seconds": 0.016
+        },
+        {
+          "role": "lock",
+          "source": "r:metalLatch",
+          "gain": 0.62,
+          "at_seconds": 0.32
+        }
+      ],
+      "sha256": "3103af2ad104595fe4c674c948fd0bacd0dd640f3b3991918d097a38648f11af",
+      "duration_seconds": 0.512,
+      "peak_dbfs": -2.83,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -142.58,
+      "spectral_centroid_hz": 6121,
+      "dc_offset": -0.0002087,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "R1",
+      "group": "R",
+      "category": "쇠뇌 발사",
+      "name": "목재 쇠뇌",
+      "file": "candidates/08_rook_fire/R1.wav",
+      "sources": [
+        "i:impactWood_medium_000",
+        "r:knifeSlice"
+      ],
+      "layers": [
+        {
+          "role": "bowstring",
+          "source": "original synthesis",
+          "gain": 0.36,
+          "at_seconds": 0.005
+        },
+        {
+          "role": "release",
+          "source": "i:impactWood_medium_000",
+          "gain": 0.59,
+          "at_seconds": 0
+        },
+        {
+          "role": "flight",
+          "source": "r:knifeSlice",
+          "gain": 0.26,
+          "at_seconds": 0.012
+        }
+      ],
+      "sha256": "fb9664b662ab5300bfb8124a527bdd8014590e9c2fa3d299ca7c82e751ee8d4c",
+      "duration_seconds": 0.337,
+      "peak_dbfs": -3.76,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -126.4,
+      "spectral_centroid_hz": 8566,
+      "dc_offset": 0.0002577,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "R2",
+      "group": "R",
+      "category": "쇠뇌 발사",
+      "name": "강철 쇠뇌",
+      "file": "candidates/08_rook_fire/R2.wav",
+      "sources": [
+        "r:drawKnife1",
+        "r:metalLatch"
+      ],
+      "layers": [
+        {
+          "role": "bowstring",
+          "source": "original synthesis",
+          "gain": 0.22,
+          "at_seconds": 0.005
+        },
+        {
+          "role": "release",
+          "source": "r:metalLatch",
+          "gain": 0.7,
+          "at_seconds": 0
+        },
+        {
+          "role": "flight",
+          "source": "r:drawKnife1",
+          "gain": 0.29,
+          "at_seconds": 0.012
+        }
+      ],
+      "sha256": "9902a017e62488795d8ce43811c98fae64a627ed74a402c1b7d95a50ff26b944",
+      "duration_seconds": 0.335,
+      "peak_dbfs": -1.72,
+      "rms_dbfs": -19.85,
+      "tail_10ms_dbfs": -121.23,
+      "spectral_centroid_hz": 8380,
+      "dc_offset": -9.39e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "R3",
+      "group": "R",
+      "category": "쇠뇌 발사",
+      "name": "날카로운 현",
+      "file": "candidates/08_rook_fire/R3.wav",
+      "sources": [
+        "r:cloth4",
+        "r:metalClick"
+      ],
+      "layers": [
+        {
+          "role": "bowstring",
+          "source": "original synthesis",
+          "gain": 0.62,
+          "at_seconds": 0.005
+        },
+        {
+          "role": "flight",
+          "source": "r:cloth4",
+          "gain": 0.18,
+          "at_seconds": 0.015
+        },
+        {
+          "role": "release",
+          "source": "r:metalClick",
+          "gain": 0.32,
+          "at_seconds": 0
+        }
+      ],
+      "sha256": "173799aaf6e4bb59f648bf4b52d8970a4bc4ae51e2b394ddf3ef9dc295f97cba",
+      "duration_seconds": 0.336,
+      "peak_dbfs": -2.86,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -124.61,
+      "spectral_centroid_hz": 4646,
+      "dc_offset": -6.99e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "R4",
+      "group": "R",
+      "category": "쇠뇌 발사",
+      "name": "묵직한 볼트",
+      "file": "candidates/08_rook_fire/R4.wav",
+      "sources": [
+        "i:impactMetal_light_004",
+        "i:impactWood_heavy_002"
+      ],
+      "layers": [
+        {
+          "role": "bowstring",
+          "source": "original synthesis",
+          "gain": 0.29,
+          "at_seconds": 0.005
+        },
+        {
+          "role": "release",
+          "source": "i:impactWood_heavy_002",
+          "gain": 0.49,
+          "at_seconds": 0
+        },
+        {
+          "role": "recoil",
+          "source": "i:impactMetal_light_004",
+          "gain": 0.23,
+          "at_seconds": 0.022
+        },
+        {
+          "role": "flight",
+          "source": "original synthesis",
+          "gain": 0.23,
+          "at_seconds": 0.007
+        }
+      ],
+      "sha256": "9730357a6148f1ec4b8b0372cd0f3cc50e87d5095d9bcbd072703aaeae21d466",
+      "duration_seconds": 0.337,
+      "peak_dbfs": -3.78,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -115.61,
+      "spectral_centroid_hz": 2907,
+      "dc_offset": 0.0006942,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "R5",
+      "group": "R",
+      "category": "쇠뇌 발사",
+      "name": "가벼운 휙",
+      "file": "candidates/08_rook_fire/R5.wav",
+      "sources": [
+        "r:knifeSlice2",
+        "r:metalClick"
+      ],
+      "layers": [
+        {
+          "role": "bowstring",
+          "source": "original synthesis",
+          "gain": 0.43,
+          "at_seconds": 0.005
+        },
+        {
+          "role": "flight",
+          "source": "r:knifeSlice2",
+          "gain": 0.45,
+          "at_seconds": 0
+        },
+        {
+          "role": "release",
+          "source": "r:metalClick",
+          "gain": 0.18,
+          "at_seconds": 0
+        }
+      ],
+      "sha256": "2addf6b32da299245ce2ff21dd8cd9192dad7582630727141cb8ee5ad90789ce",
+      "duration_seconds": 0.329,
+      "peak_dbfs": -3.91,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -123.05,
+      "spectral_centroid_hz": 10265,
+      "dc_offset": -0.0001913,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "R6",
+      "group": "R",
+      "category": "쇠뇌 발사",
+      "name": "쇠기구 반동",
+      "file": "candidates/08_rook_fire/R6.wav",
+      "sources": [
+        "i:impactTin_medium_002",
+        "r:clothBelt",
+        "r:metalLatch"
+      ],
+      "layers": [
+        {
+          "role": "bowstring",
+          "source": "original synthesis",
+          "gain": 0.23,
+          "at_seconds": 0.005
+        },
+        {
+          "role": "release",
+          "source": "r:metalLatch",
+          "gain": 0.53,
+          "at_seconds": 0
+        },
+        {
+          "role": "recoil",
+          "source": "i:impactTin_medium_002",
+          "gain": 0.37,
+          "at_seconds": 0.033
+        },
+        {
+          "role": "flight",
+          "source": "r:clothBelt",
+          "gain": 0.19,
+          "at_seconds": 0.06
+        }
+      ],
+      "sha256": "aace532cf90c0c5448112dc0b494340261d0994c530d1c310e2377e7af3777dd",
+      "duration_seconds": 0.337,
+      "peak_dbfs": -2.41,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -119.83,
+      "spectral_centroid_hz": 7048,
+      "dc_offset": 0.0001135,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "R7",
+      "group": "R",
+      "category": "쇠뇌 발사",
+      "name": "공기 절단",
+      "file": "candidates/08_rook_fire/R7.wav",
+      "sources": [
+        "i:impactWood_light_004",
+        "r:knifeSlice"
+      ],
+      "layers": [
+        {
+          "role": "bowstring",
+          "source": "original synthesis",
+          "gain": 0.28,
+          "at_seconds": 0.005
+        },
+        {
+          "role": "flight",
+          "source": "r:knifeSlice",
+          "gain": 0.48,
+          "at_seconds": 0
+        },
+        {
+          "role": "flight",
+          "source": "original synthesis",
+          "gain": 0.38,
+          "at_seconds": 0
+        },
+        {
+          "role": "release",
+          "source": "i:impactWood_light_004",
+          "gain": 0.2,
+          "at_seconds": 0
+        }
+      ],
+      "sha256": "4ac9076d94f856a63f1c099c39ea490af3b252c0b5ffe7e50b35087ca812be83",
+      "duration_seconds": 0.335,
+      "peak_dbfs": -4.73,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -129.81,
+      "spectral_centroid_hz": 7903,
+      "dc_offset": 7.19e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    },
+    {
+      "id": "R8",
+      "group": "R",
+      "category": "쇠뇌 발사",
+      "name": "짧은 잔향",
+      "file": "candidates/08_rook_fire/R8.wav",
+      "sources": [
+        "r:cloth2",
+        "r:metalLatch"
+      ],
+      "layers": [
+        {
+          "role": "bowstring",
+          "source": "original synthesis",
+          "gain": 0.35,
+          "at_seconds": 0.005
+        },
+        {
+          "role": "release",
+          "source": "r:metalLatch",
+          "gain": 0.5,
+          "at_seconds": 0
+        },
+        {
+          "role": "flight",
+          "source": "r:cloth2",
+          "gain": 0.26,
+          "at_seconds": 0.018
+        },
+        {
+          "role": "short room tail",
+          "source": "original synthesis",
+          "gain": 0.16,
+          "at_seconds": 0.02
+        }
+      ],
+      "sha256": "8cec10a71e90522f38c7ad54e170f1bc6dee03db4f1efc9f7c7014cda95f1cfe",
+      "duration_seconds": 0.337,
+      "peak_dbfs": -2.21,
+      "rms_dbfs": -19.58,
+      "tail_10ms_dbfs": -111.04,
+      "spectral_centroid_hz": 3535,
+      "dc_offset": 3.55e-05,
+      "clipped_samples": 0,
+      "first_sample": 0.0,
+      "last_sample": 0.0
+    }
+  ],
+  "total_candidates": 64,
+  "unique_sha256": 64,
+  "combined_audition": "auditions/00_all_64.wav"
+}

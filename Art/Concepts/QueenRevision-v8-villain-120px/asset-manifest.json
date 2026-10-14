@@ -1,0 +1,52 @@
+{
+  "asset": "queen boss",
+  "version": "QueenRevision-v8-villain-120px",
+  "status": "superseded concept: expression direction replaced by latest user correction",
+  "generator": "built-in image_gen edit",
+  "generated_source": "/Users/gimdong-yun/.codex/generated_images/01a0ff99-6f40-7fa1-a793-093bdf079a2b/exec-9a18d329-b419-4780-b7d5-5f7a3a25fd06.png",
+  "references": [
+    "Art/Concepts/QueenRevision-v7/queen-original-c-face.png",
+    "Art/Concepts/QueenCandidates-v4/C-throne-queen.png"
+  ],
+  "normalization": "Aseprite 1.3.18.6; normalize_aseprite.lua; fixed palette, binary alpha, nearest sampling, common bottom anchor y=116",
+  "canvas": [
+    120,
+    120
+  ],
+  "opaque_colors": 16,
+  "content_bounds": [
+    20,
+    4,
+    99,
+    116
+  ],
+  "preview_scale": 6,
+  "comparison_note": "left: v7 queen, right: this draft; both fit to 120x120 with same 16-color palette for size/silhouette comparison",
+  "target_import_settings": {
+    "ppu": 32,
+    "filter": "Point"
+  },
+  "imported_into_game": false,
+  "files": [
+    {
+      "file": "generated-edit-source.png",
+      "sha256": "bffa8743b40849e5bfdbf4818c715064b1ce3802718b1f0a198915dd6d3ac0c9"
+    },
+    {
+      "file": "queen-villain-120.png",
+      "sha256": "ee045f6ac5f6a3e9f51947736eee1a313f402d4468419c95436689b9272eef4c"
+    },
+    {
+      "file": "queen-villain-120-6x.png",
+      "sha256": "918a9555452402e3faa409c1d0487eb6b41bff2c3641843e05aaa3f3ff421e68"
+    },
+    {
+      "file": "queen-villain-120.aseprite",
+      "sha256": "ad654d673567cb11e7abce313fe873dba7270b385112a391e5f7677f9c61fb05"
+    },
+    {
+      "file": "queen-before-after-120-4x.png",
+      "sha256": "6bcc5fc1d5dbf21667033253ae334b3798f6790a090bbdc2f3979cefbc679a7a"
+    }
+  ]
+}
