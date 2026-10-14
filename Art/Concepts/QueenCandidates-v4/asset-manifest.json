@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "scope": "queen-design-candidates",
+  "status": "unapproved-design-drafts",
+  "tool": "built-in image_gen",
+  "styleSkill": "create-game-assets",
+  "logicalSize": [
+    120,
+    120
+  ],
+  "targetPalette": [
+    "#000000",
+    "#2E223C",
+    "#50355E",
+    "#795482",
+    "#626E75",
+    "#9BADB7",
+    "#DADADA",
+    "#D7782E",
+    "#F19F38",
+    "#F4AA4D",
+    "#5FCDE4"
+  ],
+  "pixelsPerUnit": 32,
+  "gameplayCollisionRole": "undecided; not changed by art review",
+  "references": [
+    "/Users/gimdong-yun/Documents/Codex/2026-09-27/referenced-chatgpt-conversation-this-is-an/work/aseprite_exports/jaguar_preview.png",
+    "/Users/gimdong-yun/GitHub/Grid-Caster/pawn-shield-guard-concept-v2.png",
+    "/Users/gimdong-yun/GitHub/Grid-Caster/docs/verification/captures/pc-screen-2026-10-02.png"
+  ],
+  "assets": [
+    {
+      "id": "A",
+      "name": "가면 여왕",
+      "slug": "A-mask-queen",
+      "state": "neutral",
+      "approval": "pending",
+      "output": "A-mask-queen.png",
+      "sourceTool": "image_gen",
+      "prompt": "ROLE/PURPOSE: One original queen boss design candidate for Grid-Caster, a top-down tile-based tactical game. This is a single neutral master-pose design draft, not an animation sheet. The queen commands the approved pawn shield guards and controls straight and diagonal attack lines and temporary barriers. Express royal authority through the large silhouette, not extra decorative symbols.\nVIEW: Compact front-facing 2D RPG game sprite compatible with the slightly overhead board characters in reference 3. No perspective scene or full-body fashion illustration. Entire character visible, centered with a small even margin.\nART DIRECTION: Use reference 1 as the strict upper bound for detail density and pixel-cluster simplicity. Large flat connected color masses, long deliberate stair-step edges, approximately one logical-pixel dark outline. At most three defining visual features. Only two or three hard-separated tones per material. A 120×120 logical-pixel boss design, enlarged uniformly for viewing; keep the large head and compact body proportions of small board-game characters. Do not add detail just because the boss is larger.\nLOCKED PALETTE: Use only these eleven flat colors for the character: #000000 outline; #2E223C, #50355E, #795482 purple; #626E75, #9BADB7, #DADADA cool stone/pale material; #D7782E, #F19F38, #F4AA4D gold; #5FCDE4 cyan accent. Upper-left light, large shadow planes, no intermediate color ramps. Gold and cyan are small accents, not thick borders over the entire costume. The approved pawn reference supplies faction colors and royal vocabulary, not its gradients or fine rendering.\nGAME-SCALE READ: Crown and face remain distinct from body at thumbnail size. Main silhouette has a clear centered occupied-cell anchor. Avoid wide detached effects and loose floating particles.\nOUTPUT: One character only, genuinely transparent background, no floor, contact shadow, scenery, labels, typography, borders, comparison panels, watermark, or additional characters. Do not render a checkerboard.\nEXCLUDE: gradients, soft shading, glow, bloom, anti-aliasing, semi-transparent character edges, microtexture, repeated 1-pixel markings, intricate armor, skeletal scary face, oversized stone fists, thin realistic limbs, long fashion-model torso, individual hair strands, eyelashes, anatomical fingers, ornate jewelry, or HD pixel-art illustration.\nREFERENCES: Image 1 is jaguar_preview.png, the native low-detail Gold Standard. Image 2 is pawn-shield-guard-concept-v2.png, the approved faction identity. Image 3 is pc-screen-2026-10-02.png, game-view and head/body proportion context. Do not reproduce the jaguar, pawn, board, HUD, or screenshot.\n\nSUBJECT A — MASKED QUEEN: A compact royal spellcaster with three dominant shapes: a large rounded ivory mask/head topped by a small three-point gold crown, a short broad triangular purple mantle, and two tiny pale mitten hands holding the mantle edges. The head including crown occupies roughly 40 percent of character height; the body is short and compressed. Mask is a smooth pale color block with two tiny cyan eye clusters, no mouth, skull sockets, or long nose. Hair, if visible, is just one short pale mass. The mantle widens toward the base and its split hem makes two bold diagonal edges. A composed, approachable-but-mysterious royal boss, visually charming rather than grotesque. No staff, throne, wings, floating magic, enormous shoulder pads, or giant gold trim.",
+      "sourcePath": "/Users/gimdong-yun/.codex/generated_images/01a0ff99-6f40-7fa1-a793-093bdf079a2b/exec-ed89075a-ff42-4da8-8598-3cbdd649d5c3.png"
+    },
+    {
+      "id": "B",
+      "name": "왕관나방",
+      "slug": "B-crown-moth",
+      "state": "neutral",
+      "approval": "pending",
+      "output": "B-crown-moth.png",
+      "sourceTool": "image_gen",
+      "prompt": "ROLE/PURPOSE: One original queen boss design candidate for Grid-Caster, a top-down tile-based tactical game. This is a single neutral master-pose design draft, not an animation sheet. The queen commands the approved pawn shield guards and controls straight and diagonal attack lines and temporary barriers. Express royal authority through the large silhouette, not extra decorative symbols.\nVIEW: Compact front-facing 2D RPG game sprite compatible with the slightly overhead board characters in reference 3. No perspective scene or full-body fashion illustration. Entire character visible, centered with a small even margin.\nART DIRECTION: Use reference 1 as the strict upper bound for detail density and pixel-cluster simplicity. Large flat connected color masses, long deliberate stair-step edges, approximately one logical-pixel dark outline. At most three defining visual features. Only two or three hard-separated tones per material. A 120×120 logical-pixel boss design, enlarged uniformly for viewing; keep the large head and compact body proportions of small board-game characters. Do not add detail just because the boss is larger.\nLOCKED PALETTE: Use only these eleven flat colors for the character: #000000 outline; #2E223C, #50355E, #795482 purple; #626E75, #9BADB7, #DADADA cool stone/pale material; #D7782E, #F19F38, #F4AA4D gold; #5FCDE4 cyan accent. Upper-left light, large shadow planes, no intermediate color ramps. Gold and cyan are small accents, not thick borders over the entire costume. The approved pawn reference supplies faction colors and royal vocabulary, not its gradients or fine rendering.\nGAME-SCALE READ: Crown and face remain distinct from body at thumbnail size. Main silhouette has a clear centered occupied-cell anchor. Avoid wide detached effects and loose floating particles.\nOUTPUT: One character only, genuinely transparent background, no floor, contact shadow, scenery, labels, typography, borders, comparison panels, watermark, or additional characters. Do not render a checkerboard.\nEXCLUDE: gradients, soft shading, glow, bloom, anti-aliasing, semi-transparent character edges, microtexture, repeated 1-pixel markings, intricate armor, skeletal scary face, oversized stone fists, thin realistic limbs, long fashion-model torso, individual hair strands, eyelashes, anatomical fingers, ornate jewelry, or HD pixel-art illustration.\nREFERENCES: Image 1 is jaguar_preview.png, the native low-detail Gold Standard. Image 2 is pawn-shield-guard-concept-v2.png, the approved faction identity. Image 3 is pc-screen-2026-10-02.png, game-view and head/body proportion context. Do not reproduce the jaguar, pawn, board, HUD, or screenshot.\n\nSUBJECT B — CROWN MOTH QUEEN: An original compact royal moth monster with three dominant shapes: a small rounded pale moth face with a simple three-point gold crown/crest, two broad purple wings folded into one bold cape-like silhouette, and a short chunky body. The wings form a strong wide M/diamond outline with two readable diagonal edges on each side; they are only large flat purple planes with a single sparse gold tip on each upper outer corner, not patterned insect wings. Head and thorax are large and cute, with two tiny cyan eyes and short simple antenna shapes integrated into the crest. Feet are two small pale blocks tucked under the body. Restrained magical monarch character, more creature than person, no realistic insect anatomy. No multiple skinny legs, veins, eye spots, butterfly texture, human dress, weapons, additional crown jewels, or detached effects.",
+      "sourcePath": "/Users/gimdong-yun/.codex/generated_images/01a0ff99-6f40-7fa1-a793-093bdf079a2b/exec-a54914b4-9ab0-46de-a753-8827f49f844e.png"
+    },
+    {
+      "id": "C",
+      "name": "왕좌 여왕",
+      "slug": "C-throne-queen",
+      "state": "neutral",
+      "approval": "pending",
+      "output": "C-throne-queen.png",
+      "sourceTool": "image_gen",
+      "prompt": "ROLE/PURPOSE: One original queen boss design candidate for Grid-Caster, a top-down tile-based tactical game. This is a single neutral master-pose design draft, not an animation sheet. The queen commands the approved pawn shield guards and controls straight and diagonal attack lines and temporary barriers. Express royal authority through the large silhouette, not extra decorative symbols.\nVIEW: Compact front-facing 2D RPG game sprite compatible with the slightly overhead board characters in reference 2. No perspective scene or full-body fashion illustration. Entire character visible, centered with a small even margin.\nART DIRECTION: Use reference 1 as the strict upper bound for detail density and pixel-cluster simplicity. Large flat connected color masses, long deliberate stair-step edges, approximately one logical-pixel dark outline. At most three defining visual features. Only two or three hard-separated tones per material. A 120×120 logical-pixel boss design, enlarged uniformly for viewing; keep the large head and compact body proportions of small board-game characters. Do not add detail just because the boss is larger.\nLOCKED PALETTE: Use only these eleven flat colors for the character: #000000 outline; #2E223C, #50355E, #795482 purple; #626E75, #9BADB7, #DADADA cool stone/pale material; #D7782E, #F19F38, #F4AA4D gold; #5FCDE4 cyan accent. Upper-left light, large shadow planes, no intermediate color ramps. Gold and cyan are small accents, not thick borders over the entire costume. The pawn faction is defined here by the locked purple, stone-gray, gold, and cyan palette.\nGAME-SCALE READ: Crown and face remain distinct from body at thumbnail size. Main silhouette has a clear centered occupied-cell anchor. Avoid wide detached effects and loose floating particles.\nOUTPUT: One character only, genuinely transparent background, no floor, contact shadow, scenery, labels, typography, borders, comparison panels, watermark, or additional characters. Do not render a checkerboard.\nEXCLUDE: gradients, soft shading, glow, bloom, anti-aliasing, semi-transparent character edges, microtexture, repeated 1-pixel markings, intricate armor, skeletal scary face, oversized stone fists, thin realistic limbs, long fashion-model torso, individual hair strands, eyelashes, anatomical fingers, ornate jewelry, or HD pixel-art illustration.\nREFERENCES: Image 1 is jaguar_preview.png, the native low-detail Gold Standard. Image 2 is pc-screen-2026-10-02.png, game-view and head/body proportion context. Do not reproduce the jaguar, board, HUD, or screenshot.\n\nSUBJECT C — THRONE QUEEN: A small compact unmasked queen seated inside a compact hovering stone throne, treated together as one character sprite. Three dominant shapes: a large rounded pale face/head with a small three-point gold crown, a short purple royal mantle/body, and a square stepped cool-gray throne frame with two short thick armrests. The throne frame surrounds rather than hides her, and forms a bold stepped rectangular silhouette with one centered short base. No huge legs, wheels, terrain, platform floor, or background architecture. The queen has two tiny cyan eye clusters, a soft, calm rounded pale face, with tiny positive dot eyes on the pale face and no black eye sockets, dark face mask, angular beak, or skull shape, and small mitten hands resting on the armrests. Head and crown are about 40 percent of the seated queen's visible height. Throne is only three large gray stone planes, with one small gold accent, not carved ornament. A dignified compact magical ruler with friendly shape clarity, not a bulky stone golem, tank, or realistic portrait. The throne is a visual motif only, no action effects.",
+      "references": [
+        "/Users/gimdong-yun/Documents/Codex/2026-09-27/referenced-chatgpt-conversation-this-is-an/work/aseprite_exports/jaguar_preview.png",
+        "/Users/gimdong-yun/GitHub/Grid-Caster/docs/verification/captures/pc-screen-2026-10-02.png"
+      ],
+      "sourcePath": "/Users/gimdong-yun/.codex/generated_images/01a0ff99-6f40-7fa1-a793-093bdf079a2b/exec-211cec17-a8cb-43e7-863f-cae9a05982d6.png"
+    }
+  ]
+}

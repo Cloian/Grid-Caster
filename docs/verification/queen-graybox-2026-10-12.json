@@ -1,0 +1,2015 @@
+{
+  "checks": [
+    {
+      "name": "무피격 경로 single rook Lv.1",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 9
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 relay rook Lv.1",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 9
+          }
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 6
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 single rook Lv.2",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 9
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 relay rook Lv.2",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 9
+          }
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 6
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 single rook Lv.3",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 9
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 relay rook Lv.3",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 9
+          }
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 6
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 single bishop Lv.1",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 7,
+            "y": 8
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 relay bishop Lv.1",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 7,
+            "y": 8
+          }
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 5,
+            "y": 6
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 single bishop Lv.2",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 7,
+            "y": 8
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 relay bishop Lv.2",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 7,
+            "y": 8
+          }
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 5,
+            "y": 6
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 single bishop Lv.3",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 7,
+            "y": 8
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 relay bishop Lv.3",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 7,
+            "y": 8
+          }
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 5,
+            "y": 6
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 single knight Lv.1",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 8
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 relay knight Lv.1",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 8
+          }
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 5,
+            "y": 6
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 single knight Lv.2",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 8
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 relay knight Lv.2",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 8
+          }
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 5,
+            "y": 6
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 single knight Lv.3",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 8
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 relay knight Lv.3",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 8
+          }
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 5,
+            "y": 6
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 single none Lv.1",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 9
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 relay none Lv.1",
+      "pass": true,
+      "detail": [
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 9
+          }
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 8
+          }
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 7
+          }
+        }
+      ]
+    },
+    {
+      "name": "룩은 중간 벽 통과 불가",
+      "pass": true
+    },
+    {
+      "name": "나이트 빈 L자 착지 가능",
+      "pass": true
+    },
+    {
+      "name": "룩 긴 대각선 불가",
+      "pass": true
+    },
+    {
+      "name": "비숍 긴 직선 불가",
+      "pass": true
+    },
+    {
+      "name": "첫 근위병에서 사격 정지",
+      "pass": true
+    },
+    {
+      "name": "직격 충전 행동당 한 번",
+      "pass": true
+    },
+    {
+      "name": "공격 뒤 적 단계 한 번",
+      "pass": true
+    },
+    {
+      "name": "빗나감 충전 없음",
+      "pass": true
+    },
+    {
+      "name": "미준비 특성은 행동을 쓰지 않음",
+      "pass": true
+    },
+    {
+      "name": "큰 보스 직격 한 번·처치 후 공격 종료",
+      "pass": true
+    },
+    {
+      "name": "첫 전장 공격 두 번째 행동 뒤",
+      "pass": true
+    },
+    {
+      "name": "둘째 공격 세 번째 행동 뒤",
+      "pass": true
+    },
+    {
+      "name": "여왕 광역은 근위병도 처치",
+      "pass": true
+    },
+    {
+      "name": "예고 위치 고정",
+      "pass": true
+    },
+    {
+      "name": "근위병 정면 공격과 이동은 하나만",
+      "pass": true
+    },
+    {
+      "name": "템플릿의 모든 안전 칸은 전장·벽·여왕과 충돌하지 않음",
+      "pass": true
+    },
+    {
+      "name": "템플릿 A·B 공통 안전 칸 없음",
+      "pass": true
+    },
+    {
+      "name": "빈 전장 모든 합법 위치의 변경 구역·반격 경로 relay rook",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "빈 전장 모든 합법 위치의 변경 구역·반격 경로 relay bishop",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "빈 전장 모든 합법 위치의 변경 구역·반격 경로 relay knight",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "빈 전장 모든 합법 위치의 변경 구역·반격 경로 relay none",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "빈 전장 모든 합법 위치의 변경 구역·반격 경로 single none",
+      "pass": true,
+      "detail": []
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 relay rook Lv.1 seed 173821",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 relay rook Lv.1 seed 173821",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 relay rook Lv.1 seed 17",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 relay rook Lv.1 seed 17",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 relay rook Lv.1 seed 991",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 relay rook Lv.1 seed 991",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 relay rook Lv.2 seed 173821",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 relay rook Lv.2 seed 173821",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 relay rook Lv.2 seed 17",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 relay rook Lv.2 seed 17",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 relay rook Lv.2 seed 991",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 relay rook Lv.2 seed 991",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 relay rook Lv.3 seed 173821",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 relay rook Lv.3 seed 173821",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 relay rook Lv.3 seed 17",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 relay rook Lv.3 seed 17",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 relay rook Lv.3 seed 991",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 relay rook Lv.3 seed 991",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 relay bishop Lv.1 seed 173821",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 relay bishop Lv.1 seed 173821",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 relay bishop Lv.1 seed 17",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 relay bishop Lv.1 seed 17",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 relay bishop Lv.1 seed 991",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 relay bishop Lv.1 seed 991",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 relay bishop Lv.2 seed 173821",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 relay bishop Lv.2 seed 173821",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 relay bishop Lv.2 seed 17",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 relay bishop Lv.2 seed 17",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 relay bishop Lv.2 seed 991",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 relay bishop Lv.2 seed 991",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 relay bishop Lv.3 seed 173821",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 relay bishop Lv.3 seed 173821",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 relay bishop Lv.3 seed 17",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 relay bishop Lv.3 seed 17",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 relay bishop Lv.3 seed 991",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 relay bishop Lv.3 seed 991",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 relay knight Lv.1 seed 173821",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 relay knight Lv.1 seed 173821",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 relay knight Lv.1 seed 17",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 relay knight Lv.1 seed 17",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 relay knight Lv.1 seed 991",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 relay knight Lv.1 seed 991",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 relay none Lv.1 seed 173821",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 relay none Lv.1 seed 173821",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 relay none Lv.1 seed 17",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 relay none Lv.1 seed 17",
+      "pass": true,
+      "detail": {
+        "unique": 11
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 relay none Lv.1 seed 991",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 relay none Lv.1 seed 991",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 single rook Lv.1 seed 173821",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 single rook Lv.1 seed 173821",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 single rook Lv.1 seed 17",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 single rook Lv.1 seed 17",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 single rook Lv.1 seed 991",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 single rook Lv.1 seed 991",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 single rook Lv.2 seed 173821",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 single rook Lv.2 seed 173821",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 single rook Lv.2 seed 17",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 single rook Lv.2 seed 17",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 single rook Lv.2 seed 991",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 single rook Lv.2 seed 991",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 single rook Lv.3 seed 173821",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 single rook Lv.3 seed 173821",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 single rook Lv.3 seed 17",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 single rook Lv.3 seed 17",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 single rook Lv.3 seed 991",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 single rook Lv.3 seed 991",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 single bishop Lv.1 seed 173821",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 single bishop Lv.1 seed 173821",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 single bishop Lv.1 seed 17",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 single bishop Lv.1 seed 17",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 single bishop Lv.1 seed 991",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 single bishop Lv.1 seed 991",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 single bishop Lv.2 seed 173821",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 single bishop Lv.2 seed 173821",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 single bishop Lv.2 seed 17",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 single bishop Lv.2 seed 17",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 single bishop Lv.2 seed 991",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 single bishop Lv.2 seed 991",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 single bishop Lv.3 seed 173821",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 single bishop Lv.3 seed 173821",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 single bishop Lv.3 seed 17",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 single bishop Lv.3 seed 17",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 single bishop Lv.3 seed 991",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 single bishop Lv.3 seed 991",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 single knight Lv.1 seed 173821",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 single knight Lv.1 seed 173821",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 single knight Lv.1 seed 17",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 single knight Lv.1 seed 17",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 single knight Lv.1 seed 991",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 single knight Lv.1 seed 991",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 single none Lv.1 seed 173821",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 single none Lv.1 seed 173821",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 single none Lv.1 seed 17",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 single none Lv.1 seed 17",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "변경 구역 무피격·반격·고정·대기 실패 single none Lv.1 seed 991",
+      "pass": true
+    },
+    {
+      "name": "12회 순환 배치 다양성 single none Lv.1 seed 991",
+      "pass": true,
+      "detail": {
+        "unique": 12
+      }
+    },
+    {
+      "name": "여덟 순환 경로 rook",
+      "pass": true
+    },
+    {
+      "name": "여덟 순환 경로 bishop",
+      "pass": true
+    },
+    {
+      "name": "여덟 순환 경로 knight",
+      "pass": true
+    },
+    {
+      "name": "여덟 순환 경로 none",
+      "pass": true
+    },
+    {
+      "name": "모형 보스 처치 가능 rook",
+      "pass": true
+    },
+    {
+      "name": "모형 보스 처치 가능 bishop",
+      "pass": true
+    },
+    {
+      "name": "모형 보스 처치 가능 knight",
+      "pass": true
+    },
+    {
+      "name": "입력 없는 시간에는 턴 정지",
+      "pass": true
+    },
+    {
+      "name": "선택·조준은 턴을 쓰지 않음",
+      "pass": true
+    },
+    {
+      "name": "확정 버튼 행동 한 번",
+      "pass": true
+    },
+    {
+      "name": "보드 클릭 좌표 선택",
+      "pass": true
+    },
+    {
+      "name": "키보드 확정 이동 한 번",
+      "pass": true
+    },
+    {
+      "name": "취소는 행동을 소비하지 않음",
+      "pass": true
+    },
+    {
+      "name": "비교 패턴 변경·전투 초기화",
+      "pass": true
+    }
+  ],
+  "coverage": [
+    {
+      "pattern": "relay",
+      "type": "rook",
+      "count": 158,
+      "unsupported": []
+    },
+    {
+      "pattern": "relay",
+      "type": "bishop",
+      "count": 158,
+      "unsupported": []
+    },
+    {
+      "pattern": "relay",
+      "type": "knight",
+      "count": 158,
+      "unsupported": []
+    },
+    {
+      "pattern": "relay",
+      "type": "none",
+      "count": 158,
+      "unsupported": []
+    },
+    {
+      "pattern": "single",
+      "type": "none",
+      "count": 158,
+      "unsupported": []
+    }
+  ],
+  "zoneChanges": [
+    {
+      "pattern": "relay",
+      "type": "rook",
+      "level": 1,
+      "seed": 173821,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 4,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "relay",
+      "type": "rook",
+      "level": 1,
+      "seed": 17,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 11,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "relay",
+      "type": "rook",
+      "level": 1,
+      "seed": 991,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 7,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "relay",
+      "type": "rook",
+      "level": 2,
+      "seed": 173821,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 5,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "relay",
+      "type": "rook",
+      "level": 2,
+      "seed": 17,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 13,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "relay",
+      "type": "rook",
+      "level": 2,
+      "seed": 991,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 9,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "relay",
+      "type": "rook",
+      "level": 3,
+      "seed": 173821,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 6,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "relay",
+      "type": "rook",
+      "level": 3,
+      "seed": 17,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 11,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "relay",
+      "type": "rook",
+      "level": 3,
+      "seed": 991,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 11,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "relay",
+      "type": "bishop",
+      "level": 1,
+      "seed": 173821,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 3,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "relay",
+      "type": "bishop",
+      "level": 1,
+      "seed": 17,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 5,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "relay",
+      "type": "bishop",
+      "level": 1,
+      "seed": 991,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 4,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "relay",
+      "type": "bishop",
+      "level": 2,
+      "seed": 173821,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 4,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "relay",
+      "type": "bishop",
+      "level": 2,
+      "seed": 17,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 7,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "relay",
+      "type": "bishop",
+      "level": 2,
+      "seed": 991,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 9,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "relay",
+      "type": "bishop",
+      "level": 3,
+      "seed": 173821,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 5,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "relay",
+      "type": "bishop",
+      "level": 3,
+      "seed": 17,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 6,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "relay",
+      "type": "bishop",
+      "level": 3,
+      "seed": 991,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 7,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "relay",
+      "type": "knight",
+      "level": 1,
+      "seed": 173821,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 6,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "relay",
+      "type": "knight",
+      "level": 1,
+      "seed": 17,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 7,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "relay",
+      "type": "knight",
+      "level": 1,
+      "seed": 991,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 5,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "relay",
+      "type": "none",
+      "level": 1,
+      "seed": 173821,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 6,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "relay",
+      "type": "none",
+      "level": 1,
+      "seed": 17,
+      "round": 13,
+      "unique": 11,
+      "maxWarningMs": 6,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "relay",
+      "type": "none",
+      "level": 1,
+      "seed": 991,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 5,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "single",
+      "type": "rook",
+      "level": 1,
+      "seed": 173821,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 5,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "single",
+      "type": "rook",
+      "level": 1,
+      "seed": 17,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 6,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "single",
+      "type": "rook",
+      "level": 1,
+      "seed": 991,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 8,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "single",
+      "type": "rook",
+      "level": 2,
+      "seed": 173821,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 5,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "single",
+      "type": "rook",
+      "level": 2,
+      "seed": 17,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 5,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "single",
+      "type": "rook",
+      "level": 2,
+      "seed": 991,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 10,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "single",
+      "type": "rook",
+      "level": 3,
+      "seed": 173821,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 6,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "single",
+      "type": "rook",
+      "level": 3,
+      "seed": 17,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 6,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "single",
+      "type": "rook",
+      "level": 3,
+      "seed": 991,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 8,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "single",
+      "type": "bishop",
+      "level": 1,
+      "seed": 173821,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 4,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "single",
+      "type": "bishop",
+      "level": 1,
+      "seed": 17,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 4,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "single",
+      "type": "bishop",
+      "level": 1,
+      "seed": 991,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 5,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "single",
+      "type": "bishop",
+      "level": 2,
+      "seed": 173821,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 5,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "single",
+      "type": "bishop",
+      "level": 2,
+      "seed": 17,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 4,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "single",
+      "type": "bishop",
+      "level": 2,
+      "seed": 991,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 6,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "single",
+      "type": "bishop",
+      "level": 3,
+      "seed": 173821,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 6,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "single",
+      "type": "bishop",
+      "level": 3,
+      "seed": 17,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 5,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "single",
+      "type": "bishop",
+      "level": 3,
+      "seed": 991,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 6,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "single",
+      "type": "knight",
+      "level": 1,
+      "seed": 173821,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 3,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "single",
+      "type": "knight",
+      "level": 1,
+      "seed": 17,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 3,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "single",
+      "type": "knight",
+      "level": 1,
+      "seed": 991,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 6,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "single",
+      "type": "none",
+      "level": 1,
+      "seed": 173821,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 4,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "single",
+      "type": "none",
+      "level": 1,
+      "seed": 17,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 1,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    },
+    {
+      "pattern": "single",
+      "type": "none",
+      "level": 1,
+      "seed": 991,
+      "round": 13,
+      "unique": 12,
+      "maxWarningMs": 6,
+      "ok": true,
+      "shot": true,
+      "displaced": true,
+      "locked": true,
+      "valid": true
+    }
+  ],
+  "cycles": [
+    {
+      "type": "rook",
+      "round": 2,
+      "layout": "2,8;8,8|2,10;8,6",
+      "hp": 12
+    },
+    {
+      "type": "rook",
+      "round": 3,
+      "layout": "11,8;5,8|7,8;9,8",
+      "hp": 12
+    },
+    {
+      "type": "rook",
+      "round": 4,
+      "layout": "0,5;6,5|2,3;8,3",
+      "hp": 12
+    },
+    {
+      "type": "rook",
+      "round": 5,
+      "layout": "11,8;5,8|7,10;9,6",
+      "hp": 12
+    },
+    {
+      "type": "rook",
+      "round": 6,
+      "layout": "2,10;9,1|0,8;11,3",
+      "hp": 12
+    },
+    {
+      "type": "rook",
+      "round": 7,
+      "layout": "11,6;5,6|7,6;9,6",
+      "hp": 12
+    },
+    {
+      "type": "rook",
+      "round": 8,
+      "layout": "2,9;8,9|2,7;8,7",
+      "hp": 12
+    },
+    {
+      "type": "rook",
+      "round": 9,
+      "layout": "2,2;8,2|0,2;10,2",
+      "hp": 12
+    },
+    {
+      "type": "bishop",
+      "round": 2,
+      "layout": "2,8;8,8|2,10;8,6",
+      "hp": 12
+    },
+    {
+      "type": "bishop",
+      "round": 3,
+      "layout": "11,8;5,8|7,8;9,8",
+      "hp": 12
+    },
+    {
+      "type": "bishop",
+      "round": 4,
+      "layout": "0,5;6,5|2,3;8,3",
+      "hp": 12
+    },
+    {
+      "type": "bishop",
+      "round": 5,
+      "layout": "11,8;5,8|7,10;9,6",
+      "hp": 12
+    },
+    {
+      "type": "bishop",
+      "round": 6,
+      "layout": "2,10;9,1|0,8;11,3",
+      "hp": 12
+    },
+    {
+      "type": "bishop",
+      "round": 7,
+      "layout": "11,6;5,6|7,6;9,6",
+      "hp": 12
+    },
+    {
+      "type": "bishop",
+      "round": 8,
+      "layout": "2,9;8,9|2,7;8,7",
+      "hp": 12
+    },
+    {
+      "type": "bishop",
+      "round": 9,
+      "layout": "2,2;8,2|0,2;10,2",
+      "hp": 12
+    },
+    {
+      "type": "knight",
+      "round": 2,
+      "layout": "2,8;8,8|2,10;8,6",
+      "hp": 12
+    },
+    {
+      "type": "knight",
+      "round": 3,
+      "layout": "11,8;5,8|7,8;9,8",
+      "hp": 12
+    },
+    {
+      "type": "knight",
+      "round": 4,
+      "layout": "0,5;6,5|2,3;8,3",
+      "hp": 12
+    },
+    {
+      "type": "knight",
+      "round": 5,
+      "layout": "11,8;5,8|7,10;9,6",
+      "hp": 12
+    },
+    {
+      "type": "knight",
+      "round": 6,
+      "layout": "2,10;9,1|0,8;11,3",
+      "hp": 12
+    },
+    {
+      "type": "knight",
+      "round": 7,
+      "layout": "11,6;5,6|7,6;9,6",
+      "hp": 12
+    },
+    {
+      "type": "knight",
+      "round": 8,
+      "layout": "2,9;8,9|2,7;8,7",
+      "hp": 12
+    },
+    {
+      "type": "knight",
+      "round": 9,
+      "layout": "2,2;8,2|0,2;10,2",
+      "hp": 12
+    },
+    {
+      "type": "none",
+      "round": 2,
+      "layout": "10,4;4,4|2,6;8,6",
+      "hp": 12
+    },
+    {
+      "type": "none",
+      "round": 3,
+      "layout": "11,4;5,4|11,2;5,6",
+      "hp": 12
+    },
+    {
+      "type": "none",
+      "round": 4,
+      "layout": "3,6;9,6|1,6;7,6",
+      "hp": 12
+    },
+    {
+      "type": "none",
+      "round": 5,
+      "layout": "3,8;9,8|1,8;7,8",
+      "hp": 12
+    },
+    {
+      "type": "none",
+      "round": 6,
+      "layout": "2,10;9,1|0,8;11,3",
+      "hp": 12
+    },
+    {
+      "type": "none",
+      "round": 7,
+      "layout": "3,8;9,8|1,8;11,8",
+      "hp": 12
+    },
+    {
+      "type": "none",
+      "round": 8,
+      "layout": "4,5;7,6|4,7;7,4",
+      "hp": 12
+    },
+    {
+      "type": "none",
+      "round": 9,
+      "layout": "3,9;8,2|5,7;6,4",
+      "hp": 12
+    }
+  ],
+  "fights": [
+    {
+      "type": "rook",
+      "end": "win",
+      "hp": 12,
+      "turn": 25,
+      "bossHits": 8
+    },
+    {
+      "type": "bishop",
+      "end": "win",
+      "hp": 12,
+      "turn": 29,
+      "bossHits": 8
+    },
+    {
+      "type": "knight",
+      "end": "win",
+      "hp": 12,
+      "turn": 33,
+      "bossHits": 8
+    }
+  ],
+  "templateCount": 510,
+  "layouts": [
+    {
+      "width": 704,
+      "scrollWidth": 704,
+      "overflow": false,
+      "boardWidth": 704
+    },
+    {
+      "width": 288,
+      "scrollWidth": 288,
+      "overflow": false,
+      "boardWidth": 288
+    }
+  ],
+  "errors": [],
+  "ok": true
+}

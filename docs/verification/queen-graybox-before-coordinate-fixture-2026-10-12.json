@@ -1,0 +1,696 @@
+{
+  "checks": [
+    {
+      "name": "무피격 경로 single rook Lv.1",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 9
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 relay rook Lv.1",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 9
+          }
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 6
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 single rook Lv.2",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 9
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 relay rook Lv.2",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 9
+          }
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 6
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 single rook Lv.3",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 9
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 relay rook Lv.3",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 9
+          }
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 6
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 single bishop Lv.1",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 7,
+            "y": 8
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 relay bishop Lv.1",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 7,
+            "y": 8
+          }
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 5,
+            "y": 6
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 single bishop Lv.2",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 7,
+            "y": 8
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 relay bishop Lv.2",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 7,
+            "y": 8
+          }
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 5,
+            "y": 6
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 single bishop Lv.3",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 7,
+            "y": 8
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 relay bishop Lv.3",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 7,
+            "y": 8
+          }
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 5,
+            "y": 6
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 single knight Lv.1",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 8
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 relay knight Lv.1",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 8
+          }
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 5,
+            "y": 6
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 single knight Lv.2",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 8
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 relay knight Lv.2",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 8
+          }
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 5,
+            "y": 6
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 single knight Lv.3",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 8
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 relay knight Lv.3",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 8
+          }
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 5,
+            "y": 6
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 single none Lv.1",
+      "pass": true,
+      "detail": [
+        {
+          "type": "wait"
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 9
+          }
+        }
+      ]
+    },
+    {
+      "name": "무피격 경로 relay none Lv.1",
+      "pass": true,
+      "detail": [
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 9
+          }
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 8
+          }
+        },
+        {
+          "type": "move",
+          "to": {
+            "x": 4,
+            "y": 7
+          }
+        }
+      ]
+    },
+    {
+      "name": "룩은 중간 벽 통과 불가",
+      "pass": true
+    },
+    {
+      "name": "나이트 빈 L자 착지 가능",
+      "pass": true
+    },
+    {
+      "name": "룩 긴 대각선 불가",
+      "pass": true
+    },
+    {
+      "name": "비숍 긴 직선 불가",
+      "pass": true
+    },
+    {
+      "name": "첫 근위병에서 사격 정지",
+      "pass": true
+    },
+    {
+      "name": "직격 충전 행동당 한 번",
+      "pass": true
+    },
+    {
+      "name": "공격 뒤 적 단계 한 번",
+      "pass": true
+    },
+    {
+      "name": "빗나감 충전 없음",
+      "pass": true
+    },
+    {
+      "name": "미준비 특성은 행동을 쓰지 않음",
+      "pass": true
+    },
+    {
+      "name": "큰 보스 직격 한 번·처치 후 공격 종료",
+      "pass": true
+    },
+    {
+      "name": "첫 전장 공격 두 번째 행동 뒤",
+      "pass": true
+    },
+    {
+      "name": "둘째 공격 세 번째 행동 뒤",
+      "pass": true
+    },
+    {
+      "name": "여왕 광역은 근위병도 처치",
+      "pass": true
+    },
+    {
+      "name": "예고 위치 고정",
+      "pass": true
+    },
+    {
+      "name": "근위병 정면 공격과 이동은 하나만",
+      "pass": true
+    },
+    {
+      "name": "여덟 순환 경로 rook",
+      "pass": true
+    },
+    {
+      "name": "여덟 순환 경로 bishop",
+      "pass": true
+    },
+    {
+      "name": "여덟 순환 경로 knight",
+      "pass": true
+    },
+    {
+      "name": "여덟 순환 경로 none",
+      "pass": true
+    },
+    {
+      "name": "입력 없는 시간에는 턴 정지",
+      "pass": true
+    },
+    {
+      "name": "선택·조준은 턴을 쓰지 않음",
+      "pass": true
+    },
+    {
+      "name": "확정 버튼 행동 한 번",
+      "pass": false
+    }
+  ],
+  "cycles": [
+    {
+      "type": "rook",
+      "round": 2,
+      "layout": 9,
+      "hp": 12
+    },
+    {
+      "type": "rook",
+      "round": 3,
+      "layout": 8,
+      "hp": 12
+    },
+    {
+      "type": "rook",
+      "round": 4,
+      "layout": 7,
+      "hp": 12
+    },
+    {
+      "type": "rook",
+      "round": 5,
+      "layout": 9,
+      "hp": 12
+    },
+    {
+      "type": "rook",
+      "round": 6,
+      "layout": 8,
+      "hp": 12
+    },
+    {
+      "type": "rook",
+      "round": 7,
+      "layout": 7,
+      "hp": 12
+    },
+    {
+      "type": "rook",
+      "round": 8,
+      "layout": 9,
+      "hp": 12
+    },
+    {
+      "type": "rook",
+      "round": 9,
+      "layout": 8,
+      "hp": 12
+    },
+    {
+      "type": "bishop",
+      "round": 2,
+      "layout": 9,
+      "hp": 12
+    },
+    {
+      "type": "bishop",
+      "round": 3,
+      "layout": 8,
+      "hp": 12
+    },
+    {
+      "type": "bishop",
+      "round": 4,
+      "layout": 7,
+      "hp": 12
+    },
+    {
+      "type": "bishop",
+      "round": 5,
+      "layout": 9,
+      "hp": 12
+    },
+    {
+      "type": "bishop",
+      "round": 6,
+      "layout": 8,
+      "hp": 12
+    },
+    {
+      "type": "bishop",
+      "round": 7,
+      "layout": 7,
+      "hp": 12
+    },
+    {
+      "type": "bishop",
+      "round": 8,
+      "layout": 9,
+      "hp": 12
+    },
+    {
+      "type": "bishop",
+      "round": 9,
+      "layout": 8,
+      "hp": 12
+    },
+    {
+      "type": "knight",
+      "round": 2,
+      "layout": 9,
+      "hp": 12
+    },
+    {
+      "type": "knight",
+      "round": 3,
+      "layout": 8,
+      "hp": 12
+    },
+    {
+      "type": "knight",
+      "round": 4,
+      "layout": 7,
+      "hp": 12
+    },
+    {
+      "type": "knight",
+      "round": 5,
+      "layout": 9,
+      "hp": 12
+    },
+    {
+      "type": "knight",
+      "round": 6,
+      "layout": 8,
+      "hp": 12
+    },
+    {
+      "type": "knight",
+      "round": 7,
+      "layout": 7,
+      "hp": 12
+    },
+    {
+      "type": "knight",
+      "round": 8,
+      "layout": 9,
+      "hp": 12
+    },
+    {
+      "type": "knight",
+      "round": 9,
+      "layout": 8,
+      "hp": 12
+    },
+    {
+      "type": "none",
+      "round": 2,
+      "layout": 9,
+      "hp": 12
+    },
+    {
+      "type": "none",
+      "round": 3,
+      "layout": 8,
+      "hp": 12
+    },
+    {
+      "type": "none",
+      "round": 4,
+      "layout": 7,
+      "hp": 12
+    },
+    {
+      "type": "none",
+      "round": 5,
+      "layout": 6,
+      "hp": 12
+    },
+    {
+      "type": "none",
+      "round": 6,
+      "layout": 7,
+      "hp": 12
+    },
+    {
+      "type": "none",
+      "round": 7,
+      "layout": 7,
+      "hp": 12
+    },
+    {
+      "type": "none",
+      "round": 8,
+      "layout": 6,
+      "hp": 12
+    },
+    {
+      "type": "none",
+      "round": 9,
+      "layout": 7,
+      "hp": 12
+    }
+  ],
+  "layouts": [
+    {
+      "width": 704,
+      "scrollWidth": 704,
+      "overflow": false,
+      "boardWidth": 704
+    },
+    {
+      "width": 288,
+      "scrollWidth": 288,
+      "overflow": false,
+      "boardWidth": 288
+    }
+  ],
+  "errors": [],
+  "ok": false
+}

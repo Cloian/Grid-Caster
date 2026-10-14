@@ -1,0 +1,31 @@
+{
+  "asset": "pawn-guard-teal-ivory.png",
+  "role": "queen-pawn-path-blocker-concept",
+  "status": "generated-concept-pending-user-review",
+  "tool": "built-in image_gen",
+  "source": "/Users/gimdong-yun/.codex/generated_images/01a0ff99-6f40-7fa1-a793-093bdf079a2b/exec-066255f6-fe4e-4af3-a0ce-3be71aeebfcf.png",
+  "references": [
+    "pawn-shield-guard-concept-v2.png",
+    "Art/Concepts/QueenRevision-v7/queen-original-c-face.png"
+  ],
+  "nativeTarget": {
+    "width": 68,
+    "height": 68,
+    "ppu": 32,
+    "filter": "Point",
+    "maxColors": 12
+  },
+  "actual": {
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGBA",
+    "hasAlpha": true,
+    "colors": ">12"
+  },
+  "validation": {
+    "visual": "Silhouette and shield retained; teal, ivory-gray and gold match queen family.",
+    "nativeSpriteGate": "failed-size-and-palette",
+    "unityImported": false
+  },
+  "generationPromptFile": "prompt.md"
+}

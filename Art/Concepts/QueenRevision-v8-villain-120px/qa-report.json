@@ -1,0 +1,32 @@
+{
+  "ok": true,
+  "assets": [
+    {
+      "path": "/Users/gimdong-yun/GitHub/Grid-Caster/Art/Concepts/QueenRevision-v8-villain-120px/queen-villain-120.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 120,
+      "height": 120,
+      "bytes": 4146,
+      "color_count": 17,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 9378,
+      "content_bounds": [
+        20,
+        4,
+        99,
+        116
+      ],
+      "problems": []
+    }
+  ],
+  "alpha_values": [
+    0,
+    255
+  ],
+  "binary_alpha": true,
+  "visual_review": "raw generated draft viewed; superseded before delivery",
+  "in_engine_validation": false
+}

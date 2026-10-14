@@ -1,0 +1,51 @@
+{
+  "asset": "queen boss",
+  "version": "QueenRevision-v9-presence-120px",
+  "status": "current concept for user review",
+  "generator": "built-in image_gen edit",
+  "generated_source": "/Users/gimdong-yun/.codex/generated_images/01a0ff99-6f40-7fa1-a793-093bdf079a2b/exec-3ac101a1-fd28-4eec-9fc6-c6d1b5eb65ed.png",
+  "references": [
+    "Art/Concepts/QueenRevision-v7/queen-original-c-face.png"
+  ],
+  "normalization": "Aseprite 1.3.18.6; normalize_aseprite.lua; fixed palette, binary alpha, nearest sampling, common bottom anchor y=116",
+  "canvas": [
+    120,
+    120
+  ],
+  "opaque_colors": 16,
+  "content_bounds": [
+    17,
+    4,
+    103,
+    116
+  ],
+  "preview_scale": 6,
+  "comparison_note": "left: v7 queen, right: this draft; both fit to 120x120 with same 16-color palette for size/silhouette comparison",
+  "target_import_settings": {
+    "ppu": 32,
+    "filter": "Point"
+  },
+  "imported_into_game": false,
+  "files": [
+    {
+      "file": "generated-edit-source.png",
+      "sha256": "ed4e441d4748f0199d220becd42c884a0b45c2d787c5f4fee63a28f2729506d3"
+    },
+    {
+      "file": "queen-presence-120.png",
+      "sha256": "197fd5a1f45f5976ef18528be1870f683828cc3e54f35e1c1389bd8bda4144be"
+    },
+    {
+      "file": "queen-presence-120-6x.png",
+      "sha256": "8f3e537b752774500ba230858bd9ea95c2452a96e8bb4ea3b5b7dad250a5b63f"
+    },
+    {
+      "file": "queen-presence-120.aseprite",
+      "sha256": "6dbd30acd8c19cd5232306e3008dddd06f5297f9905fe8c2b877715829c464a2"
+    },
+    {
+      "file": "queen-before-after-120-4x.png",
+      "sha256": "3d25775c52c666ac02084281ab050a3de3a3f1eb0c1db19cce8fe62aafaaa551"
+    }
+  ]
+}

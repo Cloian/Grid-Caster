@@ -1,0 +1,35 @@
+{
+  "ok": true,
+  "assets": [
+    {
+      "path": "/Users/gimdong-yun/GitHub/Grid-Caster/Art/Concepts/BossReboot-v2-120px/black-iron-colossus-120.png",
+      "format": "PNG",
+      "mode": "RGBA",
+      "width": 120,
+      "height": 120,
+      "bytes": 3896,
+      "color_count": 11,
+      "has_alpha": true,
+      "alpha_min": 0,
+      "alpha_max": 255,
+      "transparent_pixels": 6384,
+      "content_bounds": [
+        4,
+        6,
+        116,
+        116
+      ],
+      "problems": []
+    }
+  ],
+  "alpha_values": [
+    0,
+    255
+  ],
+  "binary_alpha": true,
+  "visual_review": {
+    "native_and_nearest_preview_inspected": true,
+    "same_canvas_queen_comparison_inspected": true,
+    "status": "concept draft; no Unity import or in-engine verification"
+  }
+}

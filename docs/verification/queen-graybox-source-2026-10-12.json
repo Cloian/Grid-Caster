@@ -1,0 +1,13 @@
+{
+  "kind": "in-conversation graybox model",
+  "source_path": "/Users/gimdong-yun/.codex/visualizations/2026/10/03/01a0ff99-6f40-7fa1-a793-093bdf079a2b/queen-checkmate-graybox.html",
+  "sha256": "d46ae3c070ddb429e64b9bbb6f644edea50f844c6d5d5fc9006e7b5175fd8df6",
+  "bytes": 25640,
+  "runtime": "vanilla browser JavaScript; visualize sandbox",
+  "implementation_scope": "isolated comparison model, not Unity integration",
+  "verification": "queen-graybox-2026-10-12.json",
+  "engine_settings_reference": "Unity 6000.4.0f1, URP/Input System observed in project; unchanged",
+  "revision": 2,
+  "change": "Disjoint A/B, previous safe tiles excluded from next A, seeded varied templates with damage-free route and counterattack checks",
+  "checks": 152
+}
