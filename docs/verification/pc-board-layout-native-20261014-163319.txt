@@ -1,0 +1,46 @@
+PC_BOARD_LAYOUT_FAIL
+Actual Editor geometry/raycast + separately labelled layout calculations. Not human play evidence.
+PASS runtime pipeline detected as URP; render settings unchanged
+PASS desktop Web is not inherently mobile
+PASS phone/native/forced adapter retained
+PASS calculation: whole board uses available screen with only header/action margins at (1024, 768)
+PASS board larger than previous side-panel layout at (1024, 768)
+PASS calculation: whole board uses available screen with only header/action margins at (1280, 720)
+PASS board larger than previous side-panel layout at (1280, 720)
+PASS calculation: whole board uses available screen with only header/action margins at (1920, 1080)
+PASS board larger than previous side-panel layout at (1920, 1080)
+PASS calculation: whole board uses available screen with only header/action margins at (2560, 1080)
+PASS board larger than previous side-panel layout at (2560, 1080)
+PASS calculation: whole board uses available screen with only header/action margins at (3840, 2160)
+PASS board larger than previous side-panel layout at (3840, 2160)
+PASS calculation: whole board uses available screen with only header/action margins at (800, 1200)
+PASS board larger than previous side-panel layout at (800, 1200)
+PASS calculation: whole board uses available screen with only header/action margins at (960, 540)
+PASS board larger than previous side-panel layout at (960, 540)
+PASS native PC does not attach mobile adapter
+PASS 13x13 internal board plus outer walls preserved
+PASS actual GraphicRaycaster reaches UpgradeChoice_1
+PASS actual runtime viewport dimensions ((973, 797)); Editor callback Screen=1948x1688
+PASS actual full board matches common PC geometry
+PASS actual HUD outside board and inside screen: BuildInventoryButton
+PASS actual HUD outside board and inside screen: WaveHud
+PASS actual HUD outside board and inside screen: TimeHud
+PASS actual HUD outside board and inside screen: HealthHud
+PASS actual HUD outside board and inside screen: UltimateFrame
+PASS actual HUD outside board and inside screen: TraitHud
+PASS actual HUD outside board and inside screen: AttackActionFrame
+PASS actual HUD outside board and inside screen: MoveActionFrame
+PASS actual HUD outside board and inside screen: ActionModeHud
+PASS owned upgrades and relics hidden during battle
+PASS actual GraphicRaycaster reaches AttackActionFrame
+PASS attack UI opens eight directions
+PASS actual GraphicRaycaster reaches MoveActionFrame
+PASS movement UI remains usable
+PASS actual GraphicRaycaster reaches BuildInventoryButton
+PASS compact build button opens owned upgrades/relics and blocks battlefield input
+PASS build window fits actual screen
+System.InvalidOperationException: actual GraphicRaycaster reaches MovementArtDetails
+  at PcBoardLayoutValidation.Check (System.Boolean ok, System.String description) [0x0001f] in /Users/gimdong-yun/GitHub/Grid-Caster/Assets/Editor/PcBoardLayoutValidation.cs:99 
+  at PcBoardLayoutValidation.Click (UnityEngine.RectTransform rect) [0x00052] in /Users/gimdong-yun/GitHub/Grid-Caster/Assets/Editor/PcBoardLayoutValidation.cs:116 
+  at PcBoardLayoutValidation+<Run>d__17.MoveNext () [0x00806] in /Users/gimdong-yun/GitHub/Grid-Caster/Assets/Editor/PcBoardLayoutValidation.cs:196 
+  at PcBoardLayoutValidation.Tick () [0x00043] in /Users/gimdong-yun/GitHub/Grid-Caster/Assets/Editor/PcBoardLayoutValidation.cs:73 
