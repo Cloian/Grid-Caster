@@ -122,7 +122,7 @@
 | 게임 에셋 | `Assets/Player/`, `Assets/Monsters/`, `Assets/TIles/` |
 | 제작 원본 | `Art/Sources/` (Aseprite), `Art/Icons/`, `Art/Backups/` |
 
-문서: [이미지 콘셉트 기준](IMAGE_CONCEPT_BRIEF.md) · [아트 폴더 안내](Art/README.md)
+문서: **[아트 스타일 바이블](ArtStyleBible.md)** · [이미지 콘셉트 기준](IMAGE_CONCEPT_BRIEF.md) · [아트 폴더 안내](Art/README.md)
 
 ### 6. 오디오
 
@@ -172,7 +172,8 @@ Grid-Caster/
 │  ├─ reviews/          변경 묶음 리뷰 안내
 │  └─ images/           README 이미지
 ├─ Tools/               브라우저 스모크·그레이박스·README 이미지 스크립트
-├─ AGENTS.md            개발 원칙과 구현 규칙
+├─ AGENTS.md            개발 원칙과 구현 규칙 (Codex·Claude 공통, CLAUDE.md가 가져옴)
+├─ ArtStyleBible.md     아트 기준과 Gold Standard
 ├─ CONTEXT.md           게임 도메인 용어
 └─ CONTRIBUTING.md      브랜치·커밋·게시 규칙
 ```

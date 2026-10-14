@@ -71,6 +71,7 @@ Grid-Caster 기획·결정·검증 문서를 **기능별**로 모았습니다. �
 
 | 문서 | 요약 |
 | --- | --- |
+| [아트 스타일 바이블](../ArtStyleBible.md) | 해상도·팔레트·명암·모션·Gold Standard·검수 기준 |
 | [이미지 콘셉트 기준](../IMAGE_CONCEPT_BRIEF.md) | 시안 제작용 게임 콘셉트 원본 |
 | [아트 폴더 안내](../Art/README.md) | 원본·시안·백업 위치와 적용 경로 |
 | [전투 효과음 조사](design/combat-sfx-inventory-2026-10-03.md) | 필요한 소리 목록 |

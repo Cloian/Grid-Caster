@@ -9,9 +9,12 @@
 | [`Concepts/`](Concepts) | 퀸 보스·폰 근위대 콘셉트 시안 (`QueenEarly` → v10) | 미적용 시안 |
 | [`Icons/`](Icons) | 이동술·성장 아이콘 제작 스크립트와 시안 ([안내](Icons/README.md)) | `Assets/UI/Icons`, `Assets/Resources/UI` |
 | [`Audio/`](Audio) | 전투 효과음 제작·선정 자료와 크레딧 | `Assets/Resources/CombatSFX` |
+| [`GoldStandard/`](GoldStandard) | 픽셀 밀도 기준 재규어 68×68 원본·미리보기 | 기준 전용 |
 | [`Backups/`](Backups) | 교체 전 시트·타일 원본 | — |
 
 ## 기준
+
+전체 기준은 [ArtStyleBible.md](../ArtStyleBible.md)를 따른다. 요약:
 
 - 32 PPU, Point 필터, 압축 없음. 박쥐·뱀 모션 시트는 기존 화면 크기를 유지하려고 40 PPU입니다.
 - 캐릭터 프레임 기준점은 프레임 중심입니다. 마법사 50px, 박쥐·뱀 40px 프레임.
