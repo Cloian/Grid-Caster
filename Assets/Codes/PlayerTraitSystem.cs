@@ -1,27 +1,30 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 [DisallowMultipleComponent]
 [RequireComponent(typeof(Move))]
 public sealed class PlayerTraitSystem : MonoBehaviour
 {
-    private readonly List<bool> activationBag = new List<bool>();
     private string selectedTraitId = string.Empty;
     private int selectedBagSize = 1;
-    private int nextBagIndex;
+    private int chargeProgress;
 
     public event Action<string> TraitActivated;
     public event Action<string> TraitSelected;
+    public event Action ChargeChanged;
 
     public string SelectedTraitId => selectedTraitId;
     public int ActivationBagSize => selectedBagSize;
+    // 기존 씬의 주기 값을 보존한다. 일반 적중 N-1회 + 특성 공격 1회가 한 주기다.
+    public int ChargeRequired => Mathf.Max(1, selectedBagSize - 1);
+    public int ChargeProgress => chargeProgress;
+    public bool IsReady => !string.IsNullOrEmpty(selectedTraitId) && chargeProgress >= ChargeRequired;
 
     public void SelectTrait(string traitId, int activationBagSize)
     {
         selectedTraitId = traitId ?? string.Empty;
         selectedBagSize = Mathf.Max(1, activationBagSize);
-        RefillActivationBag();
+        ResetCharge();
         TraitSelected?.Invoke(selectedTraitId);
     }
 
@@ -30,30 +33,20 @@ public sealed class PlayerTraitSystem : MonoBehaviour
         int requestedSize = Mathf.Max(1, bagSize);
         if (selectedBagSize == requestedSize) return;
         selectedBagSize = requestedSize;
-        // 이미 소비한 백은 보존한다. 주기 변경은 다음 백부터 적용한다.
-        // 첫 행동 전의 시작 강화만 미사용 백에 즉시 반영한다.
-        if (nextBagIndex == 0) RefillActivationBag();
+        chargeProgress = Mathf.Min(chargeProgress, ChargeRequired);
+        ChargeChanged?.Invoke();
     }
 
+    [Obsolete("자동 추첨은 제거되었습니다. 공격 확정은 TryBeginAttack을 사용하세요.")]
     public PlayerAttackTraitRoll RollBasicAttack()
     {
-        if (string.IsNullOrEmpty(selectedTraitId))
-            return default;
+        // 호환 진입점도 일반 공격이다. 자동 추첨은 더 이상 하지 않는다.
+        return default;
+    }
 
-        if (activationBag.Count == 0 || nextBagIndex >= activationBag.Count)
-        {
-            RefillActivationBag();
-        }
-
-        bool activated = activationBag[nextBagIndex];
-        nextBagIndex++;
-
-        if (!activated)
-            return default;
-
-        TraitActivated?.Invoke(selectedTraitId);
-        Debug.Log($"특성 발동: {selectedTraitId}", this);
-
+    public PlayerAttackTraitRoll PreviewAttack(bool useTrait)
+    {
+        if (!useTrait || !IsReady) return default;
         return new PlayerAttackTraitRoll(
             selectedTraitId == "double_cast",
             selectedTraitId == "pierce",
@@ -62,29 +55,28 @@ public sealed class PlayerTraitSystem : MonoBehaviour
         );
     }
 
-    private void RefillActivationBag()
+    public bool TryBeginAttack(bool useTrait, out PlayerAttackTraitRoll effect)
     {
-        activationBag.Clear();
-        nextBagIndex = 0;
+        effect = PreviewAttack(useTrait);
+        if (!useTrait) return true;
+        if (!IsReady) return false;
+        ResetCharge();
+        TraitActivated?.Invoke(selectedTraitId);
+        return true;
+    }
 
-        if (string.IsNullOrEmpty(selectedTraitId))
-            return;
+    public void RegisterCompletedAttack(bool hitEnemy, bool usedTrait)
+    {
+        // 전체 공격 행동이 끝난 뒤 한 번만 호출한다. 추가 영창/범위 피해는 중복 충전하지 않는다.
+        if (!hitEnemy || usedTrait || IsReady || string.IsNullOrEmpty(selectedTraitId)) return;
+        chargeProgress = Mathf.Min(ChargeRequired, chargeProgress + 1);
+        ChargeChanged?.Invoke();
+    }
 
-        // 셔플 백 하나마다 정확히 한 번 발동시켜 긴 연속 실패를 방지한다.
-        activationBag.Add(true);
-
-        for (int i = 1; i < selectedBagSize; i++)
-        {
-            activationBag.Add(false);
-        }
-
-        for (int i = activationBag.Count - 1; i > 0; i--)
-        {
-            int swapIndex = UnityEngine.Random.Range(0, i + 1);
-            bool temporary = activationBag[i];
-            activationBag[i] = activationBag[swapIndex];
-            activationBag[swapIndex] = temporary;
-        }
+    public void ResetCharge()
+    {
+        chargeProgress = 0;
+        ChargeChanged?.Invoke();
     }
 }
 

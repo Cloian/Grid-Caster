@@ -1,0 +1,91 @@
+BUILD_VARIATION_PASS
+Controlled actual SampleScene fixtures; not human listening or normal stage completion.
+Unity 6000.4.0f1; 2026-10-04T14:52:50.3313020+09:00
+PASS actual startup UI receives three legal weighted choices
+PASS actual startup choice unlocks combat
+PASS double_cast: non-trait-only offers remain possible; distinct sets=56; no-trait=128/3000
+PASS double_cast: other movement choice reachable: movement_knight
+PASS double_cast: other movement choice reachable: movement_bishop
+PASS double_cast: other movement choice reachable: movement_rook
+PASS double_cast: trait cards appear more often per eligible card than neutral survival cards
+SAMPLE double_cast echo_recovery=1560/3000 offers; echo_warhead=1635/3000 offers; healing_breath=643/3000 offers; life_tempering=672/3000 offers; movement_bishop=898/3000 offers; movement_knight=983/3000 offers; movement_rook=951/3000 offers; quick_cast=1658/3000 offers
+PASS pierce: non-trait-only offers remain possible; distinct sets=56; no-trait=122/3000
+PASS pierce: other movement choice reachable: movement_knight
+PASS pierce: other movement choice reachable: movement_bishop
+PASS pierce: other movement choice reachable: movement_rook
+PASS pierce: trait cards appear more often per eligible card than neutral survival cards
+SAMPLE pierce healing_breath=648/3000 offers; life_tempering=636/3000 offers; long_needle=1660/3000 offers; movement_bishop=968/3000 offers; movement_knight=939/3000 offers; movement_rook=882/3000 offers; pierce_recovery=1645/3000 offers; thin_reload=1622/3000 offers
+PASS damage_boost: non-trait-only offers remain possible; distinct sets=56; no-trait=114/3000
+PASS damage_boost: other movement choice reachable: movement_knight
+PASS damage_boost: other movement choice reachable: movement_bishop
+PASS damage_boost: other movement choice reachable: movement_rook
+PASS damage_boost: trait cards appear more often per eligible card than neutral survival cards
+SAMPLE damage_boost afterglow_recovery=1642/3000 offers; dense_mana=1625/3000 offers; healing_breath=634/3000 offers; life_tempering=615/3000 offers; movement_bishop=928/3000 offers; movement_knight=957/3000 offers; movement_rook=966/3000 offers; overcharge=1633/3000 offers
+PASS knockback: non-trait-only offers remain possible; distinct sets=56; no-trait=118/3000
+PASS knockback: other movement choice reachable: movement_knight
+PASS knockback: other movement choice reachable: movement_bishop
+PASS knockback: other movement choice reachable: movement_rook
+PASS knockback: trait cards appear more often per eligible card than neutral survival cards
+SAMPLE knockback compressed_impact=1640/3000 offers; healing_breath=637/3000 offers; impact_recovery=1613/3000 offers; life_tempering=664/3000 offers; long_impact=1605/3000 offers; movement_bishop=917/3000 offers; movement_knight=978/3000 offers; movement_rook=946/3000 offers
+PASS owned upgrade and current movement synergy increase draw frequency: owned=2031, trait=1618, landing=1208, healing=607
+PASS advanced tier=1 movement=0: varied legal choices, at least one advanced, common alternatives, no equivalent duplicate
+PASS advanced tier=2 movement=0: varied legal choices, at least one advanced, common alternatives, no equivalent duplicate
+PASS advanced tier=3 movement=0: varied legal choices, at least one advanced, common alternatives, no equivalent duplicate
+PASS advanced tier=4 movement=0: varied legal choices, at least one advanced, common alternatives, no equivalent duplicate
+PASS advanced tier=1 movement=1: varied legal choices, at least one advanced, common alternatives, no equivalent duplicate
+PASS advanced tier=2 movement=1: varied legal choices, at least one advanced, common alternatives, no equivalent duplicate
+PASS advanced tier=3 movement=1: varied legal choices, at least one advanced, common alternatives, no equivalent duplicate
+PASS advanced tier=4 movement=1: varied legal choices, at least one advanced, common alternatives, no equivalent duplicate
+PASS advanced tier=1 movement=3: varied legal choices, at least one advanced, common alternatives, no equivalent duplicate
+PASS advanced tier=2 movement=3: varied legal choices, at least one advanced, common alternatives, no equivalent duplicate
+PASS advanced tier=3 movement=3: varied legal choices, at least one advanced, common alternatives, no equivalent duplicate
+PASS advanced tier=4 movement=3: varied legal choices, at least one advanced, common alternatives, no equivalent duplicate
+PASS exhausted pools terminate without max-stack or inactive-trait offers
+PASS wave=1: preserved count/unlocks/tier/special role; sampled compositions=1
+PASS wave=2: preserved count/unlocks/tier/special role; sampled compositions=2
+PASS wave=3: preserved count/unlocks/tier/special role; sampled compositions=3
+PASS wave=4: preserved count/unlocks/tier/special role; sampled compositions=5
+PASS wave=5: preserved count/unlocks/tier/special role; sampled compositions=7
+PASS wave=6: preserved count/unlocks/tier/special role; sampled compositions=7
+PASS wave=7: preserved count/unlocks/tier/special role; sampled compositions=7
+PASS wave=8: preserved count/unlocks/tier/special role; sampled compositions=13
+PASS wave=9: preserved count/unlocks/tier/special role; sampled compositions=13
+PASS wave=10: preserved count/unlocks/tier/special role; sampled compositions=1
+PASS wave=10: boss composition unchanged
+PASS wave=11: preserved count/unlocks/tier/special role; sampled compositions=7
+PASS wave=12: preserved count/unlocks/tier/special role; sampled compositions=21
+PASS wave=13: preserved count/unlocks/tier/special role; sampled compositions=21
+PASS wave=14: preserved count/unlocks/tier/special role; sampled compositions=21
+PASS wave=15: preserved count/unlocks/tier/special role; sampled compositions=21
+PASS wave=16: preserved count/unlocks/tier/special role; sampled compositions=21
+PASS wave=17: preserved count/unlocks/tier/special role; sampled compositions=21
+PASS wave=18: preserved count/unlocks/tier/special role; sampled compositions=21
+PASS wave=19: preserved count/unlocks/tier/special role; sampled compositions=21
+PASS wave=20: preserved count/unlocks/tier/special role; sampled compositions=1
+PASS wave=20: boss composition unchanged
+PASS actual varied wave starts: fixture=0
+PASS actual varied wave starts: fixture=1
+PASS actual varied wave starts: fixture=2
+PASS actual varied wave starts: fixture=3
+PASS actual varied wave starts: fixture=4
+PASS actual varied wave starts: fixture=5
+PASS actual varied wave starts: fixture=6
+PASS actual varied wave starts: fixture=7
+PASS actual varied wave starts: fixture=8
+PASS actual varied wave starts: fixture=9
+PASS actual varied wave starts: fixture=10
+PASS actual varied wave starts: fixture=11
+PASS actual varied wave starts: fixture=12
+PASS actual varied wave starts: fixture=13
+PASS actual varied wave starts: fixture=14
+PASS actual varied wave starts: fixture=15
+PASS actual varied wave starts: fixture=16
+PASS actual varied wave starts: fixture=17
+PASS actual varied wave starts: fixture=18
+PASS actual varied wave starts: fixture=19
+PASS actual varied wave starts: fixture=20
+PASS actual varied wave starts: fixture=21
+PASS actual varied wave starts: fixture=22
+PASS actual varied wave starts: fixture=23
+PASS actual varied wave starts: fixture=24
+PASS actual spawner varies composition/placement without overlap; layouts=21/25

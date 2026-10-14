@@ -7,11 +7,10 @@ using UnityEngine.UI;
 [DisallowMultipleComponent]
 public sealed class GameHudController : MonoBehaviour
 {
-    private const float BoardEdgeHudReservation = 96f;
     public const string StartupControlsText =
         "조작 안내   <color=#FF6569>A</color> 공격 방향 · <color=#59D1FF>S</color> 이동 / 이동술\n"
-        + "공격 화살표에 마우스: 경로 확인 · 좌클릭: 실행\n"
-        + "우클릭: 선택 취소 · 행동하면 적도 한 번 행동\n"
+        + "일반 공격 적중으로 충전 · F / 특성 아이콘: 특수 공격\n"
+        + "마우스: 화살표 경로 확인 / 좌클릭 실행 · 우클릭 취소\n"
         + "특성 선택: 카드 클릭 / 숫자 1 · 2 · 3 · 4";
     public static event Action QuitRequested;
     public event Action<string> TraitSelected;
@@ -101,9 +100,19 @@ public sealed class GameHudController : MonoBehaviour
     private RunProgressionSystem progressionSystem;
     private PlayerMovementArt displayedMovementArt = (PlayerMovementArt)(-1);
     private int displayedMovementArtLevel = -1;
+    private UnityEngine.UI.Button traitAttackButton;
+    private UnityEngine.UI.Text traitChargeText;
+    private EnemyThreatPreview enemyThreatPreview;
+    private bool displayingThreatDescription;
+    private int completedWorldTurns;
+    private StageFlowManager subscribedStageFlow;
 
     public bool IsTraitSelectionOpen => selectionOverlay != null && selectionOverlay.activeSelf;
     public bool IsGameOver => playerIsDead;
+    public bool IsStageCleared => monsterSpawner != null && monsterSpawner.StageFlow != null
+        && monsterSpawner.StageFlow.State == StageFlowState.StageCleared;
+    public bool IsRunEnded => IsGameOver || IsStageCleared;
+    public float ElapsedPlayTime => elapsedPlayTime;
     public bool IsGameOverOverlayVisible => gameOverOverlay != null
         && gameOverOverlay.activeSelf;
     public bool IsPauseMenuOpen => pauseMenuOverlay != null && pauseMenuOverlay.activeSelf;
@@ -116,10 +125,27 @@ public sealed class GameHudController : MonoBehaviour
     {
         ApplyUiFont();
         ResolveGameplayReferences();
-        cameraController?.SetVerticalHudReservation(BoardEdgeHudReservation);
+        GameAudio.GetOrCreate();
+        PauseAudioSettings.Attach(pauseMenuOverlay);
+        if (!MobilePlaytestController.IsActive)
+        {
+            UnityEngine.UI.CanvasScaler scaler = GetComponent<UnityEngine.UI.CanvasScaler>();
+            if (scaler != null)
+            {
+                scaler.referenceResolution = PcBoardLayout.ReferenceResolution;
+                scaler.screenMatchMode = UnityEngine.UI.CanvasScaler.ScreenMatchMode.Expand;
+            }
+        }
         ConfigureTraitChoices();
         ConfigureActionButtons();
         ConfigureSessionButtons();
+        if (actionModeText != null)
+        {
+            actionModeText.fontSize = 16;
+            actionModeText.resizeTextForBestFit = false;
+            actionModeText.horizontalOverflow = HorizontalWrapMode.Wrap;
+            actionModeText.verticalOverflow = VerticalWrapMode.Truncate;
+        }
         ApplyActionIcon();
         ApplyUltimateIcon();
     }
@@ -150,10 +176,14 @@ public sealed class GameHudController : MonoBehaviour
         SubscribePlayerMovement();
         SubscribeHealth();
         SubscribeWave();
+        SubscribeStageFlow();
+        if (playerTraitSystem != null) playerTraitSystem.ChargeChanged += RefreshTraitCharge;
     }
 
     private void Start()
     {
+        if (MobilePlaytestController.IsActive && GetComponent<MobilePlaytestController>() == null)
+            gameObject.AddComponent<MobilePlaytestController>();
         Time.timeScale = 1f;
         ConfigureStartupControls();
         RefreshGauge();
@@ -163,6 +193,8 @@ public sealed class GameHudController : MonoBehaviour
         RefreshElapsedTime();
         RefreshWave();
         RefreshHealth();
+        // 모든 씬 Awake 이후 생성된 StageFlow도 연결한다. 재활성화 시에는 OnEnable이 연결한다.
+        SubscribeStageFlow();
 
         RunProgressionSystem progression = playerMovement != null
             ? playerMovement.GetComponent<RunProgressionSystem>() : null;
@@ -194,6 +226,9 @@ public sealed class GameHudController : MonoBehaviour
 
         // 게임 시작 전에는 특성을 고를 때까지 플레이어 행동만 잠근다.
         selectionOverlay.SetActive(true);
+        // 저장 씬에서는 ViewportHudRoot 아래에 있다. 런타임 사이드 패널보다 위에 표시한다.
+        selectionOverlay.transform.SetParent(transform, true);
+        selectionOverlay.transform.SetAsLastSibling();
         playerMovement?.SetInputEnabled(false);
         ShowUnselectedTrait();
     }
@@ -233,6 +268,8 @@ public sealed class GameHudController : MonoBehaviour
         footerRect.sizeDelta = new Vector2(744f, 104f);
     }
 
+    private bool displayingAttackOutcome;
+
     private void Update()
     {
         if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
@@ -240,9 +277,10 @@ public sealed class GameHudController : MonoBehaviour
             if (runProgressionUi != null && runProgressionUi.IsModalOpen)
             {
                 if (runProgressionUi.IsDetailOpen) runProgressionUi.CloseDetails();
+                else if (runProgressionUi.IsInventoryOpen) runProgressionUi.CloseInventory();
                 return;
             }
-            if (IsGameOver)
+            if (IsRunEnded)
             {
                 ToggleGameOverReview();
                 return;
@@ -260,19 +298,49 @@ public sealed class GameHudController : MonoBehaviour
         UpdateElapsedTime();
         RefreshHealth();
         RefreshMovementArtVisualIfChanged();
+        RefreshTraitCharge();
+        if (enemyThreatPreview == null && playerMovement != null)
+            enemyThreatPreview = playerMovement.GetComponent<EnemyThreatPreview>();
+        if (enemyThreatPreview != null && !string.IsNullOrEmpty(enemyThreatPreview.Description))
+        {
+            if (actionModeText != null)
+            {
+                actionModeText.text = enemyThreatPreview.Description;
+                actionModeText.color = MainTextColor;
+            }
+            displayingThreatDescription = true;
+        }
+        else if (!IsRunEnded && playerMovement.SelectionMode == PlayerActionSelectionMode.None
+            && !string.IsNullOrEmpty(CombatFeedback.CurrentOutcome))
+        {
+            if (actionModeText != null)
+            {
+                actionModeText.text = CombatFeedback.CurrentOutcome;
+                actionModeText.color = new Color(1f, 0.8f, 0.38f);
+            }
+            displayingAttackOutcome = true;
+        }
+        else if (displayingThreatDescription || displayingAttackOutcome)
+        {
+            displayingAttackOutcome = false;
+            displayingThreatDescription = false;
+            RefreshActionMode(playerMovement.SelectionMode);
+        }
     }
 
     private void OnDisable()
     {
+        if (playerTraitSystem != null) playerTraitSystem.ChargeChanged -= RefreshTraitCharge;
         if (progressionSystem != null)
             progressionSystem.MovementArtChanged -= HandleMovementArtChanged;
         UnsubscribePlayerMovement();
         UnsubscribeHealth();
         UnsubscribeWave();
+        UnsubscribeStageFlow();
 
         bool wasPauseMenuOpen = IsPauseMenuOpen;
 
-        if (wasPauseMenuOpen || IsGameOver)
+        if (wasPauseMenuOpen || IsRunEnded)
         {
             Time.timeScale = 1f;
         }
@@ -285,7 +353,7 @@ public sealed class GameHudController : MonoBehaviour
 
     public void SelectTrait(int index)
     {
-        if (!IsValidTraitIndex(index))
+        if (IsRunEnded || !IsValidTraitIndex(index))
             return;
 
         selectedTraitIndex = index;
@@ -377,12 +445,12 @@ public sealed class GameHudController : MonoBehaviour
                 {
                     "double_cast" => "같은 방향으로 기본공격을 한 번 더 시전합니다.",
                     "pierce" => "첫 적을 넘어 뒤쪽 적 1명까지 공격합니다.",
-                    "damage_boost" => "발동한 공격의 직접 피해가 1 증가합니다.",
-                    "knockback" => "살아남은 적을 공격 방향으로 1칸 밉니다.",
+                    "damage_boost" => "적중 주변 8칸 공격 · 직격 피해 +1",
+                    "knockback" => "생존한 적을 1칸 밀고, 벽·적 충돌 시 피해 1.",
                     _ => traitOptions[i].Description
                 };
-                traitChoiceDescriptionTexts[i].text = "평균 발동 확률 "
-                    + RunProgressionDescriptions.Chance(traitOptions[i].ActivationBagSize)
+                traitChoiceDescriptionTexts[i].text = "일반 공격 적중 "
+                    + Mathf.Max(1, traitOptions[i].ActivationBagSize - 1) + "회로 준비 · 수동 사용"
                     + "\n" + shortEffect;
             }
 
@@ -500,20 +568,46 @@ public sealed class GameHudController : MonoBehaviour
             frame.raycastTarget = true;
             button.targetGraphic = frame;
             button.onClick.AddListener(runProgressionUi.ShowTraitDetails);
+            traitChargeText = traitHud.Find("TraitHeader")?.GetComponent<UnityEngine.UI.Text>();
+            if (traitChargeText != null) traitChargeText.fontSize = 12;
+            Transform iconFrame = selectedTraitIconImage.transform.parent;
+            UnityEngine.UI.Image iconBackground = iconFrame.GetComponent<UnityEngine.UI.Image>();
+            if (iconBackground != null)
+            {
+                traitAttackButton = iconFrame.GetComponent<UnityEngine.UI.Button>();
+                if (traitAttackButton == null)
+                    traitAttackButton = iconFrame.gameObject.AddComponent<UnityEngine.UI.Button>();
+                iconBackground.raycastTarget = true;
+                traitAttackButton.targetGraphic = iconBackground;
+                traitAttackButton.onClick.RemoveAllListeners();
+                traitAttackButton.onClick.AddListener(() => playerMovement.SelectTraitAttackMode());
+            }
+            RefreshTraitCharge();
         }
+    }
+
+    private void RefreshTraitCharge()
+    {
+        if (playerTraitSystem == null) return;
+        if (traitChargeText != null)
+            traitChargeText.text = playerTraitSystem.IsReady ? "F 준비 1/1"
+                : $"F 충전 {playerTraitSystem.ChargeProgress}/{playerTraitSystem.ChargeRequired}";
+        if (traitAttackButton != null)
+            traitAttackButton.interactable = playerTraitSystem.IsReady && playerMovement.CanAct
+                && !playerMovement.IsChoosingFreeMove && !playerMovement.IsChoosingEchoDirection;
     }
 
     public void TogglePauseMenu()
     {
-        if (IsGameOver || pauseMenuOverlay == null)
+        if (IsRunEnded || pauseMenuOverlay == null)
             return;
 
         SetPauseMenuOpen(!IsPauseMenuOpen);
     }
 
-    private void ToggleGameOverReview()
+    public void ToggleGameOverReview()
     {
-        if (!IsGameOver || gameOverOverlay == null)
+        if (!IsRunEnded || gameOverOverlay == null)
             return;
 
         bool shouldShowOverlay = !gameOverOverlay.activeSelf;
@@ -527,12 +621,20 @@ public sealed class GameHudController : MonoBehaviour
 
     public void ContinueGame()
     {
+        if (IsRunEnded) return;
         SetPauseMenuOpen(false);
+    }
+
+    // 웹의 백그라운드 전환은 모바일 어댑터가 없는 PC에서도 일시정지한다.
+    public void PauseFromBrowser()
+    {
+        if (!MobilePlaytestController.IsActive && !IsRunEnded && !IsPauseMenuOpen)
+            SetPauseMenuOpen(true);
     }
 
     private void SetPauseMenuOpen(bool isOpen)
     {
-        if (pauseMenuOverlay == null)
+        if (pauseMenuOverlay == null || (isOpen && IsRunEnded))
             return;
 
         if (isOpen)
@@ -546,6 +648,13 @@ public sealed class GameHudController : MonoBehaviour
             }
 
             pauseMenuOverlay.SetActive(true);
+            // 시작 선택과 보드 옆 빌드 UI보다 위에서 전체 Canvas 입력을 막는다.
+            RectTransform pauseRect = pauseMenuOverlay.GetComponent<RectTransform>();
+            pauseRect.SetParent(transform, false);
+            pauseRect.anchorMin = Vector2.zero;
+            pauseRect.anchorMax = Vector2.one;
+            pauseRect.offsetMin = pauseRect.offsetMax = Vector2.zero;
+            pauseRect.localScale = Vector3.one;
             pauseMenuOverlay.transform.SetAsLastSibling();
             Time.timeScale = 0f;
             return;
@@ -559,7 +668,7 @@ public sealed class GameHudController : MonoBehaviour
             cameraController.enabled = cameraWasEnabledBeforePause;
         }
 
-        if (!IsTraitSelectionOpen && !IsGameOver)
+        if (!IsTraitSelectionOpen && !IsRunEnded)
         {
             playerMovement?.SetInputEnabled(true);
         }
@@ -715,6 +824,7 @@ public sealed class GameHudController : MonoBehaviour
             return;
 
         monsterSpawner.WaveStarted += HandleWaveStarted;
+        monsterSpawner.WorldTurnCompleted += CountWorldTurn;
         waveSubscribed = true;
     }
 
@@ -724,7 +834,121 @@ public sealed class GameHudController : MonoBehaviour
             return;
 
         monsterSpawner.WaveStarted -= HandleWaveStarted;
+        monsterSpawner.WorldTurnCompleted -= CountWorldTurn;
         waveSubscribed = false;
+    }
+
+    private void CountWorldTurn() { completedWorldTurns++; }
+
+    private void SubscribeStageFlow()
+    {
+        StageFlowManager flow = monsterSpawner != null ? monsterSpawner.StageFlow : null;
+        if (flow == null || subscribedStageFlow == flow) return;
+        UnsubscribeStageFlow();
+        subscribedStageFlow = flow;
+        subscribedStageFlow.StageCleared += HandleStageCleared;
+    }
+
+    private void UnsubscribeStageFlow()
+    {
+        if (subscribedStageFlow != null) subscribedStageFlow.StageCleared -= HandleStageCleared;
+        subscribedStageFlow = null;
+    }
+
+    private void HandleStageCleared()
+    {
+        // 사망과 클리어는 다른 상태지만 복기/재도전은 기존 결과 패널을 공유한다.
+        playerMovement?.SetInputEnabled(false);
+        if (IsPauseMenuOpen) SetPauseMenuOpen(false);
+        if (gameOverSummaryText != null)
+            gameOverSummaryText.text = $"WAVE {monsterSpawner.CurrentWave} 클리어\n플레이 시간 {FormatElapsedTime()}";
+        ShowRunResult(true);
+        RefreshActionMode(PlayerActionSelectionMode.None);
+        Time.timeScale = 0f;
+    }
+
+    private void ShowRunResult(bool cleared)
+    {
+        if (gameOverOverlay == null) return;
+        foreach (Text text in gameOverOverlay.GetComponentsInChildren<Text>(true))
+        {
+            switch (text.name)
+            {
+                case "GameOverTitle": text.text = cleared ? "스테이지 클리어" : "GAME OVER"; break;
+                case "GameOverEyebrow":
+                    text.text = cleared ? "RUN CLEARED" : "RUN ENDED";
+                    text.color = cleared ? FrameReadyColor : new Color32(255, 122, 130, 255);
+                    break;
+                case "ReplayLabel": text.text = cleared ? "새 빌드 시작" : "REPLAY"; break;
+                case "QuitHint": text.text = "ESC 전장 확인 · 버튼으로 새 빌드 시작"; break;
+            }
+        }
+        Outline border = gameOverOverlay.transform.Find("GameOverPanel")?.GetComponent<Outline>();
+        if (border != null) border.effectColor = cleared ? FrameReadyColor : new Color32(236, 77, 88, 255);
+        // 보드 밖에 생성한 성장 패널보다 위에서 클릭을 받아야 한다.
+        gameOverOverlay.transform.SetParent(transform, true);
+        RectTransform overlayRect = gameOverOverlay.GetComponent<RectTransform>();
+        overlayRect.localScale = Vector3.one;
+        overlayRect.anchorMin = Vector2.zero;
+        overlayRect.anchorMax = Vector2.one;
+        overlayRect.offsetMin = overlayRect.offsetMax = Vector2.zero;
+        gameOverOverlay.SetActive(true);
+        gameOverOverlay.transform.SetAsLastSibling();
+    }
+
+    [Serializable]
+    private sealed class PcPlaytestState
+    {
+        public int width, height, x, y, hp, wave, worldTurns, charge;
+        public bool mobile, startSelection, rewardSelection, detailOpen, canAct, paused, ready;
+        public string action;
+        public float playerX, playerY, tilePixels;
+        public float[] board;
+        public PcUiTarget[] ui;
+    }
+
+    [Serializable]
+    private sealed class PcUiTarget
+    {
+        public string name;
+        public float x, y, width, height;
+    }
+
+    // 화면/입력 회귀 검사와 버그 보고용 읽기 전용 정보. 전투를 조작하는 테스트 API는 아니다.
+    public void ReportPcPlaytestState()
+    {
+        Camera camera = Camera.main;
+        GridManager grid = FindAnyObjectByType<GridManager>();
+        if (camera == null || grid == null || playerMovement == null) return;
+        BoundsInt cells = grid.GroundTilemap.cellBounds;
+        Vector3 min = camera.WorldToScreenPoint(grid.GroundTilemap.CellToWorld(cells.min));
+        Vector3 max = camera.WorldToScreenPoint(grid.GroundTilemap.CellToWorld(cells.max));
+        Vector3 player = camera.WorldToScreenPoint(grid.GetCellCenterWorld(playerMovement.GridPosition));
+        var targets = new System.Collections.Generic.List<PcUiTarget>();
+        string[] names = { "BuildHudPanel", "RelicHudPanel", "BuildInventoryButton", "CloseBuildInventory", "WaveHud", "TimeHud", "HealthHud", "TraitHud",
+            "UltimateFrame", "AttackActionFrame", "MoveActionFrame", "ActionModeHud", "SelectedTraitIconFrame",
+            "TraitCard_1", "UpgradeChoice_1", "Details", "CloseDetails", "ContinueButton", "MovementArtDetails" };
+        foreach (RectTransform rect in GetComponentsInChildren<RectTransform>(true))
+        {
+            if (!rect.gameObject.activeInHierarchy || Array.IndexOf(names, rect.name) < 0) continue;
+            Vector3[] corners = new Vector3[4]; rect.GetWorldCorners(corners);
+            targets.Add(new PcUiTarget { name = rect.name, x = (corners[0].x + corners[2].x) * 0.5f,
+                y = Screen.height - (corners[0].y + corners[2].y) * 0.5f,
+                width = corners[2].x - corners[0].x, height = corners[2].y - corners[0].y });
+        }
+        var state = new PcPlaytestState { width = Screen.width, height = Screen.height,
+            x = playerMovement.GridPosition.x, y = playerMovement.GridPosition.y, hp = playerMovement.CurrentHealth,
+            wave = monsterSpawner.CurrentWave, worldTurns = completedWorldTurns,
+            mobile = MobilePlaytestController.IsActive, startSelection = IsTraitSelectionOpen,
+            rewardSelection = progressionSystem != null && progressionSystem.CurrentUpgradeOptions.Count > 0,
+            detailOpen = runProgressionUi != null && runProgressionUi.IsDetailOpen,
+            canAct = playerMovement.CanAct, paused = IsPauseMenuOpen, action = playerMovement.SelectionMode.ToString(),
+            charge = playerTraitSystem.ChargeProgress, ready = playerTraitSystem.IsReady,
+            playerX = player.x, playerY = Screen.height - player.y,
+            tilePixels = Vector3.Distance(player, camera.WorldToScreenPoint(grid.GetCellCenterWorld(
+                playerMovement.GridPosition + Vector3Int.right))),
+            board = new[] { min.x, Screen.height - max.y, max.x - min.x, max.y - min.y }, ui = targets.ToArray() };
+        Debug.Log("PC_PLAYTEST_STATE " + JsonUtility.ToJson(state));
     }
 
     private void HandlePlayerDied(CharacterHealth defeatedCharacter)
@@ -745,11 +969,7 @@ public sealed class GameHudController : MonoBehaviour
             gameOverSummaryText.text = $"WAVE {waveNumber}\n생존 시간 {FormatElapsedTime()}";
         }
 
-        if (gameOverOverlay != null)
-        {
-            gameOverOverlay.SetActive(true);
-            gameOverOverlay.transform.SetAsLastSibling();
-        }
+        ShowRunResult(false);
 
         // 사망 위치와 적 배치를 그대로 복기할 수 있도록 게임 규칙과 연출을 정지한다.
         Time.timeScale = 0f;
@@ -774,7 +994,7 @@ public sealed class GameHudController : MonoBehaviour
     {
         if (actionGuideText != null)
         {
-            actionGuideText.text = "A 공격 · S 이동/이동술 · 아이콘 클릭 가능 · 우클릭 취소 · Esc 메뉴";
+            actionGuideText.text = "A 일반 공격 · F 특수 공격 · S 이동/이동술 · 우클릭 취소";
         }
 
         SetActionCardColors(mode);
@@ -782,23 +1002,46 @@ public sealed class GameHudController : MonoBehaviour
         if (actionModeText == null)
             return;
 
+        if (IsRunEnded)
+        {
+            actionModeText.text = IsStageCleared ? "스테이지 클리어 · ESC 전장 확인"
+                : "런 종료 · ESC 전장 확인";
+            actionModeText.color = MainTextColor;
+            return;
+        }
+
+        if (playerMovement != null && playerMovement.IsChoosingFreeMove)
+        {
+            actionModeText.text = "무료 기본 1칸 · 우클릭 생략 · 이후 적 행동 1회";
+            actionModeText.color = MainTextColor;
+            SetActionFrameColor(MoveModeColor);
+            return;
+        }
+
         switch (mode)
         {
             case PlayerActionSelectionMode.Attack:
-                actionModeText.text = "공격 방향을 선택하세요";
-                actionModeText.color = AttackModeColor;
+                actionModeText.text = playerMovement != null && playerMovement.IsChoosingEchoDirection
+                    ? "추가 시전 재조준 · 현재 보드 기준 · 이동 불가"
+                    : playerMovement != null && playerMovement.IsTraitAttackSelected
+                        ? "특성 공격 · 확정 시 소모 · 옅은 경로는 적중 후 달라질 수 있음"
+                        : "일반 공격 방향 · 적중하면 충전 +1";
+                actionModeText.color = MainTextColor;
                 SetActionFrameColor(AttackModeColor);
                 break;
 
             case PlayerActionSelectionMode.Move:
-                actionModeText.text = "이동할 타일을 선택하세요";
-                actionModeText.color = MoveModeColor;
+                actionModeText.text = progressionSystem != null
+                    && progressionSystem.ActiveMovementArt == PlayerMovementArt.Rook
+                    ? "룩 이동: 중간 벽·적을 통과하지 못함 · 불길 진입 주의"
+                    : "이동할 타일을 선택하세요";
+                actionModeText.color = MainTextColor;
                 SetActionFrameColor(MoveModeColor);
                 break;
 
             case PlayerActionSelectionMode.MovementArt:
                 actionModeText.text = $"{MovementArtDisplayName()}의 착지 칸을 선택하세요";
-                actionModeText.color = GaugeFullColor;
+                actionModeText.color = MainTextColor;
                 SetActionFrameColor(GaugeFullColor);
                 break;
 
@@ -814,7 +1057,8 @@ public sealed class GameHudController : MonoBehaviour
     {
         if (actionModeFrameImage != null)
         {
-            actionModeFrameImage.color = color;
+            // 색상은 배경에 은은하게 반영하고 글자와 같은 색으로 채우지 않는다.
+            actionModeFrameImage.color = Color.Lerp(new Color32(7, 16, 31, 255), color, 0.25f);
         }
     }
 
@@ -838,7 +1082,7 @@ public sealed class GameHudController : MonoBehaviour
     private void UpdateElapsedTime()
     {
         // 시작 특성을 고르는 동안과 사망 후에는 생존 시간이 흐르지 않는다.
-        if (!IsTraitSelectionOpen
+        if (!IsRunEnded && !IsTraitSelectionOpen
             && !IsPauseMenuOpen
             && (runProgressionUi == null || !runProgressionUi.IsModalOpen)
             && (playerHealth == null || !playerHealth.IsDead))

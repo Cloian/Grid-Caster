@@ -958,15 +958,15 @@ public static class GameHudSetupTool
         names = new Text[4];
         descriptions = new Text[4];
 
-        string[] defaultNames = { "더블 캐스트", "관통", "데미지 강화", "넉백" };
+        string[] defaultNames = { "더블 캐스트", "관통", "범위 공격", "넉백" };
         string[] defaultDescriptions =
         {
             "20% · 기본 공격을\n한 번 더 연속 시전",
             "33% · 첫 대상을 넘어\n다음 대상 1명까지 관통",
-            "25% · 이번 기본공격의\n피해량을 1 증가",
-            "25% · 살아남은 적을\n한 타일 밀어냄"
+            "적중 주변 8칸 공격\n직격 피해 +1",
+            "생존한 적 1칸 밀기\n벽·적 충돌 피해 1"
         };
-        string[] defaultPlaceholders = { "×2", "P", "DMG", "KB" };
+        string[] defaultPlaceholders = { "×2", "P", "AOE", "KB" };
 
         for (int i = 0; i < 4; i++)
         {
@@ -1487,8 +1487,8 @@ public static class GameHudSetupTool
         traits.arraySize = 4;
         SetTrait(traits.GetArrayElementAtIndex(0), "double_cast", "더블 캐스트", "20% · 기본 공격을\n한 번 더 연속 시전", "×2", traitSprites[0], 5);
         SetTrait(traits.GetArrayElementAtIndex(1), "pierce", "관통", "33% · 첫 대상을 넘어\n다음 대상 1명까지 관통", "P", traitSprites[1], 3);
-        SetTrait(traits.GetArrayElementAtIndex(2), "damage_boost", "데미지 강화", "25% · 이번 기본공격의\n피해량을 1 증가", "DMG", traitSprites[2], 4);
-        SetTrait(traits.GetArrayElementAtIndex(3), "knockback", "넉백", "25% · 살아남은 적을\n한 타일 밀어냄", "KB", traitSprites[3], 4);
+        SetTrait(traits.GetArrayElementAtIndex(2), "damage_boost", "범위 공격", "적중 주변 기본 8칸 피해 1 · 직격 피해 +1", "AOE", traitSprites[2], 4);
+        SetTrait(traits.GetArrayElementAtIndex(3), "knockback", "넉백", "생존한 적 1칸 밀기\n벽·적 충돌 피해 1", "KB", traitSprites[3], 4);
         serializedController.ApplyModifiedPropertiesWithoutUndo();
 
         AssignPreviewIcon(attackIcon, attackPlaceholder, basicAttackSprite);

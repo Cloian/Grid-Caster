@@ -9,7 +9,7 @@ public sealed class TraitOptionData
     [SerializeField, TextArea] private string description;
     [SerializeField] private Sprite icon;
     [SerializeField] private string placeholder;
-    [Tooltip("이 횟수의 공격마다 정확히 한 번 발동하도록 셔플 백을 구성합니다.")]
+    [Tooltip("기존 주기 저장값. 일반 적중 (이 값 - 1)회로 특성 공격 한 번을 준비합니다.")]
     [SerializeField, Min(1)] private int activationBagSize = 4;
 
     public string Id => id;
@@ -18,5 +18,6 @@ public sealed class TraitOptionData
     public Sprite Icon => icon;
     public string Placeholder => placeholder;
     public int ActivationBagSize => Mathf.Max(1, activationBagSize);
+    [System.Obsolete("수동 특성 공격은 확률로 발동하지 않습니다. 충전 요구량을 표시하세요.")]
     public float ActivationChance => 1f / ActivationBagSize;
 }

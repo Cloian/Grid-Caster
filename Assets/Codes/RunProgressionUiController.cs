@@ -4,8 +4,9 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// 보드를 가리지 않는 좌우 전용 영역에 현재 빌드와 선택지를 표시한다.
+// PC 보유 빌드는 필요할 때 여는 창에 표시한다. 모바일 목록은 기존 어댑터가 담당한다.
 [DisallowMultipleComponent]
+[DefaultExecutionOrder(200)]
 public sealed class RunProgressionUiController : MonoBehaviour
 {
     private sealed class IconView
@@ -26,11 +27,10 @@ public sealed class RunProgressionUiController : MonoBehaviour
     private static readonly Color RiskyColor = new Color32(255, 91, 76, 255);
 
     private const int MaximumBuildRows = 14;
-    private const float PanelHeight = 820f;
-    private const float DefaultPanelWidth = 330f;
-    private const float BoardPanelGap = 18f;
+    private const float PanelHeight = PcBoardLayout.PanelHeight;
+    private const float DefaultPanelWidth = PcBoardLayout.PanelWidth;
+    private const float BoardPanelGap = PcBoardLayout.PanelGap;
     private const float ScreenEdgeMargin = 18f;
-    private const float MinimumPanelScale = 0.35f;
 
     private RunProgressionSystem progression;
     private CameraController boardCamera;
@@ -42,6 +42,16 @@ public sealed class RunProgressionUiController : MonoBehaviour
     private RectTransform replacementPanel;
     private RectTransform detailPanel;
     private RectTransform detailCard;
+    private RectTransform inventoryPanel;
+    private RectTransform inventoryCard;
+    private RectTransform inventoryButton;
+    private UnityEngine.UI.Text inventoryButtonLabel;
+    private UnityEngine.UI.Button inventoryToggle;
+    private RectTransform boardActionHudGroup;
+    private RectTransform boardHeaderHudGroup;
+    private Bounds boardHeaderHudBounds;
+    private Bounds boardActionHudBounds;
+    private int rewardOpenedFrame = -1;
     private UnityEngine.UI.Text detailTitle;
     private UnityEngine.UI.Text detailText;
     private UnityEngine.UI.Text movementSummary;
@@ -73,8 +83,9 @@ public sealed class RunProgressionUiController : MonoBehaviour
 
     public bool IsModalOpen => (upgradePanel != null && upgradePanel.gameObject.activeSelf)
         || (replacementPanel != null && replacementPanel.gameObject.activeSelf)
-        || IsDetailOpen;
+        || IsDetailOpen || IsInventoryOpen;
     public bool IsDetailOpen => detailPanel != null && detailPanel.gameObject.activeSelf;
+    public bool IsInventoryOpen => inventoryPanel != null && inventoryPanel.gameObject.activeSelf;
 
     public void Initialize(RunProgressionSystem target, CameraController cameraController)
     {
@@ -91,6 +102,7 @@ public sealed class RunProgressionUiController : MonoBehaviour
 
         BuildLeftPanel();
         BuildRightPanel();
+        if (!MobilePlaytestController.IsActive) BuildInventoryPanel();
         BuildUpgradePanel();
         BuildReplacementPanel();
         BuildDetailPanel();
@@ -111,14 +123,27 @@ public sealed class RunProgressionUiController : MonoBehaviour
 
     private void Update()
     {
-        Vector2Int size = new Vector2Int(Screen.width, Screen.height);
-        if (size != lastScreenSize) LayoutPanels();
-
+        if (inventoryToggle != null)
+        {
+            Move player = progression.GetComponent<Move>();
+            GameHudController hud = GetComponent<GameHudController>();
+            inventoryToggle.interactable = !IsDetailOpen && !upgradePanel.gameObject.activeSelf
+                && !replacementPanel.gameObject.activeSelf && !hud.IsTraitSelectionOpen
+                && !hud.IsPauseMenuOpen && !hud.IsRunEnded
+                && (IsInventoryOpen || player.CanAct || player.IsChoosingEchoDirection || player.IsChoosingFreeMove);
+        }
         Keyboard keyboard = Keyboard.current;
         if (keyboard == null) return;
         if (IsDetailOpen) return;
+        if (inventoryToggle != null && keyboard.bKey.wasPressedThisFrame)
+        {
+            if (IsInventoryOpen) CloseInventory();
+            else if (inventoryToggle.interactable) OpenInventory();
+            return;
+        }
         if (upgradePanel != null && upgradePanel.gameObject.activeSelf)
         {
+            if (Time.frameCount <= rewardOpenedFrame) return;
             if (keyboard.digit1Key.wasPressedThisFrame) SelectUpgrade(0);
             else if (keyboard.digit2Key.wasPressedThisFrame) SelectUpgrade(1);
             else if (keyboard.digit3Key.wasPressedThisFrame) SelectUpgrade(2);
@@ -131,6 +156,13 @@ public sealed class RunProgressionUiController : MonoBehaviour
             else if (keyboard.digit4Key.wasPressedThisFrame) ResolveRelic(3);
             else if (keyboard.digit5Key.wasPressedThisFrame) ResolveRelic(-1);
         }
+    }
+
+    private void LateUpdate()
+    {
+        // 카메라(실행 순서 100)가 새 창 크기를 반영한 뒤 HUD의 보드 경계를 계산한다.
+        Vector2Int size = new Vector2Int(Screen.width, Screen.height);
+        if (initialized && size != lastScreenSize) LayoutPanels();
     }
 
     private void BuildLeftPanel()
@@ -159,6 +191,71 @@ public sealed class RunProgressionUiController : MonoBehaviour
             buildTexts[i] = CreateText("Label", row, string.Empty, 13, TextAnchor.MiddleLeft,
                 TextColor, new Vector2(48f, -3f), new Vector2(-56f, 36f));
         }
+    }
+
+    private void BuildInventoryPanel()
+    {
+        inventoryPanel = CreateCenterOverlay("BuildInventoryOverlay", transform);
+        UnityEngine.UI.Button backdrop = inventoryPanel.gameObject.AddComponent<UnityEngine.UI.Button>();
+        backdrop.targetGraphic = inventoryPanel.GetComponent<UnityEngine.UI.Image>();
+        backdrop.transition = UnityEngine.UI.Selectable.Transition.None;
+        backdrop.onClick.AddListener(CloseInventory);
+        inventoryCard = CreateFixedCard("BuildInventoryCard", inventoryPanel,
+            Vector2.zero, new Vector2(724f, 920f), BorderColor);
+        inventoryCard.GetComponent<UnityEngine.UI.Image>().raycastTarget = true;
+        // 창 안의 빈 영역 클릭이 바깥 닫기 버튼까지 전달되지 않게 한다.
+        UnityEngine.UI.Button cardInput = inventoryCard.gameObject.AddComponent<UnityEngine.UI.Button>();
+        cardInput.targetGraphic = inventoryCard.GetComponent<UnityEngine.UI.Image>();
+        cardInput.transition = UnityEngine.UI.Selectable.Transition.None;
+        UnityEngine.UI.Text title = CreateText("Title", inventoryCard, "보유 빌드", 26,
+            TextAnchor.MiddleLeft, TextColor, new Vector2(22f, -14f), new Vector2(-174f, 52f));
+        RectTransform close = CreateFixedCard("CloseBuildInventory", inventoryCard,
+            new Vector2(276f, 420f), new Vector2(132f, 42f), BorderColor);
+        AddDetailButton(close, CloseInventory);
+        UnityEngine.UI.Text label = CreateText("Label", close, "닫기 · B / Esc", 14,
+            TextAnchor.MiddleCenter, TextColor, Vector2.zero, Vector2.zero);
+        label.rectTransform.anchorMin = Vector2.zero;
+        label.rectTransform.anchorMax = Vector2.one;
+        label.rectTransform.sizeDelta = Vector2.zero;
+        foreach (RectTransform panel in new[] { leftPanel, rightPanel })
+        {
+            panel.SetParent(inventoryCard, false);
+            panel.anchorMin = panel.anchorMax = panel.pivot = Vector2.one * 0.5f;
+            panel.anchoredPosition = new Vector2(panel == leftPanel ? -177f : 177f, -36f);
+            panel.sizeDelta = new Vector2(DefaultPanelWidth, PanelHeight);
+        }
+        inventoryPanel.gameObject.SetActive(false);
+
+        inventoryButton = CreateFixedCard("BuildInventoryButton", transform,
+            Vector2.zero, new Vector2(190f, 44f), BorderColor);
+        inventoryToggle = AddDetailButton(inventoryButton, OpenInventory);
+        inventoryButtonLabel = CreateText("Label", inventoryButton, "빌드 · B", 16,
+            TextAnchor.MiddleCenter, TextColor, Vector2.zero, Vector2.zero);
+        inventoryButtonLabel.rectTransform.anchorMin = Vector2.zero;
+        inventoryButtonLabel.rectTransform.anchorMax = Vector2.one;
+        inventoryButtonLabel.rectTransform.sizeDelta = Vector2.zero;
+    }
+
+    public void OpenInventory()
+    {
+        if (inventoryPanel == null || IsInventoryOpen || IsDetailOpen
+            || upgradePanel.gameObject.activeSelf || replacementPanel.gameObject.activeSelf) return;
+        GameHudController hud = GetComponent<GameHudController>();
+        Move player = progression.GetComponent<Move>();
+        if (hud.IsTraitSelectionOpen || hud.IsPauseMenuOpen || hud.IsRunEnded
+            || (!player.CanAct && !player.IsChoosingEchoDirection && !player.IsChoosingFreeMove)) return;
+        player.SetInspectionOpen(true);
+        leftPanel.gameObject.SetActive(true);
+        rightPanel.gameObject.SetActive(true);
+        inventoryPanel.gameObject.SetActive(true);
+        inventoryPanel.SetAsLastSibling();
+    }
+
+    public void CloseInventory()
+    {
+        if (inventoryPanel == null || !IsInventoryOpen) return;
+        inventoryPanel.gameObject.SetActive(false);
+        progression.GetComponent<Move>().SetInspectionOpen(IsDetailOpen);
     }
 
     private void BuildRightPanel()
@@ -288,7 +385,7 @@ public sealed class RunProgressionUiController : MonoBehaviour
     public void CloseDetails()
     {
         if (detailPanel != null) detailPanel.gameObject.SetActive(false);
-        if (progression != null) progression.GetComponent<Move>().SetInspectionOpen(false);
+        if (progression != null) progression.GetComponent<Move>().SetInspectionOpen(IsInventoryOpen);
     }
 
     public void ShowUpgradeDetails(string id)
@@ -308,9 +405,9 @@ public sealed class RunProgressionUiController : MonoBehaviour
     public void ShowTraitDetails()
     {
         if (string.IsNullOrEmpty(progression.SelectedTraitId)) return;
-        OpenDetails("시작 특성 · 평균 발동 확률 " + RunProgressionDescriptions.Chance(progression.TraitActivationInterval),
+        OpenDetails("시작 특성 · 일반 적중 " + progression.TraitChargeRequired + "회로 준비",
             RunProgressionDescriptions.TraitEffect(progression.SelectedTraitId)
-            + $"\n\n평균 발동 확률: {RunProgressionDescriptions.Chance(progression.TraitActivationInterval)}\n매 공격마다 독립 추첨하는 방식이 아니라, 공격 {progression.TraitActivationInterval}회 묶음 안에서 한 번 발동을 보장합니다. 빈도 강화를 얻으면 진행 중인 묶음 이후에 적용됩니다.");
+            + $"\n\n일반 공격 행동으로 적을 직접 맞히면 충전 +1. 필요한 적중 행동: {progression.TraitChargeRequired}회. 준비 1회만 저장하며 A로 일반 공격을 계속할 수도 있습니다. F 또는 특성 아이콘으로 특수 공격을 선택하고 방향을 클릭하면 사용합니다. 취소는 소모하지 않지만 확정한 빗나감은 소모합니다. 특성 공격·추가 영창·범위 피해는 재충전하지 않습니다. 웨이브를 넘어 유지되고 사망·클리어 때 초기화합니다.");
     }
 
     private void ShowRelicDetails(int index)
@@ -381,34 +478,43 @@ public sealed class RunProgressionUiController : MonoBehaviour
     private void LayoutPanels()
     {
         if (canvasRect == null || leftPanel == null) return;
+        if (MobilePlaytestController.IsActive)
+        {
+            // 모바일 배치와 접이식 목록은 전용 화면 어댑터가 맡는다. PC 보드 예약 공간은 사용하지 않는다.
+            lastScreenSize = new Vector2Int(Screen.width, Screen.height);
+            return;
+        }
+        // Canvas와 카메라 모두 동일한 PC 구성 배율을 쓴다. 열 폭/간격을 따로 늘리지 않는다.
+        Canvas.ForceUpdateCanvases();
         float canvasWidth = canvasRect.rect.width > 0f ? canvasRect.rect.width : 1920f;
         float canvasHeight = canvasRect.rect.height > 0f ? canvasRect.rect.height : 1080f;
-
-        // 패널을 화면 모서리가 아니라 실제 보드 가장자리에 붙인다. 넓은 화면에서도
-        // 공백이 벌어지지 않고, 좁은 화면에서는 패널 전체를 같은 비율로 축소한다.
-        float panelScale = Mathf.Min(1f,
-            (canvasHeight - ScreenEdgeMargin * 2f) / PanelHeight);
-        float cameraPanelWidth = Mathf.Clamp((canvasWidth - 900f) * 0.5f - 24f,
-            250f, DefaultPanelWidth);
-        float cameraSideReservation = cameraPanelWidth + 34f;
-        // 카메라 맞춤은 기존과 같은 값으로 한 번만 갱신한다. 패널 배치 반복 계산이
-        // 보드의 상하 HUD 안전 간격에 영향을 주지 않게 한다.
-        boardCamera?.SetSideHudReservation(cameraSideReservation);
-        float boardHalfWidth = 432f;
-        for (int pass = 0; pass < 3; pass++)
+        float panelScale = PcBoardLayout.Scale(Screen.width, Screen.height)
+            / Mathf.Max(0.01f, GetComponent<Canvas>().scaleFactor);
+        float boardHalfWidth = GetBoardHalfWidthInCanvas(PcBoardLayout.BoardSide * panelScale * 0.5f);
+        float innerEdge = boardHalfWidth + BoardPanelGap * panelScale;
+        if (inventoryCard != null)
         {
-            boardHalfWidth = GetBoardHalfWidthInCanvas(boardHalfWidth);
-            float horizontalScale = (canvasWidth * 0.5f - boardHalfWidth
-                - BoardPanelGap - ScreenEdgeMargin) / DefaultPanelWidth;
-            float verticalScale = (canvasHeight - ScreenEdgeMargin * 2f) / PanelHeight;
-            panelScale = Mathf.Clamp(Mathf.Min(horizontalScale, verticalScale),
-                MinimumPanelScale, 1f);
+            inventoryCard.localScale = Vector3.one * Mathf.Min(1f,
+                (canvasWidth - 36f) / 724f, (canvasHeight - 36f) / 920f);
+            Rect board = PcBoardLayout.BoardPixelRect(Screen.width, Screen.height);
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect,
+                new Vector2(board.xMax - 95f * PcBoardLayout.Scale(Screen.width, Screen.height),
+                    board.yMax + 40f * PcBoardLayout.Scale(Screen.width, Screen.height)),
+                null, out Vector2 buttonPosition);
+            inventoryButton.anchoredPosition = buttonPosition;
+            inventoryButton.localScale = Vector3.one * panelScale;
+            replacementPanel.anchorMin = replacementPanel.anchorMax = replacementPanel.pivot = Vector2.one * 0.5f;
+            replacementPanel.anchoredPosition = Vector2.zero;
+            replacementPanel.sizeDelta = new Vector2(500f, PanelHeight);
+            replacementPanel.localScale = Vector3.one * Mathf.Min(1f,
+                (canvasWidth - 36f) / 500f, (canvasHeight - 36f) / PanelHeight);
         }
-
-        float innerEdge = boardHalfWidth + BoardPanelGap;
-        LayoutSidePanel(leftPanel, false, innerEdge, panelScale);
-        LayoutSidePanel(rightPanel, true, innerEdge, panelScale);
-        LayoutSidePanel(replacementPanel, true, innerEdge, panelScale);
+        else
+        {
+            LayoutSidePanel(leftPanel, false, innerEdge, panelScale);
+            LayoutSidePanel(rightPanel, true, innerEdge, panelScale);
+            LayoutSidePanel(replacementPanel, true, innerEdge, panelScale);
+        }
         LayoutBoardEdgeHud();
         if (detailCard != null)
         {
@@ -432,31 +538,101 @@ public sealed class RunProgressionUiController : MonoBehaviour
             grid.GroundTilemap.CellToWorld(bounds.min)).y;
         float boardMaximumY = camera.WorldToScreenPoint(
             grid.GroundTilemap.CellToWorld(bounds.max)).y;
-        float referenceScale = Screen.height / 1080f;
+        float referenceScale = PcBoardLayout.Scale(Screen.width, Screen.height);
         float desiredGap = BoardPanelGap * referenceScale;
 
-        Vector3[] corners = new Vector3[4];
-        waveHud.GetWorldCorners(corners);
-        float topDelta = (boardMaximumY + desiredGap - corners[0].y) / referenceScale;
-        MoveHudGroupVertically(topDelta, "WaveHud", "TimeHud");
+        LayoutHeaderHud(boardMaximumY, desiredGap);
 
-        moveHud.GetWorldCorners(corners);
-        float bottomDelta = (boardMinimumY - desiredGap - corners[1].y) / referenceScale;
-        MoveHudGroupVertically(bottomDelta, "UltimateFrame", "HealthHud", "TraitHud",
-            "AttackActionFrame", "MoveActionFrame", "ActionModeHud");
+        LayoutActionHudGroup(camera, grid, boardMinimumY, desiredGap);
     }
 
-    private static void MoveHudGroupVertically(float delta, params string[] names)
+    private void LayoutActionHudGroup(Camera camera, GridManager grid, float bottomY, float gap)
     {
-        if (Mathf.Abs(delta) < 0.01f) return;
-        foreach (string name in names)
+        if (boardActionHudGroup == null)
         {
-            RectTransform rect = GameObject.Find(name)?.GetComponent<RectTransform>();
-            if (rect == null) continue;
-            Vector2 position = rect.anchoredPosition;
-            position.y += delta;
-            rect.anchoredPosition = position;
+            GameObject root = new GameObject("BoardActionHudGroup", typeof(RectTransform));
+            boardActionHudGroup = root.GetComponent<RectTransform>();
+            boardActionHudGroup.SetParent(canvasRect, false);
+            boardActionHudGroup.anchorMin = boardActionHudGroup.anchorMax = Vector2.one * 0.5f;
+            boardActionHudGroup.sizeDelta = Vector2.zero;
+            boardActionHudGroup.SetAsFirstSibling();
+            string[] names = { "UltimateFrame", "UltimateReadyGlow", "HealthHud", "TraitHud",
+                "AttackActionFrame", "MoveActionFrame" };
+            Vector3 minimum = Vector3.one * float.MaxValue;
+            Vector3 maximum = Vector3.one * float.MinValue;
+            Vector3[] corners = new Vector3[4];
+            foreach (string name in names)
+            {
+                RectTransform rect = GameObject.Find(name)?.GetComponent<RectTransform>();
+                if (rect == null) continue;
+                rect.SetParent(boardActionHudGroup, true);
+                rect.GetWorldCorners(corners);
+                foreach (Vector3 corner in corners)
+                {
+                    Vector3 local = boardActionHudGroup.InverseTransformPoint(corner);
+                    minimum = Vector3.Min(minimum, local);
+                    maximum = Vector3.Max(maximum, local);
+                }
+            }
+            RectTransform status = GameObject.Find("ActionModeHud")?.GetComponent<RectTransform>();
+            if (status != null)
+            {
+                status.SetParent(boardActionHudGroup, true);
+                // 상태 문구는 카드 위에서 전체 묶음 폭을 사용한다. 글자 AutoSize는 사용하지 않는다.
+                status.anchorMin = status.anchorMax = Vector2.one * 0.5f;
+                status.pivot = Vector2.one * 0.5f;
+                status.sizeDelta = new Vector2(maximum.x - minimum.x, 36f);
+                status.anchoredPosition = new Vector2((minimum.x + maximum.x) * 0.5f, maximum.y + 18f);
+                maximum.y += 36f;
+            }
+            boardActionHudBounds = new Bounds((minimum + maximum) * 0.5f, maximum - minimum);
         }
+        BoundsInt cells = grid.GroundTilemap.cellBounds;
+        float leftX = camera.WorldToScreenPoint(grid.GroundTilemap.CellToWorld(cells.min)).x;
+        float rightX = camera.WorldToScreenPoint(grid.GroundTilemap.CellToWorld(cells.max)).x;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, new Vector2(leftX, bottomY - gap),
+            null, out Vector2 left);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect, new Vector2(rightX, bottomY - gap),
+            null, out Vector2 right);
+        float horizontalScale = (right.x - left.x) / Mathf.Max(1f, boardActionHudBounds.size.x);
+        float verticalScale = (left.y - canvasRect.rect.yMin - ScreenEdgeMargin)
+            / Mathf.Max(1f, boardActionHudBounds.size.y);
+        float scale = Mathf.Max(0.01f, Mathf.Min(1f, horizontalScale, verticalScale));
+        boardActionHudGroup.localScale = Vector3.one * scale;
+        boardActionHudGroup.anchoredPosition = new Vector2((left.x + right.x) * 0.5f
+            - boardActionHudBounds.center.x * scale, left.y - boardActionHudBounds.max.y * scale);
+    }
+
+    private void LayoutHeaderHud(float boardTop, float gap)
+    {
+        if (boardHeaderHudGroup == null)
+        {
+            boardHeaderHudGroup = new GameObject("BoardHeaderHudGroup", typeof(RectTransform)).GetComponent<RectTransform>();
+            boardHeaderHudGroup.SetParent(canvasRect, false);
+            boardHeaderHudGroup.anchorMin = boardHeaderHudGroup.anchorMax = Vector2.one * 0.5f;
+            boardHeaderHudGroup.sizeDelta = Vector2.zero;
+            Vector3 minimum = Vector3.one * float.MaxValue;
+            Vector3 maximum = Vector3.one * float.MinValue;
+            Vector3[] corners = new Vector3[4];
+            foreach (string name in new[] { "WaveHud", "TimeHud" })
+            {
+                RectTransform rect = GameObject.Find(name)?.GetComponent<RectTransform>();
+                if (rect == null) continue;
+                rect.SetParent(boardHeaderHudGroup, true);
+                rect.GetWorldCorners(corners);
+                foreach (Vector3 corner in corners)
+                {
+                    Vector3 local = boardHeaderHudGroup.InverseTransformPoint(corner);
+                    minimum = Vector3.Min(minimum, local);
+                    maximum = Vector3.Max(maximum, local);
+                }
+            }
+            boardHeaderHudBounds = new Bounds((minimum + maximum) * 0.5f, maximum - minimum);
+        }
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRect,
+            new Vector2(Screen.width * 0.5f, boardTop + gap), null, out Vector2 anchor);
+        boardHeaderHudGroup.anchoredPosition = anchor
+            - new Vector2(boardHeaderHudBounds.center.x, boardHeaderHudBounds.min.y);
     }
 
     private float GetBoardHalfWidthInCanvas(float fallback)
@@ -486,18 +662,23 @@ public sealed class RunProgressionUiController : MonoBehaviour
         if (panel == null) return;
         panel.anchorMin = panel.anchorMax = new Vector2(0.5f, 0.5f);
         panel.pivot = right ? new Vector2(0f, 0.5f) : new Vector2(1f, 0.5f);
-        panel.anchoredPosition = new Vector2(right ? innerEdge : -innerEdge, 0f);
+        panel.anchoredPosition = new Vector2(right ? innerEdge : -innerEdge, PcBoardLayout.BoardCenterY * scale);
         panel.sizeDelta = new Vector2(DefaultPanelWidth, PanelHeight);
         panel.localScale = new Vector3(scale, scale, 1f);
     }
 
     private void ShowUpgradeOptions(IReadOnlyList<UpgradeDefinition> options)
     {
+        rewardOpenedFrame = Time.frameCount;
         CloseDetails();
+        CloseInventory();
         upgradeTitle.text = progression.IsStarterUpgradeSelection ? "시작 증강 선택" : "웨이브 증강 선택";
         upgradeGuide.text = progression.IsStarterUpgradeSelection
             ? "현재 → 선택 후를 비교하세요 · 하나를 고르면 전투 시작 · 클릭 또는 1 · 2 · 3"
             : "현재 → 선택 후를 비교하세요 · 하나를 고르면 다음 웨이브 · 클릭 또는 1 · 2 · 3";
+        if (MobilePlaytestController.IsActive)
+            upgradeGuide.text = "카드를 탭하여 하나 선택 · 상세 버튼으로 효과 확인\n"
+                + (progression.IsStarterUpgradeSelection ? "선택하면 전투 시작" : "선택하면 다음 웨이브 시작");
         for (int i = 0; i < upgradeButtons.Length; i++)
         {
             bool available = i < options.Count;
@@ -566,6 +747,8 @@ public sealed class RunProgressionUiController : MonoBehaviour
 
     private void RefreshAltars(IReadOnlyList<RelicOffer> offers)
     {
+        if (inventoryButtonLabel != null)
+            inventoryButtonLabel.text = offers.Count > 0 ? $"빌드 · 제단 {offers.Count} · B" : "빌드 · B";
         altarEmptyText.gameObject.SetActive(offers.Count == 0);
         for (int i = 0; i < altarTexts.Length; i++)
         {
@@ -584,6 +767,7 @@ public sealed class RunProgressionUiController : MonoBehaviour
         IReadOnlyList<RelicDefinition> equipped)
     {
         CloseDetails();
+        CloseInventory();
         incomingRelicDetails = incoming;
         for (int i = 0; i < 4; i++)
         {
@@ -604,7 +788,7 @@ public sealed class RunProgressionUiController : MonoBehaviour
 
     private void SetRightMode(RectTransform visiblePanel)
     {
-        rightPanel.gameObject.SetActive(visiblePanel == rightPanel);
+        rightPanel.gameObject.SetActive(visiblePanel == rightPanel || inventoryPanel != null);
         upgradePanel.gameObject.SetActive(visiblePanel == upgradePanel);
         replacementPanel.gameObject.SetActive(visiblePanel == replacementPanel);
     }
@@ -762,17 +946,10 @@ public sealed class RunProgressionUiController : MonoBehaviour
             case "movement_rook":
             case "movement_training_4":
                 return "RookMove";
-            case "mana_circulation":
-            case "pierce_recovery":
-            case "alternating_overload":
-            case "blast_core":
+            case "alternating_gear":
                 return "ChainBurst";
-            case "echo_recovery":
-                return "EchoPressure";
             case "movement_breath":
-            case "afterglow_recovery":
             case "impact_recovery":
-            case "hot_afterglow":
                 return "BindingLanding";
             default:
                 return id;
@@ -794,7 +971,6 @@ public sealed class RunProgressionUiController : MonoBehaviour
     private void OnDestroy()
     {
         CloseDetails();
-        boardCamera?.SetSideHudReservation(0f);
         if (progression == null) return;
         progression.UpgradeOptionsReady -= ShowUpgradeOptions;
         progression.UpgradesChanged -= RefreshBuild;

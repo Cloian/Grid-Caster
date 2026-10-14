@@ -1,0 +1,8 @@
+AREA_ATTACK_TEXT_PASS
+Display name: 범위 공격
+Selection description: surrounding eight tiles first; direct bonus preserved.
+Placeholder: AOE
+Internal ID, icon reference, period and four trait options preserved.
+
+Scene update keeps only four Editor-generated trait/text records. Unrelated font and newly serialized default fields were excluded.
+UI validation passed; final copy edit fixes Korean particles only.

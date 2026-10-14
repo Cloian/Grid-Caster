@@ -84,8 +84,15 @@ public static class ProgressionUsabilityValidation
         string report = "REWARD_USABILITY_" + (passed ? "PASS" : "FAIL") + "\n" + string.Join("\n", checks);
         string directory = Path.Combine(Path.GetDirectoryName(Application.dataPath), "docs/verification");
         Directory.CreateDirectory(directory);
-        string reportName = Environment.GetCommandLineArgs().Contains("-startupControlsValidation")
-            ? "startup-controls-usability-2026-10-01.txt" : "reward-usability-2026-09-30.txt";
+        string reportName = Environment.GetCommandLineArgs().Contains("-specialAttackFValidation")
+            ? "special-attack-f-ui-2026-10-02.txt"
+            : Environment.GetCommandLineArgs().Contains("-tacticalCoreValidation")
+            ? "tactical-usability-2026-10-01.txt"
+            : Environment.GetCommandLineArgs().Contains("-fourBuildValidation")
+            ? "four-build-usability-2026-10-01.txt"
+            : Environment.GetCommandLineArgs().Contains("-startupControlsValidation")
+            ? "startup-controls-usability-2026-10-01.txt"
+            : "reward-usability-" + DateTime.Now.ToString("yyyyMMdd-HHmmss") + ".txt";
         File.WriteAllText(Path.Combine(directory, reportName), report);
         Debug.Log(report);
         routine = null;
@@ -116,7 +123,10 @@ public static class ProgressionUsabilityValidation
     {
         Canvas.ForceUpdateCanvases();
         RectTransform rect = button.GetComponent<RectTransform>();
-        Vector2 point = RectTransformUtility.WorldToScreenPoint(null, rect.TransformPoint(rect.rect.center));
+        Vector2 localPoint = rect.rect.center;
+        // 특성 아이콘은 이제 공격 버튼이다. 상세 설명은 카드의 이름/배경에서 확인한다.
+        if (button.name == "TraitHud") localPoint.y = rect.rect.yMin + 7f;
+        Vector2 point = RectTransformUtility.WorldToScreenPoint(null, rect.TransformPoint(localPoint));
         var pointer = new UnityEngine.EventSystems.PointerEventData(UnityEngine.EventSystems.EventSystem.current)
             { position = point, button = UnityEngine.EventSystems.PointerEventData.InputButton.Left };
         var hits = new List<UnityEngine.EventSystems.RaycastResult>();
@@ -163,7 +173,8 @@ public static class ProgressionUsabilityValidation
             .First(text => text.name == "SelectionFooter");
         Check(footer.text == GameHudController.StartupControlsText
             && footer.text.Contains("좌클릭") && footer.text.Contains("우클릭")
-            && !footer.text.Contains("F키"), "A/S/마우스 안내가 현재 입력과 일치하며 구형 F 안내 없음");
+            && footer.text.Contains("F / 특성 아이콘")
+            && !footer.text.Contains("Shift+A"), "A/F/S/마우스 안내가 현재 입력과 일치");
         Check(!footer.raycastTarget && !footer.resizeTextForBestFit && footer.fontSize == 18,
             "조작 안내는 클릭을 가로채지 않고 기존 픽셀 글자 크기를 유지");
         Check(footer.cachedTextGenerator.Populate(footer.text,
@@ -213,6 +224,8 @@ public static class ProgressionUsabilityValidation
         CapturePreview("checkerboard-gameplay");
         yield return null;
 
+        ui.OpenInventory();
+        yield return null;
         UnityEngine.UI.Button owned = GameObject.Find("BuildRow_1").GetComponent<UnityEngine.UI.Button>();
         Vector3Int position = player.GridPosition;
         ClickButton(owned);
@@ -220,6 +233,8 @@ public static class ProgressionUsabilityValidation
         player.ProcessInputFrame(false, true, false, false, Vector2.zero);
         Check(player.GridPosition == position, "상세창 중 이동 입력은 턴을 소비하지 않음");
         ui.CloseDetails();
+        Check(ui.IsInventoryOpen && !player.CanAct, "상세창을 닫아도 빌드 목록 중 전투 입력 차단");
+        ui.CloseInventory();
         Check(!player.CanAct, "상세창을 닫은 클릭의 같은 프레임 보드 전달 차단");
         yield return null;
         Check(!ui.IsDetailOpen && player.CanAct, "닫은 뒤 기존 전투 입력 복원");
@@ -283,7 +298,7 @@ public static class ProgressionUsabilityValidation
                         && !label.text.Contains("이번 선택:") && !label.text.Contains("진행 중인 묶음"),
                         "선택 카드는 핵심 효과만 표시: " + item.Id);
                     if (item.IsTraitUpgrade || RunProgressionDescriptions.IsFrequencyUpgrade(item.Id))
-                        Check(label.text.Contains("평균 발동 확률"), "특성 증강 발동 확률 표시: " + item.Id);
+                        Check(label.text.Contains("일반 적중"), "특성 증강 충전 요구량 표시: " + item.Id);
                     ClickButton(GameObject.Find("UpgradeChoice_1").transform.Find("Details").GetComponent<UnityEngine.UI.Button>());
                     Check(ui.IsDetailOpen, "선택 카드 상세 확인: " + item.Id);
                     UnityEngine.UI.Text detail = Field<UnityEngine.UI.Text>(ui, "detailText");
@@ -302,7 +317,9 @@ public static class ProgressionUsabilityValidation
             for (int tier = 1; tier <= 4; tier++)
             {
                 Call(run, "BuildAdvancedUpgradeOptions", tier);
-                Check(run.CurrentUpgradeOptions.All(item => !item.Id.StartsWith("movement_training_") && run.CanSelectUpgrade(item)),
+                Check(run.CurrentUpgradeOptions.Count == 3
+                    && run.CurrentUpgradeOptions.Select(item => RunProgressionDescriptions.ChoiceSummary(item, run)).Distinct().Count() == 3
+                    && run.CurrentUpgradeOptions.All(item => !item.Id.StartsWith("movement_training_") && run.CanSelectUpgrade(item)),
                     "최대 이동술의 실제 상급 후보에서 연마 제외: " + trait + "/" + tier);
             }
         }

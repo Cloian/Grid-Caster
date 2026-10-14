@@ -46,6 +46,8 @@ public static class RunBalanceValidation
         public bool avoidLegendary;
         public bool mechanicsOnly;
         public bool validateMechanics;
+        public bool recordLastActions;
+        public bool bishopParityEscape;
     }
 
     [Serializable]
@@ -76,7 +78,7 @@ public static class RunBalanceValidation
     public sealed class Report
     {
         public string label;
-        public string policy = "heuristic-v4; public board/two-step chase prediction/knight intent, no hidden activation/RNG inspection";
+        public string policy = "heuristic-v5-manual; public board and charge readiness; use ready trait on selected attack; not paired with legacy random-proc policy";
         public string policyHash;
         public string unityVersion;
         public string sourceHash;
@@ -101,6 +103,8 @@ public static class RunBalanceValidation
             report = new Report { label = request.label, unityVersion = Application.unityVersion,
                 sourceHash = SourceHash(), allowRelics = request.allowRelics,
                 avoidLegendary = request.avoidLegendary };
+            if (request.bishopParityEscape)
+                report.policy += "; optional public-board single-bishop parity escape (not paired legacy policy)";
             using (SHA256 sha = SHA256.Create())
                 report.policyHash = BitConverter.ToString(sha.ComputeHash(File.ReadAllBytes(
                     Path.Combine(Application.dataPath, "Editor/RunBalanceValidation.cs"))))
@@ -124,6 +128,30 @@ public static class RunBalanceValidation
         if (EditorApplication.isPlaying) throw new InvalidOperationException("Exit Play mode first.");
         Start(new Request { label = "manual", outputPath = Path.Combine(
             Path.GetDirectoryName(Application.dataPath), "docs/verification/balance-manual.json") });
+    }
+
+    [MenuItem("Tools/Playtest/Validate Stage One Run Smoke")]
+    public static void ValidateStageOneSmoke()
+    {
+        if (EditorApplication.isPlaying) throw new InvalidOperationException("Exit Play mode first.");
+        string label = "stage-one-smoke-" + DateTime.Now.ToString("yyyyMMdd-HHmmss");
+        // 정상 능력치와 기존 공개 보드 정책을 사용한다. 인간의 재미/승률로 해석하지 않는다.
+        Start(new Request { label = label, firstSeed = 2400, seedsPerTrait = 2,
+            validateMechanics = true, recordLastActions = true,
+            outputPath = Path.Combine(Path.GetDirectoryName(Application.dataPath),
+                "docs/verification/" + label + ".json") });
+    }
+
+    [MenuItem("Tools/Playtest/Diagnose Stage One Bishop Escape Policy")]
+    public static void DiagnoseBishopEscapePolicy()
+    {
+        if (EditorApplication.isPlaying) throw new InvalidOperationException("Exit Play mode first.");
+        string label = "stage-one-bishop-policy-" + DateTime.Now.ToString("yyyyMMdd-HHmmss");
+        // 동일 초기 시드라도 정책/RNG 흐름이 달라진다. 게임 수정 전후의 짝비교로 합산하지 않는다.
+        Start(new Request { label = label, firstSeed = 2400, seedsPerTrait = 2,
+            bishopParityEscape = true, recordLastActions = true,
+            outputPath = Path.Combine(Path.GetDirectoryName(Application.dataPath),
+                "docs/verification/" + label + ".json") });
     }
 
     public static void RunBatch()
@@ -293,12 +321,19 @@ public static class RunBalanceValidation
                 { result.ending = "turn_limit"; break; }
                 ChooseAction(player, spawner, grid, growth, recent,
                     out PlayerActionSelectionMode mode, out Vector3Int direction);
-                if (n == 0 && result.actions < 24)
+                if (request.recordLastActions || (n == 0 && result.actions < 24))
+                {
                     result.trace.Add($"{result.actions} w={spawner.CurrentWave} hp={player.CurrentHealth} "
                         + $"pos={player.GridPosition} {mode} {direction} enemies="
                         + string.Join(";", spawner.ActiveMonsters.Where(monster => monster != null && !monster.IsDead)
                             .Select(monster => monster.MovementPattern + ":" + monster.GridPosition + ":"
-                                + monster.GetComponent<CharacterHealth>().CurrentHealth)));
+                                + monster.GetComponent<CharacterHealth>().CurrentHealth
+                                + ":blocked=" + monster.IsActionBlocked)));
+                    if (request.recordLastActions && result.trace.Count > 32) result.trace.RemoveAt(0);
+                }
+                if (mode == PlayerActionSelectionMode.Attack && !player.IsChoosingEchoDirection
+                    && player.GetComponent<PlayerTraitSystem>().IsReady)
+                    player.SelectTraitAttackMode();
                 if (!player.TryPerformAction(mode, direction))
                     throw new InvalidOperationException("Bot selected an invalid action " + mode + direction);
                 if (mode == PlayerActionSelectionMode.Attack) result.attackSelections++;
@@ -369,7 +404,7 @@ public static class RunBalanceValidation
         mode = PlayerActionSelectionMode.Attack;
         direction = Vector3Int.up;
         string trait = player.GetComponent<PlayerTraitSystem>().SelectedTraitId;
-        float proc = 1f / player.GetComponent<PlayerTraitSystem>().ActivationBagSize;
+        float proc = player.GetComponent<PlayerTraitSystem>().IsReady ? 1f : 0f;
         foreach (Vector3Int step in Directions)
         {
             if (player.IsChoosingFreeMove) break;
@@ -384,6 +419,11 @@ public static class RunBalanceValidation
             && Danger(player.GridPosition, spawner, null) < 0.75f) return;
         player.SelectMoveMode();
         var cells = (List<Vector3Int>)typeof(Move).GetField("selectableCells", PrivateInstance).GetValue(player);
+        MonsterMovement[] remaining = spawner.ActiveMonsters.Where(monster => monster != null && !monster.IsDead).ToArray();
+        bool changeBishopColor = request.bishopParityEscape && growth.ActiveMovementArt == PlayerMovementArt.Bishop
+            && remaining.Length == 1 && remaining[0].MovementPattern == MonsterMovementPattern.Bishop
+            && ((remaining[0].GridPosition.x + remaining[0].GridPosition.y
+                + player.GridPosition.x + player.GridPosition.y) & 1) != 0;
         foreach (Vector3Int cell in cells.ToArray())
         {
             bool art = Mathf.Max(Mathf.Abs(cell.x - player.GridPosition.x),
@@ -412,6 +452,10 @@ public static class RunBalanceValidation
             float bestShot = PredictedShotValue(cell, spawner, grid);
             value += bestShot * 0.4f;
             value -= recent.Count(previous => previous == cell) * 1.2f;
+            // 마지막 비숍과 서로 다른 색일 때 대각 이동만 반복하던 봇 진단용 선택 보정.
+            // 공개된 보드 좌표만 사용하며 게임 규칙·턴·피해·발동/RNG는 바꾸지 않는다.
+            if (changeBishopColor && ((cell.x + cell.y + player.GridPosition.x + player.GridPosition.y) & 1) != 0)
+                value += 6f;
             if (art && (growth.HasRelic("ambush_crest") || growth.MovementArtLevel == 3)) value += 2f;
             RelicOffer[] desiredAltars = growth.ActiveAltars.Where(altar =>
                 !request.avoidLegendary || altar.Relic.Rarity < RelicRarity.Legendary).ToArray();
@@ -562,14 +606,14 @@ public static class RunBalanceValidation
         }
         PlayerTraitSystem trait = player.GetComponent<PlayerTraitSystem>();
         trait.SelectTrait("damage_boost", 4);
-        trait.RollBasicAttack();
-        int bagIndex = (int)typeof(PlayerTraitSystem).GetField("nextBagIndex", PrivateInstance).GetValue(trait);
+        trait.RegisterCompletedAttack(true, false);
+        int charge = trait.ChargeProgress;
         Apply("life_tempering");
-        Check((int)typeof(PlayerTraitSystem).GetField("nextBagIndex", PrivateInstance).GetValue(trait) == bagIndex,
-            "unrelated upgrade preserves partially consumed activation bag");
+        Check(trait.ChargeProgress == charge,
+            "unrelated upgrade preserves partial charge");
         Apply("dense_mana");
-        Check((int)typeof(PlayerTraitSystem).GetField("nextBagIndex", PrivateInstance).GetValue(trait) == bagIndex,
-            "frequency upgrade preserves current bag until next refill");
+        Check(trait.ChargeProgress == charge && trait.ChargeRequired == 2,
+            "frequency upgrade preserves charge and immediately lowers requirement");
         growth.SetMovementArtForPlaytest(PlayerMovementArt.Knight, 3);
         Apply("movement_bishop");
         Check(growth.ActiveMovementArt == PlayerMovementArt.Bishop && growth.MovementArtLevel == 3,
@@ -582,10 +626,10 @@ public static class RunBalanceValidation
         stacks["trait_mastery"] = 1;
         growth.BeginAttack(new PlayerAttackTraitRoll(false, false, true, false));
         Check(growth.ModifyAttackDamage(1, new PlayerAttackTraitRoll(false, false, true, false), 0) == 2,
-            "damage mastery uses area damage rather than redundant bag reduction");
+            "damage mastery changes splash damage, not direct damage or activation rate");
         stacks["overcharge"] = 2;
-        Check(growth.ModifyAttackDamage(1, new PlayerAttackTraitRoll(false, false, true, false), 0) == 3,
-            "overcharge second stack keeps direct damage 3 and adds area effect");
+        Check(growth.ModifyAttackDamage(1, new PlayerAttackTraitRoll(false, false, true, false), 0) == 4,
+            "overcharge second stack supplies real excess damage rather than unconditional area damage");
         stacks["healing_breath"] = 2;
         Check(growth.WaveHealFlatBonus == 2, "both healing stacks have integer marginal value");
         spawner.ResetPlaytestEncounter();
@@ -604,13 +648,16 @@ public static class RunBalanceValidation
         growth.BeginAttack(pierce);
         growth.NotifyAttackHit(first, pierce, 0, 1);
         growth.NotifyAttackHit(second, pierce, 0, 2);
-        Check(neighbor.GetComponent<CharacterHealth>().CurrentHealth == 18,
-            "overlapping pierce-wave centers damage the same target only once");
+        Check(neighbor.GetComponent<CharacterHealth>().CurrentHealth == 20
+            && growth.ModifyPenetrationDamage(1, pierce, 0) == 1
+            && growth.ModifyPenetrationDamage(1, pierce, 1) == 3,
+            "pierce acceleration improves later direct targets without off-line damage");
         stacks.Clear(); stacks["impact_recovery"] = 1;
         first.TakeDamage(100);
         growth.BeginAttack(new PlayerAttackTraitRoll(false, false, false, true));
         growth.NotifyKnockbackResult(first, null, first.GridPosition);
-        Check(neighbor.IsActionBlocked || second.IsActionBlocked, "one-shot knockback keeps adjacent control");
+        Check(!neighbor.IsActionBlocked && !second.IsActionBlocked,
+            "dead knockback target does not redirect its control to unrelated neighbors");
         yield return null;
 
         stacks.Clear(); stacks["trait_mastery"] = 1;
@@ -637,15 +684,24 @@ public static class RunBalanceValidation
         neighbor = Spawn(center + new Vector3Int(2, 1, 0), 105);
         var boost = new PlayerAttackTraitRoll(false, false, true, false);
         growth.BeginAttack(boost);
+        first.TakeDamage(growth.ModifyAttackDamage(1, boost, 0));
         growth.NotifyAttackHit(first, boost, 0, 0);
-        Check(second.GetComponent<CharacterHealth>().CurrentHealth == 19
-            && neighbor.GetComponent<CharacterHealth>().CurrentHealth == 19,
-            "damage mastery hits both neighboring targets once");
+        Check(second.GetComponent<CharacterHealth>().CurrentHealth == 18
+            && neighbor.GetComponent<CharacterHealth>().CurrentHealth == 18,
+            "damage mastery splashes both neighbors for two even while direct target survives");
+        second.GetComponent<CharacterHealth>().Initialize(20);
+        neighbor.GetComponent<CharacterHealth>().Initialize(20);
         var knockback = new PlayerAttackTraitRoll(false, false, false, true);
         growth.BeginAttack(knockback);
         growth.NotifyKnockbackResult(first, null, first.GridPosition);
-        Check(spawner.ActiveMonsters.Count(item => item.IsActionBlocked) == 2,
-            "knockback mastery blocks two distinct living targets");
+        Check(spawner.ActiveMonsters.Count(item => item.IsActionBlocked) == 0
+            && growth.ModifyAttackDamage(1, knockback, 0) == 2,
+            "knockback mastery improves direct damage rather than blanket control");
+        growth.NotifyKnockbackResult(first, second, first.GridPosition);
+        Check(second.GetComponent<CharacterHealth>().CurrentHealth == 20
+            && neighbor.GetComponent<CharacterHealth>().CurrentHealth == 20,
+            "knockback notification only handles control; actual collision owns damage");
+        second.GetComponent<CharacterHealth>().Initialize(20);
 
         stacks.Clear(); heldRelics.Clear();
         Relic("glass_heart");
@@ -657,7 +713,7 @@ public static class RunBalanceValidation
             "glass heart boosts non-proc direct damage");
         first.TakeDamage(8);
         growth.NotifyAttackHit(first, default, 0, 0);
-        int totalOverflowDamage = 38 - second.GetComponent<CharacterHealth>().CurrentHealth
+        int totalOverflowDamage = 40 - second.GetComponent<CharacterHealth>().CurrentHealth
             - neighbor.GetComponent<CharacterHealth>().CurrentHealth;
         Check(totalOverflowDamage == 2, "glass overflow caps at two damage to one neighbor");
         int secondAfterOverflow = second.GetComponent<CharacterHealth>().CurrentHealth;
@@ -674,12 +730,11 @@ public static class RunBalanceValidation
         neighbor = Spawn(center + Vector3Int.right * 4, 108);
         first.GetComponent<CharacterHealth>().Initialize(3);
         second.GetComponent<CharacterHealth>().Initialize(1);
-        stacks["mana_circulation"] = 1;
         growth.BeginAttack(default);
         first.TakeDamage(5);
         growth.NotifyAttackHit(first, default, 0, 0);
         Check(second.IsDead && neighbor.GetComponent<CharacterHealth>().CurrentHealth == 20,
-            "overflow kill neither chains nor triggers a new kill explosion");
+            "overflow kill does not chain into a third target");
 
         stacks.Clear(); heldRelics.Clear();
         player.GetComponent<CharacterHealth>().Initialize(10);
@@ -762,28 +817,30 @@ public static class RunBalanceValidation
                 .Sum(piece => piece.Count);
             int advanced = pieces.Where(piece => RunProgressionCatalog.Upgrade(piece.Id).IsAdvanced)
                 .Sum(piece => piece.Count);
-            Check(normal == 6 && advanced == 4 && pieces.All(piece =>
+            // 상급 보상도 일반 후보를 섞어 추첨하므로 상급 네 장을 고정하지 않는다.
+            Check(normal + advanced == 10 && advanced <= 4 && pieces.All(piece =>
                 piece.Count <= RunProgressionCatalog.Upgrade(piece.Id).MaxStacks),
-                id + " final build uses legal six normal / four advanced choices");
+                id + " final build uses ten legal choices with at most four advanced rewards");
         }
         Build("double_cast", PlayerMovementArt.Knight, 3,
             ("quick_cast", 2), ("movement_knight", 1), ("echo_warhead", 1), ("echo_recovery", 1),
-            ("mana_circulation", 1), ("movement_training_1", 1), ("movement_training_2", 1),
-            ("alternating_overload", 1), ("trait_mastery", 1));
+            ("healing_breath", 1), ("movement_training_1", 1), ("movement_training_2", 1),
+            ("rapid_cycle", 1), ("trait_mastery", 1));
         growth.BeginAttack(doubleCast);
         Check(trait.ActivationBagSize == 3 && growth.AttackCastCount(doubleCast) == 2
-            && growth.ModifyAttackDamage(1, doubleCast, 1) == 3 && growth.Stack("echo_warhead") == 1,
-            "double final build: bag three, two casts, extra direct damage three and one extra penetration");
+            && growth.ModifyAttackDamage(1, doubleCast, 1) == 4
+            && growth.ModifyPenetrations(doubleCast) == 0 && growth.HasRotatingMirror,
+            "double final build: bag three, two casts, extra damage four, no penetration, re-aim without relic");
         Build("pierce", PlayerMovementArt.Bishop, 2,
             ("thin_reload", 1), ("movement_knight", 1), ("long_needle", 1), ("pierce_recovery", 2),
-            ("mana_circulation", 1), ("rapid_cycle", 1), ("movement_bishop", 1),
+            ("healing_breath", 1), ("rapid_cycle", 1), ("movement_bishop", 1),
             ("movement_training_3", 1), ("trait_mastery", 1));
-        Check(trait.ActivationBagSize == 2 && growth.ModifyPenetrations(pierce) == 2
-            && growth.ModifyPenetrationDamage(1, pierce, 1) == 2,
-            "pierce final build: bag two, three direct targets and extra target damage two");
+        Check(trait.ActivationBagSize == 2 && growth.ModifyPenetrations(pierce) == 3
+            && growth.ModifyPenetrationDamage(1, pierce, 1) == 4,
+            "pierce final build: bag two, four straight-line targets, later target damage four");
         Build("damage_boost", PlayerMovementArt.Bishop, 2,
-            ("overcharge", 1), ("movement_knight", 1), ("dense_mana", 2), ("afterglow_recovery", 1),
-            ("mana_circulation", 1), ("rapid_cycle", 1), ("movement_bishop", 1),
+            ("overcharge", 2), ("movement_knight", 1), ("dense_mana", 2), ("afterglow_recovery", 1),
+            ("rapid_cycle", 1), ("movement_bishop", 1),
             ("movement_training_3", 1), ("trait_mastery", 1));
         spawner.ResetPlaytestEncounter();
         yield return null;
@@ -794,13 +851,13 @@ public static class RunBalanceValidation
         int directDamage = growth.ModifyAttackDamage(1, boost, 0);
         first.TakeDamage(directDamage);
         growth.NotifyAttackHit(first, boost, 0, 0);
-        Check(trait.ActivationBagSize == 2 && directDamage == 3
-            && neighbor.GetComponent<CharacterHealth>().CurrentHealth == 17,
-            "damage final build: bag two, direct three plus distinct kill/mastery area three");
-        Build("knockback", PlayerMovementArt.Knight, 2,
+        Check(trait.ActivationBagSize == 2 && directDamage == 5
+            && neighbor.GetComponent<CharacterHealth>().CurrentHealth == 18 && growth.DamageBoostAreaLevel == 1,
+            "damage final build: bag two, direct five, twelve-cell splash two independent of surplus");
+        Build("knockback", PlayerMovementArt.Knight, 3,
             ("compressed_impact", 1), ("movement_knight", 1), ("long_impact", 1), ("impact_recovery", 2),
-            ("mana_circulation", 1), ("rapid_cycle", 1), ("movement_training_2", 1),
-            ("alternating_overload", 1), ("trait_mastery", 1));
+            ("healing_breath", 1), ("rapid_cycle", 1), ("movement_training_1", 1),
+            ("movement_training_2", 1), ("trait_mastery", 1));
         spawner.ResetPlaytestEncounter();
         yield return null;
         first = Spawn(center + Vector3Int.right * 2, 112);
@@ -809,10 +866,109 @@ public static class RunBalanceValidation
         foreach (Vector3Int offset in adjacent) Spawn(first.GridPosition + offset, 113 + Array.IndexOf(adjacent, offset));
         growth.BeginAttack(knockback);
         growth.NotifyKnockbackResult(first, null, first.GridPosition);
-        Check(trait.ActivationBagSize == 3 && growth.KnockbackDistance == 2
+        Check(trait.ActivationBagSize == 3 && growth.KnockbackDistance == 2 && growth.HasKnockbackSpread
             && growth.ModifyAttackDamage(1, knockback, 0) == 2
-            && spawner.ActiveMonsters.Count(item => item.IsActionBlocked) == 5,
-            "knockback final build: bag three, direct two, push two and five distinct controlled targets");
+            && spawner.ActiveMonsters.Count(item => item.IsActionBlocked) == 1,
+            "knockback final build: bag three, direct two, push two, spread enabled, only direct target controlled");
+
+        stacks.Clear(); heldRelics.Clear();
+        stacks["echo_recovery"] = 1;
+        Check(growth.HasRotatingMirror, "normal rotation upgrade enables direction selection without rare relic");
+        stacks["echo_warhead"] = 2;
+        growth.BeginAttack(doubleCast);
+        Check(growth.ModifyAttackDamage(1, doubleCast, 1) == 3
+            && growth.ModifyPenetrations(doubleCast) == 0,
+            "second echo warhead stack improves direct damage, never pierces");
+        Relic("rotating_mirror");
+        Check(growth.ModifyAttackDamage(1, doubleCast, 1) == 4,
+            "rotation relic remains useful with already-owned rotation upgrade");
+        growth.NotifyEchoDirectionSelected(true);
+        Check(growth.ModifyAttackDamage(1, doubleCast, 1) == 5
+            && growth.ModifyAttackDamage(1, doubleCast, 0) == 1,
+            "rotation upgrade rewards changed extra-shot direction, never the first cast");
+        growth.NotifyEchoDirectionSelected(false);
+        Check(growth.ModifyAttackDamage(1, doubleCast, 1) == 4,
+            "same-direction next cast does not retain a previous redirect bonus");
+
+        spawner.ResetPlaytestEncounter();
+        yield return null;
+        stacks.Clear(); heldRelics.Clear();
+        first = Spawn(center + Vector3Int.right * 2, 130);
+        second = Spawn(center + Vector3Int.right * 3, 131);
+        neighbor = Spawn(center + new Vector3Int(2, 1, 0), 132);
+        stacks["impact_recovery"] = 1;
+        growth.NotifyKnockbackResult(first, second, first.GridPosition);
+        Check(first.IsActionBlocked && !second.IsActionBlocked && !neighbor.IsActionBlocked,
+            "level-one impact lock cannot spend its direct-target slot on a collision or neighbor");
+        stacks["impact_recovery"] = 2;
+        growth.NotifyKnockbackResult(first, second, first.GridPosition);
+        Check(second.IsActionBlocked && !neighbor.IsActionBlocked,
+            "level-two impact lock adds only the actual collision partner");
+        growth.NotifyKnockbackResult(first, null, first.GridPosition, true);
+        Check(first.GetComponent<CharacterHealth>().CurrentHealth == 20
+            && neighbor.GetComponent<CharacterHealth>().CurrentHealth == 20,
+            "blockade notification adds no damage; actual wall or monster collision owns damage");
+        Vector3Int lockedCell = first.GridPosition;
+        int finishedLockTurns = 0;
+        first.SkipNextTurn();
+        first.TakeTurn(() => finishedLockTurns++, (from, to) => false, cell => true);
+        Check(first.IsActionBlocked && first.GridPosition == lockedCell && finishedLockTurns == 1,
+            "one-turn secondary lock never shortens the direct target's two-turn lock");
+        first.TakeTurn(() => finishedLockTurns++, (from, to) => false, cell => true);
+        Check(!first.IsActionBlocked && first.GridPosition == lockedCell && finishedLockTurns == 2,
+            "direct target consumes exactly two enemy actions then releases its lock");
+
+        stacks.Clear(); heldRelics.Clear();
+        first.GetComponent<CharacterHealth>().Initialize(3);
+        second.GetComponent<CharacterHealth>().Initialize(1);
+        neighbor.GetComponent<CharacterHealth>().Initialize(20);
+        stacks["afterglow_recovery"] = 2;
+        Relic("blast_core");
+        growth.BeginAttack(boost);
+        first.TakeDamage(6);
+        growth.NotifyAttackHit(first, boost, 0, 0);
+        Check(second.IsDead && neighbor.GetComponent<CharacterHealth>().CurrentHealth == 18,
+            "range growth preserves damage; direct-kill blast core adds one to adjacent targets");
+        growth.NotifyAttackHit(first, boost, 0, 0);
+        Check(neighbor.GetComponent<CharacterHealth>().CurrentHealth == 18,
+            "damage splash cannot repeat or recursively reward its kills");
+        first = Spawn(center + Vector3Int.up * 2, 133);
+        growth.BeginAttack(boost);
+        growth.NotifyAttackHit(first, boost, 0, 0);
+        Check(neighbor.GetComponent<CharacterHealth>().CurrentHealth == 18,
+            "new impact center leaves distant targets outside its grown shape untouched");
+        Relic("hot_afterglow");
+        growth.NotifyAttackHit(first, boost, 0, 0);
+        growth.BeginAttack(default);
+        Check(growth.ModifyAttackDamage(1, default, 0) == 2,
+            "surviving boosted target stores one next-attack damage");
+        growth.BeginAttack(default);
+        Check(growth.ModifyAttackDamage(1, default, 0) == 1,
+            "missed next attack consumes afterglow storage without multiplying it");
+        Check(!RunProgressionCatalog.AllUpgrades.Any(item => new[]
+            { "mana_circulation", "combat_regeneration", "alternating_overload", "immortal_cycle" }.Contains(item.Id)),
+            "pruned overlapping rewards are absent from all candidate pools");
+        foreach (string id in new[] { "double_cast", "pierce", "damage_boost", "knockback" })
+        {
+            stacks.Clear(); heldRelics.Clear();
+            trait.SelectTrait(id, id == "double_cast" ? 5 : id == "pierce" ? 3 : 4);
+            foreach (int level in new[] { 0, 1, 3 })
+            {
+                growth.SetMovementArtForPlaytest(level == 0 ? PlayerMovementArt.None : PlayerMovementArt.Knight, level);
+                for (int tier = 1; tier <= 4; tier++)
+                {
+                    typeof(RunProgressionSystem).GetMethod("BuildAdvancedUpgradeOptions", PrivateInstance)
+                        .Invoke(growth, new object[] { tier });
+                    Check(growth.CurrentUpgradeOptions.Count == 3
+                        && growth.CurrentUpgradeOptions.Select(item => item.Id).Distinct().Count() == 3
+                        && growth.CurrentUpgradeOptions.Select(item => RunProgressionDescriptions.ChoiceSummary(item, growth))
+                            .Distinct().Count() == 3
+                        && growth.CurrentUpgradeOptions.All(item => growth.CanSelectUpgrade(item)
+                            && (!item.IsAdvanced || item.RewardTier <= tier)),
+                        id + " advanced tier=" + tier + " movement=" + level + " offers three legal distinct unlocked choices");
+                }
+            }
+        }
         yield return null;
     }
 }
