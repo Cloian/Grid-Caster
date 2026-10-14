@@ -247,7 +247,11 @@ public static class CombatFeedbackValidation
         for (int i = 0; i < 8; i++) yield return null;
         Check(echo != null && echo.transform.position == frozen, "pause freezes death echo");
         Time.timeScale = 1;
-        yield return Gap(0.2f);
+        // 사망 모션이 있는 몬스터는 모션 길이만큼 잔상이 남는다.
+        float echoLifetime = CombatFeedback.DeathEchoSeconds;
+        if (echo.TryGetComponent(out Animator echoAnimator))
+            echoLifetime = Mathf.Max(echoLifetime, ActorMotion.DeathSeconds(echoAnimator.runtimeAnimatorController));
+        yield return Gap(echoLifetime + 0.06f);
         Check(CombatFeedback.DeathEchoCount == 0, "death echo expires independently after its brief visual lifetime");
 
         spawner.ResetPlaytestEncounter();
@@ -301,7 +305,8 @@ public static class CombatFeedbackValidation
             "paused capped flight preserves damage and enemy-turn timing");
         Time.timeScale = 1;
         while (target.GetComponent<CharacterHealth>().CurrentHealth == 20) yield return null;
-        Check(Time.time - launchAt <= 0.27f, "far diagonal flight capped at 250ms plus frame quantization; ms=" + ((Time.time-launchAt)*1000f));
+        // 공격 모션의 시전 프레임까지 기다린 뒤 투사체가 나가므로 그 시간을 뺀 비행 시간을 잰다.
+        Check(Time.time - launchAt - player.AttackWindupSeconds <= 0.27f, "far diagonal flight capped at 250ms plus frame quantization; ms=" + ((Time.time-launchAt-player.AttackWindupSeconds)*1000f));
         while (!player.CanAct) yield return null;
         Check(starts == beforeStarts + 1, "capped flight still produces exactly one enemy turn");
 
@@ -314,8 +319,8 @@ public static class CombatFeedbackValidation
         Check(player.SelectTraitAttackMode() && player.TryPerformAction(PlayerActionSelectionMode.Attack, Vector3Int.right),
             "prepared penetrating attack accepted");
         while (second.GetComponent<CharacterHealth>().CurrentHealth == 20) yield return null;
-        Check(target.GetComponent<CharacterHealth>().CurrentHealth < 20 && Time.time-launchAt <= 0.27f,
-            "both penetrating targets take damage within one shared 250ms cast cap; ms=" + ((Time.time-launchAt)*1000f));
+        Check(target.GetComponent<CharacterHealth>().CurrentHealth < 20 && Time.time-launchAt-player.AttackWindupSeconds <= 0.27f,
+            "both penetrating targets take damage within one shared 250ms cast cap; ms=" + ((Time.time-launchAt-player.AttackWindupSeconds)*1000f));
         while (!player.CanAct) yield return null;
         Check(starts == beforeStarts + 1 && trait.ChargeProgress == 0,
             "penetrating segments create one world turn and do not recharge special attack");

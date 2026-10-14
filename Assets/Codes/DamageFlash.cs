@@ -14,6 +14,15 @@ public sealed class DamageFlash : MonoBehaviour
 
     public bool IsFlashing => remainingTime > 0f;
 
+    // 깜빡임이 섞이기 전의 색. 깜빡임 도중 복사되는 사망 모션이 붉게 굳지 않게 한다.
+    public Color BaseColor(SpriteRenderer renderer)
+    {
+        if (spriteRenderers != null)
+            for (int i = 0; i < spriteRenderers.Length; i++)
+                if (spriteRenderers[i] == renderer) return originalColors[i];
+        return renderer.color;
+    }
+
     private void Awake()
     {
         CacheSpriteColors();

@@ -173,6 +173,7 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
             showCross = true;
             lastCrossCenter = destination;
             GameAudio.Play(CombatSound.KnightLand);
+            ActorMotion.Trigger(monster, ActorMotion.Attack);
             if (player.CurrentHealth > 0 && Distance(destination, player.GridPosition) == 1)
                 player.TakeDamage(1);
             // 피격 여부와 무관하게 도약을 끝낸 나이트에 다음 행동의 반격 기회를 연다.
@@ -274,6 +275,7 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
         rookCharged = false;
         rookRecovering = true;
         rookShotFlashUntil = Time.unscaledTime + 0.16f;
+        ActorMotion.Trigger(monster, ActorMotion.Attack);
         // 장전 때 고정한 세로 열을 즉시 관통 사격한다. 발사 순간 플레이어를 재조준하지 않는다.
         if (player.CurrentHealth > 0 && player.GridPosition.x == rookTargetColumn)
             player.TakeDamage(RookFireDamage);

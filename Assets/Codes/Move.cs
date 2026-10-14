@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -71,6 +72,7 @@ public class Move : MonoBehaviour
     };
 
     private Animator playerAnimator;
+    private Coroutine pendingAttackRelease;
     private SpriteRenderer playerSprite;
     private CharacterHealth characterHealth;
     private AudioSource feedbackAudioSource;
@@ -161,6 +163,7 @@ public class Move : MonoBehaviour
     private void Start()
     {
         ResolveReferences();
+        CharacterShadow.Attach(gameObject);
     }
 
     private void Update()
@@ -794,9 +797,22 @@ public class Move : MonoBehaviour
         activeAttackCastIndex = -1;
 
         CancelSelection();
+        ActorMotion.Trigger(this, ActorMotion.Attack);
         // 플레이어 투사체의 전체 경로 비행이 끝날 때까지 추가 입력과 적 턴을 막는다.
         waitingForMonsters = true;
 
+        // 공격 모션이 지팡이를 내지르는 프레임에서 투사체를 낸다.
+        float windup = ActorMotion.AttackReleaseSeconds(this);
+        if (windup > 0f) pendingAttackRelease = StartCoroutine(LaunchAfterWindup(windup));
+        else LaunchNextAttackCast();
+    }
+
+    public float AttackWindupSeconds => ActorMotion.AttackReleaseSeconds(this);
+
+    private IEnumerator LaunchAfterWindup(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        pendingAttackRelease = null;
         LaunchNextAttackCast();
     }
 
@@ -1170,8 +1186,14 @@ public class Move : MonoBehaviour
         transform.position = targetPosition;
         characterHealth.Initialize(maxHealth);
         GetComponent<PlayerDeathMarker>()?.ResetMarker();
+        if (pendingAttackRelease != null)
+        {
+            StopCoroutine(pendingAttackRelease);
+            pendingAttackRelease = null;
+        }
         playerSprite.enabled = true;
         playerAnimator.enabled = true;
+        playerAnimator.Rebind();
         SetMoving(false);
         CancelSelection();
     }

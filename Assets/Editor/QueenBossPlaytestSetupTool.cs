@@ -68,7 +68,7 @@ public static class QueenBossPlaytestSetupTool
             var cameraObject = UnityEngine.Object.Instantiate(sourceCamera.gameObject); SceneManager.MoveGameObjectToScene(cameraObject,created);
             cameraObject.name="Main Camera";
             Camera camera = cameraObject.GetComponent<Camera>();camera.allowHDR=false;camera.allowMSAA=false;
-            camera.backgroundColor=new Color(.035f,.045f,.065f);
+            camera.backgroundColor=new Color(30f/255f,22f/255f,34f/255f);
             CameraController cameraController=cameraObject.GetComponent<CameraController>();
             if (!cameraController) cameraController=cameraObject.AddComponent<CameraController>();
             Set(cameraController,"gridManager",grid);

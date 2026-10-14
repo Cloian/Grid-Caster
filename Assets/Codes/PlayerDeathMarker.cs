@@ -49,6 +49,10 @@ public sealed class PlayerDeathMarker : MonoBehaviour
         if (graveObject != null)
             return;
 
+        // 사망 모션이 묘비가 솟아오르는 장면까지 재생하고 마지막 프레임을 유지한다.
+        if (ActorMotion.HasDeath(this))
+            return;
+
         if (graveSprite == null)
         {
             Debug.LogError("플레이어 묘비 Sprite가 연결되지 않았습니다.", this);

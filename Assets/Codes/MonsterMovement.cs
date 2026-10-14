@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -85,6 +86,7 @@ public sealed class MonsterMovement : MonoBehaviour
     private void Start()
     {
         ResolveReferences();
+        CharacterShadow.Attach(gameObject);
     }
 
     private void Update()
@@ -380,6 +382,7 @@ public sealed class MonsterMovement : MonoBehaviour
         targetPosition.z = transform.position.z;
         landingAction = onLanding;
         moving = true;
+        ActorMotion.SetMoving(this, true);
 
         return true;
     }
@@ -400,6 +403,21 @@ public sealed class MonsterMovement : MonoBehaviour
     }
 
     internal void AttackPlayer()
+    {
+        ActorMotion.Trigger(this, ActorMotion.Attack);
+        // 공격 모션이 내려치는 프레임에서 피해를 준다. 그동안 이 몬스터의 턴은 끝나지 않는다.
+        float windup = ActorMotion.AttackReleaseSeconds(this);
+        if (windup > 0f) StartCoroutine(StrikeAfterWindup(windup));
+        else StrikePlayer();
+    }
+
+    private IEnumerator StrikeAfterWindup(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        StrikePlayer();
+    }
+
+    private void StrikePlayer()
     {
         playerMovement.TakeDamage(attackDamage, PlayerDamageKind.Normal, playerMovement.GridPosition - gridPosition);
         FinishTurn();
@@ -479,6 +497,7 @@ public sealed class MonsterMovement : MonoBehaviour
         targetPosition.z = transform.position.z;
         landingAction = onLanding;
         moving = true;
+        ActorMotion.SetMoving(this, true);
         return true;
     }
 
@@ -503,6 +522,7 @@ public sealed class MonsterMovement : MonoBehaviour
 
         transform.position = targetPosition;
         moving = false;
+        ActorMotion.SetMoving(this, false);
         Action landed = landingAction;
         landingAction = null;
         landed?.Invoke();

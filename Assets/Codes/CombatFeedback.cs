@@ -36,6 +36,8 @@ public sealed partial class CombatFeedback : MonoBehaviour
         public Vector3 TravelOffset;
         public float Elapsed;
         public float TravelElapsed;
+        public float Lifetime = DeathEchoSeconds;
+        public Animator Animator;
     }
 
     private sealed class Spark
@@ -96,12 +98,27 @@ public sealed partial class CombatFeedback : MonoBehaviour
                 feedback.RemoveActor(previous, false);
                 feedback.actors.Remove(source);
             }
+            // 사망 모션이 있는 플레이어는 원본이 그대로 남아 모션을 재생한다.
+            bool animatedDeath = ActorMotion.HasDeath(health);
+            if (animatedDeath && health.GetComponent<MonsterMovement>() == null)
+            {
+                source.enabled = true;
+                return;
+            }
             SpriteRenderer copy = feedback.CreateCopy(source, "CombatDeathEcho");
-            feedback.echoes.Add(new DeathEcho {
+            var echo = new DeathEcho {
                 Copy = copy, Position = source.transform.position, Scale = source.transform.lossyScale,
                 Color = source.color, RecoilDirection = direction, TravelOffset = travel,
                 Elapsed = -DamageVisualDelay
-            });
+            };
+            if (animatedDeath)
+            {
+                echo.Lifetime = Mathf.Max(DeathEchoSeconds, ActorMotion.PlayDeathOn(health, copy.gameObject));
+                echo.Animator = copy.GetComponent<Animator>();
+                if (health.TryGetComponent(out DamageFlash flash)) copy.color = echo.Color = flash.BaseColor(source);
+                if (echo.Animator != null) echo.Animator.enabled = echo.Elapsed >= 0f;
+            }
+            feedback.echoes.Add(echo);
             copy.transform.position += travel + (DamageVisualDelay > 0f ? Vector3.zero
                 : PixelOffset(direction * RecoilPixels / PixelsPerUnit));
             source.enabled = false;
@@ -253,7 +270,7 @@ public sealed partial class CombatFeedback : MonoBehaviour
             DeathEcho echo = echoes[i];
             echo.Elapsed += dt;
             echo.TravelElapsed += dt;
-            if (echo.Elapsed >= DeathEchoSeconds)
+            if (echo.Elapsed >= echo.Lifetime)
             {
                 HideAndDestroy(echo.Copy.gameObject);
                 echoes.RemoveAt(i);
@@ -265,10 +282,16 @@ public sealed partial class CombatFeedback : MonoBehaviour
                 echo.Copy.transform.position = echo.Position + PixelOffset(echo.TravelOffset * travel);
                 continue;
             }
-            float progress = echo.Elapsed / DeathEchoSeconds;
             float recoil = Mathf.Pow(1f - Mathf.Clamp01(echo.Elapsed / RecoilSeconds), 2f);
             echo.Copy.transform.position = echo.Position + PixelOffset(echo.TravelOffset * travel
                 + echo.RecoilDirection * (RecoilPixels / PixelsPerUnit * recoil));
+            if (echo.Animator != null)
+            {
+                // 사망 모션 자체가 소멸까지 그리므로 축소·페이드는 하지 않는다.
+                echo.Animator.enabled = true;
+                continue;
+            }
+            float progress = echo.Elapsed / DeathEchoSeconds;
             echo.Copy.transform.localScale = echo.Scale * Mathf.Lerp(1f, 0.35f, progress);
             Color color = echo.Elapsed < CoreGatherSeconds ? Color.white : echo.Color;
             color.a *= 1f - progress;

@@ -390,7 +390,7 @@ MonoBehaviour:
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 42
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -1436,7 +1436,8 @@ MonoBehaviour:
   edgeInsetTiles: 1
   minimumPlayerDistance: 4
   enableChessWaves: 1
-  chessMonsterSprite: {fileID: 6687599659494732175, guid: f8dccbf2331384711b8ba0dbd24d7c13, type: 3}
+  chessMonsterSprite: {fileID: -2062616160, guid: 2f54d1484e82941b08d43790761d4864, type: 3}
+  chessMonsterAnimatorController: {fileID: 9100000, guid: ec8be16b33cce443a9d6c3f6b4952fb9, type: 2}
   bishopMonsterSprite: {fileID: -1933069808, guid: 40115c6db072f4dac9a38e773eef0d88, type: 3}
   bishopMonsterAnimatorController: {fileID: 9100000, guid: d6fe023b245ad46c88b3bf3b67292d63, type: 2}
   rookMonsterSprite: {fileID: 0}
@@ -1490,6 +1491,8 @@ MonoBehaviour:
   moveSpeed: 16.8
   projectileColor: {r: 1, g: 1, b: 1, a: 1}
   sortingOrder: 15
+  minimumFlightSeconds: 0.06
+  maximumFlightSeconds: 0.25
   projectileSprite: {fileID: 7817816895817814352, guid: 14a2a48dfb4c04eeb942aa8d3bbaa4e8, type: 3}
   projectileAnimatorController: {fileID: 9100000, guid: 33e5e8ff9d21c4f668437596dd8f1be1, type: 2}
 --- !u!1 &217616797
@@ -2349,11 +2352,11 @@ MonoBehaviour:
     placeholder: P
     activationBagSize: 3
   - id: damage_boost
-    displayName: "\uB370\uBBF8\uC9C0 \uAC15\uD654"
-    description: "25% \xB7 \uC774\uBC88 \uAE30\uBCF8\uACF5\uACA9\uC758\n\uD53C\uD574\uB7C9\uC744
-      1 \uC99D\uAC00"
+    displayName: "\uBC94\uC704 \uACF5\uACA9"
+    description: "\uC801\uC911 \uC8FC\uBCC0 \uAE30\uBCF8 8\uCE78 \uD53C\uD574 1 \xB7
+      \uC9C1\uACA9 \uD53C\uD574 +1"
     icon: {fileID: 21300000, guid: 0e1cade1a08d74e0c9bac65c58257999, type: 3}
-    placeholder: DMG
+    placeholder: AOE
     activationBagSize: 4
   - id: knockback
     displayName: "\uB109\uBC31"
@@ -2749,7 +2752,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.11764706, g: 0.08627451, b: 0.13333334, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -2820,6 +2823,8 @@ MonoBehaviour:
   gridManager: {fileID: 0}
   cameraZ: -10
   mapPadding: 0.5
+  impactShakePixels: 2
+  impactShakeSeconds: 0.07
 --- !u!1 &528256273
 GameObject:
   m_ObjectHideFlags: 0
@@ -3440,7 +3445,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uB370\uBBF8\uC9C0 \uAC15\uD654"
+  m_Text: "\uBC94\uC704 \uACF5\uACA9"
 --- !u!1 &608234026
 GameObject:
   m_ObjectHideFlags: 0
@@ -6841,8 +6846,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Move
   moveSpeed: 2.67
+  movementArtTravelSeconds: 0.4
   maxHealth: 10
   attackDamage: 1
+  attackRecoverySeconds: 0.08
   blockedMoveSound: {fileID: 0}
   blockedMoveSoundVolume: 0.45
   actionIndicator: {fileID: 1479494360}
@@ -6897,7 +6904,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 1
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 6254356484370202729, guid: ad66df2e418824f4f8fdd34f3d36e18e, type: 3}
+  m_Sprite: {fileID: -1147218300, guid: 2433d5cabf14c4c0a94311c3e020b818, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -7531,8 +7538,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.15
-  m_Text: "25% \xB7 \uC774\uBC88 \uAE30\uBCF8\uACF5\uACA9\uC758\n\uD53C\uD574\uB7C9\uC744
-    1 \uC99D\uAC00"
+  m_Text: "\uC77C\uBC18 \uACF5\uACA9 \uC801\uC911 3\uD68C\uB85C \uC900\uBE44 \xB7
+    \uC218\uB3D9 \uC0AC\uC6A9\n\uC801\uC911 \uC8FC\uBCC0 8\uCE78 \uACF5\uACA9 \xB7
+    \uC9C1\uACA9 \uD53C\uD574 +1"
 --- !u!1 &1594972273
 GameObject:
   m_ObjectHideFlags: 0
@@ -8422,7 +8430,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: DMG
+  m_Text: AOE
 --- !u!1 &1833948978
 GameObject:
   m_ObjectHideFlags: 0

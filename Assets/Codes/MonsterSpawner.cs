@@ -26,6 +26,8 @@ public sealed class MonsterSpawner : MonoBehaviour
     [Header("체스 몬스터 웨이브")]
     [SerializeField] private bool enableChessWaves;
     [SerializeField] private Sprite chessMonsterSprite;
+    [Tooltip("기본 체스 몬스터 Sprite를 쓰는 몬스터의 대기·이동·공격·피격·사망 모션입니다.")]
+    [SerializeField] private RuntimeAnimatorController chessMonsterAnimatorController;
     [Tooltip("비숍 전용 외형입니다. 비워 두면 기존 체스 몬스터 Sprite를 사용합니다.")]
     [SerializeField] private Sprite bishopMonsterSprite;
     [Tooltip("비숍 전용 반복 애니메이션입니다.")]
@@ -626,16 +628,22 @@ public sealed class MonsterSpawner : MonoBehaviour
         renderer.sprite = sprite;
         renderer.color = usesBishopVisual ? Color.white : color;
         renderer.sortingOrder = 10;
+        RuntimeAnimatorController motion = null;
         if (usesBishopVisual)
         {
             FitSpriteInsideTile(actor.transform, sprite);
-            if (bishopMonsterAnimatorController != null)
-            {
-                Animator animator = actor.AddComponent<Animator>();
-                animator.runtimeAnimatorController = bishopMonsterAnimatorController;
-                animator.applyRootMotion = false;
-                animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
-            }
+            motion = bishopMonsterAnimatorController;
+        }
+        else if (sprite == chessMonsterSprite)
+        {
+            motion = chessMonsterAnimatorController;
+        }
+        if (motion != null)
+        {
+            Animator animator = actor.AddComponent<Animator>();
+            animator.runtimeAnimatorController = motion;
+            animator.applyRootMotion = false;
+            animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
         }
         MonsterMovement monster = actor.AddComponent<MonsterMovement>();
         ChessMonsterBehaviour behaviour = actor.AddComponent<ChessMonsterBehaviour>();

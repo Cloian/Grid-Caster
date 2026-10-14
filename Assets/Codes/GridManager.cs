@@ -6,6 +6,7 @@ using UnityEngine.Tilemaps;
 public sealed class GridManager : MonoBehaviour
 {
     private static readonly Color DarkFloorColor = new Color(0.8f, 0.85f, 0.9f);
+    private const int GroundSortingOrder = -10;
     [Header("맵 설정")]
     [SerializeField] private Tilemap groundTilemap;
     [SerializeField, Min(1)] private int boundaryThickness = 1;
@@ -45,7 +46,12 @@ public sealed class GridManager : MonoBehaviour
     {
         // 셀별 색을 표시하도록 렌더링하며 원본 에셋/외벽/셀 Transform은 보존한다.
         TilemapRenderer renderer = groundTilemap.GetComponent<TilemapRenderer>();
-        if (renderer != null) renderer.mode = TilemapRenderer.Mode.Individual;
+        if (renderer != null)
+        {
+            renderer.mode = TilemapRenderer.Mode.Individual;
+            // 캐릭터 그림자(캐릭터 순서 - 1)가 항상 바닥 위에 그려지도록 바닥을 충분히 아래로 둔다.
+            renderer.sortingOrder = Mathf.Min(renderer.sortingOrder, GroundSortingOrder);
+        }
         foreach (Vector3Int cell in groundTilemap.cellBounds.allPositionsWithin)
         {
             if (!IsWalkableCell(cell)) continue;

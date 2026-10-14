@@ -57,6 +57,7 @@ public sealed class CharacterHealth : MonoBehaviour
 
         currentHealth = Mathf.Max(0, currentHealth - damage);
         if (CombatFeedback.DamageVisualDelay <= 0f) damageFlash?.Play();
+        ActorMotion.Trigger(this, IsDead ? ActorMotion.Die : ActorMotion.Hit);
         CombatFeedback.PlayHit(this, incomingDirection, IsDead);
         Debug.Log($"{name}: 피해 {damage}, 체력 {currentHealth}/{maxHealth}", this);
 
