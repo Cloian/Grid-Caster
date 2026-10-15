@@ -798,7 +798,9 @@ public sealed class RunProgressionUiController : MonoBehaviour
     }
 
     private const float SideHudWidth = 332f;
-    private const float SideHudHeight = 336f;
+    // 상태 문구는 두 줄 설명이 332폭에서 네 줄로 접혀도(18pt 기준 93px) 잘리지 않는 높이로 둔다.
+    private const float SideStatusHeight = 96f;
+    private const float SideHudHeight = 376f;
     private const float SideHudPadding = 8f;
     private readonly Dictionary<RectTransform, Vector3> actionHudHome = new Dictionary<RectTransform, Vector3>();
     private Vector2 actionStatusHomeSize;
@@ -833,14 +835,14 @@ public sealed class RunProgressionUiController : MonoBehaviour
             if (backing != null) backing.sizeDelta = actionBackingHomeSize;
             return;
         }
-        if (status != null) status.sizeDelta = new Vector2(SideHudWidth, 56f);
-        PlaceCenter(status, new Vector2(0f, -28f));
-        PlaceCenter(Find("HealthHud"), new Vector2(0f, -96f));
-        PlaceCenter(Find("UltimateFrame"), new Vector2(-52f, -184f));
-        PlaceCenter(Find("UltimateReadyGlow"), new Vector2(-52f, -184f));
-        PlaceCenter(Find("TraitHud"), new Vector2(52f, -184f));
-        PlaceCenter(Find("AttackActionFrame"), new Vector2(-52f, -288f));
-        PlaceCenter(Find("MoveActionFrame"), new Vector2(52f, -288f));
+        if (status != null) status.sizeDelta = new Vector2(SideHudWidth, SideStatusHeight);
+        PlaceCenter(status, new Vector2(0f, -SideStatusHeight * 0.5f));
+        PlaceCenter(Find("HealthHud"), new Vector2(0f, -136f));
+        PlaceCenter(Find("UltimateFrame"), new Vector2(-52f, -224f));
+        PlaceCenter(Find("UltimateReadyGlow"), new Vector2(-52f, -224f));
+        PlaceCenter(Find("TraitHud"), new Vector2(52f, -224f));
+        PlaceCenter(Find("AttackActionFrame"), new Vector2(-52f, -328f));
+        PlaceCenter(Find("MoveActionFrame"), new Vector2(52f, -328f));
         if (backing != null)
         {
             backing.sizeDelta = new Vector2(SideHudWidth + SideHudPadding * 2f, SideHudHeight + SideHudPadding * 2f);
