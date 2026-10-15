@@ -1,0 +1,71 @@
+{
+  "scope": "Design-document arithmetic, coordinate, connectivity and local-link checks only. No Unity runtime, balance, playtime or human playtest validation.",
+  "status": "pass",
+  "checks": [
+    {
+      "name": "board_count",
+      "status": "pass",
+      "detail": "169 interior cells minus 4 pillars; 5 relay cells are walkable"
+    },
+    {
+      "name": "board_connectivity",
+      "status": "pass",
+      "detail": "All 165 walkable cells connected even with cardinal-only steps"
+    },
+    {
+      "name": "relays_and_spawn",
+      "status": "pass",
+      "detail": "5 walkable relays; player spawn walkable"
+    },
+    {
+      "name": "boss_footprints",
+      "status": "pass",
+      "detail": "All 16 boss 3x3 footprints fit and avoid pillars"
+    },
+    {
+      "name": "boss_no_permanent_target_cell",
+      "status": "pass",
+      "detail": "No cell is occupied by the boss at every route position"
+    },
+    {
+      "name": "boss_steps",
+      "status": "pass",
+      "detail": "All 16 center moves including wrap are cardinal distance 1"
+    },
+    {
+      "name": "ascii_size",
+      "status": "pass",
+      "detail": "15x15 schematic includes 1-cell boundary"
+    },
+    {
+      "name": "ascii_coordinates",
+      "status": "pass",
+      "detail": "Text map matches diagram coordinates exactly"
+    },
+    {
+      "name": "wave_rows",
+      "status": "pass",
+      "detail": "15 ordinary waves with matching row sums"
+    },
+    {
+      "name": "enemy_total",
+      "status": "pass",
+      "detail": "101 ordinary enemies total; maximum 10 per wave"
+    },
+    {
+      "name": "reward_budget",
+      "status": "pass",
+      "detail": "Start 1 + general 4 + altar conditional 3 = 8 choices; 3 altar opportunities; boss gives none"
+    },
+    {
+      "name": "boss_cycle",
+      "status": "pass",
+      "detail": "Documented full cycle contains 9 enemy actions, including 2 moves"
+    },
+    {
+      "name": "local_document_links",
+      "status": "pass",
+      "detail": "12 local image/document references resolved"
+    }
+  ]
+}

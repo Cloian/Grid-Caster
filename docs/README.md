@@ -35,6 +35,7 @@ Grid-Caster 기획·결정·검증 문서를 **기능별**로 모았습니다. �
 | [나이트 착지 후 반격 기회](design/knight-counter-opportunity-2026-10-04.md) | 반격 창 규칙 |
 | [넉백 충돌과 충격 확산](design/knockback-collision-2026-10-05.md) | 충돌 피해 규칙 |
 | [공격 기회 확장 실험](design/attack-opportunities-2026-10-01.md) | 반사·분열 가설 (미구현 실험) |
+| [2스테이지: 침수된 뇌전 수로](design/stage-two-flooded-conduits-proposal-2026-10-15.md) | 신규 검토안. 타일·전격/서리 빌드·적 5종·이동 보스·16웨이브·보상·제작 순서 |
 
 ## 타격 피드백
 
