@@ -32,8 +32,12 @@ public sealed class MonsterSpawner : MonoBehaviour
     [SerializeField] private Sprite bishopMonsterSprite;
     [Tooltip("비숍 전용 반복 애니메이션입니다.")]
     [SerializeField] private RuntimeAnimatorController bishopMonsterAnimatorController;
-    [Tooltip("비워 두면 기존 체스 몬스터 스프라이트를 임시로 사용합니다.")]
+    [Tooltip("나이트(기갑 병마) 전용 외형입니다. 비워 두면 기존 체스 몬스터 Sprite를 사용합니다.")]
+    [SerializeField] private Sprite knightMonsterSprite;
+    [SerializeField] private RuntimeAnimatorController knightMonsterAnimatorController;
+    [Tooltip("룩(쇠뇌를 문 성벽 괴물) 전용 외형입니다. 비워 두면 기존 체스 몬스터 Sprite를 사용합니다.")]
     [SerializeField] private Sprite rookMonsterSprite;
+    [SerializeField] private RuntimeAnimatorController rookMonsterAnimatorController;
     [SerializeField, Min(1)] private int chessMonsterHealth = 3;
     [Tooltip("일반 웨이브의 나이트는 최소 2턴 간격으로 도약합니다. 독립 패턴 테스트는 별도 값을 사용합니다.")]
     [SerializeField, Min(2)] private int knightActionInterval = 2;
@@ -613,12 +617,10 @@ public sealed class MonsterSpawner : MonoBehaviour
             || TryGetMonsterAtCell(cell, out _))
             throw new InvalidOperationException($"테스트 스폰 타일이 막혀 있습니다: {cell}");
 
-        bool usesBishopVisual = pattern == MonsterMovementPattern.Bishop
-            && bishopMonsterSprite != null;
-        if (usesBishopVisual)
-        {
-            sprite = bishopMonsterSprite;
-        }
+        // 전용 외형(64px 시트)이 있는 패턴은 색을 입히지 않고 한 칸 크기로 맞춘다.
+        bool usesOwnVisual = TryGetOwnVisual(pattern, out Sprite ownSprite, out RuntimeAnimatorController ownMotion);
+        if (usesOwnVisual)
+            sprite = ownSprite;
 
         // 새 몬스터는 프리팹 없이 독립 Sprite와 행동 컴포넌트로 구성한다.
         GameObject actor = new GameObject(pattern.ToString());
@@ -626,13 +628,13 @@ public sealed class MonsterSpawner : MonoBehaviour
         actor.transform.position = gridManager.GetCellCenterWorld(cell);
         SpriteRenderer renderer = actor.AddComponent<SpriteRenderer>();
         renderer.sprite = sprite;
-        renderer.color = usesBishopVisual ? Color.white : color;
+        renderer.color = usesOwnVisual ? Color.white : color;
         renderer.sortingOrder = 10;
         RuntimeAnimatorController motion = null;
-        if (usesBishopVisual)
+        if (usesOwnVisual)
         {
             FitSpriteInsideTile(actor.transform, sprite);
-            motion = bishopMonsterAnimatorController;
+            motion = ownMotion;
         }
         else if (sprite == chessMonsterSprite)
         {
@@ -673,6 +675,19 @@ public sealed class MonsterSpawner : MonoBehaviour
         blockedMonsterCells.Remove(defeatedCell);
     }
 
+    private bool TryGetOwnVisual(MonsterMovementPattern pattern, out Sprite sprite,
+        out RuntimeAnimatorController motion)
+    {
+        (sprite, motion) = pattern switch
+        {
+            MonsterMovementPattern.Bishop => (bishopMonsterSprite, bishopMonsterAnimatorController),
+            MonsterMovementPattern.Knight => (knightMonsterSprite, knightMonsterAnimatorController),
+            MonsterMovementPattern.Rook => (rookMonsterSprite, rookMonsterAnimatorController),
+            _ => ((Sprite)null, (RuntimeAnimatorController)null)
+        };
+        return sprite != null;
+    }
+
     private static void FitSpriteInsideTile(Transform visualTransform, Sprite sprite)
     {
         if (visualTransform == null || sprite == null)
@@ -683,7 +698,10 @@ public sealed class MonsterSpawner : MonoBehaviour
         if (largestDimension <= MaximumTileSpan)
             return;
 
-        float scale = MaximumTileSpan / largestDimension;
+        // 64px 프레임(2칸 크기)은 정확히 1/2로 줄여 타일과 같은 화면 픽셀 격자에 맞춘다.
+        // 가장자리 1px 여백이 있어 그림은 한 칸 안에 들어간다.
+        int divisor = Mathf.CeilToInt(largestDimension - 0.001f);
+        float scale = divisor >= 2 ? 1f / divisor : MaximumTileSpan / largestDimension;
         visualTransform.localScale = new Vector3(scale, scale, 1f);
     }
 
@@ -826,12 +844,8 @@ public sealed class MonsterSpawner : MonoBehaviour
                 ? TryGetRookWallSpawnCell(out chessCell)
                 : TryGetSpawnCell(out chessCell);
             if (!foundCell) return false;
-            Sprite monsterSprite = movementPattern == MonsterMovementPattern.Rook
-                && rookMonsterSprite != null
-                ? rookMonsterSprite
-                : chessMonsterSprite;
             MonsterMovement chessMonster = SpawnPlaytestMonster(movementPattern, chessCell,
-                monsterSprite, ChessWaveDisplay.ColorFor(movementPattern), chessMonsterHealth,
+                chessMonsterSprite, ChessWaveDisplay.ColorFor(movementPattern), chessMonsterHealth,
                 ++spawnSerial, Mathf.Max(2, knightActionInterval), bishopMoveDistance, bishopOrbitDistance);
             return true;
         }

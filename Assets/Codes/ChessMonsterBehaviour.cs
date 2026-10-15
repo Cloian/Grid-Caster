@@ -41,9 +41,7 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
     private bool rookRecovering;
     private int rookTargetColumn;
     private float rookShotFlashUntil;
-    private bool showCross;
     private bool knightCounterOpen;
-    private Vector3Int lastCrossCenter;
 
     public int PatternExecutions { get; private set; }
     public int BishopMoveDistance => bishopMoveDistance;
@@ -159,7 +157,6 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
     private void TakeKnightTurn(Vector3Int playerCell, Func<Vector3Int, bool> blocked)
     {
         CloseKnightCounterWindow();
-        showCross = false;
         if (actionIndex % knightInterval != 0)
         {
             monster.FinishTurn();
@@ -170,10 +167,10 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
         // 착지 연출이 끝난 뒤 십자 4칸에만 한 번 피해를 준다. 중심/대각선에는 피해가 없다.
         if (monster.TryBeginMove(origin, destination, () =>
         {
-            showCross = true;
-            lastCrossCenter = destination;
             GameAudio.Play(CombatSound.KnightLand);
+            // 착지가 곧 앞발 내려찍기다: 공격 모션 첫 프레임과 십자 균열·먼지·땅 흔들림이 같은 순간에 나온다.
             ActorMotion.Trigger(monster, ActorMotion.Attack);
+            KnightQuakeEffect.PlayCross(grid, destination);
             if (player.CurrentHealth > 0 && Distance(destination, player.GridPosition) == 1)
                 player.TakeDamage(1);
             // 피격 여부와 무관하게 도약을 끝낸 나이트에 다음 행동의 반격 기회를 연다.
@@ -303,48 +300,30 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
         bool showRookLane = monster != null
             && monster.MovementPattern == MonsterMovementPattern.Rook
             && (rookCharged || Time.unscaledTime < rookShotFlashUntil);
-        if ((!showCross && !showRookLane) || camera == null || grid == null) return;
+        if (!showRookLane || camera == null || grid == null) return;
         Rect viewport = camera.pixelRect;
         GUI.BeginGroup(new Rect(viewport.xMin, Screen.height - viewport.yMax,
             viewport.width, viewport.height));
-        if (showRookLane)
+        bool firing = !rookCharged;
+        Color previous = GUI.color;
+        GUI.color = firing
+            ? new Color(1f, 0.8f, 0.25f, 0.78f)
+            : new Color(1f, 0.12f, 0.12f, 0.28f);
+        foreach (Vector3Int cell in grid.GroundTilemap.cellBounds.allPositionsWithin)
         {
-            bool firing = !rookCharged;
-            Color previous = GUI.color;
-            GUI.color = firing
-                ? new Color(1f, 0.8f, 0.25f, 0.78f)
-                : new Color(1f, 0.12f, 0.12f, 0.28f);
-            foreach (Vector3Int cell in grid.GroundTilemap.cellBounds.allPositionsWithin)
-            {
-                if (cell.x != rookTargetColumn || !grid.IsWalkableCell(cell)) continue;
-                Vector3 center = grid.GetCellCenterWorld(cell);
-                Vector3 minimum = camera.WorldToScreenPoint(center + new Vector3(-0.46f, -0.46f));
-                Vector3 maximum = camera.WorldToScreenPoint(center + new Vector3(0.46f, 0.46f));
-                if (center.z < camera.transform.position.z) continue;
-                Rect cellRect = new Rect(
-                    minimum.x - viewport.xMin,
-                    viewport.yMax - maximum.y,
-                    maximum.x - minimum.x,
-                    maximum.y - minimum.y);
-                GUI.DrawTexture(cellRect, Texture2D.whiteTexture);
-            }
-            GUI.color = previous;
+            if (cell.x != rookTargetColumn || !grid.IsWalkableCell(cell)) continue;
+            Vector3 center = grid.GetCellCenterWorld(cell);
+            Vector3 minimum = camera.WorldToScreenPoint(center + new Vector3(-0.46f, -0.46f));
+            Vector3 maximum = camera.WorldToScreenPoint(center + new Vector3(0.46f, 0.46f));
+            if (center.z < camera.transform.position.z) continue;
+            Rect cellRect = new Rect(
+                minimum.x - viewport.xMin,
+                viewport.yMax - maximum.y,
+                maximum.x - minimum.x,
+                maximum.y - minimum.y);
+            GUI.DrawTexture(cellRect, Texture2D.whiteTexture);
         }
-
-        if (showCross && fire != null)
-        {
-            GUIStyle style = new GUIStyle(GUI.skin.label)
-                { font = fire.LabelFont, fontSize = 16, alignment = TextAnchor.MiddleCenter };
-            style.normal.textColor = Color.cyan;
-            foreach (Vector3Int direction in Cardinals)
-            {
-                Vector3Int cell = lastCrossCenter + direction;
-                if (!grid.IsWalkableCell(cell)) continue;
-                Vector3 point = camera.WorldToScreenPoint(grid.GetCellCenterWorld(cell));
-                if (point.z <= 0) continue;
-                GUI.Label(new Rect(point.x - viewport.xMin - 30, viewport.yMax - point.y - 24, 60, 24), "십자", style);
-            }
-        }
+        GUI.color = previous;
         GUI.EndGroup();
     }
 

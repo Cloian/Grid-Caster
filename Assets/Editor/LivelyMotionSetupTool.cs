@@ -24,7 +24,12 @@ public static class LivelyMotionSetupTool
     private const string BatControllerPath = "Assets/Monsters/Controllers/Bat.controller";
     private const string SnakeControllerPath = "Assets/Monsters/Controllers/Snake.controller";
     private const string ArmadilloControllerPath = "Assets/Monsters/Controllers/ArmadilloBishop.controller";
+    private const string KnightControllerPath = "Assets/Monsters/Controllers/Knight.controller";
+    private const string RookControllerPath = "Assets/Monsters/Controllers/Rook.controller";
+    private const string PawnGuardControllerPath = "Assets/Monsters/Controllers/PawnGuard.controller";
     private const string FireTrailSheet = "Assets/Resources/Effects/fire_trail.png";
+    private static readonly string[] QuakeSheets =
+        { "Assets/Resources/Effects/knight_quake_crack.png", "Assets/Resources/Effects/knight_quake_dust.png" };
 
     private sealed class Motion
     {
@@ -94,6 +99,34 @@ public static class LivelyMotionSetupTool
             Size = 64, PpuOverride = 32f, DurationsMs = new[] { 80, 90, 90, 110, 140, 100, 100, 160 } },
     };
 
+    // 체스 적(퀸 진영): 아르마딜로와 같은 64px 프레임 · 32 PPU. 스포너가 한 칸에 1/2 배율로 맞춘다.
+    private static Motion[] ChessMotions(string folder, string prefix, int[] idle, int[] move, int[] attack, int[] hit, int[] death)
+    {
+        string Sheet(string clip) => $"Assets/Monsters/{folder}/Lively/{prefix}_{clip}.png";
+        string Clip(string clip) => $"Assets/Monsters/Animations/{folder}/{folder}{clip}.anim";
+        return new[]
+        {
+            new Motion { Sheet = Sheet("idle"), Clip = Clip("Idle"), Size = 64, PpuOverride = 32f, Loop = true, DurationsMs = idle },
+            new Motion { Sheet = Sheet("move"), Clip = Clip("Move"), Size = 64, PpuOverride = 32f, Loop = true, DurationsMs = move },
+            new Motion { Sheet = Sheet("attack"), Clip = Clip("Attack"), Size = 64, PpuOverride = 32f, DurationsMs = attack },
+            new Motion { Sheet = Sheet("hit"), Clip = Clip("Hit"), Size = 64, PpuOverride = 32f, DurationsMs = hit },
+            new Motion { Sheet = Sheet("death"), Clip = Clip("Death"), Size = 64, PpuOverride = 32f, DurationsMs = death },
+        };
+    }
+
+    // 나이트: 이동 5프레임 합 340ms = MonsterMovement.KnightJumpSeconds. 공격 첫 프레임이 착지 내려찍기다.
+    private static readonly Motion[] Knight = ChessMotions("Knight", "knight",
+        new[] { 220, 160, 160, 220 }, new[] { 40, 60, 80, 80, 80 }, new[] { 90, 110, 110, 140 },
+        new[] { 50, 80, 110, 140 }, new[] { 80, 100, 110, 140, 160, 100, 100, 160 });
+    // 룩: 장전은 앞선 턴에 끝났으므로 시위 당김을 짧게 두고 발사 프레임(4번째)을 사선 표시(0.16초) 안에 맞춘다.
+    private static readonly Motion[] Rook = ChessMotions("Rook", "rook",
+        new[] { 260, 140, 160, 220 }, new[] { 90, 90, 90, 90 }, new[] { 30, 40, 40, 140, 110, 120 },
+        new[] { 50, 80, 110, 140 }, new[] { 80, 120, 120, 140, 160, 100, 100, 160 });
+    // 근위병: 현재 게임 패턴은 없고 퀸 보스 전투용으로 미리 준비한다. 밀치기는 4번째 프레임(0.3초).
+    private static readonly Motion[] PawnGuard = ChessMotions("PawnGuard", "pawn_guard",
+        new[] { 240, 160, 160, 240 }, new[] { 90, 90, 110, 90, 90, 110 }, new[] { 70, 80, 150, 80, 110, 100, 90, 120 },
+        new[] { 50, 80, 110, 140 }, new[] { 80, 100, 110, 140, 160, 100, 100, 160 });
+
     [MenuItem("Tools/Art/Apply Lively Motions")]
     public static void Apply()
     {
@@ -107,7 +140,14 @@ public static class LivelyMotionSetupTool
         AnimationClip[] batClips = Bat.Select(Build).ToArray();
         AnimationClip[] snakeClips = Snake.Select(Build).ToArray();
         AnimationClip[] armadilloClips = Armadillo.Select(Build).ToArray();
+        foreach (string folder in new[] { "Knight", "Rook", "PawnGuard" })
+            EnsureFolder("Assets/Monsters/Animations", folder);
+        AnimationClip[] knightClips = Knight.Select(Build).ToArray();
+        AnimationClip[] rookClips = Rook.Select(Build).ToArray();
+        AnimationClip[] pawnClips = PawnGuard.Select(Build).ToArray();
         ConfigureSheet(new Motion { Sheet = FireTrailSheet, Size = 32, PpuOverride = 32f });
+        foreach (string sheet in QuakeSheets)
+            ConfigureSheet(new Motion { Sheet = sheet, Size = 32, PpuOverride = 32f });
 
         AnimatorController player = AssetDatabase.LoadAssetAtPath<AnimatorController>(PlayerControllerPath);
         if (player == null)
@@ -119,16 +159,37 @@ public static class LivelyMotionSetupTool
         ConfigureController(snake, snakeClips, "Idle", "Move");
         AnimatorController armadillo = LoadOrCreate(ArmadilloControllerPath);
         ConfigureController(armadillo, armadilloClips, "Idle", "Move");
+        AnimatorController knight = LoadOrCreate(KnightControllerPath);
+        ConfigureController(knight, knightClips, "Idle", "Move");
+        AnimatorController rook = LoadOrCreate(RookControllerPath);
+        ConfigureController(rook, rookClips, "Idle", "Move");
+        AnimatorController pawnGuard = LoadOrCreate(PawnGuardControllerPath);
+        ConfigureController(pawnGuard, pawnClips, "Idle", "Move");
+        var chess = new ChessVisuals
+        {
+            KnightIdle = LoadFrames(Knight[0])[0], Knight = knight,
+            RookIdle = LoadFrames(Rook[0])[0], Rook = rook
+        };
 
         Sprite batIdle = LoadFrames(Bat[0])[0];
         Sprite playerIdle = LoadFrames(Player[0])[0];
-        ApplyToScene(SampleScenePath, batIdle, bat, playerIdle);
-        ApplyToScene(ChessScenePath, batIdle, bat, playerIdle);
+        ApplyToScene(SampleScenePath, batIdle, bat, playerIdle, chess);
+        ApplyToScene(ChessScenePath, batIdle, bat, playerIdle, chess);
         // 일반 웨이브(4방향·8방향)는 기존 Bat/Snake 프리팹으로 생성되므로 외형만 교체한다.
         ApplyToPrefab(BatPrefabPath, batIdle, bat);
         ApplyToPrefab(SnakePrefabPath, LoadFrames(Snake[0])[0], snake);
         AssetDatabase.SaveAssets();
-        Validate(playerClips.Concat(batClips).Concat(snakeClips).Concat(armadilloClips).ToArray(), player, bat, snake, armadillo);
+        Validate(playerClips.Concat(batClips).Concat(snakeClips).Concat(armadilloClips)
+            .Concat(knightClips).Concat(rookClips).Concat(pawnClips).ToArray(),
+            player, bat, snake, armadillo, knight, rook, pawnGuard);
+    }
+
+    private sealed class ChessVisuals
+    {
+        public Sprite KnightIdle;
+        public RuntimeAnimatorController Knight;
+        public Sprite RookIdle;
+        public RuntimeAnimatorController Rook;
     }
 
     // Temp/LivelyMotionSetup.pending 이 있으면 다음 스크립트 로드 때 한 번만 자동 적용한다.
@@ -328,7 +389,8 @@ public static class LivelyMotionSetupTool
         if (controller.parameters.All(p => p.name != name)) controller.AddParameter(name, type);
     }
 
-    private static void ApplyToScene(string scenePath, Sprite batIdle, RuntimeAnimatorController bat, Sprite playerIdle)
+    private static void ApplyToScene(string scenePath, Sprite batIdle, RuntimeAnimatorController bat, Sprite playerIdle,
+        ChessVisuals chess)
     {
         Scene previous = SceneManager.GetActiveScene();
         Scene scene = SceneManager.GetSceneByPath(scenePath);
@@ -344,6 +406,10 @@ public static class LivelyMotionSetupTool
                 var serialized = new SerializedObject(spawner);
                 serialized.FindProperty("chessMonsterSprite").objectReferenceValue = batIdle;
                 serialized.FindProperty("chessMonsterAnimatorController").objectReferenceValue = bat;
+                serialized.FindProperty("knightMonsterSprite").objectReferenceValue = chess.KnightIdle;
+                serialized.FindProperty("knightMonsterAnimatorController").objectReferenceValue = chess.Knight;
+                serialized.FindProperty("rookMonsterSprite").objectReferenceValue = chess.RookIdle;
+                serialized.FindProperty("rookMonsterAnimatorController").objectReferenceValue = chess.Rook;
                 serialized.ApplyModifiedPropertiesWithoutUndo();
             }
             foreach (ChessPlaytest playtest in roots.SelectMany(r => r.GetComponentsInChildren<ChessPlaytest>(true)))
@@ -400,7 +466,8 @@ public static class LivelyMotionSetupTool
 
     private static void Validate(AnimationClip[] clips, params AnimatorController[] controllers)
     {
-        foreach (Motion motion in Player.Concat(Bat).Concat(Snake).Concat(Armadillo))
+        foreach (Motion motion in Player.Concat(Bat).Concat(Snake).Concat(Armadillo)
+            .Concat(Knight).Concat(Rook).Concat(PawnGuard))
         {
             TextureImporter importer = AssetImporter.GetAtPath(motion.Sheet) as TextureImporter;
             Sprite[] frames = LoadFrames(motion);
