@@ -5,6 +5,8 @@ using UnityEngine;
 public sealed class CharacterHealth : MonoBehaviour
 {
     public event Action<CharacterHealth> Died;
+    // 모든 캐릭터의 실제 피해(피해 숫자 표시용). 두 번째 값은 실제로 깎인 체력이다(초과 피해 제외).
+    public static event Action<CharacterHealth, int> AnyDamaged;
 
     [SerializeField] private int maxHealth = 1;
     [SerializeField] private int currentHealth = 1;
@@ -55,10 +57,12 @@ public sealed class CharacterHealth : MonoBehaviour
         if (IsDead || damage <= 0)
             return;
 
+        int before = currentHealth;
         currentHealth = Mathf.Max(0, currentHealth - damage);
         if (CombatFeedback.DamageVisualDelay <= 0f) damageFlash?.Play();
         ActorMotion.Trigger(this, IsDead ? ActorMotion.Die : ActorMotion.Hit);
         CombatFeedback.PlayHit(this, incomingDirection, IsDead);
+        AnyDamaged?.Invoke(this, before - currentHealth);
         Debug.Log($"{name}: 피해 {damage}, 체력 {currentHealth}/{maxHealth}", this);
 
         if (IsDead)

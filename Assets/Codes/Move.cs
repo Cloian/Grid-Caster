@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -100,6 +101,9 @@ public class Move : MonoBehaviour
     private Vector3Int activeAttackOriginCell;
     private Vector3Int activeAttackDirection;
     private int activeAttackDamage;
+    private readonly Dictionary<MonsterMovement, int> attackPrediction = new Dictionary<MonsterMovement, int>();
+    // 조준 중인 공격이 각 적에게 줄 예상 피해(직격·관통·연속 시전·강화 폭발 합계). 조준하지 않으면 비어 있다.
+    public IReadOnlyDictionary<MonsterMovement, int> AttackPrediction => attackPrediction;
     private int activeAttackPenetrations;
     private int remainingAttackCasts;
     private bool activeAttackKnockback;
@@ -313,6 +317,7 @@ public class Move : MonoBehaviour
         emphasizedChoices.Clear();
         actionIndicator?.ClearChoices();
         hoveredAttackCell = new Vector3Int(int.MinValue, int.MinValue, 0);
+        attackPrediction.Clear();
         SelectionModeChanged?.Invoke(selectionMode);
     }
 
@@ -466,10 +471,84 @@ public class Move : MonoBehaviour
             conditionalStartIndex
         );
         actionIndicator.ShowAttackArea(attackAreaWorldPositions);
+        PredictAttack(direction, previewEffect);
+    }
+
+    // 실제 공격 규칙을 상태 변경 없이 따라간다. 죽을 적은 다음 시전·관통에서 제외한다.
+    // 넉백 충돌·유물 연쇄처럼 맞은 뒤 위치에 따라 달라지는 피해는 포함하지 않는다.
+    private void PredictAttack(Vector3Int direction, PlayerAttackTraitRoll roll)
+    {
+        attackPrediction.Clear();
+        if (monsterSpawner == null || gridManager == null || direction == Vector3Int.zero) return;
+        var health = new Dictionary<MonsterMovement, int>();
+        int Hp(MonsterMovement monster)
+        {
+            if (!health.TryGetValue(monster, out int value))
+                health[monster] = value = monster.GetComponent<CharacterHealth>().CurrentHealth;
+            return value;
+        }
+        void Hit(MonsterMovement monster, int damage)
+        {
+            if (damage <= 0 || Hp(monster) <= 0) return;
+            health[monster] = Hp(monster) - damage;
+            attackPrediction.TryGetValue(monster, out int total);
+            attackPrediction[monster] = total + damage;
+        }
+
+        int casts = progressionSystem != null ? progressionSystem.AttackCastCount(roll) : roll.DoubleCast ? 2 : 1;
+        int penetrations = progressionSystem != null ? progressionSystem.ModifyPenetrations(roll) : roll.Pierce ? 1 : 0;
+        Vector3Int step = new Vector3Int(Mathf.Clamp(direction.x, -1, 1), Mathf.Clamp(direction.y, -1, 1), 0);
+        bool firstHit = true;
+        bool firstCastKilled = false;
+        for (int cast = 0; cast < casts; cast++)
+        {
+            Vector3Int origin = GridPosition;
+            MonsterMovement previous = null;
+            for (int hitIndex = 0; hitIndex <= penetrations; hitIndex++)
+            {
+                MonsterMovement target = null;
+                Vector3Int cell = origin;
+                while (gridManager.IsInsideMapCell(cell + step))
+                {
+                    cell += step;
+                    if (monsterSpawner.TryGetMonsterAtCell(cell, out MonsterMovement candidate)
+                        && candidate != previous && !candidate.IsDead && Hp(candidate) > 0)
+                    { target = candidate; break; }
+                    if (!gridManager.IsWalkableCell(cell)) break;
+                }
+                if (target == null) break;
+
+                int damage = progressionSystem != null
+                    ? progressionSystem.PreviewAttackDamage(attackDamage, roll, cast, hitIndex, firstHit, firstCastKilled)
+                    : attackDamage + (roll.DamageBoost ? 1 : 0);
+                bool counter = cast == 0 && hitIndex == 0
+                    && Mathf.Max(Mathf.Abs(cell.x - GridPosition.x), Mathf.Abs(cell.y - GridPosition.y)) == 1
+                    && target.TryGetComponent(out ChessMonsterBehaviour pattern) && pattern.IsKnightCounterVulnerable;
+                Hit(target, damage + (counter ? 1 : 0));
+                bool killed = Hp(target) <= 0;
+                if (cast == 0 && killed) firstCastKilled = true;
+
+                // 특성 강화 공격은 첫 직격 위치에서 한 번 폭발한다(RunProgressionSystem.NotifyAttackHit와 같은 범위).
+                if (firstHit && roll.DamageBoost && progressionSystem != null)
+                {
+                    int splash = progressionSystem.DamageBoostSplashDamageFor(killed);
+                    int level = progressionSystem.DamageBoostAreaLevel;
+                    foreach (MonsterMovement other in monsterSpawner.ActiveMonsters)
+                        if (other != null && other != target && !other.IsDead
+                            && monsterSpawner.OccupiedCellsOf(other).Any(c => DamageBoostArea.Contains(c - cell, level)))
+                            Hit(other, splash);
+                }
+                firstHit = false;
+                previous = target;
+                origin = cell;
+                if (!gridManager.IsWalkableCell(cell)) break;
+            }
+        }
     }
 
     private void ClearAttackPathPreview()
     {
+        attackPrediction.Clear();
         actionIndicator?.ClearAttackPath();
         hoveredAttackCell = new Vector3Int(int.MinValue, int.MinValue, 0);
     }

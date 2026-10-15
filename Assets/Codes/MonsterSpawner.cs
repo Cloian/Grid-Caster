@@ -170,6 +170,8 @@ public sealed class MonsterSpawner : MonoBehaviour
             ConfigureFire(bishopFireTurns, bishopFireDamage);
         }
         playerMovement.MoveCompleted += BeginMonsterTurn;
+        // 모든 전투 씬에서 몬스터 체력 칸·예상 피해·행동 아이콘·피해 숫자를 보여 준다.
+        MonsterStatusHud.Attach(this, playerMovement);
 
         if (bossPlaytest != null)
         {

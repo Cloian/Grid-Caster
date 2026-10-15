@@ -184,7 +184,8 @@ public sealed class ChessPlaytest : MonoBehaviour
         GUIStyle button = new GUIStyle(GUI.skin.button) { font = uiFont, fontSize = 17, wordWrap = true };
         GUIStyle field = new GUIStyle(GUI.skin.textArea) { font = uiFont, fontSize = 15, wordWrap = true };
         Camera camera = Camera.main;
-        if (camera != null)
+        // 체력은 MonsterStatusHud 체력 칸이 보여 주므로 떠 있는 글자 표시는 HUD가 없을 때만 쓴다.
+        if (camera != null && !MonsterStatusHud.IsActive)
         {
             Rect viewport = camera.pixelRect;
             float xScale = 1280f / Screen.width;
