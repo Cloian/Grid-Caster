@@ -57,8 +57,12 @@ public sealed class MonsterMovement : MonoBehaviour
     private ChessMonsterBehaviour chessBehaviour;
     private Vector3 jumpOrigin;
     private float jumpProgress;
+    // 도약 중 바닥 위로 뜬 높이(월드 단위). 그림자는 이만큼 내려 바닥에 남긴다.
+    public float VisualLift { get; private set; }
     private int skippedTurns;
-    private const float KnightJumpSeconds = 0.24f;
+    // 나이트 이동 모션 5프레임(40+60+80+80+80ms)과 같은 길이. 높이 뛰어 L자 도약이 읽히게 한다.
+    private const float KnightJumpSeconds = 0.34f;
+    private const float KnightJumpHeight = 0.9f;
 
     public bool IsDead => characterHealth != null && characterHealth.IsDead;
     // 연출 전용: 타일 이동 보간 중인지(판정에는 쓰지 않는다).
@@ -509,8 +513,8 @@ public sealed class MonsterMovement : MonoBehaviour
         {
             // 중간 칸 판정 없이 예약한 L자 착지 칸으로 도약하는 연출이다.
             jumpProgress = Mathf.Min(1f, jumpProgress + Time.deltaTime / KnightJumpSeconds);
-            transform.position = Vector3.Lerp(jumpOrigin, targetPosition, jumpProgress)
-                + Vector3.up * (Mathf.Sin(jumpProgress * Mathf.PI) * 0.6f);
+            VisualLift = Mathf.Sin(jumpProgress * Mathf.PI) * KnightJumpHeight;
+            transform.position = Vector3.Lerp(jumpOrigin, targetPosition, jumpProgress) + Vector3.up * VisualLift;
             if (jumpProgress < 1f) return;
         }
         else
@@ -523,6 +527,7 @@ public sealed class MonsterMovement : MonoBehaviour
             return;
 
         transform.position = targetPosition;
+        VisualLift = 0f;
         moving = false;
         ActorMotion.SetMoving(this, false);
         Action landed = landingAction;

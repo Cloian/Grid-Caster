@@ -24,6 +24,9 @@ public sealed class CharacterShadow : MonoBehaviour
         new Profile { Prefix = "bat", Width = 14, Height = 4, OffsetX = 0f, OffsetY = -16f },
         new Profile { Prefix = "snake", Width = 30, Height = 6, OffsetX = 0f, OffsetY = -13f },
         new Profile { Prefix = "armadillo", Width = 54, Height = 9, OffsetX = -1f, OffsetY = -22.5f },
+        // 64px 체스 적: 발이 프레임 바닥에서 2px 위(y=62). 룩은 성벽에 붙어 있어 그림자가 없다.
+        new Profile { Prefix = "knight", Width = 52, Height = 8, OffsetX = 0f, OffsetY = -29f },
+        new Profile { Prefix = "pawn_guard", Width = 34, Height = 7, OffsetX = 0f, OffsetY = -29f },
     };
 
     private static readonly Color Core = new Color(30f / 255f, 22f / 255f, 34f / 255f, 0.5f);
@@ -34,6 +37,7 @@ public sealed class CharacterShadow : MonoBehaviour
     private CharacterHealth health;
     private bool isMonster;
     private SpriteRenderer shadow;
+    private MonsterMovement monster;
     private Profile profile;
     private float pixelsPerUnit;
 
@@ -55,7 +59,8 @@ public sealed class CharacterShadow : MonoBehaviour
 
         pixelsPerUnit = body.sprite.pixelsPerUnit;
         health = GetComponent<CharacterHealth>();
-        isMonster = GetComponent<MonsterMovement>() != null;
+        monster = GetComponent<MonsterMovement>();
+        isMonster = monster != null;
         GameObject child = new GameObject("Shadow");
         child.layer = gameObject.layer;
         child.transform.SetParent(transform, false);
@@ -73,7 +78,12 @@ public sealed class CharacterShadow : MonoBehaviour
         // 피격 연출이 원본을 숨기고 복사본을 그릴 때도 그림자는 남긴다. 사망 시에는 함께 숨긴다.
         shadow.enabled = !isMonster || health == null || !health.IsDead;
         float x = body.flipX ? -profile.OffsetX : profile.OffsetX;
-        shadow.transform.localPosition = new Vector3(x / pixelsPerUnit, profile.OffsetY / pixelsPerUnit, 0f);
+        // 도약 중에는 몸만 뜨고 그림자는 바닥에 남는다. 높이 뜰수록 그림자가 작아진다.
+        float lift = monster != null ? monster.VisualLift : 0f;
+        float scaleY = Mathf.Max(0.0001f, transform.lossyScale.y);
+        float shrink = 1f - Mathf.Clamp01(lift) * 0.35f;
+        shadow.transform.localPosition = new Vector3(x / pixelsPerUnit, profile.OffsetY / pixelsPerUnit - lift / scaleY, 0f);
+        shadow.transform.localScale = new Vector3(shrink, shrink, 1f);
     }
 
     private static bool TryFindProfile(string textureName, out Profile found)

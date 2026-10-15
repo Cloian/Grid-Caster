@@ -743,6 +743,32 @@ public sealed class RunProgressionSystem : MonoBehaviour
         return damage;
     }
 
+    // 공격 확정 전 미리보기: BeginAttack이 정할 상태로 같은 규칙을 계산하고 실제 상태는 되돌린다.
+    public int PreviewAttackDamage(int baseDamage, PlayerAttackTraitRoll roll, int castIndex, int hitIndex,
+        bool firstHitOfAttack, bool firstCastKilledInPreview)
+    {
+        bool savedHunter = attackHunterBonus;
+        int savedSources = attackStoredSources;
+        int savedHits = attackHitCount;
+        bool savedFirstKill = firstCastKilled;
+        attackHunterBonus = lastBasicAction == BasicActionType.Move
+            && (HasRelic("hunters_mark") || Stack("hunter_instinct") > 0);
+        attackStoredSources = storedAttackSources;
+        attackHitCount = firstHitOfAttack ? 0 : 1;
+        firstCastKilled = firstCastKilledInPreview;
+        try
+        {
+            return ModifyPenetrationDamage(ModifyAttackDamage(baseDamage, roll, castIndex, hitIndex), roll, hitIndex);
+        }
+        finally
+        {
+            attackHunterBonus = savedHunter;
+            attackStoredSources = savedSources;
+            attackHitCount = savedHits;
+            firstCastKilled = savedFirstKill;
+        }
+    }
+
     public void NotifyEchoDirectionSelected(bool changed)
     {
         echoDirectionChanged = changed;

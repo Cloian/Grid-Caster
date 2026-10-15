@@ -2205,7 +2205,10 @@ MonoBehaviour:
   chessMonsterAnimatorController: {fileID: 9100000, guid: ec8be16b33cce443a9d6c3f6b4952fb9, type: 2}
   bishopMonsterSprite: {fileID: -1933069808, guid: 40115c6db072f4dac9a38e773eef0d88, type: 3}
   bishopMonsterAnimatorController: {fileID: 9100000, guid: d6fe023b245ad46c88b3bf3b67292d63, type: 2}
-  rookMonsterSprite: {fileID: 0}
+  knightMonsterSprite: {fileID: -414182080, guid: 7975a01b80a89413db4d6e45375f1448, type: 3}
+  knightMonsterAnimatorController: {fileID: 9100000, guid: 3139f70fab4bd4478887b55d76270658, type: 2}
+  rookMonsterSprite: {fileID: -1099427868, guid: 8636472aec18c491094ef14fd103e216, type: 3}
+  rookMonsterAnimatorController: {fileID: 9100000, guid: 3174df463a541432e913da56c81f17e5, type: 2}
   chessMonsterHealth: 3
   knightActionInterval: 1
   bishopMoveDistance: 2

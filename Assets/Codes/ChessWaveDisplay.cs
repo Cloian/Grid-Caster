@@ -24,6 +24,8 @@ public sealed class ChessWaveDisplay : MonoBehaviour
     {
         Camera camera = Camera.main;
         if (spawner == null || player == null || camera == null) return;
+        // 체력·다음 행동은 MonsterStatusHud의 체력 칸과 아이콘이 대신 보여 준다.
+        if (MonsterStatusHud.IsActive) return;
         Rect viewport = camera.pixelRect;
         // 카메라가 비추지 않는 UI 영역에는 월드 좌표 기반 이름표를 그리지 않는다.
         GUI.BeginGroup(new Rect(viewport.xMin, Screen.height - viewport.yMax,
