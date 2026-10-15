@@ -230,8 +230,17 @@ public static class ImpactPresentationValidation
         lethalSide.GetComponent<CharacterHealth>().Died += _ => sideDied = true;
         Ready(); player.SelectTraitAttackMode();
         Check(player.TryPerformAction(PlayerActionSelectionMode.Attack, Vector3Int.right), "actual F attack accepted");
-        var projectile = UnityEngine.Object.FindObjectsByType<SpriteRenderer>().First(r => r.gameObject.name.StartsWith("PlayerProjectile_"));
-        Check(projectile.transform.localScale.x > 1f && projectile.transform.Find("EmpoweredShortTail") != null,
+        // 투사체는 공격 모션이 지팡이를 내지르는 시점(AttackWindupSeconds)에 생긴다.
+        SpriteRenderer projectile = null;
+        float launchDeadline = Time.time + player.AttackWindupSeconds + 0.1f;
+        while (projectile == null && Time.time <= launchDeadline)
+        {
+            projectile = UnityEngine.Object.FindObjectsByType<SpriteRenderer>()
+                .FirstOrDefault(r => r.gameObject.name.StartsWith("PlayerProjectile_"));
+            if (projectile == null) yield return null;
+        }
+        Check(projectile != null && Hp(direct) == 20, "projectile launches after attack windup before any damage");
+        Check(projectile != null && projectile.transform.localScale.x > 1f && projectile.transform.Find("EmpoweredShortTail") != null,
             "prepared damage boost has thicker warm projectile and short tail");
         while (Hp(direct) == 20) yield return null;
         float impact = Time.time;

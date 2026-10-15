@@ -405,7 +405,9 @@ public static class DamageBoostSplashValidation
         growth.BeginAttack(default); main.GetComponent<CharacterHealth>().Initialize(1);
         main.TakeDamage(4); growth.NotifyAttackHit(main,default,0,0);
         Check(Hp(side)==17, "glass heart retains its independent capped surplus transfer on normal attacks");
-        Check(RunProgressionDescriptions.TraitEffect("damage_boost").Contains("주변 8칸")
+        string traitEffect = RunProgressionDescriptions.TraitEffect("damage_boost");
+        Check(traitEffect.Contains("주변 기본 8칸") && traitEffect.Contains("파편 피해 1")
+            && traitEffect.Contains("12·16칸") && traitEffect.Contains("빗나가면 폭발하지 않습니다")
             && RunProgressionCatalog.Upgrade("afterglow_recovery").Name=="폭발 증폭"
             && RunProgressionCatalog.Relics.First(x=>x.Id=="blast_core").Name=="폭발 핵",
             "trait and renamed growth explain the applied splash rule");

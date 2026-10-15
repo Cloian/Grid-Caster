@@ -31,7 +31,8 @@ public static class KnightCounterValidation
             checks.Clear(); frame = -1; runtimeError = null;
             previousRunInBackground = Application.runInBackground;
             Application.runInBackground = true;
-            deadline = EditorApplication.timeSinceStartup + 90;
+            // 공격·착지 모션 대기(약 0.16초씩)가 들어가 1920×1080 기준 약 190초 걸린다.
+            deadline = EditorApplication.timeSinceStartup + 300;
             Application.logMessageReceived += Error;
             routine = Flatten(Run()); EditorApplication.update += Tick;
         };
