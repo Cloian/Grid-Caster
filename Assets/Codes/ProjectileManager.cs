@@ -183,6 +183,7 @@ public sealed class ProjectileManager : MonoBehaviour
         animator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
         animator.Rebind();
         animator.Update(0f);
+        PlayerCometVisual.TryAttach(projectileObject, spriteRenderer, animator, normalizedDirection);
         if (empoweredVisual) CombatFeedback.StyleEmpoweredProjectile(spriteRenderer);
 
         MonsterMovement hitMonster = null;

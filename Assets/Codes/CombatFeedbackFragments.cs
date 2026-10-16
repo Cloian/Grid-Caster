@@ -74,7 +74,14 @@ public sealed partial class CombatFeedback
         projectile.transform.localScale = new Vector3(1.2f, 1.2f, 1f);
         SpriteRenderer tail = feedback.CreatePixel("EmpoweredShortTail", projectile);
         tail.transform.SetParent(projectile.transform, false);
-        tail.transform.localPosition = new Vector3(-3f / PixelsPerUnit, 0f, 0f);
+        // 혜성탄이면 그림의 꼬리 끝(14px 뒤)에 이어 붙여 꼬리가 길어 보이게 한다.
+        PlayerCometVisual comet = projectile.GetComponent<PlayerCometVisual>();
+        if (comet != null)
+        {
+            tail.transform.localPosition = comet.LocalBackward * (14f / PixelsPerUnit);
+            if (comet.IsDiagonal) tail.transform.localRotation = Quaternion.Euler(0f, 0f, 45f);
+        }
+        else tail.transform.localPosition = new Vector3(-3f / PixelsPerUnit, 0f, 0f);
         tail.transform.localScale = new Vector3(4f, 2f, 1f);
         tail.color = new Color(0.37f, 0.8f, 0.89f, 0.85f);   // #5FCDE4
     }
