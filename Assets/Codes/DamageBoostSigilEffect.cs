@@ -6,7 +6,9 @@ using UnityEngine;
 public sealed class DamageBoostSigilEffect : MonoBehaviour
 {
     private const float FrameSeconds = 0.06f;
-    private const int SortingOrder = -5;   // 바닥(-10) 위, 캐릭터·그림자 아래
+    // 캐릭터(10) 위에 찍어 직격 칸 문양이 맞은 적에 가려지지 않게 한다.
+    // 파편(13)·투사체(15)·적 상태 HUD(30)보다는 아래라 체력 칸과 피해 숫자를 가리지 않는다.
+    private const int SortingOrder = 12;
 
     private static Sprite[] centerFrames;
     private static Sprite[] splashFrames;
