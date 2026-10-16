@@ -810,7 +810,10 @@ public sealed class RunProgressionSystem : MonoBehaviour
 
         // 처치·초과 피해와 무관하게 특성 공격의 첫 직격 위치에서 한 번 폭발한다.
         if (roll.DamageBoost && attackHitCount == 1)
+        {
+            DamageBoostSigilEffect.Play(gridManager, center, DamageBoostAreaLevel);
             DamageAdjacentEnemies(center, DamageBoostSplashDamageFor(target.IsDead), target, "damage_boost");
+        }
 
         if (roll.DamageBoost && !target.IsDead && HasRelic("hot_afterglow"))
             storedAttackSources |= ExcessCharge;

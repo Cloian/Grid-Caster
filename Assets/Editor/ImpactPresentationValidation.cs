@@ -241,9 +241,16 @@ public static class ImpactPresentationValidation
         }
         Check(projectile != null && Hp(direct) == 20, "projectile launches after attack windup before any damage");
         Check(projectile != null && projectile.transform.localScale.x > 1f && projectile.transform.Find("EmpoweredShortTail") != null,
-            "prepared damage boost has thicker warm projectile and short tail");
+            "prepared damage boost has thicker magic-colored projectile and short tail");
         while (Hp(direct) == 20) yield return null;
         float impact = Time.time;
+        Vector3Int impactCell = direct.GridPosition;
+        int sigilCount = 1 + DamageBoostArea.Offsets(growth.DamageBoostAreaLevel)
+            .Count(offset => grid.IsWalkableCell(impactCell + offset));
+        var sigils = UnityEngine.Object.FindObjectsByType<DamageBoostSigilEffect>()
+            .Select(effect => effect.GetComponent<SpriteRenderer>()).ToArray();
+        Check(sigils.Length == sigilCount && sigils.Count(r => r.sprite != null) == 1,
+            "boost blast stamps center sigil now and one waiting sigil per walkable area cell: " + sigils.Length + "/" + sigilCount);
         Check(Hp(direct) == 18 && Hp(survivingSide) == 19 && sideDied,
             "all damage resolves at center impact, independently of fragment animation");
         Check(!spawner.TryGetMonsterAtCell(new Vector3Int(3,-1,0), out _), "splash kill frees occupancy immediately");
@@ -268,6 +275,8 @@ public static class ImpactPresentationValidation
         while (Time.time - impact < 0.085f) yield return null;
         Check(CombatFeedback.ResidualFragmentCount == 0 && survivingSide.GetComponent<DamageFlash>().IsFlashing,
             "within 80ms plus one frame, fragments disappear and neighbor hit flash begins");
+        Check(sigils.All(r => r != null && r.sprite != null),
+            "area sigils appear together with fragment arrival");
         Capture("residual-magic-arrival");
         while (player.IsActionInProgress) yield return null;
         Check(starts == 1 && completions == 1 && trait.ChargeProgress == 0,
