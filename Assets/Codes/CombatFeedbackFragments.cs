@@ -69,13 +69,14 @@ public sealed partial class CombatFeedback
     {
         CombatFeedback feedback = GetOrCreate();
         feedback.EnsurePixelSprite();
-        projectile.color = new Color(1f, 0.88f, 0.55f);
+        // 투사체 원래 색(흰·청록·파랑)을 유지하고 크기와 꼬리로 강화를 표시한다.
+        projectile.color = Color.white;
         projectile.transform.localScale = new Vector3(1.2f, 1.2f, 1f);
         SpriteRenderer tail = feedback.CreatePixel("EmpoweredShortTail", projectile);
         tail.transform.SetParent(projectile.transform, false);
         tail.transform.localPosition = new Vector3(-3f / PixelsPerUnit, 0f, 0f);
         tail.transform.localScale = new Vector3(4f, 2f, 1f);
-        tail.color = new Color(1f, 0.73f, 0.28f, 0.85f);
+        tail.color = new Color(0.37f, 0.8f, 0.89f, 0.85f);   // #5FCDE4
     }
 
     public static void EmitResidualFragment(Vector3 center, MonsterMovement target)
@@ -94,8 +95,8 @@ public sealed partial class CombatFeedback
         head.transform.position = tail.transform.position = PixelOffset(center);
         head.transform.localScale = new Vector3(3f, 2f, 1f);
         tail.transform.localScale = new Vector3(2f, 1f, 1f);
-        head.color = new Color(1f, 0.92f, 0.62f);
-        tail.color = new Color(1f, 0.68f, 0.28f, 0.7f);
+        head.color = new Color(0.37f, 0.8f, 0.89f);          // #5FCDE4
+        tail.color = new Color(0.39f, 0.61f, 1f, 0.7f);      // #639BFF
         feedback.fragments.Add(new Fragment { Head = head, Tail = tail, Start = center, End = endpoint, Bend = bend });
     }
 
