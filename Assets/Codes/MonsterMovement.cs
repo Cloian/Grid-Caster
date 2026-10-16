@@ -571,11 +571,15 @@ public sealed class MonsterMovement : MonoBehaviour
 
     private void OnDisable()
     {
-        if (moveCompleted != null)
-        {
-            moving = false;
-            FinishTurn();
-        }
+        // 비활성화는 행동 취소다. 씬 종료·재시작 중에 투사체 턴을 이어가지 않는다.
+        StopAllCoroutines();
+        moving = false;
+        VisualLift = 0f;
+        moveCompleted = null;
+        landingAction = null;
+        tryReserveCell = null;
+        isCellBlocked = null;
+        isPreferredCell = null;
     }
 
     private void OnDestroy()

@@ -200,8 +200,12 @@ public static class MotionUiRegressionValidation
         var binding = AnimationUtility.GetObjectReferenceCurveBindings(death)
             .First(x => x.propertyName == "m_Sprite");
         Sprite grave = AnimationUtility.GetObjectReferenceCurve(death, binding).Last().value as Sprite;
-        float until = Time.realtimeSinceStartup + death.length + 0.3f;
-        while (Time.realtimeSinceStartup < until) yield return null;
+        // Editor 지연·상태 전환 프레임을 클립 재생 시간으로 오인하지 않는다.
+        // 실제 마지막 프레임을 기다리되 재생이 멈춘 경우에는 제한 시간 안에 실패한다.
+        double until = EditorApplication.timeSinceStartup + death.length + 2f;
+        while ((renderer.sprite != grave || !animator.GetCurrentAnimatorStateInfo(0).IsName(ActorMotion.DeathState)
+            || animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+            && EditorApplication.timeSinceStartup < until) yield return null;
         Check(renderer.sprite == grave && animator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f,
             "death reaches final grave sprite while timeScale is zero");
         Check(renderer.color == baseColor && !player.GetComponent<DamageFlash>().IsFlashing,
