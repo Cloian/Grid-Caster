@@ -47,6 +47,7 @@ public sealed class MonsterMovement : MonoBehaviour
     private CharacterHealth characterHealth;
     private Vector3 targetPosition;
     private bool moving;
+    private float activeMoveSpeed;
     private Action moveCompleted;
     private Action landingAction;
     private Func<Vector3Int, Vector3Int, bool> tryReserveCell;
@@ -62,6 +63,8 @@ public sealed class MonsterMovement : MonoBehaviour
     private int skippedTurns;
     // 나이트 이동 모션 5프레임(40+60+80+80+80ms)과 같은 길이. 높이 뛰어 L자 도약이 읽히게 한다.
     private const float KnightJumpSeconds = 0.34f;
+    // 비숍 구르기 모션이 보이도록 짧은 대각선 이동도 이 시간보다 빨리 끝나지 않게 한다. 긴 이동 속도는 그대로다.
+    private const float BishopMinimumMoveSeconds = 0.25f;
     private const float KnightJumpHeight = 0.9f;
 
     public bool IsDead => characterHealth != null && characterHealth.IsDead;
@@ -387,6 +390,9 @@ public sealed class MonsterMovement : MonoBehaviour
         targetPosition = gridManager.GetCellCenterWorld(destinationCell);
         targetPosition.z = transform.position.z;
         landingAction = onLanding;
+        activeMoveSpeed = movementPattern == MonsterMovementPattern.Bishop
+            ? Mathf.Min(moveSpeed, Vector3.Distance(transform.position, targetPosition) / BishopMinimumMoveSeconds)
+            : moveSpeed;
         moving = true;
         ActorMotion.SetMoving(this, true);
 
@@ -502,6 +508,7 @@ public sealed class MonsterMovement : MonoBehaviour
         targetPosition = gridManager.GetCellCenterWorld(destinationCell);
         targetPosition.z = transform.position.z;
         landingAction = onLanding;
+        activeMoveSpeed = moveSpeed;
         moving = true;
         ActorMotion.SetMoving(this, true);
         return true;
@@ -520,7 +527,7 @@ public sealed class MonsterMovement : MonoBehaviour
         else
         {
             transform.position = Vector3.MoveTowards(
-                transform.position, targetPosition, moveSpeed * Time.deltaTime);
+                transform.position, targetPosition, Mathf.Max(0.01f, activeMoveSpeed) * Time.deltaTime);
         }
 
         if ((transform.position - targetPosition).sqrMagnitude > 0.000001f)
