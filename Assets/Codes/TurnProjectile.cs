@@ -56,7 +56,12 @@ public sealed class TurnProjectile : MonoBehaviour
     public bool IsEnemyProjectile => enemyTarget != null;
 
     public void SetEnemyOwner(Move targetPlayer) => enemyTarget = targetPlayer;
-    public void Cancel() => FinishTurn(true);
+    public void Cancel()
+    {
+        // 정리·재시작은 공격 완료가 아니다. 관통 후속탄과 적 턴을 시작하지 않는다.
+        turnCompleted = null;
+        FinishTurn(true);
+    }
 
     public bool TryHitPlayerEnteringCell(Vector3Int cell)
     {
@@ -333,13 +338,11 @@ public sealed class TurnProjectile : MonoBehaviour
 
     private void OnDisable()
     {
-        if (turnCompleted == null)
-            return;
-
+        // 정상 도착만 FinishTurn에서 완료를 알린다. 씬 종료 중에는 새 행동을 만들지 않는다.
         moving = false;
+        travellingFullPath = false;
+        pendingHitTarget = null;
         finished = true;
-        Action<TurnProjectile> callback = turnCompleted;
         turnCompleted = null;
-        callback.Invoke(this);
     }
 }

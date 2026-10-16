@@ -281,6 +281,8 @@ public static class ImpactPresentationValidation
         while (player.IsActionInProgress) yield return null;
         Check(starts == 1 && completions == 1 && trait.ChargeProgress == 0,
             "presentation retains one world turn and never recharges the F attack");
+        // 80ms 도착 시점 캡처 이후에는 실제 프레임 시간으로 나머지 행동을 검사한다.
+        Time.captureDeltaTime = 0f;
         Reset(Vector3Int.zero);
         direct = Spawn(new Vector3Int(2,0,0),2);
         Spawn(new Vector3Int(2,1,0),1); Spawn(new Vector3Int(3,-1,0),1);
@@ -355,5 +357,66 @@ public static class ImpactPresentationValidation
         Check(GameAudio.Play(CombatSound.MagicLaunch) && voices.Any(v => v.clip != null
             && v.clip.name.Contains("laser") && v.pitch == 1f),
             "normal launch resets pitch after a heavier kill sound");
+
+        // 새 문양은 CombatFeedback 인스턴스 유무와 일시정지에 관계없이 재시작 즉시 지운다.
+        Reset(Vector3Int.zero);
+        DamageBoostSigilEffect.Play(grid, Vector3Int.zero, 0);
+        Check(DamageBoostSigilEffect.ActiveCount == 9, "lifecycle fixture creates nine sigils");
+        Time.timeScale = 0f;
+        spawner.ResetPlaytestEncounter();
+        Check(DamageBoostSigilEffect.ActiveCount == 0
+            && !UnityEngine.Object.FindObjectsByType<DamageBoostSigilEffect>().Any(),
+            "paused restart immediately removes visible and delayed sigils");
+        for (int i = 0; i < 3; i++) yield return null;
+        Time.timeScale = 1f;
+        yield return Gap(0.5f);
+        Check(DamageBoostSigilEffect.ActiveCount == 0, "canceled sigils never resume after unpause");
+
+        var projectiles = UnityEngine.Object.FindAnyObjectByType<ProjectileManager>();
+        bool canceledAttackCompleted = false;
+        Check(projectiles.SpawnPlayerProjectile(Vector3Int.zero, Vector3Int.right, 1, 0,
+            null, () => canceledAttackCompleted = true), "cancellation fixture launches actual projectile");
+        projectiles.ClearProjectiles();
+        yield return null;
+        Check(!canceledAttackCompleted && projectiles.ActiveProjectileCount == 0,
+            "clearing an in-flight attack does not invoke attack completion");
+
+        GameObject closingRoot = new GameObject("ClosingSceneFixture");
+        Check(projectiles.SpawnPlayerProjectile(Vector3Int.zero, Vector3Int.right, 1, 0,
+            null, () => canceledAttackCompleted = true), "scene-close fixture launches actual projectile");
+        var closingProjectile = UnityEngine.Object.FindObjectsByType<TurnProjectile>()
+            .Single(p => !p.IsFinished);
+        closingProjectile.transform.SetParent(closingRoot.transform, true);
+        closingRoot.SetActive(false);
+        yield return null;
+        Check(!canceledAttackCompleted && projectiles.ActiveProjectileCount == 0,
+            "parent teardown cancels projectile without starting an enemy turn");
+        UnityEngine.Object.Destroy(closingRoot);
+
+        Reset(Vector3Int.zero);
+        var canceledMonster = Spawn(new Vector3Int(3,3,0), kind: MonsterMovementPattern.Bishop);
+        // Spawn은 다른 검사에서 적 턴을 막으므로 이번 픽스처만 봉쇄를 해제한다.
+        typeof(MonsterMovement).GetField("skippedTurns", Private).SetValue(canceledMonster, 0);
+        bool shortBishopCompleted = false;
+        Vector3Int bishopDestination = new Vector3Int(4,4,0);
+        float bishopStarted = Time.time;
+        canceledMonster.TakeTurn(() => shortBishopCompleted = true, (_, __) => true,
+            cell => cell != bishopDestination);
+        Check(canceledMonster.GridPosition == bishopDestination && canceledMonster.IsMovingVisual,
+            "short bishop move reserves its destination before visual travel");
+        while (!shortBishopCompleted) yield return null;
+        Check(Time.time - bishopStarted >= 0.24f
+            && canceledMonster.transform.position == grid.GetCellCenterWorld(bishopDestination),
+            "one-cell bishop diagonal visibly travels for at least 250ms within one frame tolerance");
+        bool canceledMonsterCompleted = false;
+        bishopDestination = new Vector3Int(5,5,0);
+        canceledMonster.TakeTurn(() => canceledMonsterCompleted = true, (_, __) => true,
+            cell => cell != bishopDestination);
+        Check(canceledMonster.IsMovingVisual, "monster teardown fixture begins movement");
+        canceledMonster.gameObject.SetActive(false);
+        yield return null;
+        Check(!canceledMonsterCompleted && !canceledMonster.IsMovingVisual,
+            "monster teardown cancels pending movement without advancing world turn");
+        Reset(Vector3Int.zero);
     }
 }

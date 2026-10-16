@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 // 강화 폭발 연출: 직격 칸에 낙인 문양을 찍고, 현재 폭발 범위(8·12·16칸)의 바닥 칸마다 작은 문양을 찍는다.
@@ -13,7 +14,20 @@ public sealed class DamageBoostSigilEffect : MonoBehaviour
     private static Sprite[] centerFrames;
     private static Sprite[] splashFrames;
 
-    public static int ActiveCount { get; private set; }
+    private static readonly HashSet<DamageBoostSigilEffect> active = new HashSet<DamageBoostSigilEffect>();
+    public static int ActiveCount => active.Count;
+
+    public static void ClearAll()
+    {
+        // 일시정지 중에도 즉시 숨기고, 지연 재생 코루틴까지 취소한다.
+        foreach (DamageBoostSigilEffect effect in new List<DamageBoostSigilEffect>(active))
+        {
+            if (effect == null) continue;
+            effect.gameObject.SetActive(false);
+            Destroy(effect.gameObject);
+        }
+        active.Clear();
+    }
 
     private SpriteRenderer sigil;
     private Sprite[] frames;
@@ -55,11 +69,12 @@ public sealed class DamageBoostSigilEffect : MonoBehaviour
         effect.sigil.sortingOrder = SortingOrder;
         effect.frames = frames;
         effect.delay = delay;
-        ActiveCount++;
+        active.Add(effect);
         effect.StartCoroutine(effect.Run());
     }
 
-    private void OnDestroy() => ActiveCount--;
+    private void OnDisable() => active.Remove(this);
+    private void OnDestroy() => active.Remove(this);
 
     // 일시정지(timeScale 0)에서는 파편과 함께 멈추도록 스케일 시간만 쓴다.
     private IEnumerator Run()

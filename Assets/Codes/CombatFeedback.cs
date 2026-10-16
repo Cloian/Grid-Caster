@@ -166,6 +166,7 @@ public sealed partial class CombatFeedback : MonoBehaviour
     public static void ClearAll()
     {
         ResetAttackOutcome();
+        DamageBoostSigilEffect.ClearAll();
         if (instance == null) return;
         instance.ClearFragments();
         foreach (ActorVisual actor in instance.actors.Values) instance.RemoveActor(actor, true);
