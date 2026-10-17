@@ -454,6 +454,9 @@ public static class ChessPlaytestValidation
         GameHudController hud = UnityEngine.Object.FindAnyObjectByType<GameHudController>();
         Check(player != null && grid != null && normalSpawner != null && hud != null,
             "SampleScene 기존 컴포넌트 로드");
+        // 이 검증은 이동술·투사체 규칙 자체를 본다. 주도권(이동술 비용) 프로토타입 영향은 뺀다.
+        player.GetComponent<InitiativeTracker>()?.SetEnabledForValidation(false);
+        normalSpawner.SetQueenClockForValidation(false);
         string detectedPipeline = DetectPipeline();
         Check(detectedPipeline.Contains("Universal"), "픽셀 표시 검사 전 URP 렌더 파이프라인 확인");
         var walls = new Dictionary<Vector3Int, (UnityEngine.Tilemaps.TileBase, Color)>();

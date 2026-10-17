@@ -249,7 +249,9 @@ public static class BuildVariationValidation
                             throw new InvalidOperationException("wave composition exceeds one-unit swap budget");
                     variants.Add(Composition(rolled));
                 }
-                Check(wave==1 || wave==10 || wave==20 ? variants.Count==1 : variants.Count>1,
+                // 박쥐·뱀을 폰 하나로 합친 뒤 한 종류만 나오는 웨이브(1·2웨이브)는 바꿀 상대가 없어 변주가 하나다.
+                bool singleType=baseline.Monsters.Distinct().Count()==1;
+                Check(wave==1 || wave==10 || wave==20 || singleType ? variants.Count==1 : variants.Count>1,
                     "wave="+wave+": preserved count/unlocks/tier/special role; sampled compositions="+variants.Count);
                 if(wave==10 || wave==20)
                     Check(variants.Single()==Composition(baseline),"wave="+wave+": boss composition unchanged");

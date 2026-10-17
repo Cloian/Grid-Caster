@@ -38,7 +38,25 @@ public sealed class MonsterSpawner : MonoBehaviour
     [Tooltip("룩(쇠뇌를 문 성벽 괴물) 전용 외형입니다. 비워 두면 기존 체스 몬스터 Sprite를 사용합니다.")]
     [SerializeField] private Sprite rookMonsterSprite;
     [SerializeField] private RuntimeAnimatorController rookMonsterAnimatorController;
+    [Tooltip("원거리 폭탄병 외형입니다. 비워 두면 기존 체스 몬스터 Sprite를 사용합니다.")]
+    [SerializeField] private Sprite bomberMonsterSprite;
+    [SerializeField] private RuntimeAnimatorController bomberMonsterAnimatorController;
+    [Tooltip("폭탄병은 멀리서 위협하는 대신 약하다. 다가가 잡을 이유를 준다.")]
+    [SerializeField, Min(1)] private int bomberHealth = 2;
     [SerializeField, Min(1)] private int chessMonsterHealth = 3;
+
+    [Header("여왕의 시계 (프로토타입)")]
+    [Tooltip("웨이브마다 공개된 턴 예산. 넘기면 폰 증원이 오고, 안에 정리하면 주도권 보너스.")]
+    [SerializeField] private bool enableQueenClock = true;
+    [SerializeField, Min(1)] private int clockBaseTurns = 9;
+    [SerializeField, Min(0f)] private float clockTurnsPerMonster = 0.75f;
+    [SerializeField, Min(1)] private int overtimeReinforceInterval = 3;
+    [SerializeField, Min(0)] private int maxReinforcementsPerWave = 2;
+    [Tooltip("증원은 플레이어 근처(체비쇼프 거리)에서 소환해 직접 다가오게 한다. 멀리 쫓아가는 악순환을 막는다.")]
+    [SerializeField, Min(1)] private int reinforcementMinDistance = 2;
+    [SerializeField, Min(1)] private int reinforcementMaxDistance = 3;
+    [Tooltip("원래 웨이브 적을 모두 잡으면 남은 증원은 소환 해제되고 웨이브가 끝난다.")]
+    [SerializeField] private bool dismissReinforcementsOnClear = true;
     [Tooltip("일반 웨이브의 나이트는 최소 2턴 간격으로 도약합니다. 독립 패턴 테스트는 별도 값을 사용합니다.")]
     [SerializeField, Min(2)] private int knightActionInterval = 2;
     [SerializeField, Min(1)] private int bishopMoveDistance = 4;
@@ -75,6 +93,26 @@ public sealed class MonsterSpawner : MonoBehaviour
     private int monstersStillMoving;
     private int currentWave;
     private bool waveActive;
+    private int reinforcementsThisWave;
+    private readonly HashSet<MonsterMovement> reinforcements = new HashSet<MonsterMovement>();
+    // 원래 웨이브 적(증원 제외) 중 살아 있는 수
+    private int OriginalMonstersAlive
+    {
+        get
+        {
+            int count = 0;
+            foreach (MonsterMovement monster in activeMonsters)
+                if (monster != null && !monster.IsDead && !reinforcements.Contains(monster)) count++;
+            return count;
+        }
+    }
+    public bool QueenClockActive => enableQueenClock && waveActive && chessPlaytest == null && bossPlaytest == null;
+    public int ClockTurn { get; private set; }
+    public int ClockBudget { get; private set; }
+    public bool IsClockOvertime => ClockTurn > ClockBudget;
+    // 다음 증원까지 남은 턴(초과 전에는 예산까지 남은 턴 + 1)
+    public int TurnsUntilReinforcement => !IsClockOvertime ? ClockBudget - ClockTurn + 1
+        : overtimeReinforceInterval - (ClockTurn - ClockBudget - 1) % overtimeReinforceInterval;
     private bool worldTurnInProgress;
     private bool monsterTurnCompleted;
     private bool projectileTurnCompleted;
@@ -204,10 +242,13 @@ public sealed class MonsterSpawner : MonoBehaviour
 
         activeMonsters.RemoveAll(monster => monster == null || monster.IsDead);
 
-        if (waveActive && activeMonsters.Count == 0
-            && monstersStillMoving == 0 && !worldTurnInProgress && !playerMovement.IsActionInProgress)
+        if (waveActive && monstersStillMoving == 0 && !worldTurnInProgress && !playerMovement.IsActionInProgress)
         {
-            CompleteCurrentWave();
+            // 원래 적을 모두 잡으면 남은 증원은 소환 해제한다(증원 때문에 웨이브가 늘어지지 않게).
+            if (dismissReinforcementsOnClear && reinforcements.Count > 0 && activeMonsters.Count > 0
+                && OriginalMonstersAlive == 0)
+                DismissReinforcements();
+            if (activeMonsters.Count == 0) CompleteCurrentWave();
         }
 
     }
@@ -584,9 +625,72 @@ public sealed class MonsterSpawner : MonoBehaviour
         if (!projectileTurnCompleted)
             return;
 
+        AdvanceQueenClock();
         worldTurnInProgress = false;
         playerMovement.CompleteMonsterTurn();
         WorldTurnCompleted?.Invoke();
+    }
+
+    // 시계와 무관한 규칙을 검사하는 검증이 증원 영향을 빼고 확인할 때 쓴다.
+    public void SetQueenClockForValidation(bool enabled) => enableQueenClock = enabled;
+
+    // 여왕의 시계: 적 턴이 끝날 때마다 한 칸. 예산을 넘기면 정해진 간격으로 폰 증원이 온다.
+    private void AdvanceQueenClock()
+    {
+        if (!QueenClockActive || playerHealth.IsDead) return;
+        activeMonsters.RemoveAll(monster => monster == null || monster.IsDead);
+        if (OriginalMonstersAlive == 0) return;
+        ClockTurn++;
+        if (!IsClockOvertime || reinforcementsThisWave >= maxReinforcementsPerWave) return;
+        if ((ClockTurn - ClockBudget - 1) % overtimeReinforceInterval != 0) return;
+        if (!TryGetReinforcementCell(out Vector3Int cell)) return;
+        int before = activeMonsters.Count;
+        if (SpawnMonster(MonsterMovementPattern.CardinalFour, cell) && activeMonsters.Count > before)
+        {
+            MonsterMovement summoned = activeMonsters[activeMonsters.Count - 1];
+            reinforcements.Add(summoned);
+            summoned.gameObject.AddComponent<SummonedGhost>();
+            reinforcementsThisWave++;
+            Debug.Log($"여왕의 시계 초과: 웨이브 {currentWave} {ClockTurn}/{ClockBudget}턴, 폰 증원 {reinforcementsThisWave} at {cell}", this);
+        }
+    }
+
+    // 플레이어에게서 2~3칸 떨어진 빈 바닥. 가까운 거리부터 고르되 같은 거리 안에서는 무작위.
+    private bool TryGetReinforcementCell(out Vector3Int cell)
+    {
+        cell = default;
+        Vector3Int center = playerMovement.GridPosition;
+        for (int distance = reinforcementMinDistance; distance <= reinforcementMaxDistance; distance++)
+        {
+            var candidates = new List<Vector3Int>();
+            for (int y = -distance; y <= distance; y++)
+                for (int x = -distance; x <= distance; x++)
+                {
+                    if (Mathf.Max(Mathf.Abs(x), Mathf.Abs(y)) != distance) continue;
+                    Vector3Int candidate = center + new Vector3Int(x, y, 0);
+                    if (gridManager.IsWalkableCell(candidate) && !IsOccupied(candidate)) candidates.Add(candidate);
+                }
+            if (candidates.Count == 0) continue;
+            cell = candidates[UnityEngine.Random.Range(0, candidates.Count)];
+            return true;
+        }
+        return false;
+    }
+
+    private void DismissReinforcements()
+    {
+        var cells = new List<Vector3Int>();
+        foreach (MonsterMovement monster in reinforcements)
+        {
+            if (monster == null || monster.IsDead) continue;
+            cells.Add(monster.GridPosition);
+            activeMonsters.Remove(monster);
+            monster.gameObject.SetActive(false);
+            Destroy(monster.gameObject);
+        }
+        reinforcements.Clear();
+        KnightQuakeEffect.PlayDust(gridManager, cells);
+        if (cells.Count > 0) Debug.Log($"여왕의 시계: 웨이브 {currentWave} 원래 적 정리 → 증원 {cells.Count}마리 소환 해제", this);
     }
 
     public void ResetPlaytestEncounter()
@@ -610,7 +714,8 @@ public sealed class MonsterSpawner : MonoBehaviour
 
     public MonsterMovement SpawnPlaytestMonster(
         MonsterMovementPattern pattern, Vector3Int cell, Sprite sprite, Color color,
-        int health, int order, int knightInterval, int bishopTravel, int bishopOrbit)
+        int health, int order, int knightInterval, int bishopTravel, int bishopOrbit,
+        RuntimeAnimatorController motionOverride = null)
     {
         bool wallMountedRook = pattern == MonsterMovementPattern.Rook
             && gridManager.IsTopBoundaryWallCell(cell);
@@ -630,13 +735,18 @@ public sealed class MonsterSpawner : MonoBehaviour
         actor.transform.position = gridManager.GetCellCenterWorld(cell);
         SpriteRenderer renderer = actor.AddComponent<SpriteRenderer>();
         renderer.sprite = sprite;
-        renderer.color = usesOwnVisual ? Color.white : color;
+        // 보스전처럼 호출자가 그림과 모션을 함께 넘기면 색을 입히지 않고 그 모션을 쓴다(크기는 호출자가 정한다).
+        renderer.color = usesOwnVisual || motionOverride != null ? Color.white : color;
         renderer.sortingOrder = 10;
         RuntimeAnimatorController motion = null;
         if (usesOwnVisual)
         {
             FitSpriteInsideTile(actor.transform, sprite);
             motion = ownMotion;
+        }
+        else if (motionOverride != null)
+        {
+            motion = motionOverride;
         }
         else if (sprite == chessMonsterSprite)
         {
@@ -685,6 +795,7 @@ public sealed class MonsterSpawner : MonoBehaviour
             MonsterMovementPattern.Bishop => (bishopMonsterSprite, bishopMonsterAnimatorController),
             MonsterMovementPattern.Knight => (knightMonsterSprite, knightMonsterAnimatorController),
             MonsterMovementPattern.Rook => (rookMonsterSprite, rookMonsterAnimatorController),
+            MonsterMovementPattern.Bomber => (bomberMonsterSprite, bomberMonsterAnimatorController),
             _ => ((Sprite)null, (RuntimeAnimatorController)null)
         };
         return sprite != null;
@@ -806,6 +917,10 @@ public sealed class MonsterSpawner : MonoBehaviour
         }
 
         waveActive = spawnedCount > 0;
+        ClockTurn = 0;
+        reinforcementsThisWave = 0;
+        reinforcements.Clear();
+        ClockBudget = clockBaseTurns + Mathf.CeilToInt(spawnedCount * clockTurnsPerMonster);
 
         Debug.Log(
             $"웨이브 {currentWave} · {CurrentWaveTemplate.DisplayName}: "
@@ -821,6 +936,15 @@ public sealed class MonsterSpawner : MonoBehaviour
 
     private void CompleteCurrentWave()
     {
+        // 여왕의 시계 안에 정리하면 주도권 보너스(실험 지표도 남긴다).
+        if (QueenClockActive)
+        {
+            bool fast = !IsClockOvertime;
+            if (fast) playerMovement.Initiative?.Grant(playerMovement.Initiative.FastClearBonus, "빠른 정리");
+            InitiativeTracker tempo = playerMovement.Initiative;
+            Debug.Log($"TEMPO_WAVE wave={currentWave} turns={ClockTurn}/{ClockBudget} fast={fast} reinforcements={reinforcementsThisWave}"
+                + (tempo != null ? $" initiative={tempo.Current}/{tempo.Max} arts={tempo.MovementArtsUsed} attacks={tempo.AttacksResolved} multi={tempo.MultiHitAttacks} adjacent={tempo.AdjacentHits}" : string.Empty), this);
+        }
         waveActive = false;
         if (enableChessWaves)
         {
@@ -837,7 +961,7 @@ public sealed class MonsterSpawner : MonoBehaviour
         waveSpawnPlan.AddRange(template.Monsters);
     }
 
-    private bool SpawnMonster(MonsterMovementPattern movementPattern)
+    private bool SpawnMonster(MonsterMovementPattern movementPattern, Vector3Int? forcedCell = null)
     {
         if (enableChessWaves && movementPattern >= MonsterMovementPattern.Knight)
         {
@@ -847,14 +971,17 @@ public sealed class MonsterSpawner : MonoBehaviour
                 : TryGetSpawnCell(out chessCell);
             if (!foundCell) return false;
             MonsterMovement chessMonster = SpawnPlaytestMonster(movementPattern, chessCell,
-                chessMonsterSprite, ChessWaveDisplay.ColorFor(movementPattern), chessMonsterHealth,
+                chessMonsterSprite, ChessWaveDisplay.ColorFor(movementPattern),
+                movementPattern == MonsterMovementPattern.Bomber ? bomberHealth : chessMonsterHealth,
                 ++spawnSerial, Mathf.Max(2, knightActionInterval), bishopMoveDistance, bishopOrbitDistance);
             return true;
         }
         MonsterMovement prefab = GetNextPrefab(movementPattern);
 
-        if (prefab == null || !TryGetSpawnCell(out Vector3Int spawnCell))
+        Vector3Int spawnCell = default;
+        if (prefab == null || (forcedCell.HasValue ? IsOccupied(forcedCell.Value) : !TryGetSpawnCell(out spawnCell)))
             return false;
+        if (forcedCell.HasValue) spawnCell = forcedCell.Value;
 
         Vector3 spawnPosition = mapTilemap.GetCellCenterWorld(spawnCell);
         MonsterMovement monster = Instantiate(prefab, spawnPosition, Quaternion.identity, transform);

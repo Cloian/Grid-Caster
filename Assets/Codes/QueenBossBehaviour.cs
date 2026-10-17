@@ -6,6 +6,16 @@ using UnityEngine;
 // 보스 규칙은 플레이어 행동 완료 뒤에만 Tick으로 진행한다. 렌더링은 별도 UI가 맡는다.
 public sealed class QueenBossBehaviour : MonoBehaviour
 {
+    // 여왕·근위병 그림과 모션. 비어 있으면 단색 그레이박스로 그린다. 판정 크기는 그림과 무관하다.
+    [Serializable]
+    public struct Visuals
+    {
+        public Sprite QueenSprite;
+        public RuntimeAnimatorController QueenMotion;
+        public Sprite GuardSprite;
+        public RuntimeAnimatorController GuardMotion;
+    }
+
     public enum Pattern { RoyalLines, Bombardment, Guards, Fortress, Checkmate }
     public static readonly Vector3Int QueenCenter = new Vector3Int(7,11,0);
     public const int FootprintRadius = 1;
@@ -42,30 +52,40 @@ public sealed class QueenBossBehaviour : MonoBehaviour
     private GridManager grid;
     private Sprite square;
     private QueenSafeZonePlanner safePlanner;
+    private Visuals visuals;
     private int maximumHealth, serial, normalIndex, phaseTwoNormals, lineVariant;
+    // 근위병 방패 밀치기 모션의 발동 프레임(4번째, 70+80+150ms)에 맞춰 피해 연출을 늦춘다. 판정은 즉시다.
+    private const float GuardStrikeVisualDelay = 0.3f;
+    private const float GuardStepSeconds = 0.36f;
     private const int LineDamage = 3, BombardDamage = 4, UltimateDamage = 8, GuardHealth = 4;
     private static readonly Pattern[] NormalCycle = { Pattern.RoyalLines, Pattern.Bombardment, Pattern.Guards, Pattern.Fortress };
     private static readonly Vector3Int[] Orthogonal = { Vector3Int.up,Vector3Int.right,Vector3Int.down,Vector3Int.left };
     private static readonly Vector3Int[] Diagonal = { new Vector3Int(1,1,0),new Vector3Int(1,-1,0),new Vector3Int(-1,1,0),new Vector3Int(-1,-1,0) };
 
-    public void Initialize(MonsterSpawner spawner, GridManager grid, Move player, Sprite square, int health, int seed, bool phaseTwo)
+    public void Initialize(MonsterSpawner spawner, GridManager grid, Move player, Sprite square, int health, int seed, bool phaseTwo,
+        Visuals visuals = default)
     {
+        this.visuals = visuals;
+        MonsterStatusHud.IntentOverride = IntentOf;
         this.spawner = spawner; this.grid = grid; Player = player; this.square = square; maximumHealth = health;
         Turn = normalIndex = phaseTwoNormals = lineVariant = CheckmateCount = 0; serial = 0;
         IsFinished = Won = false; guards.Clear(); previousB.Clear(); Danger.Clear(); Walls.Clear(); grid.SetTemporaryObstacles(null);
         Queen = null;
-        Queen = Spawn(QueenCenter, maximumHealth, new Color32(80,55,110,255), "Queen · 3×3");
-        Queen.transform.localScale = new Vector3(3f,3f,1f);
+        Queen = Spawn(QueenCenter, maximumHealth, new Color32(80,55,110,255), "Queen · 3×3",
+            visuals.QueenSprite, visuals.QueenMotion);
+        // 그림은 32 PPU 원래 크기(120px)로 둬 화면 픽셀 격자에 맞춘다. 발이 3×3 점유의 아래 가장자리에 온다.
+        Queen.transform.localScale = visuals.QueenSprite != null ? Vector3.one : new Vector3(3f,3f,1f);
         if (phaseTwo) Queen.GetComponent<CharacterHealth>().TakeDamage(maximumHealth / 2);
         // 초기 좌표와 3×3 점유가 확정된 뒤 후보를 만든다.
         safePlanner = new QueenSafeZonePlanner(grid, spawner, Player, Queen, seed);
         PrepareNext();
     }
 
-    private MonsterMovement Spawn(Vector3Int cell, int health, Color color, string label)
+    private MonsterMovement Spawn(Vector3Int cell, int health, Color color, string label,
+        Sprite sprite = null, RuntimeAnimatorController motion = null)
     {
         MonsterMovement actor = spawner.SpawnPlaytestMonster(MonsterMovementPattern.CardinalFour,
-            cell, square, color, health, serial++, 2, 4, 2);
+            cell, sprite != null ? sprite : square, color, health, serial++, 2, 4, 2, sprite != null ? motion : null);
         actor.name = label;
         return actor;
     }
@@ -138,8 +158,10 @@ public sealed class QueenBossBehaviour : MonoBehaviour
             if (guards.Count >= 3) break;
             Vector3Int cell = new Vector3Int(Mathf.Clamp(Player.GridPosition.x+offset,1,13),Mathf.Min(9,Player.GridPosition.y+3),0);
             if(cell==Player.GridPosition||!grid.IsWalkableCell(cell)||spawner.IsOccupied(cell))continue;
-            MonsterMovement guard=Spawn(cell,GuardHealth,new Color32(115,135,151,255),"Guard ↓");
-            guard.transform.localScale = Vector3.one*.75f; guards.Add(guard);
+            MonsterMovement guard=Spawn(cell,GuardHealth,new Color32(115,135,151,255),"Guard ↓",
+                visuals.GuardSprite,visuals.GuardMotion);
+            // 64px 근위병 시트는 나이트·룩처럼 정확히 1/2 배율로 한 칸에 맞춘다.
+            guard.transform.localScale = Vector3.one*(visuals.GuardSprite != null ? .5f : .75f); guards.Add(guard);
         }
     }
 
@@ -179,10 +201,48 @@ public sealed class QueenBossBehaviour : MonoBehaviour
             if (Player.CurrentHealth <= 0) break;
             if (guard.ConsumeBlockedTurn()) continue;
             Vector3Int next=guard.GridPosition+Vector3Int.down;
-            if(next==Player.GridPosition) {Player.TakeDamage(1,PlayerDamageKind.Normal,Vector3Int.down);LastOutcome="근위병 정면 공격 −1";}
-            else if(grid.IsWalkableCell(next)&&!spawner.IsOccupied(next))guard.ApplyKnockback(next);
+            if(next==Player.GridPosition)
+            {
+                ActorMotion.Trigger(guard,ActorMotion.Attack);
+                float previousDelay=CombatFeedback.DamageVisualDelay;
+                CombatFeedback.DamageVisualDelay=visuals.GuardMotion!=null?GuardStrikeVisualDelay:0f;
+                try{Player.TakeDamage(1,PlayerDamageKind.Normal,Vector3Int.down);}
+                finally{CombatFeedback.DamageVisualDelay=previousDelay;}
+                LastOutcome="근위병 정면 공격 −1";
+            }
+            else if(grid.IsWalkableCell(next)&&!spawner.IsOccupied(next)&&guard.ApplyKnockback(next))
+                StartCoroutine(PlayGuardStep(guard));
         }
     }
+    // 전진은 논리상 한 번의 칸 이동이다. 걷기 모션은 연출만 맡는다.
+    private System.Collections.IEnumerator PlayGuardStep(MonsterMovement guard)
+    {
+        ActorMotion.SetMoving(guard,true);
+        yield return new WaitForSeconds(GuardStepSeconds);
+        if(guard!=null)ActorMotion.SetMoving(guard,false);
+    }
+
+    // 상태 HUD 아이콘: 여왕은 현재 패턴, 근위병은 전진·정면 공격·정지.
+    private MonsterStatusHud.Intent? IntentOf(MonsterMovement actor)
+    {
+        if(actor==null||IsFinished)return null;
+        if(actor==Queen)
+        {
+            if(Queen.IsActionBlocked)return MonsterStatusHud.Intent.Blocked;
+            if(IsRecovery)return MonsterStatusHud.Intent.Vulnerable;
+            return CurrentPattern switch {
+                Pattern.Bombardment=>MonsterStatusHud.Intent.Fire,
+                Pattern.Guards=>MonsterStatusHud.Intent.Summon,
+                Pattern.Checkmate=>MonsterStatusHud.Intent.Checkmate,
+                _=>MonsterStatusHud.Intent.Crossbow };
+        }
+        if(!guards.Contains(actor))return null;
+        if(actor.IsActionBlocked)return MonsterStatusHud.Intent.Blocked;
+        if(IsRecovery||CurrentPattern==Pattern.Checkmate)return MonsterStatusHud.Intent.Wait;
+        return actor.GridPosition+Vector3Int.down==Player.GridPosition
+            ? MonsterStatusHud.Intent.Attack : MonsterStatusHud.Intent.Move;
+    }
+
     private void StrikeOutside(HashSet<Vector3Int> safe, string label)
     {
         var area=new HashSet<Vector3Int>();
@@ -193,11 +253,18 @@ public sealed class QueenBossBehaviour : MonoBehaviour
     }
     private void Strike(HashSet<Vector3Int> area, int damage)
     {
+        ActorMotion.Trigger(Queen,ActorMotion.Attack);
         bool hit=area.Contains(Player.GridPosition);
         if(hit)Player.TakeDamage(damage,PlayerDamageKind.Hazard,Player.GridPosition-QueenCenter);
         foreach(MonsterMovement guard in guards.ToArray())if(guard!=null&&!guard.IsDead&&area.Contains(guard.GridPosition))guard.TakeDamage(damage);
         LastOutcome=hit?$"{PatternName} 피격 −{damage}":"공격 회피";
     }
+    private void OnDestroy()
+    {
+        if (MonsterStatusHud.IntentOverride == (Func<MonsterMovement, MonsterStatusHud.Intent?>)IntentOf)
+            MonsterStatusHud.IntentOverride = null;
+    }
+
     private void Finish(bool won)
     {
         IsFinished=true; Won=won; LastOutcome=won?"여왕 처치 · 클리어":"사망 · 같은 조건으로 재시작 가능";

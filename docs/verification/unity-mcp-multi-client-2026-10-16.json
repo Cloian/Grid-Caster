@@ -1,0 +1,38 @@
+{
+  "status": "pass",
+  "timestamp": "2026-10-16T20:46:54.076689+09:00",
+  "test": "Two persistent TCP clients; second client must not disconnect first; then real Unity scene commands on both",
+  "ping_roundtrips": 51,
+  "unity_scene_commands": 2,
+  "client_a": {
+    "status": "success",
+    "result": {
+      "success": true,
+      "message": "Retrieved active scene information.",
+      "data": {
+        "name": "SampleScene",
+        "path": "Assets/Scenes/SampleScene.unity",
+        "buildIndex": -1,
+        "isDirty": false,
+        "isLoaded": true,
+        "rootCount": 16
+      }
+    }
+  },
+  "client_b": {
+    "status": "success",
+    "result": {
+      "success": true,
+      "message": "Retrieved active scene information.",
+      "data": {
+        "name": "SampleScene",
+        "path": "Assets/Scenes/SampleScene.unity",
+        "buildIndex": -1,
+        "isDirty": false,
+        "isLoaded": true,
+        "rootCount": 16
+      }
+    }
+  },
+  "limitation": "Diagnostic source ports outside the exhausted OS ephemeral range were used. This verifies the Unity bridge; it does not resolve host-wide automatic TCP port allocation failure."
+}

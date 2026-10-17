@@ -34,7 +34,7 @@ public static class WaveTemplateCatalog
         // 첫 유물 웨이브 전에는 수량과 새 기믹이 동시에 급증하지 않게 한다.
         Build(2, "엇갈린 추격", false, (MonsterMovementPattern.CardinalFour, 2),
             (MonsterMovementPattern.EightDirection, 1)),
-        Build(3, "박쥐 무리", false, (MonsterMovementPattern.CardinalFour, 2),
+        Build(3, "포격병 첫 등장", false, (MonsterMovementPattern.CardinalFour, 2),
             (MonsterMovementPattern.EightDirection, 2)),
         Build(4, "나이트 첫 등장", true, (MonsterMovementPattern.CardinalFour, 2),
             (MonsterMovementPattern.EightDirection, 2), (MonsterMovementPattern.Knight, 1)),
@@ -86,12 +86,21 @@ public static class WaveTemplateCatalog
             (MonsterMovementPattern.Bishop, 4), (MonsterMovementPattern.Rook, 3))
     };
 
+    // 프로토타입: 박쥐(8방향)와 뱀(4방향)은 폰 하나로 합쳤다. 기존 8방향 자리는 3웨이브부터
+    // 원거리 폭탄병(초반 1마리, 8웨이브부터 최대 2마리)으로, 나머지는 폰(4방향)으로 바꾼다.
+    private static int BomberSlots(int waveNumber) => waveNumber < 3 ? 0 : waveNumber < 8 ? 1 : 2;
+
     private static WaveTemplate Build(int waveNumber, string displayName, bool specialWave,
         params (MonsterMovementPattern Pattern, int Count)[] groups)
     {
         List<MonsterMovementPattern> monsters = new List<MonsterMovementPattern>();
+        int bombers = BomberSlots(waveNumber);
         foreach ((MonsterMovementPattern pattern, int count) in groups)
-            for (int i = 0; i < count; i++) monsters.Add(pattern);
+            for (int i = 0; i < count; i++)
+            {
+                if (pattern != MonsterMovementPattern.EightDirection) { monsters.Add(pattern); continue; }
+                monsters.Add(bombers-- > 0 ? MonsterMovementPattern.Bomber : MonsterMovementPattern.CardinalFour);
+            }
         return new WaveTemplate(waveNumber, displayName, specialWave,
             GetDifficultyTier(waveNumber), monsters.ToArray());
     }

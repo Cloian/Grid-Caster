@@ -31,7 +31,8 @@ public static class KnockbackCollisionValidation
             checks.Clear(); frame = -1; runtimeError = null;
             previousRunInBackground = Application.runInBackground;
             Application.runInBackground = true;
-            deadline = EditorApplication.timeSinceStartup + 150;
+            // 공격 준비 모션·투사체·충돌 연출이 늘어 150초로는 전체 픽스처가 끝나지 않는다.
+            deadline = EditorApplication.timeSinceStartup + 300;
             Application.logMessageReceived += Error;
             routine = Flatten(Run()); EditorApplication.update += Tick;
         };
@@ -146,6 +147,9 @@ public static class KnockbackCollisionValidation
     {
         spawner.ResetPlaytestEncounter();
         player.ResetPlaytest(cell);
+        // 넉백 규칙만 본다. 주도권·여왕의 시계 프로토타입 영향은 뺀다.
+        player.GetComponent<InitiativeTracker>()?.SetEnabledForValidation(false);
+        spawner.SetQueenClockForValidation(false);
         Stacks.Clear(); Relics.Clear();
         growth.SetMovementArtForPlaytest(PlayerMovementArt.None);
         typeof(PlayerTraitSystem).GetField("selectedTraitId", Private).SetValue(trait, id);

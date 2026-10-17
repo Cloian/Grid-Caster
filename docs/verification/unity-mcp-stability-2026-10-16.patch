@@ -1,0 +1,207 @@
+--- a/Packages/com.coplaydev.unity-mcp/Editor/Helpers/PortManager.cs
++++ b/Packages/com.coplaydev.unity-mcp/Editor/Helpers/PortManager.cs
+@@ -128,7 +128,7 @@
+                 }
+             }
+ 
+-            throw new Exception($"No available ports found in range {DefaultPort}-{DefaultPort + MaxPortAttempts}");
++            throw new InvalidOperationException($"No available ports found in range {DefaultPort}-{DefaultPort + MaxPortAttempts - 1}");
+         }
+ 
+         /// <summary>
+@@ -141,19 +141,17 @@
+             // Grid-Caster 로컬 수정: 시험 소켓을 성공·실패와 관계없이 반드시 닫는다.
+             // 원본은 Start() 실패 시 소켓을 닫지 않고, macOS Mono의 TcpListener.Stop()은 새 소켓을 만들어 남긴다.
+             // 포트 하나가 TIME_WAIT로 잠깐 막히면 재시도마다 소켓이 새어 파일 핸들이 고갈되고 에디터가 종료됐다.
+-            // 또 시험 중 listen하면 포트를 훑는 MCP 서버가 접속해 TIME_WAIT를 남기므로 bind만 시험한다.
++            // 원시 Socket으로 listen까지 시험하고 즉시 닫아 실제 리스너 충돌을 확인한다.
++            // 이 에디터의 Mono에서는 관리형 ReuseAddress가 리스너 공유까지 허용했다.
++            // 시험과 본 리스너 모두 네이티브 주소 재사용/포트 독점 정책을 적용한다.
+             try
+             {
+                 using (var socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp))
+                 {
+-#if UNITY_EDITOR_OSX
+-                    // Grid-Caster 로컬 수정: macOS에서 종료된 연결의 TIME_WAIT가 커널에 남아 포트 범위 전체가
+-                    // "사용 중"으로 막히는 일이 있었다. SO_REUSEADDR로 TIME_WAIT 포트는 재사용하되,
+-                    // 실제로 listen 중인 다른 프로세스가 있으면 여전히 bind가 실패한다.
+-                    // (AssetImportWorker는 배치 모드라 브리지를 시작하지 않으므로 포트를 나눠 잡지 않는다.)
+-                    try { socket.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true); } catch { }
+-#endif
++                    LoopbackSocketOptions.Configure(socket);
+                     socket.Bind(new IPEndPoint(IPAddress.Loopback, port));
++                    socket.LingerState = new LingerOption(true, 0);
++                    socket.Listen(1);
+                 }
+             }
+             catch (SocketException)
+--- a/Packages/com.coplaydev.unity-mcp/Editor/Services/Transport/Transports/StdioBridgeHost.cs
++++ b/Packages/com.coplaydev.unity-mcp/Editor/Services/Transport/Transports/StdioBridgeHost.cs
+@@ -45,6 +45,8 @@
+         private static bool ensureUpdateHooked = false;
+         private static bool isStarting = false;
+         private static double nextStartAt = 0.0f;
++        private static int startFailureCount;
++        private const double MaximumStartRetrySeconds = 30.0;
+         private static double nextHeartbeatAt = 0.0f;
+         // EditorApplication.timeSinceStartup of the first AddressAlreadyInUse on the configured
+         // port; 0 when the port binds cleanly. Drives the same-port retry window (#1173).
+@@ -182,6 +184,10 @@
+ 
+             if (!isRunning)
+             {
++                // 실패 후 정한 대기 시간을 delayCall 경로가 우회하지 않게 한다.
++                // update 훅이 시간이 되면 다시 시작한다.
++                if (EditorApplication.timeSinceStartup < nextStartAt)
++                    return;
+                 Start();
+                 if (!isRunning)
+                 {
+@@ -197,7 +203,7 @@
+                 return;
+             }
+             initScheduled = true;
+-            nextStartAt = EditorApplication.timeSinceStartup + 0.20f;
++            nextStartAt = Math.Max(nextStartAt, EditorApplication.timeSinceStartup + 0.20f);
+             if (!ensureUpdateHooked)
+             {
+                 ensureUpdateHooked = true;
+@@ -335,6 +341,11 @@
+                         }
+ 
+                         int oldPort = currentUnityPort;
++                        // 새 리스너로 덮기 전에 실패한 소켓도 닫는다.
++                        // 실패한 Start는 isRunning=false라 이전 Stop에서는 정리되지 않았다.
++                        try { listener?.Stop(); } catch { }
++                        try { listener?.Server?.Dispose(); } catch { }
++                        listener = null;
+                         currentUnityPort = PortManager.DiscoverNewPort();
+                         _portBusySince = 0.0;
+ 
+@@ -369,10 +380,24 @@
+                     heartbeatSeq++;
+                     WriteHeartbeat(false, "ready");
+                     nextHeartbeatAt = EditorApplication.timeSinceStartup + 0.5f;
+-                }
+-                catch (SocketException ex)
+-                {
+-                    McpLog.Error($"Failed to start TCP listener: {ex.Message}");
++                    startFailureCount = 0;
++                    nextStartAt = 0.0;
++                }
++                catch (Exception ex)
++                {
++                    // 포트 범위 소진은 SocketException이 아닌 InvalidOperationException이다.
++                    // 이를 흘리면 update마다 100개 포트를 훑고 Console을 예외로 채웠다.
++                    Stop();
++                    startFailureCount = Math.Min(startFailureCount + 1, 6);
++                    double retrySeconds = Math.Min(MaximumStartRetrySeconds,
++                        Math.Pow(2.0, startFailureCount - 1));
++                    nextStartAt = EditorApplication.timeSinceStartup + retrySeconds;
++                    if (!ensureUpdateHooked)
++                    {
++                        ensureUpdateHooked = true;
++                        EditorApplication.update += EnsureStartedOnEditorIdle;
++                    }
++                    McpLog.Warn($"TCP bridge startup failed ({ex.GetType().Name}): {ex.Message}. Retrying in {retrySeconds:0.#}s.");
+                     WriteHeartbeat(false, "start_failed");
+                 }
+             }
+@@ -381,13 +406,9 @@
+         private static TcpListener CreateConfiguredListener(int port)
+         {
+             var newListener = new TcpListener(IPAddress.Loopback, port);
+-#if UNITY_EDITOR_OSX
+-            // Grid-Caster 로컬 수정: 원본은 ExclusiveAddressUse로 SO_REUSEADDR를 막았지만, 이 Mac에서
+-            // 커널에 남은 TIME_WAIT 때문에 6400~6499 전체 bind가 실패해 브리지가 시작되지 못했다.
+-            // 이 버전은 AssetImportWorker(배치 모드)에서 브리지를 시작하지 않으므로 SO_REUSEADDR를 켠다.
+-            // 실제로 listen 중인 다른 소켓이 있으면 bind는 여전히 실패한다(SO_REUSEPORT는 켜지 않음).
+-            try { newListener.Server.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, true); } catch { }
+-#endif
++            // 다른 에디터가 이미 사용하는 포트를 공유하지 않는다.
++            // 도메인 재로드 직후의 일시적인 충돌은 위의 재시도·대체 포트 경로가 처리한다.
++            LoopbackSocketOptions.Configure(newListener.Server);
+             try
+             {
+                 newListener.Server.LingerState = new LingerOption(true, 0);
+@@ -403,7 +424,7 @@
+             Task toWait = null;
+             lock (startStopLock)
+             {
+-                if (!isRunning)
++                if (!isRunning && listener == null && cts == null && listenerTask == null)
+                 {
+                     return;
+                 }
+@@ -555,22 +576,9 @@
+                         return;
+                     }
+ 
+-                    // In stdio transport there is only ever one active Python server.
+-                    // A new connection means the old one is dead — close stale clients so
+-                    // their hung ReadFrameAsUtf8Async calls throw and exit cleanly.
+-                    TcpClient[] staleClients;
+-                    lock (clientsLock)
+-                    {
+-                        staleClients = activeClients.Where(c => c != client).ToArray();
+-                    }
+-                    if (staleClients.Length > 0)
+-                    {
+-                        McpLog.Info($"Closing {staleClients.Length} stale client(s) after new connection", always: false);
+-                        foreach (var stale in staleClients)
+-                        {
+-                            try { stale.Close(); } catch { }
+-                        }
+-                    }
++                    // Codex와 Claude는 각각 별도의 stdio 서버로 같은 에디터에 접속한다.
++                    // 새 연결이 왔다고 기존 연결이 죽은 것은 아니다. 강제 종료하면 두 도구가
++                    // 서로를 끊으며 재접속을 반복한다. 각 연결의 EOF/시간 초과와 Stop이 정리한다.
+ 
+                     while (isRunning && !token.IsCancellationRequested)
+                     {
+--- /dev/null
++++ b/Packages/com.coplaydev.unity-mcp/Editor/Helpers/LoopbackSocketOptions.cs
+@@ -0,0 +1,37 @@
++using System;
++using System.Net.Sockets;
++#if UNITY_EDITOR_OSX
++using System.Runtime.InteropServices;
++#endif
++
++namespace MCPForUnity.Editor.Helpers
++{
++    // 포트 검사와 실제 리스너가 같은 정책을 사용한다.
++    internal static class LoopbackSocketOptions
++    {
++        public static void Configure(Socket socket)
++        {
++            socket.ExclusiveAddressUse = true;
++#if UNITY_EDITOR_OSX
++            // 이 Unity Mono의 관리형 ReuseAddress는 살아 있는 리스너까지 공유했다.
++            // macOS 헤더의 네이티브 옵션을 따로 설정해 TIME_WAIT 주소만 재사용하고,
++            // 다른 에디터/프로세스와 같은 포트를 동시에 listen하는 것은 금지한다.
++            SetNative(socket, 0x0004, 1); // SO_REUSEADDR
++            SetNative(socket, 0x0200, 0); // SO_REUSEPORT
++#endif
++        }
++
++#if UNITY_EDITOR_OSX
++        [DllImport("libc", SetLastError = true)]
++        private static extern int setsockopt(int descriptor, int level, int option,
++            ref int value, int length);
++
++        private static void SetNative(Socket socket, int option, int value)
++        {
++            const int SolSocket = 0xffff;
++            if (setsockopt(socket.Handle.ToInt32(), SolSocket, option, ref value, sizeof(int)) != 0)
++                throw new SocketException(Marshal.GetLastWin32Error());
++        }
++#endif
++    }
++}
+--- /dev/null
++++ b/Packages/com.coplaydev.unity-mcp/Editor/Helpers/LoopbackSocketOptions.cs.meta
+@@ -0,0 +1,2 @@
++fileFormatVersion: 2
++guid: 2aa9c636c09124b95800221345eb4180
+\ No newline at end of file

@@ -39,6 +39,7 @@ public static class ActorMotion
         if (controller == "idle-run") return 0.16f;  // wizard_attack 70 + 90ms
         if (controller == "Bat") return 0.28f;       // bat_attack 130 + 150ms
         if (controller == "Snake") return 0.30f;     // snake_attack 140 + 160ms
+        if (controller == "PawnGuard") return 0.30f; // pawn_guard_attack 70 + 80 + 150ms(방패 밀치기)
         return 0f;
     }
 

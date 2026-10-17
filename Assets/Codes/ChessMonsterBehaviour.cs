@@ -42,6 +42,20 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
     private int rookTargetColumn;
     private float rookShotFlashUntil;
     private bool knightCounterOpen;
+    // 폭탄병: 예고한 3×3 칸, 남은 플레이어 행동 수, 폭발 뒤 재배치 턴
+    private readonly HashSet<Vector3Int> bombCells = new HashSet<Vector3Int>();
+    private int bombFuse;
+    private bool bomberRepositioning;
+    private BombTelegraph bombTelegraph;
+    public const int BombFuseActions = 2;
+    public const int BomberRange = 6;
+    public const int BomberPreferredMin = 3;
+    public const int BomberPreferredMax = 5;
+    public static int BombDamage = 2;
+    public bool HasPendingBomb => monster != null && monster.MovementPattern == MonsterMovementPattern.Bomber
+        && bombFuse > 0 && bombCells.Count > 0;
+    public int BombFuse => bombFuse;
+    public IReadOnlyCollection<Vector3Int> BombCells => bombCells;
 
     public int PatternExecutions { get; private set; }
     public int BishopMoveDistance => bishopMoveDistance;
@@ -55,7 +69,9 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
     public bool WillKnightJumpNextTurn => monster != null
         && monster.MovementPattern == MonsterMovementPattern.Knight
         && actionIndex % knightInterval == 0;
-    public string StatusText => monster.MovementPattern == MonsterMovementPattern.Knight
+    public string StatusText => monster.MovementPattern == MonsterMovementPattern.Bomber
+        ? (HasPendingBomb ? $"폭탄병 · {bombFuse}행동 뒤 3×3 폭발 / 처치하면 불발" : "폭탄병 · 6칸 안이면 내 위치에 3×3 폭탄 예고")
+        : monster.MovementPattern == MonsterMovementPattern.Knight
         ? $"N · {knightInterval}턴마다 도약 / 다음: {(WillKnightJumpNextTurn ? "도약" : "준비")}"
             + (IsKnightCounterVulnerable ? " · 이번 행동 인접 첫 직격 +1" : string.Empty)
         : monster.MovementPattern == MonsterMovementPattern.Bishop
@@ -85,6 +101,8 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
         rookTargetColumn = monster.GridPosition.x;
         rookShotFlashUntil = 0f;
         knightCounterOpen = false;
+        ClearBomb();
+        bomberRepositioning = false;
     }
 
     public void CloseKnightCounterWindow() => knightCounterOpen = false;
@@ -96,6 +114,7 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
             case MonsterMovementPattern.Knight: TakeKnightTurn(playerCell, blocked); break;
             case MonsterMovementPattern.Bishop: TakeBishopTurn(playerCell, blocked); break;
             case MonsterMovementPattern.Rook: TakeRookTurn(blocked); break;
+            case MonsterMovementPattern.Bomber: TakeBomberTurn(playerCell, blocked); break;
             default: monster.FinishTurn(); break;
         }
         actionIndex++;
@@ -293,6 +312,94 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
         else
             ChargeRook(blocked);
     }
+
+    // ---------------- 폭탄병 ----------------
+    // 사거리 안이면 플레이어 칸 중심 3×3에 폭탄을 던져 고정 예고하고, 플레이어가 두 번 행동한 뒤 터진다(여왕 포격과 같은 박자).
+    // 폭발은 같은 칸의 다른 적에게도 피해를 준다. 터진 뒤 한 턴은 거리를 다시 잡는다. 폭탄병이 죽으면 던진 폭탄은 불발된다.
+    private void TakeBomberTurn(Vector3Int playerCell, Func<Vector3Int, bool> blocked)
+    {
+        if (bombFuse > 0)
+        {
+            bombFuse--;
+            if (bombFuse == 0) DetonateBomb();
+            else bombTelegraph?.SetFuse(bombFuse);
+            monster.FinishTurn();
+            return;
+        }
+        int distance = Chebyshev(monster.GridPosition, playerCell);
+        if (!bomberRepositioning && distance <= BomberRange && distance >= 2)
+        {
+            ThrowBomb(playerCell);
+            monster.FinishTurn();
+            return;
+        }
+        bomberRepositioning = false;
+        // 3~5칸 거리를 유지한다: 너무 가까우면 물러나고, 멀면 다가간다.
+        Vector3Int origin = monster.GridPosition;
+        Vector3Int best = origin;
+        int bestScore = BomberScore(distance);
+        foreach (Vector3Int step in Cardinals)
+        {
+            Vector3Int cell = origin + step;
+            if (cell == playerCell || !grid.IsWalkableCell(cell) || blocked(cell)) continue;
+            int score = BomberScore(Chebyshev(cell, playerCell));
+            if (score < bestScore) { bestScore = score; best = cell; }
+        }
+        if (best == origin || !monster.TryBeginMove(origin, best)) monster.FinishTurn();
+    }
+
+    private static int BomberScore(int distance) =>
+        distance < BomberPreferredMin ? (BomberPreferredMin - distance) * 10
+        : distance > BomberPreferredMax ? distance - BomberPreferredMax : 0;
+
+    private void ThrowBomb(Vector3Int center)
+    {
+        bombCells.Clear();
+        for (int y = -1; y <= 1; y++)
+            for (int x = -1; x <= 1; x++)
+            {
+                Vector3Int cell = center + new Vector3Int(x, y, 0);
+                if (grid.IsWalkableCell(cell)) bombCells.Add(cell);
+            }
+        bombFuse = BombFuseActions;
+        ActorMotion.Trigger(monster, ActorMotion.Attack);
+        GameAudio.Play(CombatSound.MagicLaunch);
+        if (bombTelegraph == null) bombTelegraph = BombTelegraph.Create(grid);
+        bombTelegraph.Show(bombCells, center, monster.transform.position, bombFuse);
+        PatternExecutions++;
+    }
+
+    private void DetonateBomb()
+    {
+        var cells = new List<Vector3Int>(bombCells);
+        ClearBomb();
+        bomberRepositioning = true;
+        KnightQuakeEffect.PlayCells(grid, cells, true);
+        if (player != null && player.CurrentHealth > 0 && cells.Contains(player.GridPosition))
+            player.TakeDamage(BombDamage, PlayerDamageKind.Hazard, Vector3Int.zero);
+        // 폭발에 휘말린 다른 적도 피해를 받는다(유인 플레이). 목록을 먼저 고정한다.
+        MonsterSpawner spawner = FindAnyObjectByType<MonsterSpawner>();
+        if (spawner == null) return;
+        foreach (MonsterMovement other in new List<MonsterMovement>(spawner.ActiveMonsters))
+            if (other != null && !other.IsDead && cells.Contains(other.GridPosition))
+                other.TakeDamage(BombDamage, other.GridPosition - monster.GridPosition);
+    }
+
+    private void ClearBomb()
+    {
+        bombCells.Clear();
+        bombFuse = 0;
+        bombTelegraph?.Hide();
+    }
+
+    private void OnDestroy()
+    {
+        // 폭탄병이 죽으면 예고한 폭탄도 불발된다.
+        if (bombTelegraph != null) Destroy(bombTelegraph.gameObject);
+    }
+
+    private static int Chebyshev(Vector3Int a, Vector3Int b) =>
+        Mathf.Max(Mathf.Abs(a.x - b.x), Mathf.Abs(a.y - b.y));
 
     private void OnGUI()
     {

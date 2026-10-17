@@ -1429,8 +1429,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MonsterSpawner
   monsterPrefabs:
-  - {fileID: 389352596088525320, guid: 18fd261aaa22b42d1a1fe456aa3c6b06, type: 3}
-  - {fileID: 5932958904877674560, guid: 78172201126dc4c0387914e7ad7284d1, type: 3}
+  - {fileID: 5932958904877674560, guid: dfd7043bbf4e8491f9dfe9e4c1654de9, type: 3}
   player: {fileID: 1479494355}
   mapTilemap: {fileID: 1982633485}
   edgeInsetTiles: 1
@@ -1438,13 +1437,24 @@ MonoBehaviour:
   enableChessWaves: 1
   chessMonsterSprite: {fileID: -2062616160, guid: 2f54d1484e82941b08d43790761d4864, type: 3}
   chessMonsterAnimatorController: {fileID: 9100000, guid: ec8be16b33cce443a9d6c3f6b4952fb9, type: 2}
-  bishopMonsterSprite: {fileID: -1933069808, guid: 40115c6db072f4dac9a38e773eef0d88, type: 3}
-  bishopMonsterAnimatorController: {fileID: 9100000, guid: d6fe023b245ad46c88b3bf3b67292d63, type: 2}
+  bishopMonsterSprite: {fileID: -26182444, guid: 24a1365c314394fadae029720d068f8a, type: 3}
+  bishopMonsterAnimatorController: {fileID: 9100000, guid: 94fca75cfbf1348f5ab62a96bbb4da67, type: 2}
   knightMonsterSprite: {fileID: -414182080, guid: 7975a01b80a89413db4d6e45375f1448, type: 3}
   knightMonsterAnimatorController: {fileID: 9100000, guid: 3139f70fab4bd4478887b55d76270658, type: 2}
   rookMonsterSprite: {fileID: -1099427868, guid: 8636472aec18c491094ef14fd103e216, type: 3}
   rookMonsterAnimatorController: {fileID: 9100000, guid: 3174df463a541432e913da56c81f17e5, type: 2}
+  bomberMonsterSprite: {fileID: 302961923, guid: 0a0867a7f0d3644acaad356a963933e8, type: 3}
+  bomberMonsterAnimatorController: {fileID: 9100000, guid: ab42d0ceefdd04e4a820186e8a0c7da9, type: 2}
+  bomberHealth: 2
   chessMonsterHealth: 3
+  enableQueenClock: 1
+  clockBaseTurns: 9
+  clockTurnsPerMonster: 0.75
+  overtimeReinforceInterval: 3
+  maxReinforcementsPerWave: 2
+  reinforcementMinDistance: 2
+  reinforcementMaxDistance: 3
+  dismissReinforcementsOnClear: 1
   knightActionInterval: 1
   bishopMoveDistance: 4
   bishopOrbitDistance: 2
@@ -6829,6 +6839,7 @@ GameObject:
   - component: {fileID: 1479494361}
   - component: {fileID: 1479494362}
   - component: {fileID: 1479494363}
+  - component: {fileID: 1479494364}
   m_Layer: 0
   m_Name: player
   m_TagString: Untagged
@@ -7146,6 +7157,27 @@ MonoBehaviour:
   graveSprite: {fileID: 8179912504859571379, guid: 64556b8f5b732470687cb3571148b9d2, type: 3}
   hidePlayerVisual: 1
   sortingOrderOffset: 1
+--- !u!114 &1479494364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1479494352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7c21343df64d4dd0b0845894d846825, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InitiativeTracker
+  enableInitiative: 1
+  maxInitiative: 3
+  startInitiative: 1
+  movementArtCost: 1
+  gainPerKill: 1
+  gainMultiHit: 1
+  gainAdjacentHit: 1
+  maxGainPerAttack: 2
+  fastClearBonus: 1
 --- !u!1 &1506469721
 GameObject:
   m_ObjectHideFlags: 0

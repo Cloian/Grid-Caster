@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 // 나이트 착지 내려찍기 연출: 십자 4칸에 균열(바닥 층)과 먼지구름(캐릭터 위 층)을 띄우고 땅을 흔든다.
@@ -32,6 +33,26 @@ public sealed class KnightQuakeEffect : MonoBehaviour
         CameraController.PlayImpactShake(Vector3.down);
     }
 
+    // 폭탄병 폭발 등 임의 칸 묶음에 같은 균열·먼지 연출을 낸다.
+    public static void PlayCells(GridManager grid, IEnumerable<Vector3Int> cells, bool shake)
+    {
+        if (grid == null || !LoadFrames()) return;
+        foreach (Vector3Int cell in cells)
+            if (grid.IsWalkableCell(cell)) Spawn(grid.GetCellCenterWorld(cell), Vector3Int.zero);
+        if (shake) CameraController.PlayImpactShake(Vector3.down);
+    }
+
+    // 소환 해제 등: 균열 없이 먼지구름만 피어오른다.
+    public static void PlayDust(GridManager grid, IEnumerable<Vector3Int> cells)
+    {
+        if (grid == null || !LoadFrames()) return;
+        foreach (Vector3Int cell in cells)
+        {
+            KnightQuakeEffect effect = Spawn(grid.GetCellCenterWorld(cell), Vector3Int.zero);
+            effect.crack.enabled = false;
+        }
+    }
+
     private static bool LoadFrames()
     {
         if (crackFrames == null || crackFrames.Length == 0)
@@ -47,7 +68,7 @@ public sealed class KnightQuakeEffect : MonoBehaviour
         return frames;
     }
 
-    private static void Spawn(Vector3 position, Vector3Int direction)
+    private static KnightQuakeEffect Spawn(Vector3 position, Vector3Int direction)
     {
         GameObject root = new GameObject("KnightQuake");
         root.transform.position = position;
@@ -61,6 +82,7 @@ public sealed class KnightQuakeEffect : MonoBehaviour
         effect.dust.flipX = flipX;
         effect.crack.flipY = direction.y < 0;
         effect.StartCoroutine(effect.Play());
+        return effect;
     }
 
     private static SpriteRenderer AddLayer(GameObject root, string name, int order)

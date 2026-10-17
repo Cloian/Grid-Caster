@@ -109,6 +109,9 @@ public static class MotionUiRegressionValidation
         var ui = hud.GetComponent<RunProgressionUiController>();
         var run = player.GetComponent<RunProgressionSystem>();
         var animator = player.GetComponent<Animator>();
+        // 모션·UI 회귀만 본다. 주도권(이동술 비용)과 여왕의 시계 프로토타입 영향은 뺀다.
+        player.GetComponent<InitiativeTracker>()?.SetEnabledForValidation(false);
+        spawner.SetQueenClockForValidation(false);
         hud.SelectTrait(0);
         yield return null;
         GameObject.Find("UpgradeChoice_1").GetComponent<UnityEngine.UI.Button>().onClick.Invoke();
