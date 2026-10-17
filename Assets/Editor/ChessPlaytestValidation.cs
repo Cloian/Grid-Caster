@@ -220,7 +220,7 @@ public static class ChessPlaytestValidation
         Check(player.CurrentHealth == 10, "나이트 착지 전 피해 없음");
         Check(knight.GridPosition == new Vector3Int(5, 4, 0), "나이트 빈 L자 착지 칸 선택");
         while (!done) yield return null;
-        Check(player.CurrentHealth == 9, "착지 십자 피해 1회");
+        Check(player.CurrentHealth == 10 - ChessMonsterBehaviour.KnightLandingDamage, "착지 십자 피해 1회");
         PlaceFixture(test, player, new Vector3Int(6, 5, 0), new Vector3Int(3, 3, 0));
         done = false;
         IsolatedTurn(knight, test, () => done = true, cell => cell != new Vector3Int(5, 4, 0));
@@ -369,14 +369,14 @@ public static class ChessPlaytestValidation
         projectiles.ClearProjectiles();
         fire.Clear();
         fire.AddFire(new Vector3Int(5, 4, 0));
-        int healthOnEntry = -1;
-        Action entered = () => healthOnEntry = player.CurrentHealth;
-        player.PlayerMoved += entered;
+        // 불길은 지나갈 수 없는 벽이다: 실제 클릭으로 불길 칸에 들어가려 해도 이동·피해·적 턴이 없다.
+        int healthBeforeWall = player.CurrentHealth;
         player.ProcessInputFrame(false, true, true, false,
             Camera.main.WorldToScreenPoint(grid.GetCellCenterWorld(new Vector3Int(5, 4, 0))));
-        while (!player.CanAct) yield return null;
-        player.PlayerMoved -= entered;
-        Check(healthOnEntry == 9, "실제 클릭 이동으로 불길 진입 피해 1회");
+        yield return null;
+        Check(player.GridPosition == new Vector3Int(4, 4, 0) && player.CurrentHealth == healthBeforeWall && player.CanAct,
+            "실제 클릭으로 불길 칸 이동 불가 · 피해 없음");
+        player.CancelSelection();
         int healthBeforeAttack = player.CurrentHealth;
         fire.AddFire(player.GridPosition);
         player.ProcessInputFrame(true, false, true, false,

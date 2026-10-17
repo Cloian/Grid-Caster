@@ -141,7 +141,8 @@ public sealed class MonsterStatusHud : MonoBehaviour
                 case MonsterMovementPattern.Bishop:
                     return Intent.Fire;
                 case MonsterMovementPattern.Bomber:
-                    return chess.HasPendingBomb ? Intent.Bomb : Intent.Move;
+                    // 던진 폭탄이 있으면 폭탄, 다음 턴에 던질 거면 조준(과녁) 아이콘
+                    return chess.HasPendingBomb ? Intent.Bomb : chess.WillThrowNextTurn ? Intent.Crossbow : Intent.Move;
                 case MonsterMovementPattern.Rook:
                     return chess.IsRookCharged ? Intent.Crossbow : Intent.Wait;
             }

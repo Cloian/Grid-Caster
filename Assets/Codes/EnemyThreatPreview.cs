@@ -61,7 +61,9 @@ public sealed class EnemyThreatPreview : MonoBehaviour
                 foreach (Vector3Int cell in pattern.BombCells) output.Add(cell);
                 return $"주황: 폭탄 3×3 · {pattern.BombFuse}행동 뒤 폭발(피해 {ChessMonsterBehaviour.BombDamage}, 다른 적도 맞음) · 폭탄병을 처치하면 불발";
             }
-            return $"폭탄병: {ChessMonsterBehaviour.BomberRange}칸 안이면 내 위치에 3×3 폭탄 예고 → 두 번 행동 뒤 폭발 · 3~5칸 거리를 유지 · 체력이 낮음";
+            return pattern.WillThrowNextTurn
+                ? "과녁: 다음 적 턴에 내 위치로 3×3 폭탄을 던짐 → 두 번 행동 뒤 폭발 · 2칸 안으로 붙거나 7칸 밖이면 던지지 못함"
+                : $"폭탄병: {ChessMonsterBehaviour.BomberRange}칸 안이면 내 위치에 3×3 폭탄 예고 → 두 번 행동 뒤 폭발 · 3~5칸 거리를 유지 · 체력이 낮음";
         }
         if (monster.MovementPattern == MonsterMovementPattern.Rook)
         {
@@ -95,7 +97,7 @@ public sealed class EnemyThreatPreview : MonoBehaviour
                     if (!map.IsWalkableCell(cell)) break;
                     output.Add(cell);
                 }
-            return "주황: 출발점과 대각선 불길 경로 후보(한 경로만 선택) · 생성 즉시 피해 없음 · 진입 시 피해";
+            return "주황: 출발점과 대각선 불길 경로 후보(한 경로만 선택) · 불길은 2턴 동안 지나갈 수 없는 벽 · 공격은 통과하며 지나간 불은 꺼짐";
         }
         return string.Empty;
     }

@@ -216,7 +216,7 @@ public sealed class ChessPlaytest : MonoBehaviour
             GUILayout.Space(8);
             GUILayout.Label("S 이동 / A 공격 → 화살표 타일 클릭\n우클릭 취소 · 대각선 포함 8방향", text);
             GUILayout.Space(8);
-            GUILayout.Label("하늘색 N: 착지 십자 공격\n노란색 B: 대각선 이동·불길\n분홍색 R: 무작위 열 장전 → 사격 → 한 턴 재정비\n다음 이동 예고 없음 · 불길은 진입 피해", text);
+            GUILayout.Label("하늘색 N: 착지 십자 공격\n노란색 B: 대각선 이동·불길\n분홍색 R: 무작위 열 장전 → 사격 → 한 턴 재정비\n다음 이동 예고 없음 · 불길은 지나갈 수 없는 벽", text);
             for (int i = 0; i < encounter.Count; i++)
             {
                 if (encounter[i] != null && !encounter[i].IsDead)

@@ -1458,7 +1458,7 @@ MonoBehaviour:
   knightActionInterval: 1
   bishopMoveDistance: 4
   bishopOrbitDistance: 2
-  bishopFireTurns: 3
+  bishopFireTurns: 2
   bishopFireDamage: 1
 --- !u!4 &216182191
 Transform:

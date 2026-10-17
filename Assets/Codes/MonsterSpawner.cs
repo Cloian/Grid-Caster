@@ -61,11 +61,13 @@ public sealed class MonsterSpawner : MonoBehaviour
     [SerializeField, Min(2)] private int knightActionInterval = 2;
     [SerializeField, Min(1)] private int bishopMoveDistance = 4;
     [SerializeField, Min(1)] private int bishopOrbitDistance = 2;
-    [SerializeField, Min(1)] private int bishopFireTurns = 3;
+    [SerializeField, Min(1)] private int bishopFireTurns = 2;
     [SerializeField, Min(1)] private int bishopFireDamage = 1;
     public BishopFireTrail FireTrail { get; private set; }
 
     private bool UsesChessTurns => chessPlaytest != null || bossPlaytest != null || enableChessWaves;
+    // 비숍 불길은 이동만 막는 벽이다(투사체는 통과). 플레이어·적의 이동 판정에서 함께 쓴다.
+    public bool IsFireCell(Vector3Int cell) => FireTrail != null && FireTrail.HasFire(cell);
     public bool ChessWavesEnabled => enableChessWaves;
 
     private readonly List<MonsterMovement> activeMonsters = new List<MonsterMovement>();
@@ -411,7 +413,8 @@ public sealed class MonsterSpawner : MonoBehaviour
                     (currentCell, destinationCell) =>
                         TryReserveMonsterCell(monster, currentCell, destinationCell),
                     destinationCell => blockedMonsterCells.Contains(destinationCell)
-                        || reservedTransitCells.Contains(destinationCell),
+                        || reservedTransitCells.Contains(destinationCell)
+                        || IsFireCell(destinationCell),
                     destinationCell => monster.MovementPattern
                             == MonsterMovementPattern.CardinalFour
                         && recentlyDefeatedCells.Contains(destinationCell)
@@ -432,7 +435,8 @@ public sealed class MonsterSpawner : MonoBehaviour
     )
     {
         // 현재 다른 몬스터가 있거나 이번 턴에 이미 예약된 타일은 사용할 수 없다.
-        if (blockedMonsterCells.Contains(destinationCell) || reservedTransitCells.Contains(destinationCell))
+        if (blockedMonsterCells.Contains(destinationCell) || reservedTransitCells.Contains(destinationCell)
+            || IsFireCell(destinationCell))
             return false;
 
         Vector3Int step = Vector3Int.zero;
@@ -442,7 +446,7 @@ public sealed class MonsterSpawner : MonoBehaviour
             if (Mathf.Abs(delta.x) != Mathf.Abs(delta.y) || delta == Vector3Int.zero) return false;
             step = new Vector3Int(Math.Sign(delta.x), Math.Sign(delta.y), 0);
             for (Vector3Int cell = currentCell + step; cell != destinationCell; cell += step)
-                if (blockedMonsterCells.Contains(cell) || reservedTransitCells.Contains(cell)) return false;
+                if (blockedMonsterCells.Contains(cell) || reservedTransitCells.Contains(cell) || IsFireCell(cell)) return false;
         }
 
         // 몬스터가 투사체의 도착 타일로 들어오면 실제 이동 전에 피격을 먼저 확정한다.
