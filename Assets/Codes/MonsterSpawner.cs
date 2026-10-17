@@ -13,6 +13,8 @@ public sealed class MonsterSpawner : MonoBehaviour
     public event Action<int> WaveStarted;
     public event Action<int> WaveCleared;
     public event Action WorldTurnCompleted;
+    // 증원(유령)을 뺀 원래 웨이브 적이 쓰러질 때마다 알린다. 위험 제단 잠금 해제가 이 수를 센다.
+    public event Action<MonsterMovement> OriginalMonsterDefeated;
 
     [Header("참조")]
     [SerializeField] private MonsterMovement[] monsterPrefabs;
@@ -125,6 +127,8 @@ public sealed class MonsterSpawner : MonoBehaviour
     private StageFlowManager stageFlowManager;
 
     public int CurrentWave => currentWave;
+    // 이번 웨이브 시작 때 실제로 생성된 원래 적 수(증원 제외)
+    public int WaveMonsterCount { get; private set; }
     public WaveTemplate CurrentWaveTemplate { get; private set; }
     public StageFlowManager StageFlow => stageFlowManager;
     public bool IsWorldTurnInProgress => worldTurnInProgress;
@@ -790,6 +794,7 @@ public sealed class MonsterSpawner : MonoBehaviour
             recentlyDefeatedCells.Add(defeatedCell);
         blockedMonsterCells.Remove(defeatedCell);
     }
+        if (!reinforcements.Contains(monster)) OriginalMonsterDefeated?.Invoke(monster);
 
     private bool TryGetOwnVisual(MonsterMovementPattern pattern, out Sprite sprite,
         out RuntimeAnimatorController motion)
@@ -922,6 +927,7 @@ public sealed class MonsterSpawner : MonoBehaviour
 
         waveActive = spawnedCount > 0;
         ClockTurn = 0;
+        WaveMonsterCount = spawnedCount;
         reinforcementsThisWave = 0;
         reinforcements.Clear();
         ClockBudget = clockBaseTurns + Mathf.CeilToInt(spawnedCount * clockTurnsPerMonster);

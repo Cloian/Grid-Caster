@@ -6,16 +6,30 @@ using UnityEngine;
 
 public sealed class RelicOffer
 {
-    public RelicOffer(RelicDefinition relic, Vector3Int cell, bool risky)
+    public RelicOffer(RelicDefinition relic, Vector3Int cell, bool risky, int killsRequired = 0)
     {
         Relic = relic;
         Cell = cell;
         IsRisky = risky;
+        KillsRequired = Mathf.Max(0, killsRequired);
     }
 
     public RelicDefinition Relic { get; }
     public Vector3Int Cell { get; }
     public bool IsRisky { get; }
+    // 위험 제단은 잠긴 채 생기고, 이번 웨이브 원래 적을 KillsRequired만큼 처치하면 풀린다.
+    public int KillsRequired { get; }
+    public int Kills { get; private set; }
+    public bool IsLocked => Kills < KillsRequired;
+    public int KillsRemaining => Mathf.Max(0, KillsRequired - Kills);
+
+    // 잠금이 이번 처치로 풀렸으면 true
+    public bool RegisterKill()
+    {
+        if (!IsLocked) return false;
+        Kills++;
+        return !IsLocked;
+    }
 }
 
 // 한 런 안의 강화와 유물만 관리하며 사망/재시작 시 씬과 함께 초기화된다.
@@ -44,7 +58,7 @@ public sealed class RunProgressionSystem : MonoBehaviour
     private readonly List<RelicDefinition> relics = new List<RelicDefinition>();
     private readonly List<RelicOffer> activeAltars = new List<RelicOffer>();
     private readonly HashSet<string> shownRelics = new HashSet<string>();
-    private readonly List<GameObject> altarMarkers = new List<GameObject>();
+    private readonly List<RelicAltarVisual> altarMarkers = new List<RelicAltarVisual>();
     private readonly List<UpgradeDefinition> currentUpgradeOptions = new List<UpgradeDefinition>();
 
     private Move playerMovement;
@@ -55,8 +69,6 @@ public sealed class RunProgressionSystem : MonoBehaviour
     private StageFlowManager stageFlow;
     private RelicDefinition pendingRelic;
     private Action pendingRelicResume;
-    private Texture2D markerTexture;
-    private Sprite markerSprite;
     private BasicActionType lastBasicAction;
     private bool firstDamageBlocked;
     private bool firstHazardBlocked;
@@ -138,6 +150,7 @@ public sealed class RunProgressionSystem : MonoBehaviour
         stageFlow.UpgradeSelectionRequested += HandleUpgradeSelectionRequested;
         monsterSpawner.WaveStarted += HandleWaveStarted;
         monsterSpawner.WaveCleared += HandleWaveCleared;
+        monsterSpawner.OriginalMonsterDefeated += HandleOriginalMonsterDefeated;
         if (traitSystem != null) traitSystem.TraitSelected += HandleTraitSelected;
         initialized = true;
     }
@@ -532,7 +545,7 @@ public sealed class RunProgressionSystem : MonoBehaviour
         }
         RelicDefinition selected = rarityPool[UnityEngine.Random.Range(0, rarityPool.Count)];
         shownRelics.Add(selected.Id);
-        activeAltars.Add(new RelicOffer(selected, cell, risky));
+        activeAltars.Add(new RelicOffer(selected, cell, risky, risky ? RiskyAltarKillsRequired() : 0));
     }
 
     private RelicRarity RollRarity(int waveNumber, bool risky)
@@ -546,6 +559,28 @@ public sealed class RunProgressionSystem : MonoBehaviour
         float roll = UnityEngine.Random.value;
         if (roll < legendary) return RelicRarity.Legendary;
         return roll < legendary + rare ? RelicRarity.Rare : RelicRarity.Common;
+    }
+
+    // 위험 제단 잠금: 이 유물 웨이브에 나온 원래 적 수의 3분의 2(올림), 최소 1마리.
+    private int RiskyAltarKillsRequired()
+    {
+        int waveMonsters = monsterSpawner != null ? monsterSpawner.WaveMonsterCount : 0;
+        return waveMonsters <= 0 ? 0 : Mathf.Max(1, Mathf.CeilToInt(waveMonsters * 2f / 3f));
+    }
+
+    private void HandleOriginalMonsterDefeated(MonsterMovement monster)
+    {
+        bool changed = false;
+        for (int i = 0; i < activeAltars.Count; i++)
+        {
+            RelicOffer offer = activeAltars[i];
+            if (!offer.IsLocked) continue;
+            bool unlocked = offer.RegisterKill();
+            changed = true;
+            RelicAltarVisual visual = i < altarMarkers.Count ? altarMarkers[i] : null;
+            if (visual != null) visual.SetLockProgress(offer.KillsRemaining, offer.KillsRequired, unlocked);
+        }
+        if (changed) AltarsChanged?.Invoke(activeAltars);
     }
 
     private List<Vector3Int> ReachableEmptyCells()
@@ -591,33 +626,15 @@ public sealed class RunProgressionSystem : MonoBehaviour
 
     private void CreateAltarMarkers()
     {
-        if (markerSprite == null)
-        {
-            markerTexture = new Texture2D(1, 1) { filterMode = FilterMode.Point };
-            markerTexture.SetPixel(0, 0, Color.white);
-            markerTexture.Apply();
-            markerSprite = Sprite.Create(markerTexture, new Rect(0, 0, 1, 1),
-                new Vector2(0.5f, 0.5f), 1f);
-        }
         foreach (RelicOffer offer in activeAltars)
-        {
-            GameObject marker = new GameObject(offer.IsRisky ? "RiskyRelicAltar" : "SafeRelicAltar");
-            marker.transform.position = gridManager.GetCellCenterWorld(offer.Cell);
-            marker.transform.localScale = Vector3.one * 0.78f;
-            SpriteRenderer renderer = marker.AddComponent<SpriteRenderer>();
-            renderer.sprite = markerSprite;
-            renderer.color = offer.IsRisky
-                ? new Color(1f, 0.28f, 0.18f, 0.68f)
-                : new Color(0.2f, 0.9f, 1f, 0.68f);
-            renderer.sortingOrder = 4;
-            altarMarkers.Add(marker);
-        }
+            altarMarkers.Add(RelicAltarVisual.Create(gridManager, offer));
     }
 
     public bool TryHandleAltarAtCell(Vector3Int cell, Action resumeWorldTurn)
     {
         RelicOffer offer = activeAltars.FirstOrDefault(item => item.Cell == cell);
-        if (offer == null) return false;
+        // 잠긴 위험 제단은 밟아도 아무 일이 없다(처치 수를 채워야 풀린다).
+        if (offer == null || offer.IsLocked) return false;
         ClearAltars();
 
         if (relics.Count < MaxRelicSlots)
@@ -685,7 +702,7 @@ public sealed class RunProgressionSystem : MonoBehaviour
     private void ClearAltars()
     {
         activeAltars.Clear();
-        foreach (GameObject marker in altarMarkers) if (marker != null) Destroy(marker);
+        foreach (RelicAltarVisual marker in altarMarkers) if (marker != null) Destroy(marker.gameObject);
         altarMarkers.Clear();
         AltarsChanged?.Invoke(activeAltars);
     }
@@ -993,10 +1010,9 @@ public sealed class RunProgressionSystem : MonoBehaviour
         {
             monsterSpawner.WaveStarted -= HandleWaveStarted;
             monsterSpawner.WaveCleared -= HandleWaveCleared;
+            monsterSpawner.OriginalMonsterDefeated -= HandleOriginalMonsterDefeated;
         }
         if (traitSystem != null) traitSystem.TraitSelected -= HandleTraitSelected;
         ClearAltars();
-        if (markerSprite != null) Destroy(markerSprite);
-        if (markerTexture != null) Destroy(markerTexture);
     }
 }

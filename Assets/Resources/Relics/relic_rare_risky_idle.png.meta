@@ -1,0 +1,806 @@
+fileFormatVersion: 2
+guid: 36ddd345c65194d60848cebeb116da3f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8360972411655183423
+    second: relic_rare_risky_idle_0
+  - first:
+      213: -1808688047355131773
+    second: relic_rare_risky_idle_1
+  - first:
+      213: 7233561651643433579
+    second: relic_rare_risky_idle_2
+  - first:
+      213: -2230358020345676305
+    second: relic_rare_risky_idle_3
+  - first:
+      213: 8974542403660631793
+    second: relic_rare_risky_idle_4
+  - first:
+      213: 7983618556872502021
+    second: relic_rare_risky_idle_5
+  - first:
+      213: -5252087414338017554
+    second: relic_rare_risky_idle_6
+  - first:
+      213: 323271607104823214
+    second: relic_rare_risky_idle_7
+  - first:
+      213: 4056300442344353109
+    second: relic_rare_risky_idle_8
+  - first:
+      213: -374125504876517762
+    second: relic_rare_risky_idle_9
+  - first:
+      213: 7368744864851812431
+    second: relic_rare_risky_idle_10
+  - first:
+      213: 6830069775277775873
+    second: relic_rare_risky_idle_11
+  - first:
+      213: 6233316928744828201
+    second: relic_rare_risky_idle_12
+  - first:
+      213: -5163598339613999945
+    second: relic_rare_risky_idle_13
+  - first:
+      213: 6279933046766416094
+    second: relic_rare_risky_idle_14
+  - first:
+      213: 3126913080761518394
+    second: relic_rare_risky_idle_15
+  - first:
+      213: -6427216388383400157
+    second: relic_rare_risky_idle_16
+  - first:
+      213: -6779672131487299593
+    second: relic_rare_risky_idle_17
+  - first:
+      213: -4817537281215950675
+    second: relic_rare_risky_idle_18
+  - first:
+      213: 2572553611627242883
+    second: relic_rare_risky_idle_19
+  - first:
+      213: -4292926334711868868
+    second: relic_rare_risky_idle_20
+  - first:
+      213: -2944297044805034473
+    second: relic_rare_risky_idle_21
+  - first:
+      213: 2827173021710637598
+    second: relic_rare_risky_idle_22
+  - first:
+      213: -5978713551329743448
+    second: relic_rare_risky_idle_23
+  - first:
+      213: 545259639853516513
+    second: relic_rare_risky_idle_24
+  - first:
+      213: -4307105350821872303
+    second: relic_rare_risky_idle_25
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: relic_rare_risky_idle_0
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 15
+        width: 22
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c3a372d3ebd7fb80800000000000000
+      internalID: -8360972411655183423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_rare_risky_idle_1
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 16
+        width: 25
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 38807e3cdcf36e6e0800000000000000
+      internalID: -1808688047355131773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_rare_risky_idle_2
+      rect:
+        serializedVersion: 2
+        x: 70
+        y: 17
+        width: 23
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b6248134ff5c26460800000000000000
+      internalID: 7233561651643433579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_rare_risky_idle_3
+      rect:
+        serializedVersion: 2
+        x: 102
+        y: 18
+        width: 23
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fed3a5b823d2c01e0800000000000000
+      internalID: -2230358020345676305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_rare_risky_idle_4
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 18
+        width: 21
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1fe4fd754cafb8c70800000000000000
+      internalID: 8974542403660631793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_rare_risky_idle_5
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 31
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 50b2a9847c28bce60800000000000000
+      internalID: 7983618556872502021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_rare_risky_idle_6
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 25
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ee6251bc256dc17b0800000000000000
+      internalID: -5252087414338017554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_rare_risky_idle_7
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 17
+        width: 20
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eafd37b50dd7c7400800000000000000
+      internalID: 323271607104823214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_rare_risky_idle_8
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 30
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 55de138d2cfda4830800000000000000
+      internalID: 4056300442344353109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_rare_risky_idle_9
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 16
+        width: 24
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e76eb64e5d6decaf0800000000000000
+      internalID: -374125504876517762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_rare_risky_idle_10
+      rect:
+        serializedVersion: 2
+        x: 229
+        y: 15
+        width: 21
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f40e9fdc96a034660800000000000000
+      internalID: 7368744864851812431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_rare_risky_idle_11
+      rect:
+        serializedVersion: 2
+        x: 247
+        y: 28
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 10c509af54849ce50800000000000000
+      internalID: 6830069775277775873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_rare_risky_idle_12
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 23
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 92da34e98b0318650800000000000000
+      internalID: 6233316928744828201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_rare_risky_idle_13
+      rect:
+        serializedVersion: 2
+        x: 247
+        y: 21
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7bcb2840ba63758b0800000000000000
+      internalID: -5163598339613999945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_rare_risky_idle_14
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 4
+        width: 22
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ed0bfb165ddc62750800000000000000
+      internalID: 6279933046766416094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_rare_risky_idle_15
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 5
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a39005e31e6056b20800000000000000
+      internalID: 3126913080761518394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_rare_risky_idle_16
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 4
+        width: 26
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 32f96d36fb0fdc6a0800000000000000
+      internalID: -6427216388383400157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_rare_risky_idle_17
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 4
+        width: 22
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f7851ddd14c9e1a0800000000000000
+      internalID: -6779672131487299593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_rare_risky_idle_18
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 5
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: da01cecfd5ba42db0800000000000000
+      internalID: -4817537281215950675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_rare_risky_idle_19
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 4
+        width: 26
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 385a0ba31eb83b320800000000000000
+      internalID: 2572553611627242883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_rare_risky_idle_20
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 4
+        width: 22
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c3254945e367c64c0800000000000000
+      internalID: -4292926334711868868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_rare_risky_idle_21
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 5
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 71ed923ff61c327d0800000000000000
+      internalID: -2944297044805034473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_rare_risky_idle_22
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 4
+        width: 26
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1a51ad52e22c3720800000000000000
+      internalID: 2827173021710637598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_rare_risky_idle_23
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 4
+        width: 22
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8ad2d2f93b7570da0800000000000000
+      internalID: -5978713551329743448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_rare_risky_idle_24
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 5
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1e683d7e0c6219700800000000000000
+      internalID: 545259639853516513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_rare_risky_idle_25
+      rect:
+        serializedVersion: 2
+        x: 227
+        y: 4
+        width: 26
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 15df312e0861a34c0800000000000000
+      internalID: -4307105350821872303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      relic_rare_risky_idle_0: -8360972411655183423
+      relic_rare_risky_idle_1: -1808688047355131773
+      relic_rare_risky_idle_10: 7368744864851812431
+      relic_rare_risky_idle_11: 6830069775277775873
+      relic_rare_risky_idle_12: 6233316928744828201
+      relic_rare_risky_idle_13: -5163598339613999945
+      relic_rare_risky_idle_14: 6279933046766416094
+      relic_rare_risky_idle_15: 3126913080761518394
+      relic_rare_risky_idle_16: -6427216388383400157
+      relic_rare_risky_idle_17: -6779672131487299593
+      relic_rare_risky_idle_18: -4817537281215950675
+      relic_rare_risky_idle_19: 2572553611627242883
+      relic_rare_risky_idle_2: 7233561651643433579
+      relic_rare_risky_idle_20: -4292926334711868868
+      relic_rare_risky_idle_21: -2944297044805034473
+      relic_rare_risky_idle_22: 2827173021710637598
+      relic_rare_risky_idle_23: -5978713551329743448
+      relic_rare_risky_idle_24: 545259639853516513
+      relic_rare_risky_idle_25: -4307105350821872303
+      relic_rare_risky_idle_3: -2230358020345676305
+      relic_rare_risky_idle_4: 8974542403660631793
+      relic_rare_risky_idle_5: 7983618556872502021
+      relic_rare_risky_idle_6: -5252087414338017554
+      relic_rare_risky_idle_7: 323271607104823214
+      relic_rare_risky_idle_8: 4056300442344353109
+      relic_rare_risky_idle_9: -374125504876517762
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
