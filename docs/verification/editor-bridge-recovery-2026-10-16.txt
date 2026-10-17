@@ -1,0 +1,28 @@
+EDITOR_BRIDGE_RECOVERY_PASS
+2026-10-16T20:44:53.2313950+09:00 Unity 6000.4.0f1
+Real TCP port exhaustion/restart fixture. Not a guarantee against all OS/editor crashes.
+PASS original editor bridge is running before fixture
+PASS configured port is occupied by a real listener
+PASS 1000 failed port probes do not accumulate file descriptors
+PASS exhausted range stays disconnected without throwing, attempt 1
+PASS failed listener is released, attempt 1
+PASS exhausted range stays disconnected without throwing, attempt 2
+PASS failed listener is released, attempt 2
+PASS exhausted range stays disconnected without throwing, attempt 3
+PASS failed listener is released, attempt 3
+PASS exhausted range stays disconnected without throwing, attempt 4
+PASS failed listener is released, attempt 4
+PASS exhausted range stays disconnected without throwing, attempt 5
+PASS failed listener is released, attempt 5
+PASS exhausted range stays disconnected without throwing, attempt 6
+PASS failed listener is released, attempt 6
+PASS exhausted range stays disconnected without throwing, attempt 7
+PASS failed listener is released, attempt 7
+PASS exhausted range stays disconnected without throwing, attempt 8
+PASS failed listener is released, attempt 8
+PASS repeated startup failure backs off to about 30 seconds
+PASS delayCall startup does not bypass the backoff
+PASS play-mode scheduling does not shorten the existing backoff
+PASS Stop releases partially initialized listeners even when isRunning is false
+PASS bridge reconnects after ports are released
+PASS successful startup resets failure count and deadline
