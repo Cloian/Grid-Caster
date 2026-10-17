@@ -1,0 +1,454 @@
+fileFormatVersion: 2
+guid: f665790d242914334af9f8f97dc8bd0d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -341242470754384439
+    second: queen_death_0
+  - first:
+      213: -392741254348037691
+    second: queen_death_1
+  - first:
+      213: -5395906151747093223
+    second: queen_death_2
+  - first:
+      213: -854697777556397774
+    second: queen_death_3
+  - first:
+      213: 5464700424975134710
+    second: queen_death_4
+  - first:
+      213: 8324406049632744167
+    second: queen_death_5
+  - first:
+      213: 8051825973826565382
+    second: queen_death_6
+  - first:
+      213: 2750282587485635114
+    second: queen_death_7
+  - first:
+      213: 5800518530541216827
+    second: queen_death_8
+  - first:
+      213: 7806569819984288631
+    second: queen_death_9
+  - first:
+      213: -5996171583878021792
+    second: queen_death_10
+  - first:
+      213: -5096604781265812805
+    second: queen_death_11
+  - first:
+      213: -6992965439683073304
+    second: queen_death_12
+  - first:
+      213: 1050247665747824215
+    second: queen_death_13
+  - first:
+      213: -7285163204153669
+    second: queen_death_14
+  - first:
+      213: -5693170963269673412
+    second: queen_death_15
+  - first:
+      213: 4704092236022388710
+    second: queen_death_16
+  - first:
+      213: 7976043950669479039
+    second: queen_death_17
+  - first:
+      213: -8946498366494405003
+    second: queen_death_18
+  - first:
+      213: 1587687702178216121
+    second: queen_death_19
+  - first:
+      213: 7855219721443761140
+    second: queen_death_20
+  - first:
+      213: 2793410035021704739
+    second: queen_death_21
+  - first:
+      213: -1378824655402427551
+    second: queen_death_22
+  - first:
+      213: 3037645061083789045
+    second: queen_death_23
+  - first:
+      213: 6102310309189894230
+    second: queen_death_24
+  - first:
+      213: 1942748253359764322
+    second: queen_death_25
+  - first:
+      213: 318038903179866337
+    second: queen_death_26
+  - first:
+      213: 6721778969075831100
+    second: queen_death_27
+  - first:
+      213: 1127629584409290864
+    second: queen_death_28
+  - first:
+      213: 7353619686346004707
+    second: queen_death_29
+  - first:
+      213: -6393300235961058212
+    second: queen_death_30
+  - first:
+      213: 501093310703820988
+    second: queen_death_31
+  - first:
+      213: -4785638080610294469
+    second: queen_death_32
+  - first:
+      213: 4067669679922265946
+    second: queen_death_33
+  - first:
+      213: -9133758528349486648
+    second: queen_death_34
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: queen_death_00
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 120
+        height: 120
+      alignment: 9
+      pivot: {x: 0.5, y: 0.43333334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a6d5a74269ed493590a5d1f33f65520
+      internalID: 1108267718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: queen_death_01
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 0
+        width: 120
+        height: 120
+      alignment: 9
+      pivot: {x: 0.5, y: 0.43333334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 401314ad673164051a6e5c1eae263e7f
+      internalID: 1572501461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: queen_death_02
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 0
+        width: 120
+        height: 120
+      alignment: 9
+      pivot: {x: 0.5, y: 0.43333334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 517b336f753714aa989397cfba4add9d
+      internalID: 65396720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: queen_death_03
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 0
+        width: 120
+        height: 120
+      alignment: 9
+      pivot: {x: 0.5, y: 0.43333334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8463628c5fe1485fb2241b90353342b
+      internalID: -1713771709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: queen_death_04
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 0
+        width: 120
+        height: 120
+      alignment: 9
+      pivot: {x: 0.5, y: 0.43333334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a477850a232c462788bfc01e968d56d
+      internalID: 331587642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: queen_death_05
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 0
+        width: 120
+        height: 120
+      alignment: 9
+      pivot: {x: 0.5, y: 0.43333334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 860e02d8b1f7e413eba870963a4ad97e
+      internalID: 729034070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: queen_death_06
+      rect:
+        serializedVersion: 2
+        x: 720
+        y: 0
+        width: 120
+        height: 120
+      alignment: 9
+      pivot: {x: 0.5, y: 0.43333334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05bd9db3d838a45dabe8d5018aba88ac
+      internalID: 493364431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: queen_death_07
+      rect:
+        serializedVersion: 2
+        x: 840
+        y: 0
+        width: 120
+        height: 120
+      alignment: 9
+      pivot: {x: 0.5, y: 0.43333334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 999ff1bec37314b3885f46da12ae8083
+      internalID: -2118225688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 6b820453efa9d40fea703cff3952bef3
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      queen_death_0: -341242470754384439
+      queen_death_00: 1108267718
+      queen_death_01: 1572501461
+      queen_death_02: 65396720
+      queen_death_03: -1713771709
+      queen_death_04: 331587642
+      queen_death_05: 729034070
+      queen_death_06: 493364431
+      queen_death_07: -2118225688
+      queen_death_1: -392741254348037691
+      queen_death_10: -5996171583878021792
+      queen_death_11: -5096604781265812805
+      queen_death_12: -6992965439683073304
+      queen_death_13: 1050247665747824215
+      queen_death_14: -7285163204153669
+      queen_death_15: -5693170963269673412
+      queen_death_16: 4704092236022388710
+      queen_death_17: 7976043950669479039
+      queen_death_18: -8946498366494405003
+      queen_death_19: 1587687702178216121
+      queen_death_2: -5395906151747093223
+      queen_death_20: 7855219721443761140
+      queen_death_21: 2793410035021704739
+      queen_death_22: -1378824655402427551
+      queen_death_23: 3037645061083789045
+      queen_death_24: 6102310309189894230
+      queen_death_25: 1942748253359764322
+      queen_death_26: 318038903179866337
+      queen_death_27: 6721778969075831100
+      queen_death_28: 1127629584409290864
+      queen_death_29: 7353619686346004707
+      queen_death_3: -854697777556397774
+      queen_death_30: -6393300235961058212
+      queen_death_31: 501093310703820988
+      queen_death_32: -4785638080610294469
+      queen_death_33: 4067669679922265946
+      queen_death_34: -9133758528349486648
+      queen_death_4: 5464700424975134710
+      queen_death_5: 8324406049632744167
+      queen_death_6: 8051825973826565382
+      queen_death_7: 2750282587485635114
+      queen_death_8: 5800518530541216827
+      queen_death_9: 7806569819984288631
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -27,6 +27,10 @@ public sealed class CharacterShadow : MonoBehaviour
         // 64px 체스 적: 발이 프레임 바닥에서 2px 위(y=62). 룩은 성벽에 붙어 있어 그림자가 없다.
         new Profile { Prefix = "knight", Width = 52, Height = 8, OffsetX = 0f, OffsetY = -29f },
         new Profile { Prefix = "pawn_guard", Width = 34, Height = 7, OffsetX = 0f, OffsetY = -29f },
+        new Profile { Prefix = "bomber", Width = 34, Height = 7, OffsetX = 0f, OffsetY = -29f },
+        new Profile { Prefix = "bishop_priest", Width = 30, Height = 7, OffsetX = 2f, OffsetY = -29f },
+        // 여왕 120px: 기준점이 발(점유 3×3의 아래 가장자리) 위 48px에 있다.
+        new Profile { Prefix = "queen", Width = 80, Height = 12, OffsetX = 0f, OffsetY = -47f },
     };
 
     private static readonly Color Core = new Color(30f / 255f, 22f / 255f, 34f / 255f, 0.5f);

@@ -39,6 +39,8 @@ public static class LivelyMotionSetupTool
         public bool Loop;
         public int[] DurationsMs;
         public float PpuOverride;
+        // 0이면 프레임 중심. 여왕처럼 발을 점유 칸 바닥에 맞춰야 할 때 세로 기준점(0~1)을 준다.
+        public float PivotY;
         public float Ppu => PpuOverride > 0f ? PpuOverride : Size == 50 ? PixelsPerUnit : MonsterPixelsPerUnit;
     }
 
@@ -100,17 +102,18 @@ public static class LivelyMotionSetupTool
     };
 
     // 체스 적(퀸 진영): 아르마딜로와 같은 64px 프레임 · 32 PPU. 스포너가 한 칸에 1/2 배율로 맞춘다.
-    private static Motion[] ChessMotions(string folder, string prefix, int[] idle, int[] move, int[] attack, int[] hit, int[] death)
+    private static Motion[] ChessMotions(string folder, string prefix, int[] idle, int[] move, int[] attack, int[] hit, int[] death,
+        int size = 64, float pivotY = 0f)
     {
         string Sheet(string clip) => $"Assets/Monsters/{folder}/Lively/{prefix}_{clip}.png";
         string Clip(string clip) => $"Assets/Monsters/Animations/{folder}/{folder}{clip}.anim";
         return new[]
         {
-            new Motion { Sheet = Sheet("idle"), Clip = Clip("Idle"), Size = 64, PpuOverride = 32f, Loop = true, DurationsMs = idle },
-            new Motion { Sheet = Sheet("move"), Clip = Clip("Move"), Size = 64, PpuOverride = 32f, Loop = true, DurationsMs = move },
-            new Motion { Sheet = Sheet("attack"), Clip = Clip("Attack"), Size = 64, PpuOverride = 32f, DurationsMs = attack },
-            new Motion { Sheet = Sheet("hit"), Clip = Clip("Hit"), Size = 64, PpuOverride = 32f, DurationsMs = hit },
-            new Motion { Sheet = Sheet("death"), Clip = Clip("Death"), Size = 64, PpuOverride = 32f, DurationsMs = death },
+            new Motion { Sheet = Sheet("idle"), Clip = Clip("Idle"), Size = size, PpuOverride = 32f, PivotY = pivotY, Loop = true, DurationsMs = idle },
+            new Motion { Sheet = Sheet("move"), Clip = Clip("Move"), Size = size, PpuOverride = 32f, PivotY = pivotY, Loop = true, DurationsMs = move },
+            new Motion { Sheet = Sheet("attack"), Clip = Clip("Attack"), Size = size, PpuOverride = 32f, PivotY = pivotY, DurationsMs = attack },
+            new Motion { Sheet = Sheet("hit"), Clip = Clip("Hit"), Size = size, PpuOverride = 32f, PivotY = pivotY, DurationsMs = hit },
+            new Motion { Sheet = Sheet("death"), Clip = Clip("Death"), Size = size, PpuOverride = 32f, PivotY = pivotY, DurationsMs = death },
         };
     }
 
@@ -127,6 +130,26 @@ public static class LivelyMotionSetupTool
         new[] { 240, 160, 160, 240 }, new[] { 90, 90, 110, 90, 90, 110 }, new[] { 70, 80, 150, 80, 110, 100, 90, 120 },
         new[] { 50, 80, 110, 140 }, new[] { 80, 100, 110, 140, 160, 100, 100, 160 });
 
+    // 비숍(향로 사제): 64px · 32 PPU. 이동 6프레임은 미끄러지며 향로를 흔들고 불씨를 떨어뜨린다.
+    private const string BishopPriestControllerPath = "Assets/Monsters/Controllers/BishopPriest.controller";
+    private static readonly Motion[] BishopPriest = ChessMotions("BishopPriest", "bishop_priest",
+        new[] { 260, 200, 260, 200 }, new[] { 70, 70, 70, 70, 70, 70 }, new[] { 70, 90, 110, 120, 120, 140 },
+        new[] { 50, 80, 110, 140 }, new[] { 80, 100, 110, 140, 160, 100, 100, 160 });
+
+    // 폭탄병: 64px · 32 PPU. 던지기는 4번째 프레임(70+90+90ms)이지만 폭발은 두 행동 뒤라 피해 시점과 무관하다.
+    private const string BomberControllerPath = "Assets/Monsters/Controllers/Bomber.controller";
+    private static readonly Motion[] Bomber = ChessMotions("Bomber", "bomber",
+        new[] { 260, 120, 120, 200 }, new[] { 90, 90, 110, 90, 90, 110 }, new[] { 70, 90, 90, 120, 120, 140 },
+        new[] { 50, 80, 110, 140 }, new[] { 80, 100, 110, 140, 160, 100, 100, 160 });
+
+    // 여왕 보스: 승인 v10 120px 원본 크기(32 PPU). 발(캔버스 아래 4px)이 3×3 점유의 아래 가장자리(중심 -48px)에 오도록
+    // 기준점을 (4+48)/120에 둔다. 시전 발동은 4번째 프레임(70+90+90ms).
+    private const string QueenControllerPath = "Assets/Monsters/Controllers/Queen.controller";
+    private const string BossScenePath = "Assets/Scenes/QueenBossPlaytest.unity";
+    private static readonly Motion[] Queen = ChessMotions("Queen", "queen",
+        new[] { 320, 220, 200, 300 }, new[] { 320, 220, 200, 300 }, new[] { 70, 90, 90, 130, 120, 150 },
+        new[] { 50, 80, 110, 140 }, new[] { 80, 120, 120, 140, 160, 100, 100, 200 }, 120, 52f / 120f);
+
     [MenuItem("Tools/Art/Apply Lively Motions")]
     public static void Apply()
     {
@@ -140,11 +163,14 @@ public static class LivelyMotionSetupTool
         AnimationClip[] batClips = Bat.Select(Build).ToArray();
         AnimationClip[] snakeClips = Snake.Select(Build).ToArray();
         AnimationClip[] armadilloClips = Armadillo.Select(Build).ToArray();
-        foreach (string folder in new[] { "Knight", "Rook", "PawnGuard" })
+        foreach (string folder in new[] { "Knight", "Rook", "PawnGuard", "Queen", "Bomber", "BishopPriest" })
             EnsureFolder("Assets/Monsters/Animations", folder);
         AnimationClip[] knightClips = Knight.Select(Build).ToArray();
         AnimationClip[] rookClips = Rook.Select(Build).ToArray();
         AnimationClip[] pawnClips = PawnGuard.Select(Build).ToArray();
+        AnimationClip[] queenClips = Queen.Select(Build).ToArray();
+        AnimationClip[] bomberClips = Bomber.Select(Build).ToArray();
+        AnimationClip[] bishopClips = BishopPriest.Select(Build).ToArray();
         ConfigureSheet(new Motion { Sheet = FireTrailSheet, Size = 32, PpuOverride = 32f });
         foreach (string sheet in QuakeSheets)
             ConfigureSheet(new Motion { Sheet = sheet, Size = 32, PpuOverride = 32f });
@@ -165,10 +191,23 @@ public static class LivelyMotionSetupTool
         ConfigureController(rook, rookClips, "Idle", "Move");
         AnimatorController pawnGuard = LoadOrCreate(PawnGuardControllerPath);
         ConfigureController(pawnGuard, pawnClips, "Idle", "Move");
+        AnimatorController bishopPriest = LoadOrCreate(BishopPriestControllerPath);
+        ConfigureController(bishopPriest, bishopClips, "Idle", "Move");
+        AnimatorController bomber = LoadOrCreate(BomberControllerPath);
+        ConfigureController(bomber, bomberClips, "Idle", "Move");
+        AnimatorController queen = LoadOrCreate(QueenControllerPath);
+        ConfigureController(queen, queenClips, "Idle", "Move");
+        ApplyToBossScene(new QueenBossBehaviour.Visuals
+        {
+            QueenSprite = LoadFrames(Queen[0])[0], QueenMotion = queen,
+            GuardSprite = LoadFrames(PawnGuard[0])[0], GuardMotion = pawnGuard
+        });
         var chess = new ChessVisuals
         {
             KnightIdle = LoadFrames(Knight[0])[0], Knight = knight,
-            RookIdle = LoadFrames(Rook[0])[0], Rook = rook
+            RookIdle = LoadFrames(Rook[0])[0], Rook = rook,
+            BomberIdle = LoadFrames(Bomber[0])[0], Bomber = bomber,
+            BishopIdle = LoadFrames(BishopPriest[0])[0], Bishop = bishopPriest
         };
 
         Sprite batIdle = LoadFrames(Bat[0])[0];
@@ -180,8 +219,8 @@ public static class LivelyMotionSetupTool
         ApplyToPrefab(SnakePrefabPath, LoadFrames(Snake[0])[0], snake);
         AssetDatabase.SaveAssets();
         Validate(playerClips.Concat(batClips).Concat(snakeClips).Concat(armadilloClips)
-            .Concat(knightClips).Concat(rookClips).Concat(pawnClips).ToArray(),
-            player, bat, snake, armadillo, knight, rook, pawnGuard);
+            .Concat(knightClips).Concat(rookClips).Concat(pawnClips).Concat(queenClips).Concat(bomberClips).Concat(bishopClips).ToArray(),
+            player, bat, snake, armadillo, knight, rook, pawnGuard, queen, bomber, bishopPriest);
     }
 
     private sealed class ChessVisuals
@@ -190,6 +229,10 @@ public static class LivelyMotionSetupTool
         public RuntimeAnimatorController Knight;
         public Sprite RookIdle;
         public RuntimeAnimatorController Rook;
+        public Sprite BomberIdle;
+        public RuntimeAnimatorController Bomber;
+        public Sprite BishopIdle;
+        public RuntimeAnimatorController Bishop;
     }
 
     // Temp/LivelyMotionSetup.pending 이 있으면 다음 스크립트 로드 때 한 번만 자동 적용한다.
@@ -302,8 +345,8 @@ public static class LivelyMotionSetupTool
             {
                 name = name,
                 rect = new Rect(i * motion.Size, 0f, motion.Size, motion.Size),
-                alignment = SpriteAlignment.Center,
-                pivot = new Vector2(0.5f, 0.5f),
+                alignment = motion.PivotY > 0f ? SpriteAlignment.Custom : SpriteAlignment.Center,
+                pivot = new Vector2(0.5f, motion.PivotY > 0f ? motion.PivotY : 0.5f),
                 border = Vector4.zero,
                 spriteID = old != null ? old.spriteID : GUID.Generate()
             };
@@ -410,6 +453,11 @@ public static class LivelyMotionSetupTool
                 serialized.FindProperty("knightMonsterAnimatorController").objectReferenceValue = chess.Knight;
                 serialized.FindProperty("rookMonsterSprite").objectReferenceValue = chess.RookIdle;
                 serialized.FindProperty("rookMonsterAnimatorController").objectReferenceValue = chess.Rook;
+                serialized.FindProperty("bomberMonsterSprite").objectReferenceValue = chess.BomberIdle;
+                serialized.FindProperty("bomberMonsterAnimatorController").objectReferenceValue = chess.Bomber;
+                // 비숍은 아르마딜로에서 향로 사제로 교체했다(불길 규칙은 그대로).
+                serialized.FindProperty("bishopMonsterSprite").objectReferenceValue = chess.BishopIdle;
+                serialized.FindProperty("bishopMonsterAnimatorController").objectReferenceValue = chess.Bishop;
                 serialized.ApplyModifiedPropertiesWithoutUndo();
             }
             foreach (ChessPlaytest playtest in roots.SelectMany(r => r.GetComponentsInChildren<ChessPlaytest>(true)))
@@ -430,6 +478,40 @@ public static class LivelyMotionSetupTool
             EditorSceneManager.MarkSceneDirty(scene);
             if (!EditorSceneManager.SaveScene(scene))
                 throw new InvalidOperationException($"씬을 저장하지 못했습니다: {scenePath}");
+        }
+        finally
+        {
+            if (openedForSetup)
+                EditorSceneManager.CloseScene(scene, true);
+            if (previous.IsValid() && previous.isLoaded)
+                SceneManager.SetActiveScene(previous);
+        }
+    }
+
+    // 보스 테스트 씬의 QueenBossPlaytest에 여왕·근위병 그림과 모션을 연결한다.
+    private static void ApplyToBossScene(QueenBossBehaviour.Visuals visuals)
+    {
+        Scene previous = SceneManager.GetActiveScene();
+        Scene scene = SceneManager.GetSceneByPath(BossScenePath);
+        bool openedForSetup = !scene.IsValid() || !scene.isLoaded;
+        if (openedForSetup)
+            scene = EditorSceneManager.OpenScene(BossScenePath, OpenSceneMode.Additive);
+        try
+        {
+            foreach (QueenBossPlaytest playtest in scene.GetRootGameObjects()
+                .SelectMany(r => r.GetComponentsInChildren<QueenBossPlaytest>(true)))
+            {
+                var serialized = new SerializedObject(playtest);
+                SerializedProperty property = serialized.FindProperty("visuals");
+                property.FindPropertyRelative("QueenSprite").objectReferenceValue = visuals.QueenSprite;
+                property.FindPropertyRelative("QueenMotion").objectReferenceValue = visuals.QueenMotion;
+                property.FindPropertyRelative("GuardSprite").objectReferenceValue = visuals.GuardSprite;
+                property.FindPropertyRelative("GuardMotion").objectReferenceValue = visuals.GuardMotion;
+                serialized.ApplyModifiedPropertiesWithoutUndo();
+            }
+            EditorSceneManager.MarkSceneDirty(scene);
+            if (!EditorSceneManager.SaveScene(scene))
+                throw new InvalidOperationException($"씬을 저장하지 못했습니다: {BossScenePath}");
         }
         finally
         {
@@ -467,7 +549,7 @@ public static class LivelyMotionSetupTool
     private static void Validate(AnimationClip[] clips, params AnimatorController[] controllers)
     {
         foreach (Motion motion in Player.Concat(Bat).Concat(Snake).Concat(Armadillo)
-            .Concat(Knight).Concat(Rook).Concat(PawnGuard))
+            .Concat(Knight).Concat(Rook).Concat(PawnGuard).Concat(Queen).Concat(Bomber).Concat(BishopPriest))
         {
             TextureImporter importer = AssetImporter.GetAtPath(motion.Sheet) as TextureImporter;
             Sprite[] frames = LoadFrames(motion);

@@ -28,6 +28,15 @@ public sealed class DamageFlash : MonoBehaviour
         CacheSpriteColors();
     }
 
+    // 소환된 유령처럼 원래 색 자체가 바뀐 경우, 번쩍임이 끝난 뒤 돌아갈 색을 갱신한다.
+    public void SetBaseColor(SpriteRenderer renderer, Color color)
+    {
+        if (spriteRenderers == null || spriteRenderers.Length == 0) CacheSpriteColors();
+        for (int i = 0; i < spriteRenderers.Length; i++)
+            if (spriteRenderers[i] == renderer) originalColors[i] = color;
+        if (!IsFlashing && renderer != null) renderer.color = color;
+    }
+
     public void Play()
     {
         if (spriteRenderers == null || spriteRenderers.Length == 0)

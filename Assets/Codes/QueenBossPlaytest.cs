@@ -8,6 +8,8 @@ public sealed class QueenBossPlaytest : MonoBehaviour
 {
     [Header("독립 보스 실험 · 정식 런과 무관")]
     [SerializeField] private Sprite grayboxSprite;
+    [Tooltip("여왕·근위병 그림과 모션. 비우면 단색 그레이박스로 시험한다.")]
+    [SerializeField] private QueenBossBehaviour.Visuals visuals;
     [SerializeField, Min(1)] private int bossHealth = 60;
     [SerializeField] private int layoutSeed = 173821;
     private static readonly Vector3Int PlayerStart = new Vector3Int(7,3,0);
@@ -53,7 +55,7 @@ public sealed class QueenBossPlaytest : MonoBehaviour
         if(strong){upgrades.AddRange(specific);upgrades.Add("trait_mastery");}
         growth.SetUpgradesForPlaytest(upgrades);
         for(int i=0;i<trait.ChargeRequired;i++)trait.RegisterCompletedAttack(true,false);
-        Encounter.Initialize(spawner,grid,Player,grayboxSprite,bossHealth,layoutSeed,phaseTwo);
+        Encounter.Initialize(spawner,grid,Player,grayboxSprite,bossHealth,layoutSeed,phaseTwo,visuals);
         HasStarted=true;Player.SetInputEnabled(true);Changed?.Invoke();return true;
     }
     public bool RestartEncounter()=>StartEncounter(TraitId,MovementArt,MovementLevel,StrongBuild,StartPhaseTwo);

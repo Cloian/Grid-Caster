@@ -54,6 +54,15 @@ public sealed class EnemyThreatPreview : MonoBehaviour
         if (pattern == null) return string.Empty;
         if (monster.IsActionBlocked) return "봉쇄됨: 다음 적 턴 행동 없음 · 다음 턴 이후에는 다시 위험";
         Vector3Int origin = monster.GridPosition;
+        if (monster.MovementPattern == MonsterMovementPattern.Bomber)
+        {
+            if (pattern.HasPendingBomb)
+            {
+                foreach (Vector3Int cell in pattern.BombCells) output.Add(cell);
+                return $"주황: 폭탄 3×3 · {pattern.BombFuse}행동 뒤 폭발(피해 {ChessMonsterBehaviour.BombDamage}, 다른 적도 맞음) · 폭탄병을 처치하면 불발";
+            }
+            return $"폭탄병: {ChessMonsterBehaviour.BomberRange}칸 안이면 내 위치에 3×3 폭탄 예고 → 두 번 행동 뒤 폭발 · 3~5칸 거리를 유지 · 체력이 낮음";
+        }
         if (monster.MovementPattern == MonsterMovementPattern.Rook)
         {
             if (!pattern.IsRookCharged) return "룩: 무작위 열 장전 → 발사 → 재정비";

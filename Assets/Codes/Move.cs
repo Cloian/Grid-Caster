@@ -102,6 +102,13 @@ public class Move : MonoBehaviour
     private Vector3Int activeAttackDirection;
     private int activeAttackDamage;
     private readonly Dictionary<MonsterMovement, int> attackPrediction = new Dictionary<MonsterMovement, int>();
+    // 주도권: 공격 한 번(연속 시전·범위·충돌 포함) 동안 피해를 준 적과 처치를 모은다.
+    private InitiativeTracker initiative;
+    private readonly HashSet<MonsterMovement> attackDamagedMonsters = new HashSet<MonsterMovement>();
+    private readonly HashSet<MonsterMovement> attackKilledMonsters = new HashSet<MonsterMovement>();
+    private bool collectingAttackResult;
+    private bool attackHitAdjacent;
+    public InitiativeTracker Initiative => initiative;
     // 조준 중인 공격이 각 적에게 줄 예상 피해(직격·관통·연속 시전·강화 폭발 합계). 조준하지 않으면 비어 있다.
     public IReadOnlyDictionary<MonsterMovement, int> AttackPrediction => attackPrediction;
     private int activeAttackPenetrations;
@@ -149,6 +156,8 @@ public class Move : MonoBehaviour
         }
         if (GetComponent<EnemyThreatPreview>() == null)
             gameObject.AddComponent<EnemyThreatPreview>();
+        initiative = GetComponent<InitiativeTracker>();
+        CharacterHealth.AnyDamaged += CollectAttackDamage;
 
         if (characterHealth == null)
         {
@@ -546,6 +555,14 @@ public class Move : MonoBehaviour
         }
     }
 
+    private void CollectAttackDamage(CharacterHealth health, int damage)
+    {
+        if (!collectingAttackResult || health == null || damage <= 0) return;
+        if (!health.TryGetComponent(out MonsterMovement monster)) return;
+        attackDamagedMonsters.Add(monster);
+        if (health.IsDead) attackKilledMonsters.Add(monster);
+    }
+
     private void ClearAttackPathPreview()
     {
         attackPrediction.Clear();
@@ -595,7 +612,8 @@ public class Move : MonoBehaviour
         if (selectionMode == PlayerActionSelectionMode.Move
             && !kingsFreeMove
             && progressionSystem != null
-            && progressionSystem.HasMovementArt)
+            && progressionSystem.HasMovementArt
+            && (initiative == null || initiative.CanAffordMovementArt))
         {
             BuildMovementArtCells(currentCell);
         }
@@ -750,7 +768,8 @@ public class Move : MonoBehaviour
             || !gridManager.IsWalkableCell(destinationCell)
             || monsterSpawner.TryGetMonsterAtCell(destinationCell, out _)
             || progressionSystem == null
-            || !progressionSystem.HasMovementArt)
+            || !progressionSystem.HasMovementArt
+            || (initiative != null && !initiative.CanAffordMovementArt))
             return false;
 
         // 목적지가 비어 있어도 중간 점유가 바뀌었으면 비숍/룩은 통과할 수 없다.
@@ -763,6 +782,8 @@ public class Move : MonoBehaviour
                     || monsterSpawner.TryGetMonsterAtCell(cell, out _)) return false;
         }
 
+        // 경로 검사를 모두 통과한 뒤에만 주도권을 쓴다.
+        if (initiative != null && !initiative.TrySpendMovementArt()) return false;
         monsterSpawner.CloseKnightCounterWindows();
         Vector3Int originCell = gridPosition;
         Vector3Int difference = destinationCell - gridPosition;
@@ -861,6 +882,10 @@ public class Move : MonoBehaviour
         CombatFeedback.BeginPlayerAttack(traitRoll.DamageBoost);
         progressionSystem?.BeginAttack(traitRoll);
         activeTraitRoll = traitRoll;
+        attackDamagedMonsters.Clear();
+        attackKilledMonsters.Clear();
+        attackHitAdjacent = false;
+        collectingAttackResult = true;
         activeAttackOriginCell = currentCell;
         activeAttackDirection = difference;
         activeAttackDamage = attackDamage;
@@ -960,6 +985,11 @@ public class Move : MonoBehaviour
         }
 
         CombatFeedback.CompletePlayerAttack();
+        if (collectingAttackResult)
+        {
+            collectingAttackResult = false;
+            initiative?.RegisterAttack(attackDamagedMonsters.Count, attackKilledMonsters.Count, attackHitAdjacent);
+        }
         playerTraitSystem?.RegisterCompletedAttack(attackHitReported, activeAttackUsedTrait);
         bool grantsFreeMove = progressionSystem != null && progressionSystem.CompleteAttack(activeTraitRoll);
         if (characterHealth.IsDead) return;
@@ -999,6 +1029,9 @@ public class Move : MonoBehaviour
             AttackHit?.Invoke();
         }
 
+        if (targetMonster != null && Mathf.Max(Mathf.Abs(impactCell.x - activeAttackOriginCell.x),
+                Mathf.Abs(impactCell.y - activeAttackOriginCell.y)) == 1)
+            attackHitAdjacent = true;
         if (activeAttackKnightCounter && activeAttackCastIndex == 0 && activeAttackHitIndex == 0)
             CombatFeedback.NoteCounter();
         progressionSystem?.NotifyAttackHit(
@@ -1388,6 +1421,7 @@ public class Move : MonoBehaviour
 
     private void OnDestroy()
     {
+        CharacterHealth.AnyDamaged -= CollectAttackDamage;
         if (characterHealth != null)
         {
             characterHealth.Died -= HandleDeath;
