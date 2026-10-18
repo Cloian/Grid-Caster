@@ -86,7 +86,13 @@ public static class QueenBossPlaytestSetupTool
             var spawnSettings=new SerializedObject(spawner);
             spawnSettings.FindProperty("player").objectReferenceValue=player.transform;spawnSettings.FindProperty("mapTilemap").objectReferenceValue=map;
             spawnSettings.FindProperty("monsterPrefabs").arraySize=0;spawnSettings.FindProperty("enableChessWaves").boolValue=false;
-            spawnSettings.FindProperty("edgeInsetTiles").intValue=1;spawnSettings.ApplyModifiedPropertiesWithoutUndo();
+            spawnSettings.FindProperty("edgeInsetTiles").intValue=1;
+            // 근위병 승격(나이트·비숍·폭탄병)과 룩이 본 게임과 같은 그림·모션으로 나오도록 원본 씬의 외형을 그대로 넘긴다.
+            var sourceSpawnSettings=new SerializedObject(sourceSpawner);
+            foreach(string field in new[]{"bishopMonsterSprite","bishopMonsterAnimatorController","knightMonsterSprite","knightMonsterAnimatorController",
+                "rookMonsterSprite","rookMonsterAnimatorController","bomberMonsterSprite","bomberMonsterAnimatorController"})
+                spawnSettings.FindProperty(field).objectReferenceValue=sourceSpawnSettings.FindProperty(field).objectReferenceValue;
+            spawnSettings.ApplyModifiedPropertiesWithoutUndo();
             Set(test,"grayboxSprite",square);
             var hud=new GameObject("Queen Playtest HUD",typeof(RectTransform),typeof(Canvas),typeof(CanvasScaler),typeof(GraphicRaycaster));
             hud.GetComponent<Canvas>().renderMode=RenderMode.ScreenSpaceOverlay;

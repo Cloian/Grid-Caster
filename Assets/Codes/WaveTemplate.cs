@@ -21,6 +21,8 @@ public sealed class WaveTemplate
     public int DifficultyTier { get; }
     public bool IsRelicWave => WaveNumber >= 4 && WaveNumber <= 16 && WaveNumber % 4 == 0;
     public bool IsMidBossWave => WaveNumber == 10;
+    // 마지막 웨이브는 일반 적 대신 여왕 보스전(근위병 승격·이동·돌진·체크메이트)이다.
+    public bool IsBossWave => WaveNumber == WaveTemplateCatalog.FinalWave;
     public IReadOnlyList<MonsterMovementPattern> Monsters { get; }
 }
 
@@ -32,9 +34,10 @@ public static class WaveTemplateCatalog
     {
         Build(1, "추적의 시작", false, (MonsterMovementPattern.CardinalFour, 3)),
         // 첫 유물 웨이브 전에는 수량과 새 기믹이 동시에 급증하지 않게 한다.
-        Build(2, "엇갈린 추격", false, (MonsterMovementPattern.CardinalFour, 2),
+        // 2웨이브: 수는 그대로 두고 폭탄병 하나로 "빨간 예고 칸은 피한다"를 먼저 익힌다(여왕 포격·체크메이트와 같은 문법).
+        Build(2, "포격병 첫 등장", false, (MonsterMovementPattern.CardinalFour, 2),
             (MonsterMovementPattern.EightDirection, 1)),
-        Build(3, "포격병 첫 등장", false, (MonsterMovementPattern.CardinalFour, 2),
+        Build(3, "포격 엄호", false, (MonsterMovementPattern.CardinalFour, 2),
             (MonsterMovementPattern.EightDirection, 2)),
         Build(4, "나이트 첫 등장", true, (MonsterMovementPattern.CardinalFour, 2),
             (MonsterMovementPattern.EightDirection, 2), (MonsterMovementPattern.Knight, 1)),
@@ -81,14 +84,12 @@ public static class WaveTemplateCatalog
         Build(19, "왕의 수비진", true, (MonsterMovementPattern.CardinalFour, 3),
             (MonsterMovementPattern.EightDirection, 2), (MonsterMovementPattern.Knight, 3),
             (MonsterMovementPattern.Bishop, 4), (MonsterMovementPattern.Rook, 4)),
-        Build(20, "모든 기믹의 종착점", true, (MonsterMovementPattern.CardinalFour, 4),
-            (MonsterMovementPattern.EightDirection, 3), (MonsterMovementPattern.Knight, 4),
-            (MonsterMovementPattern.Bishop, 4), (MonsterMovementPattern.Rook, 3))
+        Build(20, "여왕 · 최종전", true)
     };
 
-    // 프로토타입: 박쥐(8방향)와 뱀(4방향)은 폰 하나로 합쳤다. 기존 8방향 자리는 3웨이브부터
+    // 프로토타입: 박쥐(8방향)와 뱀(4방향)은 폰 하나로 합쳤다. 기존 8방향 자리는 2웨이브부터
     // 원거리 폭탄병(초반 1마리, 8웨이브부터 최대 2마리)으로, 나머지는 폰(4방향)으로 바꾼다.
-    private static int BomberSlots(int waveNumber) => waveNumber < 3 ? 0 : waveNumber < 8 ? 1 : 2;
+    private static int BomberSlots(int waveNumber) => waveNumber < 2 ? 0 : waveNumber < 8 ? 1 : 2;
 
     private static WaveTemplate Build(int waveNumber, string displayName, bool specialWave,
         params (MonsterMovementPattern Pattern, int Count)[] groups)

@@ -3817,14 +3817,14 @@ MonoBehaviour:
   enableChessWaves: 0
   chessMonsterSprite: {fileID: 0}
   chessMonsterAnimatorController: {fileID: 0}
-  bishopMonsterSprite: {fileID: 0}
-  bishopMonsterAnimatorController: {fileID: 0}
-  knightMonsterSprite: {fileID: 0}
-  knightMonsterAnimatorController: {fileID: 0}
-  rookMonsterSprite: {fileID: 0}
-  rookMonsterAnimatorController: {fileID: 0}
-  bomberMonsterSprite: {fileID: 0}
-  bomberMonsterAnimatorController: {fileID: 0}
+  bishopMonsterSprite: {fileID: -26182444, guid: 24a1365c314394fadae029720d068f8a, type: 3}
+  bishopMonsterAnimatorController: {fileID: 9100000, guid: 94fca75cfbf1348f5ab62a96bbb4da67, type: 2}
+  knightMonsterSprite: {fileID: -414182080, guid: 7975a01b80a89413db4d6e45375f1448, type: 3}
+  knightMonsterAnimatorController: {fileID: 9100000, guid: 3139f70fab4bd4478887b55d76270658, type: 2}
+  rookMonsterSprite: {fileID: -1099427868, guid: 8636472aec18c491094ef14fd103e216, type: 3}
+  rookMonsterAnimatorController: {fileID: 9100000, guid: 3174df463a541432e913da56c81f17e5, type: 2}
+  bomberMonsterSprite: {fileID: 302961923, guid: 0a0867a7f0d3644acaad356a963933e8, type: 3}
+  bomberMonsterAnimatorController: {fileID: 9100000, guid: ab42d0ceefdd04e4a820186e8a0c7da9, type: 2}
   bomberHealth: 2
   chessMonsterHealth: 3
   enableQueenClock: 1

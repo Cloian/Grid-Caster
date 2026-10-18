@@ -1282,6 +1282,18 @@ public class Move : MonoBehaviour
         return true;
     }
 
+    // 보스 등장처럼 판 배치가 바뀔 때 체력·성장은 그대로 두고 칸만 옮긴다.
+    public void RelocateForEncounter(Vector3Int cell)
+    {
+        ResolveReferences();
+        gridPosition = cell;
+        gridPositionReady = true;
+        targetPosition = gridManager.GetCellCenterWorld(cell);
+        transform.position = targetPosition;
+        SetMoving(false);
+        CancelSelection();
+    }
+
     public void ResetPlaytest(Vector3Int startCell)
     {
         cardinalOnly = false;

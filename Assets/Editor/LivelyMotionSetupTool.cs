@@ -150,6 +150,59 @@ public static class LivelyMotionSetupTool
         new[] { 320, 220, 200, 300 }, new[] { 320, 220, 200, 300 }, new[] { 70, 90, 90, 130, 120, 150 },
         new[] { 50, 80, 110, 140 }, new[] { 80, 120, 120, 140, 160, 100, 100, 200 }, 120, 52f / 120f);
 
+    // 여왕 기믹: 패턴마다 준비(예고 자세에서 멈춤)와 발동(발사 → 대기 복귀) 클립. 체크메이트는 A·B 타격과 탈진 반복.
+    // 시트는 Art/Concepts/ChessCast-v2-clean/queen/queen_gimmicks.py --game 출력(120px · 원본 여왕과 같은 캔버스·발 위치).
+    // 프레임 시간은 그 스크립트의 연출 시간(60ms 프레임 = 키포즈 사이 잔상)과 같다.
+    private static readonly (string State, Motion Motion)[] QueenGimmicks =
+    {
+        QueenGimmick("RoyalLines_Windup", "royal_lines_windup", new[] { 60, 160, 300, 60, 260 }),
+        QueenGimmick("RoyalLines_Release", "royal_lines_release", new[] { 130, 160, 60, 240 }),
+        QueenGimmick("Bombardment_Windup", "bombardment_windup", new[] { 60, 180, 340 }),
+        QueenGimmick("Bombardment_Release", "bombardment_release", new[] { 60, 150, 200, 60, 240 }),
+        QueenGimmick("Guards_Windup", "guard_advance_windup", new[] { 60, 200, 180, 240 }),
+        QueenGimmick("Guards_Release", "guard_advance_release", new[] { 200, 200, 60, 240 }),
+        QueenGimmick("Fortress_Windup", "fortress_windup", new[] { 60, 140, 220, 160, 300 }),
+        QueenGimmick("Fortress_Release", "fortress_release", new[] { 130, 60, 240 }),
+        QueenGimmick("Checkmate_Windup", "checkmate_windup", new[] { 60, 160, 60, 380, 260 }),
+        QueenGimmick("Checkmate_StrikeA", "checkmate_strike_a", new[] { 60, 150 }),
+        QueenGimmick("Checkmate_StrikeB", "checkmate_strike_b", new[] { 60, 150 }),
+        QueenGimmick("Checkmate_Exhausted", "checkmate_exhausted", new[] { 440, 440 }, true),
+    };
+
+    private static (string, Motion) QueenGimmick(string state, string sheet, int[] durations, bool loop = false) =>
+        (state, new Motion
+        {
+            Sheet = $"Assets/Monsters/Queen/Lively/queen_gm_{sheet}.png",
+            Clip = $"Assets/Monsters/Animations/Queen/Queen{state}.anim",
+            Size = 120, PpuOverride = 32f, PivotY = 52f / 120f, Loop = loop, DurationsMs = durations
+        });
+
+    // 기믹 상태는 QueenBossBehaviour가 패턴 단계에 맞춰 Animator.Play로 직접 고른다.
+    // 준비 클립은 마지막 프레임(예고 자세)에서 멈추고, 발동 클립은 끝나면 대기로, B 타격은 탈진으로 넘어간다.
+    private static void ConfigureQueenGimmicks(AnimatorController controller)
+    {
+        AnimatorStateMachine machine = controller.layers[0].stateMachine;
+        AnimatorState idle = machine.defaultState;
+        var states = new Dictionary<string, AnimatorState>();
+        for (int i = 0; i < QueenGimmicks.Length; i++)
+        {
+            (string name, Motion motion) = QueenGimmicks[i];
+            AnimatorState state = State(machine, name, Build(motion), new Vector3(820, -320 + i * 60));
+            foreach (AnimatorStateTransition transition in state.transitions.ToArray()) state.RemoveTransition(transition);
+            states[name] = state;
+        }
+        foreach (KeyValuePair<string, AnimatorState> pair in states)
+        {
+            AnimatorState next = pair.Key.EndsWith("_Release") ? idle
+                : pair.Key == "Checkmate_StrikeB" ? states["Checkmate_Exhausted"] : null;
+            if (next == null) continue;
+            AnimatorStateTransition back = Immediate(pair.Value.AddTransition(next));
+            back.hasExitTime = true;
+            back.exitTime = 1f;
+        }
+        EditorUtility.SetDirty(controller);
+    }
+
     [MenuItem("Tools/Art/Apply Lively Motions")]
     public static void Apply()
     {
@@ -197,6 +250,7 @@ public static class LivelyMotionSetupTool
         ConfigureController(bomber, bomberClips, "Idle", "Move");
         AnimatorController queen = LoadOrCreate(QueenControllerPath);
         ConfigureController(queen, queenClips, "Idle", "Move");
+        ConfigureQueenGimmicks(queen);
         ApplyToBossScene(new QueenBossBehaviour.Visuals
         {
             QueenSprite = LoadFrames(Queen[0])[0], QueenMotion = queen,
@@ -207,7 +261,12 @@ public static class LivelyMotionSetupTool
             KnightIdle = LoadFrames(Knight[0])[0], Knight = knight,
             RookIdle = LoadFrames(Rook[0])[0], Rook = rook,
             BomberIdle = LoadFrames(Bomber[0])[0], Bomber = bomber,
-            BishopIdle = LoadFrames(BishopPriest[0])[0], Bishop = bishopPriest
+            BishopIdle = LoadFrames(BishopPriest[0])[0], Bishop = bishopPriest,
+            Queen = new QueenBossBehaviour.Visuals
+            {
+                QueenSprite = LoadFrames(Queen[0])[0], QueenMotion = queen,
+                GuardSprite = LoadFrames(PawnGuard[0])[0], GuardMotion = pawnGuard
+            }
         };
 
         Sprite batIdle = LoadFrames(Bat[0])[0];
@@ -233,6 +292,8 @@ public static class LivelyMotionSetupTool
         public RuntimeAnimatorController Bomber;
         public Sprite BishopIdle;
         public RuntimeAnimatorController Bishop;
+        // 본 게임 마지막 웨이브의 여왕 보스(보스 테스트 씬과 같은 외형)
+        public QueenBossBehaviour.Visuals Queen;
     }
 
     // Temp/LivelyMotionSetup.pending 이 있으면 다음 스크립트 로드 때 한 번만 자동 적용한다.
@@ -458,6 +519,11 @@ public static class LivelyMotionSetupTool
                 // 비숍은 아르마딜로에서 향로 사제로 교체했다(불길 규칙은 그대로).
                 serialized.FindProperty("bishopMonsterSprite").objectReferenceValue = chess.BishopIdle;
                 serialized.FindProperty("bishopMonsterAnimatorController").objectReferenceValue = chess.Bishop;
+                SerializedProperty queenVisuals = serialized.FindProperty("queenBossVisuals");
+                queenVisuals.FindPropertyRelative("QueenSprite").objectReferenceValue = chess.Queen.QueenSprite;
+                queenVisuals.FindPropertyRelative("QueenMotion").objectReferenceValue = chess.Queen.QueenMotion;
+                queenVisuals.FindPropertyRelative("GuardSprite").objectReferenceValue = chess.Queen.GuardSprite;
+                queenVisuals.FindPropertyRelative("GuardMotion").objectReferenceValue = chess.Queen.GuardMotion;
                 serialized.ApplyModifiedPropertiesWithoutUndo();
             }
             foreach (ChessPlaytest playtest in roots.SelectMany(r => r.GetComponentsInChildren<ChessPlaytest>(true)))
