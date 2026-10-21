@@ -6,7 +6,7 @@ using UnityEngine;
 // 10웨이브 중간보스 · 기사단장(3×3 기마). 규칙은 플레이어 행동이 끝날 때마다 Tick 한 번 진행한다.
 // 설계: docs/design/knight-commander-patterns-2026-10-18.md
 // - 기병 돌진: 가로·세로 한 방향, 몸 폭(3칸) 경로를 두 행동 전에 공개 → 돌진(줄 위의 플레이어 앞에서 멈추며 피해) → 두 행동 반격 기회
-// - 마상 휩쓸기: 바라보는 쪽 정면 3×3을 한 행동 전에 공개 → 베기 → 한 행동 반격 기회
+// - 마상 휩쓸기: 바라보는 쪽 앞 4줄 반원(몸 가운데에서 반지름 4.2칸)을 한 행동 전에 공개 → 베기(맞은 자리에 따라 정면·사선·옆으로 2칸 밀려남) → 한 행동 반격 기회
 // - 나이트 소환: 생길 칸을 먼저 공개하고 다음 행동에 체력 2 나이트 최대 3마리(생존 상한 3). 새 나이트는 그 행동에 움직이지 않는다.
 // 좌표는 13×13 판의 지역 좌표에 판 기준점(QueenBossBehaviour.MapOrigin)을 더한다. 논리 좌표는 몸의 중심 칸이다.
 public sealed class KnightCommanderBehaviour : MonoBehaviour, IBossEncounter
@@ -15,6 +15,8 @@ public sealed class KnightCommanderBehaviour : MonoBehaviour, IBossEncounter
     public const int BodyRadius = 1, BodySize = BodyRadius * 2 + 1;
     public static readonly Vector3Int HomeAnchor = new Vector3Int(7, 11, 0);   // 위쪽 가운데 3×3(지역 6~8, 10~12)
     public const int ChargeDamage = 3, SweepDamage = 2, MaxSummoned = 3, SummonHealth = 2;
+    public const float SweepRadius = 4.2f;
+    public const int SweepKnockback = 2;
     private static readonly Pattern[] Cycle = { Pattern.Charge, Pattern.Sweep, Pattern.Summon };
     private static readonly Vector3Int[] Orthogonal = { Vector3Int.up, Vector3Int.right, Vector3Int.down, Vector3Int.left };
 
@@ -151,7 +153,7 @@ public sealed class KnightCommanderBehaviour : MonoBehaviour, IBossEncounter
         if (best.x != 0) Face(best.x < 0);
     }
 
-    // 정면 3×3: 플레이어가 있는 쪽(가로·세로 중 차이가 큰 축)을 바라본다.
+    // 정면 반원: 플레이어가 있는 쪽(가로·세로 중 차이가 큰 축)을 바라본다.
     private void BuildSweep()
     {
         Vector3 center = new Vector3(Anchor.x, Anchor.y);
@@ -162,10 +164,20 @@ public sealed class KnightCommanderBehaviour : MonoBehaviour, IBossEncounter
         if (sweepDirection.x != 0) Face(sweepDirection.x < 0);
     }
 
+    // 몸 가운데를 축으로 한쪽 옆에서 정면을 지나 반대쪽 옆까지 휘두른다.
+    // 몸보다 앞쪽 4줄에서 가운데로부터 반지름 안의 칸(몸 제외). 몸 옆 줄과 뒤쪽은 안전하다.
+    // 줄별 칸 수: 앞 1줄 6 · 2줄 7 · 3줄 5 · 4줄 3 = 21칸
     private IEnumerable<Vector3Int> SweepCells(Vector3Int direction)
     {
-        Vector3Int center = Anchor + direction * BodySize;
-        foreach (Vector3Int cell in CellsAt(center)) yield return cell;
+        Vector3Int side = new Vector3Int(direction.y, direction.x, 0);
+        int reach = Mathf.FloorToInt(SweepRadius);
+        for (int along = 1; along <= reach; along++)
+            for (int lateral = -reach; lateral <= reach; lateral++)
+            {
+                if (along * along + lateral * lateral > SweepRadius * SweepRadius) continue;
+                Vector3Int cell = Anchor + direction * along + side * lateral;
+                if (!ContainsBodyCell(cell)) yield return cell;
+            }
     }
 
     // 소환 칸: 빈 바닥, 몸과 플레이어 둘레 1칸 밖, 플레이어와 2~4칸 거리, 기사단장 가까운 쪽 우선.
@@ -261,10 +273,16 @@ public sealed class KnightCommanderBehaviour : MonoBehaviour, IBossEncounter
         float delay = KnightCommanderFx.Sweep(grid, Anchor, sweepDirection);
         KnightQuakeEffect.PlayCells(grid, cells, true);
         bool hit = cells.Contains(Player.GridPosition);
-        if (hit) Damage(SweepDamage, delay, sweepDirection);
+        int pushed = 0;
+        if (hit)
+        {
+            Vector3Int push = SweepPushDirection(Player.GridPosition);
+            Damage(SweepDamage, delay, push);
+            if (Player.CurrentHealth > 0) pushed = KnockPlayer(push, SweepKnockback, delay);
+        }
         foreach (MonsterMovement ally in summoned.ToArray())
             if (ally != null && !ally.IsDead && cells.Contains(ally.GridPosition)) ally.TakeDamage(SweepDamage);
-        LastOutcome = hit ? $"마상 휩쓸기 피격 −{SweepDamage}" : "휩쓸기 회피";
+        LastOutcome = hit ? $"마상 휩쓸기 피격 −{SweepDamage}" + (pushed > 0 ? $" · {pushed}칸 밀려남" : "") : "휩쓸기 회피";
     }
 
     private void ExecuteSummon()
@@ -284,6 +302,52 @@ public sealed class KnightCommanderBehaviour : MonoBehaviour, IBossEncounter
         }
         if (spawnedCells.Count > 0) KnightQuakeEffect.PlayDust(grid, spawnedCells);
         LastOutcome = spawnedCells.Count > 0 ? $"나이트 {spawnedCells.Count}마리 소환" : "소환 실패(칸이 막힘)";
+    }
+
+    // 맞은 자리에 따라 미는 방향: 몸 폭 정면(옆 거리 ≤ 1)은 뒤로, 앞보다 옆으로 더 먼 칸은 옆으로, 나머지는 사선으로.
+    private Vector3Int SweepPushDirection(Vector3Int cell)
+    {
+        Vector3Int side = new Vector3Int(sweepDirection.y, sweepDirection.x, 0);
+        Vector3Int d = cell - Anchor;
+        int along = d.x * sweepDirection.x + d.y * sweepDirection.y;
+        int lateral = d.x * side.x + d.y * side.y;
+        Vector3Int outward = side * Math.Sign(lateral);
+        if (Mathf.Abs(lateral) <= BodyRadius) return sweepDirection;
+        if (Mathf.Abs(lateral) > along) return outward;
+        return sweepDirection + outward;
+    }
+
+    // 베기에 맞은 플레이어를 direction 쪽(사선 포함)으로 최대 distance칸 민다. 벽·적·기사단장 몸 앞에서 멈춘다.
+    // 판정 위치는 바로 옮기고, 그림은 피격 표시 뒤에 미끄러지듯 따라간다.
+    private int KnockPlayer(Vector3Int direction, int distance, float delay)
+    {
+        Vector3Int to = Player.GridPosition;
+        for (int i = 0; i < distance; i++)
+        {
+            Vector3Int next = to + direction;
+            if (!grid.IsWalkableCell(next) || spawner.IsOccupied(next) || ContainsBodyCell(next)) break;
+            to = next;
+        }
+        Vector3Int from = Player.GridPosition;
+        if (to == from) return 0;
+        Vector3 start = Player.transform.position;
+        Player.RelocateForEncounter(to);
+        StartCoroutine(SlidePlayer(Player.transform, start, Player.transform.position, delay));
+        return Mathf.Max(Mathf.Abs(to.x - from.x), Mathf.Abs(to.y - from.y));
+    }
+
+    private static System.Collections.IEnumerator SlidePlayer(Transform body, Vector3 from, Vector3 to, float delay)
+    {
+        body.position = from;
+        if (delay > 0f) yield return new WaitForSeconds(delay);
+        const float seconds = 0.15f;
+        for (float t = 0f; t < seconds && body != null; t += Time.deltaTime)
+        {
+            float k = 1f - (1f - t / seconds) * (1f - t / seconds);     // 빠르게 밀려났다가 멈춘다
+            body.position = Vector3.Lerp(from, to, k);
+            yield return null;
+        }
+        if (body != null) body.position = to;
     }
 
     private void Damage(int amount, float delay, Vector3Int direction)

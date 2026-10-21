@@ -4,7 +4,7 @@ using UnityEngine;
 
 // 기사단장 공격 연출(판정과 무관). 여왕의 금빛 광선과 구분되도록 강철·청록·흙먼지 색만 쓴다.
 // - 돌진: 청록 잔상이 길게 남고, 지나간 3칸 폭 줄에 진행 방향 속도선과 흙먼지가 일어나며, 멈춘 앞에서 창끝 충격이 터진다.
-// - 휩쓸기: 몸 가운데를 축으로 정면 3×3을 가르는 초승달 베기.
+// - 휩쓸기: 몸 가운데를 축으로 앞쪽 반원(±72°)을 그리는 베기.
 public static class KnightCommanderFx
 {
     private const float Ppu = 32f;
@@ -164,7 +164,7 @@ public static class KnightCommanderFx
         lanceBurst = new Sprite[4];
         for (int f = 0; f < 4; f++) { int frame = f; lanceBurst[f] = Make(64, 64, (x, y) => LancePixel(x, y, frame)); }
         crescent = new Sprite[5];
-        for (int f = 0; f < 5; f++) { int frame = f; crescent[f] = Make(224, 224, (x, y) => CrescentPixel(x, y, frame)); }
+        for (int f = 0; f < 5; f++) { int frame = f; crescent[f] = Make(256, 256, (x, y) => CrescentPixel(x, y, frame)); }
     }
 
     // 속도선: 세 줄(위·가운데·아래)이 진행 방향(오른쪽)으로 뻗었다가 꼬리부터 걷힌다. 가운데 줄은 강철색 심지.
@@ -225,23 +225,23 @@ public static class KnightCommanderFx
         return default;
     }
 
-    // 초승달 베기(오른쪽): 가운데 칸에서 2~4칸 떨어진 정면 3×3을 지나는 반지름 3칸 호.
-    // 호가 아래(-32°)에서 위(+32°, 3×3 폭)로 그어지고, 가운데가 두껍고 양 끝이 가는 초승달이 된다.
+    // 반원 베기(오른쪽): 몸 가운데에서 반지름 약 2.9칸(몸 밖 1.5~4.2칸 띠 가운데)을 지나는 호.
+    // 맞는 칸이 몸보다 앞쪽 4줄이라 호는 -72°에서 정면을 지나 +72°까지 그어지고, 가운데가 두껍고 양 끝이 가는 초승달이 된다.
     // 바깥 날은 강철색, 안쪽은 청록, 마지막 프레임은 성글게 흩어진다.
     private static Color32 CrescentPixel(int x, int y, int frame)
     {
-        float dx = x - 111.5f, dy = y - 111.5f;
+        float dx = x - 127.5f, dy = y - 127.5f;
         float r = Mathf.Sqrt(dx * dx + dy * dy);
         float angle = Mathf.Atan2(dy, dx) * Mathf.Rad2Deg;
-        float lead = Mathf.Min(-32f + (Mathf.Min(frame, 3) + 1) * 16f, 32f);   // 칼날이 지금 있는 각도
-        if (angle < -32f || angle > lead) return default;
-        float u = (angle + 32f) / 64f;                                         // 호 전체에서의 위치
-        float thick = 2f + 18f * Mathf.Pow(Mathf.Sin(Mathf.PI * u), 0.8f);
+        float lead = Mathf.Min(-72f + (Mathf.Min(frame, 3) + 1) * 36f, 72f);   // 칼날이 지금 있는 각도
+        if (angle < -72f || angle > lead) return default;
+        float u = (angle + 72f) / 144f;                                         // 호 전체에서의 위치
+        float thick = 3f + 26f * Mathf.Pow(Mathf.Sin(Mathf.PI * u), 0.8f);
         if (frame == 4) thick *= 0.6f;
-        float s = (r - 96f) / (thick * 0.5f);                                  // -1 안쪽 … +1 바깥
+        float s = (r - 92f) / (thick * 0.5f);                                  // -1 안쪽 … +1 바깥
         if (s < -1f || s > 1f) return default;
         if (frame == 4 && (x + y) % 2 == 0) return default;
-        bool tip = lead - angle < 8f && frame < 4;
+        bool tip = lead - angle < 14f && frame < 4;
         Color32 c = s > 0.7f ? Teal : s > 0.05f || tip ? Steel : s > -0.55f ? TealL : Teal;
         c.a = (byte)(frame == 4 ? 150 : 255);
         return c;
