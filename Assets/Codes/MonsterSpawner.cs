@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -126,7 +127,7 @@ public sealed class MonsterSpawner : MonoBehaviour
             return count;
         }
     }
-    public bool QueenClockActive => enableQueenClock && waveActive && chessPlaytest == null && bossPlaytest == null && runQueen == null;
+    public bool QueenClockActive => enableQueenClock && waveActive && chessPlaytest == null && bossPlaytest == null && runBoss == null;
     public int ClockTurn { get; private set; }
     public int ClockBudget { get; private set; }
     public bool IsClockOvertime => ClockTurn > ClockBudget;
@@ -144,17 +145,22 @@ public sealed class MonsterSpawner : MonoBehaviour
     [Header("마지막 웨이브 · 여왕 보스")]
     [SerializeField] private QueenBossBehaviour.Visuals queenBossVisuals;
     [SerializeField, Min(1)] private int queenBossHealth = 60;
-    private QueenBossBehaviour runQueen;
-    public QueenBossBehaviour RunQueen => runQueen;
-    public bool BossWaveActive => runQueen != null && waveActive;
+    [Header("10웨이브 · 기사단장 중간보스")]
+    [SerializeField] private Sprite commanderSprite;
+    [SerializeField] private RuntimeAnimatorController commanderMotion;
+    [SerializeField, Min(1)] private int commanderHealth = 30;
+    private IBossEncounter runBoss;
+    public IBossEncounter RunBoss => runBoss;
+    public QueenBossBehaviour RunQueen => runBoss as QueenBossBehaviour;
+    public bool BossWaveActive => runBoss != null && waveActive;
 
     private bool IsBossQueen(MonsterMovement actor) => actor != null
-        && ((bossPlaytest != null && bossPlaytest.IsQueen(actor)) || (runQueen != null && actor == runQueen.Queen));
+        && ((bossPlaytest != null && bossPlaytest.IsQueen(actor)) || (runBoss != null && actor == runBoss.Body));
 
     private bool TryGetBossQueenAtCell(Vector3Int cell, out MonsterMovement queen)
     {
         if (bossPlaytest != null && bossPlaytest.TryGetQueenAtCell(cell, out queen)) return true;
-        queen = runQueen != null && waveActive && runQueen.ContainsQueenCell(cell) ? runQueen.Queen : null;
+        queen = BossWaveActive && runBoss.Body != null && !runBoss.Body.IsDead && runBoss.ContainsBodyCell(cell) ? runBoss.Body : null;
         return queen != null;
     }
     private StageFlowManager stageFlowManager;
@@ -170,10 +176,14 @@ public sealed class MonsterSpawner : MonoBehaviour
     // 일반 적은 한 칸, 큰 보스는 몸 전체를 범위 판정에 사용하되 피해는 적당 한 번이다.
     public IEnumerable<Vector3Int> OccupiedCellsOf(MonsterMovement actor)
     {
-        if (IsBossQueen(actor))
+        if (runBoss != null && actor != null && actor == runBoss.Body)
+        {
+            foreach (Vector3Int cell in runBoss.BodyCells) yield return cell;     // 본 게임 보스(3×3 기사단장·여왕)
+        }
+        else if (IsBossQueen(actor))
         {
             for (int y=-1;y<=1;y++) for(int x=-1;x<=1;x++)
-                yield return actor.GridPosition + new Vector3Int(x,y,0);   // 여왕의 현재 중심(움직인다)
+                yield return actor.GridPosition + new Vector3Int(x,y,0);   // 보스 테스트 씬 여왕의 현재 중심(움직인다)
         }
         else if (actor != null) yield return actor.GridPosition;
     }
@@ -189,7 +199,7 @@ public sealed class MonsterSpawner : MonoBehaviour
                 for(int step=1;step<distance;step++)
                 {
                     Vector3Int earlier=origin+direction*step;
-                    if(Mathf.Abs(earlier.x-actor.GridPosition.x)<=1&&Mathf.Abs(earlier.y-actor.GridPosition.y)<=1)return earlier;
+                    if(OccupiedCellsOf(actor).Contains(earlier))return earlier;
                 }
                 return cell;
             }
@@ -384,8 +394,8 @@ public sealed class MonsterSpawner : MonoBehaviour
         {
             // 여왕 한 행동(근위병·승격 적 포함) → 남은 투사체 → 다음 플레이어 차례.
             worldTurnInProgress = true;
-            if (playerMovement.CurrentHealth > 0) runQueen.Tick();
-            if (runQueen.IsFinished && runQueen.Won) FinishQueenWave();
+            if (playerMovement.CurrentHealth > 0) runBoss.Tick();
+            if (runBoss.IsFinished && runBoss.Won) FinishBossWave();
             projectileManager.TakeTurn(() =>
             {
                 worldTurnInProgress = false;
@@ -694,7 +704,6 @@ public sealed class MonsterSpawner : MonoBehaviour
     {
         if (!QueenClockActive || playerHealth.IsDead) return;
         activeMonsters.RemoveAll(monster => monster == null || monster.IsDead);
-        if (OriginalMonstersAlive == 0) return;
         ClockTurn++;
         if (!IsClockOvertime || reinforcementsThisWave >= maxReinforcementsPerWave) return;
         if ((ClockTurn - ClockBudget - 1) % overtimeReinforceInterval != 0) return;
@@ -968,6 +977,7 @@ public sealed class MonsterSpawner : MonoBehaviour
         recentlyDefeatedCells.Clear();
         CurrentWaveTemplate = WaveTemplateCatalog.Roll(currentWave);
         if (CurrentWaveTemplate.IsBossWave && UsesChessTurns) return StartQueenWave();
+        if (CurrentWaveTemplate.IsMidBossWave && UsesChessTurns) return StartCommanderWave();
         BuildWaveSpawnPlan(CurrentWaveTemplate);
         bool variableWave = currentWave != 10 && currentWave != WaveTemplateCatalog.FinalWave;
         if (variableWave)
@@ -1031,40 +1041,69 @@ public sealed class MonsterSpawner : MonoBehaviour
         if (Mathf.Abs(p.x - home.x) <= 2 && Mathf.Abs(p.y - home.y) <= 2)
             playerMovement.RelocateForEncounter(new Vector3Int(home.x, origin.y + 3, 0));
         FireTrail?.Clear();
-        runQueen = GetComponent<QueenBossBehaviour>();
-        if (runQueen == null) runQueen = gameObject.AddComponent<QueenBossBehaviour>();
-        runQueen.DisableInputOnFinish = false;
-        runQueen.Initialize(this, gridManager, playerMovement, chessMonsterSprite, queenBossHealth,
+        QueenBossBehaviour queen = GetComponent<QueenBossBehaviour>();
+        if (queen == null) queen = gameObject.AddComponent<QueenBossBehaviour>();
+        queen.DisableInputOnFinish = false;
+        runBoss = queen;
+        queen.Initialize(this, gridManager, playerMovement, chessMonsterSprite, queenBossHealth,
             UnityEngine.Random.Range(1, 1_000_000), false, queenBossVisuals);
-        QueenBossTelegraph.Attach(runQueen, gridManager);
+        QueenBossTelegraph.Attach(queen, gridManager);
+        BeginBossWave();
+        Debug.Log($"웨이브 {currentWave} · {CurrentWaveTemplate.DisplayName}: 여왕 보스전 (체력 {queenBossHealth})", this);
+        return true;
+    }
+
+    // 10웨이브: 기사단장을 위쪽 가운데 3×3에 세운다(플레이어가 근처면 아래쪽으로 옮김).
+    private bool StartCommanderWave()
+    {
+        Vector3Int origin = QueenBossBehaviour.MapOrigin(gridManager);
+        Vector3Int home = KnightCommanderBehaviour.HomeAnchor + origin;
+        Vector3Int p = playerMovement.GridPosition;
+        int clearance = KnightCommanderBehaviour.BodyRadius + 1;
+        if (Mathf.Abs(p.x - home.x) <= clearance && Mathf.Abs(p.y - home.y) <= clearance)
+            playerMovement.RelocateForEncounter(new Vector3Int(home.x, origin.y + 3, 0));
+        FireTrail?.Clear();
+        KnightCommanderBehaviour commander = GetComponent<KnightCommanderBehaviour>();
+        if (commander == null) commander = gameObject.AddComponent<KnightCommanderBehaviour>();
+        runBoss = commander;
+        commander.Initialize(this, gridManager, playerMovement, commanderSprite != null ? commanderSprite : chessMonsterSprite,
+            commanderSprite != null ? commanderMotion : null, commanderHealth,
+            UnityEngine.Random.Range(1, 1_000_000));
+        BeginBossWave();
+        Debug.Log($"웨이브 {currentWave} · {CurrentWaveTemplate.DisplayName}: 기사단장 중간보스 (체력 {commanderHealth})", this);
+        return true;
+    }
+
+    private void BeginBossWave()
+    {
         waveActive = true;
         WaveMonsterCount = 0;
         ClockTurn = 0;
         reinforcementsThisWave = 0;
         reinforcements.Clear();
-        Debug.Log($"웨이브 {currentWave} · {CurrentWaveTemplate.DisplayName}: 여왕 보스전 (체력 {queenBossHealth})", this);
         WaveStarted?.Invoke(currentWave);
-        return true;
     }
 
-    // 여왕을 쓰러뜨리면 남은 근위병·승격 적을 먼지로 걷어내고 웨이브를 끝낸다.
-    private void FinishQueenWave()
+    // 보스를 쓰러뜨리면 남은 부하(근위병·승격 적·소환 나이트)를 먼지로 걷어내고 웨이브를 끝낸다.
+    private void FinishBossWave()
     {
         var cells = new List<Vector3Int>();
+        MonsterMovement body = runBoss.Body;
         foreach (MonsterMovement monster in activeMonsters.ToArray())
         {
-            if (monster == null || monster == runQueen.Queen) continue;
+            if (monster == null || monster == body) continue;
             if (!monster.IsDead) cells.Add(monster.GridPosition);
             RemoveActor(monster);
         }
         KnightQuakeEffect.PlayDust(gridManager, cells);
-        activeMonsters.RemoveAll(monster => monster == null || monster.IsDead || (runQueen != null && monster == runQueen.Queen));
+        activeMonsters.RemoveAll(monster => monster == null || monster.IsDead || monster == body);
         gridManager.SetTemporaryObstacles(null);
         CompleteCurrentWave();
     }
 
     private void CompleteCurrentWave()
     {
+        runBoss = null;   // 보스 웨이브가 끝나면 일반 웨이브 규칙(여왕의 시계 등)으로 돌아간다
         // 여왕의 시계 안에 정리하면 주도권 보너스(실험 지표도 남긴다).
         if (QueenClockActive)
         {

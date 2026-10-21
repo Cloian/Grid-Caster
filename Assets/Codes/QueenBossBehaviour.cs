@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 
 // 보스 규칙은 플레이어 행동 완료 뒤에만 Tick으로 진행한다. 렌더링은 별도 UI가 맡는다.
-public sealed class QueenBossBehaviour : MonoBehaviour
+public sealed class QueenBossBehaviour : MonoBehaviour, IBossEncounter
 {
     // 여왕·근위병 그림과 모션. 비어 있으면 단색 그레이박스로 그린다. 판정 크기는 그림과 무관하다.
     [Serializable]
@@ -126,6 +126,13 @@ public sealed class QueenBossBehaviour : MonoBehaviour
             cell, sprite != null ? sprite : square, color, health, serial++, 2, 4, 2, sprite != null ? motion : null);
         actor.name = label;
         return actor;
+    }
+
+    public MonsterMovement Body => Queen;
+    public bool ContainsBodyCell(Vector3Int cell) => ContainsQueenCell(cell);
+    public IEnumerable<Vector3Int> BodyCells
+    {
+        get { for (int y=-1;y<=1;y++) for (int x=-1;x<=1;x++) yield return Center + new Vector3Int(x,y,0); }
     }
 
     public bool ContainsQueenCell(Vector3Int cell) => Queen != null && Queen.gameObject.activeInHierarchy && !Queen.IsDead

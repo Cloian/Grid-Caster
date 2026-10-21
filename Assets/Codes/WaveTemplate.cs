@@ -54,9 +54,8 @@ public static class WaveTemplateCatalog
             (MonsterMovementPattern.EightDirection, 2), (MonsterMovementPattern.Knight, 2),
             (MonsterMovementPattern.Bishop, 2)),
         // 중간전은 두 기믹의 비중으로 압박하고, 직후에는 재정비할 전투를 둔다.
-        Build(10, "중간보스 · 도약 화염진", true, (MonsterMovementPattern.CardinalFour, 1),
-            (MonsterMovementPattern.EightDirection, 1), (MonsterMovementPattern.Knight, 3),
-            (MonsterMovementPattern.Bishop, 3)),
+        // 10웨이브는 기사단장 중간보스전(돌진·휩쓸기·나이트 소환). 기사단장 외형이 없으면 일반 적 없이 비게 되므로 스포너가 막는다.
+        Build(10, "기사단장 · 중간보스", true),
         Build(11, "잔불 추격", false, (MonsterMovementPattern.CardinalFour, 3),
             (MonsterMovementPattern.EightDirection, 3), (MonsterMovementPattern.Knight, 1),
             (MonsterMovementPattern.Bishop, 1)),

@@ -1,0 +1,367 @@
+fileFormatVersion: 2
+guid: 8606e59e42c2845f39a325ae8560ebb1
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -624242672909054928
+    second: kc_charge_release_l_0
+  - first:
+      213: 3645874540239579476
+    second: kc_charge_release_l_1
+  - first:
+      213: -2514148491156417554
+    second: kc_charge_release_l_2
+  - first:
+      213: 6724649694874930675
+    second: kc_charge_release_l_3
+  - first:
+      213: -1829323562483919901
+    second: kc_charge_release_l_4
+  - first:
+      213: 926312894374186943
+    second: kc_charge_release_l_5
+  - first:
+      213: -8005852322840647604
+    second: kc_charge_release_l_6
+  - first:
+      213: -332696356238335971
+    second: kc_charge_release_l_7
+  - first:
+      213: -8962931192822295535
+    second: kc_charge_release_l_8
+  - first:
+      213: 2785877423583711569
+    second: kc_charge_release_l_9
+  - first:
+      213: -3600568259223392225
+    second: kc_charge_release_l_10
+  - first:
+      213: 1527057830975982732
+    second: kc_charge_release_l_11
+  - first:
+      213: -2642271206727099383
+    second: kc_charge_release_l_12
+  - first:
+      213: -851943802026401681
+    second: kc_charge_release_l_13
+  - first:
+      213: 3988303578635757445
+    second: kc_charge_release_l_14
+  - first:
+      213: -6614461536288659545
+    second: kc_charge_release_l_15
+  - first:
+      213: 5706669590658557969
+    second: kc_charge_release_l_16
+  - first:
+      213: 5155486641914089544
+    second: kc_charge_release_l_17
+  - first:
+      213: -2026162722132188236
+    second: kc_charge_release_l_18
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: kc_charge_release_l_00
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 128
+        height: 128
+      alignment: 9
+      pivot: {x: 0.5, y: 0.390625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57e4862b042994c85b5101975b260431
+      internalID: -615501283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kc_charge_release_l_01
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 128
+        height: 128
+      alignment: 9
+      pivot: {x: 0.5, y: 0.390625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3f5f8e386c6143e39dc33f5b9cdecc9
+      internalID: 1646170829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kc_charge_release_l_02
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 128
+        height: 128
+      alignment: 9
+      pivot: {x: 0.5, y: 0.390625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2a6c91352abd4d87a3e54cd35fd5322
+      internalID: 189263282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kc_charge_release_l_03
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 128
+        height: 128
+      alignment: 9
+      pivot: {x: 0.5, y: 0.390625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bdb5e1dde78d942f2ac2a06f1c96f23d
+      internalID: -709210814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kc_charge_release_l_04
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 128
+        height: 128
+      alignment: 9
+      pivot: {x: 0.5, y: 0.390625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97bb024ffc80f4e07a68b9fabee5c54f
+      internalID: -1284413590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kc_charge_release_l_05
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 128
+        height: 128
+      alignment: 9
+      pivot: {x: 0.5, y: 0.390625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc37d7b084f604a899f0f63d184dced4
+      internalID: -756591624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kc_charge_release_l_06
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 128
+        height: 128
+      alignment: 9
+      pivot: {x: 0.5, y: 0.390625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bba9ae9f69f714fb889041d768146d88
+      internalID: -1922884929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 1816ee3694a4b42beaaea356b3f676ae
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      kc_charge_release_l_0: -624242672909054928
+      kc_charge_release_l_00: -615501283
+      kc_charge_release_l_01: 1646170829
+      kc_charge_release_l_02: 189263282
+      kc_charge_release_l_03: -709210814
+      kc_charge_release_l_04: -1284413590
+      kc_charge_release_l_05: -756591624
+      kc_charge_release_l_06: -1922884929
+      kc_charge_release_l_1: 3645874540239579476
+      kc_charge_release_l_10: -3600568259223392225
+      kc_charge_release_l_11: 1527057830975982732
+      kc_charge_release_l_12: -2642271206727099383
+      kc_charge_release_l_13: -851943802026401681
+      kc_charge_release_l_14: 3988303578635757445
+      kc_charge_release_l_15: -6614461536288659545
+      kc_charge_release_l_16: 5706669590658557969
+      kc_charge_release_l_17: 5155486641914089544
+      kc_charge_release_l_18: -2026162722132188236
+      kc_charge_release_l_2: -2514148491156417554
+      kc_charge_release_l_3: 6724649694874930675
+      kc_charge_release_l_4: -1829323562483919901
+      kc_charge_release_l_5: 926312894374186943
+      kc_charge_release_l_6: -8005852322840647604
+      kc_charge_release_l_7: -332696356238335971
+      kc_charge_release_l_8: -8962931192822295535
+      kc_charge_release_l_9: 2785877423583711569
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
