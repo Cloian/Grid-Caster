@@ -1447,6 +1447,9 @@ MonoBehaviour:
   bomberMonsterAnimatorController: {fileID: 9100000, guid: ab42d0ceefdd04e4a820186e8a0c7da9, type: 2}
   bomberHealth: 2
   chessMonsterHealth: 3
+  knightHealth: 4
+  bishopHealth: 2
+  rookHealth: 2
   enableQueenClock: 1
   clockBaseTurns: 9
   clockTurnsPerMonster: 0.75
@@ -1458,8 +1461,17 @@ MonoBehaviour:
   knightActionInterval: 1
   bishopMoveDistance: 4
   bishopOrbitDistance: 2
-  bishopFireTurns: 3
+  bishopFireTurns: 2
   bishopFireDamage: 1
+  queenBossVisuals:
+    QueenSprite: {fileID: -2130417101, guid: 24ed3f868ecf942e2a279937eb70d5ae, type: 3}
+    QueenMotion: {fileID: 9100000, guid: 782d74da581d045a2944a04b205098d5, type: 2}
+    GuardSprite: {fileID: 88541459, guid: d608a694be2ae419d872dd9182dd3513, type: 3}
+    GuardMotion: {fileID: 9100000, guid: 6f60dabb2061544e799dd6d1e8d4c1c2, type: 2}
+  queenBossHealth: 60
+  commanderSprite: {fileID: 651048204, guid: b31de880c0aaf4fa6a5442e0e8a7951f, type: 3}
+  commanderMotion: {fileID: 9100000, guid: 75b58129ce31e4ac2a67533fb6b3ed46, type: 2}
+  commanderHealth: 30
 --- !u!4 &216182191
 Transform:
   m_ObjectHideFlags: 0

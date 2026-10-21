@@ -1,0 +1,676 @@
+fileFormatVersion: 2
+guid: ae630e0b31fd74bbebeb29286860704f
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -466931802011791074
+    second: relic_legendary_risky_unlock_0
+  - first:
+      213: 3702441507123093061
+    second: relic_legendary_risky_unlock_1
+  - first:
+      213: -1118698392860565188
+    second: relic_legendary_risky_unlock_2
+  - first:
+      213: 4826702338573714734
+    second: relic_legendary_risky_unlock_3
+  - first:
+      213: -5870218690895258439
+    second: relic_legendary_risky_unlock_4
+  - first:
+      213: 7426871502668617410
+    second: relic_legendary_risky_unlock_5
+  - first:
+      213: 8705639278272808285
+    second: relic_legendary_risky_unlock_6
+  - first:
+      213: -1284844218699634148
+    second: relic_legendary_risky_unlock_7
+  - first:
+      213: 549351243361948972
+    second: relic_legendary_risky_unlock_8
+  - first:
+      213: 1313403757502267110
+    second: relic_legendary_risky_unlock_9
+  - first:
+      213: 186836327138133454
+    second: relic_legendary_risky_unlock_10
+  - first:
+      213: 9108748873142093203
+    second: relic_legendary_risky_unlock_11
+  - first:
+      213: -398208755649502739
+    second: relic_legendary_risky_unlock_12
+  - first:
+      213: 6122085133132961988
+    second: relic_legendary_risky_unlock_13
+  - first:
+      213: 3664415867451299099
+    second: relic_legendary_risky_unlock_14
+  - first:
+      213: 4280137942637755914
+    second: relic_legendary_risky_unlock_15
+  - first:
+      213: -3670551356356634781
+    second: relic_legendary_risky_unlock_16
+  - first:
+      213: 3863281414792840542
+    second: relic_legendary_risky_unlock_17
+  - first:
+      213: -4833397721508991713
+    second: relic_legendary_risky_unlock_18
+  - first:
+      213: 8944821239995316670
+    second: relic_legendary_risky_unlock_19
+  - first:
+      213: -1767679527100358726
+    second: relic_legendary_risky_unlock_20
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 0
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: relic_legendary_risky_unlock_0
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 15
+        width: 26
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e1111ceffff1589f0800000000000000
+      internalID: -466931802011791074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_legendary_risky_unlock_1
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 16
+        width: 26
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 54edbb13fe6b16330800000000000000
+      internalID: 3702441507123093061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_legendary_risky_unlock_2
+      rect:
+        serializedVersion: 2
+        x: 65
+        y: 17
+        width: 30
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c31eeb22db59970f0800000000000000
+      internalID: -1118698392860565188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_legendary_risky_unlock_3
+      rect:
+        serializedVersion: 2
+        x: 95
+        y: 18
+        width: 34
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e25cb373434ebf240800000000000000
+      internalID: 4826702338573714734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_legendary_risky_unlock_4
+      rect:
+        serializedVersion: 2
+        x: 127
+        y: 34
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9bc545fc33bc88ea0800000000000000
+      internalID: -5870218690895258439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_legendary_risky_unlock_5
+      rect:
+        serializedVersion: 2
+        x: 132
+        y: 18
+        width: 21
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c6d80d484c811760800000000000000
+      internalID: 7426871502668617410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_legendary_risky_unlock_6
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 31
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d5583249cc4a0d870800000000000000
+      internalID: 8705639278272808285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_legendary_risky_unlock_7
+      rect:
+        serializedVersion: 2
+        x: 159
+        y: 34
+        width: 7
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c1aa1b09df05b2ee0800000000000000
+      internalID: -1284844218699634148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_legendary_risky_unlock_8
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 17
+        width: 20
+        height: 27
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2512859b00bf9700800000000000000
+      internalID: 549351243361948972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_legendary_risky_unlock_9
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 30
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6eef59c32c52a3210800000000000000
+      internalID: 1313403757502267110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_legendary_risky_unlock_10
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 18
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ec5053e46a6c79200800000000000000
+      internalID: 186836327138133454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_legendary_risky_unlock_11
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 18
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 395cfd307d6c86e70800000000000000
+      internalID: 9108748873142093203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_legendary_risky_unlock_12
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 4
+        width: 22
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: de1af0d1f37497af0800000000000000
+      internalID: -398208755649502739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_legendary_risky_unlock_13
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 5
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4c8171d0ef306f450800000000000000
+      internalID: 6122085133132961988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_legendary_risky_unlock_14
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 4
+        width: 26
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b155db801de9ad230800000000000000
+      internalID: 3664415867451299099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_legendary_risky_unlock_15
+      rect:
+        serializedVersion: 2
+        x: 67
+        y: 4
+        width: 22
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a0e389c18ca166b30800000000000000
+      internalID: 4280137942637755914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_legendary_risky_unlock_16
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 5
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 367d8822df49f0dc0800000000000000
+      internalID: -3670551356356634781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_legendary_risky_unlock_17
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 4
+        width: 26
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e55881c6af12d9530800000000000000
+      internalID: 3863281414792840542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_legendary_risky_unlock_18
+      rect:
+        serializedVersion: 2
+        x: 131
+        y: 4
+        width: 22
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f1d264771625cecb0800000000000000
+      internalID: -4833397721508991713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_legendary_risky_unlock_19
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 5
+        width: 6
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eb93a4da683622c70800000000000000
+      internalID: 8944821239995316670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: relic_legendary_risky_unlock_20
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 4
+        width: 26
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: abfd37ee5d0f777e0800000000000000
+      internalID: -1767679527100358726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      relic_legendary_risky_unlock_0: -466931802011791074
+      relic_legendary_risky_unlock_1: 3702441507123093061
+      relic_legendary_risky_unlock_10: 186836327138133454
+      relic_legendary_risky_unlock_11: 9108748873142093203
+      relic_legendary_risky_unlock_12: -398208755649502739
+      relic_legendary_risky_unlock_13: 6122085133132961988
+      relic_legendary_risky_unlock_14: 3664415867451299099
+      relic_legendary_risky_unlock_15: 4280137942637755914
+      relic_legendary_risky_unlock_16: -3670551356356634781
+      relic_legendary_risky_unlock_17: 3863281414792840542
+      relic_legendary_risky_unlock_18: -4833397721508991713
+      relic_legendary_risky_unlock_19: 8944821239995316670
+      relic_legendary_risky_unlock_2: -1118698392860565188
+      relic_legendary_risky_unlock_20: -1767679527100358726
+      relic_legendary_risky_unlock_3: 4826702338573714734
+      relic_legendary_risky_unlock_4: -5870218690895258439
+      relic_legendary_risky_unlock_5: 7426871502668617410
+      relic_legendary_risky_unlock_6: 8705639278272808285
+      relic_legendary_risky_unlock_7: -1284844218699634148
+      relic_legendary_risky_unlock_8: 549351243361948972
+      relic_legendary_risky_unlock_9: 1313403757502267110
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

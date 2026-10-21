@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// 불길은 플레이어의 이동 진입에만 피해를 주며 수명은 적 턴 시작 때만 감소한다.
+// 불길은 지나갈 수 없는 벽이다(플레이어·적 이동 불가, 투사체는 통과). 수명은 적 턴 시작 때만 감소한다.
+// 진입 피해 코드는 남아 있지만 이동 판정이 불길 칸을 막으므로 정상 이동으로는 들어갈 수 없다.
 public sealed class BishopFireTrail : MonoBehaviour
 {
     private readonly Dictionary<Vector3Int, int> expiryTurns = new Dictionary<Vector3Int, int>();
@@ -15,7 +16,8 @@ public sealed class BishopFireTrail : MonoBehaviour
 
     // 연출: 칸마다 타오르는 픽셀 불꽃. 규칙(피해·수명)은 즉시 적용하고,
     // 그림은 비숍(아르마딜로)이 그 칸을 굴러 지나갈 때 나타난다.
-    private const float FireFramesPerSecond = 8f;
+    // 불꽃 끝만 흔들리는 낮은 불길을 천천히 돌려 깜빡임 피로를 줄인다.
+    private const float FireFramesPerSecond = 4f;
     private const float RevealRadius = 0.55f;
     private static Sprite[] fireFrames;
     private readonly Dictionary<Vector3Int, SpriteRenderer> visuals = new Dictionary<Vector3Int, SpriteRenderer>();
@@ -41,8 +43,26 @@ public sealed class BishopFireTrail : MonoBehaviour
     public void AddFire(Vector3Int cell)
     {
         if (!grid.IsWalkableCell(cell)) return;
+        // 플레이어를 완전히 가두는 불은 놓지 않는다(주변 8칸 중 하나는 늘 비워 둔다).
+        if (!expiryTurns.ContainsKey(cell) && WouldSealPlayer(cell)) return;
         expiryTurns[cell] = turn + lifetime;
         if (!visuals.ContainsKey(cell)) CreateVisual(cell);
+    }
+
+    private bool WouldSealPlayer(Vector3Int candidate)
+    {
+        if (player == null || grid == null) return false;
+        Vector3Int center = player.GridPosition;
+        if (candidate == center) return false;
+        int exits = 0;
+        for (int y = -1; y <= 1; y++)
+            for (int x = -1; x <= 1; x++)
+            {
+                if (x == 0 && y == 0) continue;
+                Vector3Int cell = center + new Vector3Int(x, y, 0);
+                if (cell != candidate && grid.IsWalkableCell(cell) && !expiryTurns.ContainsKey(cell)) exits++;
+            }
+        return exits == 0;
     }
 
     public bool RemoveFire(Vector3Int cell)

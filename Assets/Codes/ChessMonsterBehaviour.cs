@@ -24,7 +24,9 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
     private const int OrbitRadiusWeight = 20;
     private const int OrbitDirectionPenalty = 40;
     private const int BacktrackPenalty = 30;
+    private const int EscapeCutBonus = 25;
     private const int RookFireDamage = 2;
+    public const int KnightLandingDamage = 2;
     private MonsterMovement monster;
     private GridManager grid;
     private ProjectileManager projectiles;
@@ -75,7 +77,7 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
         ? $"N · {knightInterval}턴마다 도약 / 다음: {(WillKnightJumpNextTurn ? "도약" : "준비")}"
             + (IsKnightCounterVulnerable ? " · 이번 행동 인접 첫 직격 +1" : string.Empty)
         : monster.MovementPattern == MonsterMovementPattern.Bishop
-            ? "B · 대각선 이동 / 불길 남김"
+            ? "B · 대각선 이동 / 지나갈 수 없는 불길 벽 2턴"
             : rookCharged
                 ? $"R · 성벽 쇠뇌 / {rookTargetColumn}열 발사 준비"
                 : rookRecovering ? "R · 성벽 쇠뇌 / 한 턴 재정비 · 반격 기회"
@@ -191,7 +193,7 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
             ActorMotion.Trigger(monster, ActorMotion.Attack);
             KnightQuakeEffect.PlayCross(grid, destination);
             if (player.CurrentHealth > 0 && Distance(destination, player.GridPosition) == 1)
-                player.TakeDamage(1);
+                player.TakeDamage(KnightLandingDamage);
             // 피격 여부와 무관하게 도약을 끝낸 나이트에 다음 행동의 반격 기회를 연다.
             knightCounterOpen = player.CurrentHealth > 0;
         }))
@@ -219,7 +221,12 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
                 int radius = Mathf.Max(Mathf.Abs(cell.x - playerCell.x), Mathf.Abs(cell.y - playerCell.y));
                 int cross = relative.x * direction.y - relative.y * direction.x;
                 // 목표 거리 근처에서 한 방향으로 돌도록 선호한다. 거리만 최소화하면 작은 왕복에 갇힌다.
+                // 플레이어 바로 옆(8방향)을 지나는 경로를 우선한다: 불길 벽으로 퇴로를 X자로 끊는다.
+                bool cutsEscape = false;
+                foreach (Vector3Int passed in path)
+                    if (Mathf.Max(Mathf.Abs(passed.x - playerCell.x), Mathf.Abs(passed.y - playerCell.y)) == 1) cutsEscape = true;
                 int score = Mathf.Abs(radius - bishopOrbitDistance) * OrbitRadiusWeight
+                    + (cutsEscape ? -EscapeCutBonus : 0)
                     + (cross < 0 ? 0 : OrbitDirectionPenalty)
                     + (cell == previousBishopCell ? BacktrackPenalty : 0)
                     + (recentBishopCells.Contains(cell) ? BacktrackPenalty : 0) - step;
@@ -327,7 +334,7 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
             return;
         }
         int distance = Chebyshev(monster.GridPosition, playerCell);
-        if (!bomberRepositioning && distance <= BomberRange && distance >= 2)
+        if (CanThrowFrom(distance))
         {
             ThrowBomb(playerCell);
             monster.FinishTurn();
@@ -347,6 +354,16 @@ public sealed class ChessMonsterBehaviour : MonoBehaviour
         }
         if (best == origin || !monster.TryBeginMove(origin, best)) monster.FinishTurn();
     }
+
+    // 던질 수 있는 조건: 2~6칸. 폭발 직후에는 이미 3~5칸 거리일 때만 재배치 없이 바로 던진다.
+    private bool CanThrowFrom(int distance) =>
+        distance >= 2 && distance <= BomberRange
+        && (!bomberRepositioning || (distance >= BomberPreferredMin && distance <= BomberPreferredMax));
+
+    // 상태 HUD 예고: 다음 적 턴에 폭탄을 던질지(현재 플레이어 위치 기준)
+    public bool WillThrowNextTurn => monster != null && !monster.IsDead
+        && monster.MovementPattern == MonsterMovementPattern.Bomber && bombFuse == 0 && player != null
+        && CanThrowFrom(Chebyshev(monster.GridPosition, player.GridPosition));
 
     private static int BomberScore(int distance) =>
         distance < BomberPreferredMin ? (BomberPreferredMin - distance) * 10

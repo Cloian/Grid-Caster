@@ -182,6 +182,46 @@ public static class QueenBossPlaytestValidation
         // Direct rule fixture: stay outside A with full health; no HP-threshold execution.
         test.Encounter.Tick();test.Encounter.Tick();
         Check(player.CurrentHealth==10&&!test.Encounter.IsFinished,"checkmate deals fixed 8, full-health failure is not instant death");
+        // 근위병 승격: 소환 때 승격할 말이 정해지고, 맨 아래 줄에 닿으면 그 말(체력 절반)로 바뀐다. 동시 2마리 상한.
+        Check(test.StartEncounter("pierce",PlayerMovementArt.Rook,3,false,false),"promotion fixture starts");yield return null;
+        player.ResetPlaytest(new Vector3Int(7,1,0));
+        ForceNext(test.Encounter,2);
+        Check(test.Encounter.Guards.Count==3&&test.Encounter.Guards.All(g=>test.Encounter.PromotionMarkers.TryGetValue(g,out PromotionMarker m)&&m!=null
+            &&QueenBossBehaviour.PromotionPool.Contains(m.Promotion)),"every summoned guard shows its promotion piece (knight/bishop/bomber, no rook/queen)");
+        var expected=test.Encounter.Guards.ToDictionary(g=>g.GridPosition.x,g=>test.Encounter.PromotionMarkers[g].Promotion);
+        player.ResetPlaytest(new Vector3Int(12,8,0));
+        MethodInfo advance=typeof(QueenBossBehaviour).GetMethod("AdvanceGuards",Private);
+        for(int i=0;i<4;i++){advance.Invoke(test.Encounter,null);yield return null;}
+        Check(test.Encounter.Guards.Count==0&&test.Encounter.Promoted.Count==QueenBossBehaviour.MaxPromoted,"guards reaching the last row promote, third one crumbles at the cap");
+        Check(test.Encounter.Promoted.All(m=>expected.TryGetValue(m.GridPosition.x,out MonsterMovementPattern p)&&p==m.MovementPattern
+            &&m.GetComponent<CharacterHealth>().CurrentHealth==QueenBossBehaviour.PromotedHealth(m.MovementPattern)&&m.GridPosition.y==1),
+            "promoted piece matches the telegraphed icon, at half health, on the last row");
+        Check(test.Encounter.Promoted.All(m=>m.GetComponent<SpriteRenderer>().sprite!=test.Encounter.Queen.GetComponent<SpriteRenderer>().sprite),"promoted pieces use their own art");
+        IEnumerator allyTurn=Wait(test);while(allyTurn.MoveNext())yield return allyTurn.Current;
+        allyTurn=Wait(test);while(allyTurn.MoveNext())yield return allyTurn.Current;
+        Check(test.Encounter.Promoted.All(m=>m!=null),"promoted pieces act inside the boss turn after real player actions");
+        Check(test.StartEncounter("pierce",PlayerMovementArt.Rook,3,false,false),"promotion denial fixture starts");yield return null;
+        ForceNext(test.Encounter,2);
+        MonsterMovement denied=test.Encounter.Guards[0];int markersBefore=test.Encounter.PromotionMarkers.Count;
+        denied.TakeDamage(99);yield return null;
+        Check(test.Encounter.PromotionMarkers.Count==markersBefore-1&&!test.Encounter.PromotionMarkers.ContainsKey(denied),"killing a guard before the last row cancels its promotion");
+        // 여왕 이동: 첫 예고는 시작 자리, 이후 패턴마다 위쪽 영역 안에서 퀸처럼 한 방향으로 미끄러진다.
+        Check(test.StartEncounter("pierce",PlayerMovementArt.Rook,3,false,true),"queen movement fixture starts");yield return null;
+        Check(test.Encounter.Center==QueenBossBehaviour.QueenCenter,"first telegraph starts at the home square");
+        player.ResetPlaytest(new Vector3Int(3,3,0));
+        for(int i=0;i<3;i++){IEnumerator step=Wait(test);while(step.MoveNext())yield return step.Current;}
+        Vector3Int moved=test.Encounter.Center,delta=moved-QueenBossBehaviour.QueenCenter;
+        Check(moved.y>=8&&(delta.x==0||delta.y==0||Mathf.Abs(delta.x)==Mathf.Abs(delta.y))&&!test.Encounter.ContainsQueenCell(player.GridPosition),
+            "next pattern glides like a queen inside the top area without overlapping the player");
+        Check(spawner.TryGetMonsterAtCell(moved,out MonsterMovement movedQueen)&&movedQueen==test.Encounter.Queen,"boss footprint follows the moved queen");
+        // 돌진(2페이즈): 줄을 예고하고, 줄 위의 플레이어 앞에서 멈추며 피해 5.
+        ForceNext(test.Encounter,4);
+        Check(test.Encounter.CurrentPattern==QueenBossBehaviour.Pattern.Charge&&test.Encounter.Danger.Count>0,"charge telegraphs its swept line");
+        int beforeCharge=player.CurrentHealth;bool onLine=test.Encounter.Danger.Contains(player.GridPosition);
+        IEnumerator chargeWait=Wait(test);while(chargeWait.MoveNext())yield return chargeWait.Current;
+        chargeWait=Wait(test);while(chargeWait.MoveNext())yield return chargeWait.Current;
+        Check(!test.Encounter.ContainsQueenCell(player.GridPosition)&&player.CurrentHealth==(onLine?beforeCharge-5:beforeCharge),
+            "charge stops in front of the player and deals 5 only on the telegraphed line");
         Check(test.StartEncounter("pierce",PlayerMovementArt.Rook,3,false,false),"victory fixture starts");yield return null;
         test.Encounter.Queen.TakeDamage(999);IEnumerator win=Wait(test);while(win.MoveNext())yield return win.Current;
         Check(test.Encounter.IsFinished&&test.Encounter.Won&&!player.CanAct&&player.CurrentHealth==18,"kill before enemy phase ends fight without retaliation");
@@ -197,7 +237,7 @@ public static class QueenBossPlaytestValidation
         Click(ui.GetComponentsInChildren<Button>(true).First(b=>b.name=="Resume"));yield return null;
         Check(Time.timeScale==1&&player.CanAct,"pause resume restores unfinished combat only");
         Check(ui.GetComponentsInChildren<TMP_Text>(true).All(t=>t.font!=null&&!t.enableAutoSizing),"fixed-size Galmuri TMP font assigned throughout HUD");
-        checks.Add("36 trait/movement/level attack configurations; 8 actual A→B paths; controlled damage/wall/end fixtures.");
+        checks.Add("36 trait/movement/level attack configurations; 8 actual A→B paths; controlled damage/wall/promotion/end fixtures.");
     }
     private static Vector3Int[] Plan(Move player,GridManager grid,QueenSafeZonePlanner.Layout layout)
     {

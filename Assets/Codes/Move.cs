@@ -589,8 +589,10 @@ public class Move : MonoBehaviour
 
             if (selectionMode == PlayerActionSelectionMode.Move)
             {
+                // 비숍 불길은 지나갈 수 없는 벽이다.
                 if (!gridManager.IsWalkableCell(destinationCell)
-                    || monsterSpawner.TryGetMonsterAtCell(destinationCell, out _))
+                    || monsterSpawner.TryGetMonsterAtCell(destinationCell, out _)
+                    || monsterSpawner.IsFireCell(destinationCell))
                 {
                     continue;
                 }
@@ -738,7 +740,8 @@ public class Move : MonoBehaviour
             {
                 Vector3Int cell = origin + direction * distance;
                 if (!gridManager.IsWalkableCell(cell)
-                    || monsterSpawner.TryGetMonsterAtCell(cell, out _)) break;
+                    || monsterSpawner.TryGetMonsterAtCell(cell, out _)
+                    || monsterSpawner.IsFireCell(cell)) break;
                 AddMovementArtCell(cell);
             }
         }
@@ -748,7 +751,8 @@ public class Move : MonoBehaviour
     {
         if (!CanReachCellFrom(GridPosition, cell)
             || !gridManager.IsWalkableCell(cell)
-            || monsterSpawner.TryGetMonsterAtCell(cell, out _)) return;
+            || monsterSpawner.TryGetMonsterAtCell(cell, out _)
+            || monsterSpawner.IsFireCell(cell)) return;
         // 비숍/룩의 1칸 목적지는 기본 이동으로 처리하고 중복 표시하지 않는다.
         if (selectableCells.Contains(cell)) return;
         selectableCells.Add(cell);
@@ -767,6 +771,7 @@ public class Move : MonoBehaviour
             || destinationCell == GridPosition
             || !gridManager.IsWalkableCell(destinationCell)
             || monsterSpawner.TryGetMonsterAtCell(destinationCell, out _)
+            || monsterSpawner.IsFireCell(destinationCell)
             || progressionSystem == null
             || !progressionSystem.HasMovementArt
             || (initiative != null && !initiative.CanAffordMovementArt))
@@ -779,7 +784,8 @@ public class Move : MonoBehaviour
             Vector3Int step = new Vector3Int(Math.Sign(delta.x), Math.Sign(delta.y), 0);
             for (Vector3Int cell = GridPosition + step; cell != destinationCell; cell += step)
                 if (!gridManager.IsWalkableCell(cell)
-                    || monsterSpawner.TryGetMonsterAtCell(cell, out _)) return false;
+                    || monsterSpawner.TryGetMonsterAtCell(cell, out _)
+                    || monsterSpawner.IsFireCell(cell)) return false;
         }
 
         // 경로 검사를 모두 통과한 뒤에만 주도권을 쓴다.
@@ -1274,6 +1280,18 @@ public class Move : MonoBehaviour
         else
             ExecuteAttack(destination);
         return true;
+    }
+
+    // 보스 등장처럼 판 배치가 바뀔 때 체력·성장은 그대로 두고 칸만 옮긴다.
+    public void RelocateForEncounter(Vector3Int cell)
+    {
+        ResolveReferences();
+        gridPosition = cell;
+        gridPositionReady = true;
+        targetPosition = gridManager.GetCellCenterWorld(cell);
+        transform.position = targetPosition;
+        SetMoving(false);
+        CancelSelection();
     }
 
     public void ResetPlaytest(Vector3Int startCell)

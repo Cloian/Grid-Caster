@@ -90,7 +90,7 @@ public sealed class QueenBossPlaytestUi : MonoBehaviour
         if (!playtest.HasStarted)
         {
             status.text = "전투 대기\n여왕 HP 60";
-            detail.text = "1페이즈\n사격 · 포격 · 근위대\n\n2페이즈 (HP 50% 이하)\n성벽 봉쇄 · 체크메이트 추가";
+            detail.text = "1페이즈\n사격 · 포격 · 근위대\n패턴마다 여왕이 퀸처럼 이동\n\n2페이즈 (HP 50% 이하)\n성벽 봉쇄 · 돌진 · 체크메이트 추가";
             outcome.text = "왼쪽에서 설정으로 시작"; return;
         }
         int hp = boss.Queen == null ? 0 : boss.Queen.GetComponent<CharacterHealth>().CurrentHealth;
@@ -98,9 +98,10 @@ public sealed class QueenBossPlaytestUi : MonoBehaviour
         detail.text = boss.TimingText + "\n\n" + (boss.CurrentPattern switch
         {
             QueenBossBehaviour.Pattern.Checkmate => "예고 중 2행동 뒤 A\n그 다음 행동 뒤 B\n안전구역 밖 피해 8\n근위병 정지\n반격 기회 2행동",
-            QueenBossBehaviour.Pattern.Guards => "근위병은 아래로만 전진\n정면 한 칸에 있으면 피해 1\n옆으로 우회하거나 밀어내기\n반격 기회에는 정지",
+            QueenBossBehaviour.Pattern.Guards => "근위병은 아래로만 전진 · 정면이면 피해 1\n맨 아래 줄에 닿으면 머리 위 말로 승격\n(나이트 2·비숍 1·폭탄병 1, 최대 2)\n승격 전에 쓰러뜨리면 저지",
             QueenBossBehaviour.Pattern.Bombardment => "예고 위치에 3×3 포격\n두 번째 행동 뒤 피해 4\n발동 중 목표 변경 없음\n다음 1행동 반격",
             QueenBossBehaviour.Pattern.Fortress => "회색 성벽은 이동과 탄을 차단\n빨간 직선 / 대각선에 피해 3\n반격 기회가 끝나면 성벽 소멸",
+            QueenBossBehaviour.Pattern.Charge => "빨간 줄을 따라 여왕이 돌진\n두 번째 행동 뒤 줄 위에 있으면 피해 5\n(여왕은 플레이어 앞에서 멈춤)\n줄 밖으로 비켜서기",
             _ => "직선과 대각선 3줄 사격\n두 번째 행동 뒤 피해 3\n빨강 밖으로 이동\n다음 1행동 반격"
         });
         if (!playtest.Paused) outcome.text = boss.LastOutcome;
@@ -137,7 +138,7 @@ public sealed class QueenBossPlaytestUi : MonoBehaviour
             Vector3Int next=guard.GridPosition+Vector3Int.down;
             if(!boss.IsRecovery&&boss.CurrentPattern!=QueenBossBehaviour.Pattern.Checkmate&&grid.IsWalkableCell(next))Marker(grid,next,new Color(1f,.5f,.15f,.4f));
         }
-        if(boss.Queen!=null&&!boss.Queen.IsDead)CellLabel(grid,QueenBossBehaviour.QueenCenter,"Q",64);
+        if(boss.Queen!=null&&!boss.Queen.IsDead)CellLabel(grid,boss.Center,"Q",64);
     }
     private bool CanShowTileLetter(Vector3Int cell)=>cell!=playtest.Player.GridPosition&&!playtest.GetComponent<MonsterSpawner>().IsOccupied(cell);
     private void Marker(GridManager grid, Vector3Int cell, Color color, bool transient = true)

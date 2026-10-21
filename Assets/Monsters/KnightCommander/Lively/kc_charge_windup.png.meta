@@ -1,0 +1,291 @@
+fileFormatVersion: 2
+guid: b9b0af397f14b4f2ba2f80ee1e9daa2a
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -2560551702974781422
+    second: kc_charge_windup_0
+  - first:
+      213: 5431489841356431513
+    second: kc_charge_windup_1
+  - first:
+      213: 1599766523829971264
+    second: kc_charge_windup_2
+  - first:
+      213: -5993692140747012857
+    second: kc_charge_windup_3
+  - first:
+      213: -7597923467311801115
+    second: kc_charge_windup_4
+  - first:
+      213: -1958937191106456027
+    second: kc_charge_windup_5
+  - first:
+      213: 6990570574785327826
+    second: kc_charge_windup_6
+  - first:
+      213: -7206926412855216841
+    second: kc_charge_windup_7
+  - first:
+      213: 5945162654432853542
+    second: kc_charge_windup_8
+  - first:
+      213: 1126010437021811577
+    second: kc_charge_windup_9
+  - first:
+      213: 3863195797268491639
+    second: kc_charge_windup_10
+  - first:
+      213: 4999998171409967769
+    second: kc_charge_windup_11
+  - first:
+      213: 654508150875133434
+    second: kc_charge_windup_12
+  - first:
+      213: 667272206301479984
+    second: kc_charge_windup_13
+  - first:
+      213: -4862687205790725031
+    second: kc_charge_windup_14
+  - first:
+      213: 6442088249687530237
+    second: kc_charge_windup_15
+  - first:
+      213: 929432039793650982
+    second: kc_charge_windup_16
+  - first:
+      213: 8581118641333890709
+    second: kc_charge_windup_17
+  - first:
+      213: 3839647280410397753
+    second: kc_charge_windup_18
+  - first:
+      213: 8568886296793879174
+    second: kc_charge_windup_19
+  - first:
+      213: 2587443768248929011
+    second: kc_charge_windup_20
+  - first:
+      213: 8138438418460561326
+    second: kc_charge_windup_21
+  - first:
+      213: -225108993510099698
+    second: kc_charge_windup_22
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 0
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: kc_charge_windup_00
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 128
+        height: 128
+      alignment: 9
+      pivot: {x: 0.5, y: 0.390625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86ceaf657cd9d4306ad1a3a999223d91
+      internalID: 1586658872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kc_charge_windup_01
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 128
+        height: 128
+      alignment: 9
+      pivot: {x: 0.5, y: 0.390625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1cdae47dd3864487ae564cd66ef2c16
+      internalID: -1453480321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: kc_charge_windup_02
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 128
+        height: 128
+      alignment: 9
+      pivot: {x: 0.5, y: 0.390625}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2db7f467ace3440958ee6b0fc29c9c3b
+      internalID: -1476317811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 068255e57a1c14a32b751ce31494b1fa
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      kc_charge_windup_0: -2560551702974781422
+      kc_charge_windup_00: 1586658872
+      kc_charge_windup_01: -1453480321
+      kc_charge_windup_02: -1476317811
+      kc_charge_windup_1: 5431489841356431513
+      kc_charge_windup_10: 3863195797268491639
+      kc_charge_windup_11: 4999998171409967769
+      kc_charge_windup_12: 654508150875133434
+      kc_charge_windup_13: 667272206301479984
+      kc_charge_windup_14: -4862687205790725031
+      kc_charge_windup_15: 6442088249687530237
+      kc_charge_windup_16: 929432039793650982
+      kc_charge_windup_17: 8581118641333890709
+      kc_charge_windup_18: 3839647280410397753
+      kc_charge_windup_19: 8568886296793879174
+      kc_charge_windup_2: 1599766523829971264
+      kc_charge_windup_20: 2587443768248929011
+      kc_charge_windup_21: 8138438418460561326
+      kc_charge_windup_22: -225108993510099698
+      kc_charge_windup_3: -5993692140747012857
+      kc_charge_windup_4: -7597923467311801115
+      kc_charge_windup_5: -1958937191106456027
+      kc_charge_windup_6: 6990570574785327826
+      kc_charge_windup_7: -7206926412855216841
+      kc_charge_windup_8: 5945162654432853542
+      kc_charge_windup_9: 1126010437021811577
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

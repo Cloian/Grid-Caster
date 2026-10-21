@@ -181,7 +181,7 @@ public static class KnightCounterValidation
         while (!landed) yield return null;
         Check(pattern.IsKnightCounterVulnerable && pattern.WillKnightJumpNextTurn == (interval == 1),
             "landing opens vulnerability while preserving next-turn intent " + destination);
-        int crossDamage = Mathf.Abs(destination.x) + Mathf.Abs(destination.y) == 1 ? 1 : 0;
+        int crossDamage = Mathf.Abs(destination.x) + Mathf.Abs(destination.y) == 1 ? ChessMonsterBehaviour.KnightLandingDamage : 0;
         Check(player.CurrentHealth == beforeHp - crossDamage,
             "original cardinal cross damage remains; diagonal landing is safe " + destination);
     }

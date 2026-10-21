@@ -28,15 +28,23 @@ public sealed class QueenSafeZonePlanner
     {
         this.grid = grid; this.spawner = spawner; this.player = player; this.queen = queen;
         random = new System.Random(seed);
+        Refresh();
+    }
+
+    // 여왕이 움직이면 바닥·후보를 현재 점유로 다시 만든다(최근 사용 기록과 난수 상태는 유지).
+    public void Refresh()
+    {
+        floor.Clear(); templates.Clear();
         foreach (Vector3Int cell in grid.GroundTilemap.cellBounds.allPositionsWithin)
             if (grid.IsWalkableCell(cell) && !spawner.TryGetMonsterAtCell(cell, out MonsterMovement actor)) floor.Add(cell);
         // 후보는 입력 전에만 고르며 발동 순간 재추첨하지 않는다.
         var ids = new HashSet<string>();
+        Vector3Int o = QueenBossBehaviour.MapOrigin(grid);   // 지역 좌표(1~13) → 판 좌표
         for (int y = 1; y <= 12; y++) for (int x = 1; x <= 12; x++) foreach (Vector3Int step in Steps)
         {
-            Vector3Int first = new Vector3Int(x, y, 0), delta = step * 2;
-            Add(first, new Vector3Int(13-x,13-y,0), delta, -delta, ids);
-            Vector3Int offset = new Vector3Int((x-1+6)%12+1,y,0);
+            Vector3Int first = new Vector3Int(x, y, 0) + o, delta = step * 2;
+            Add(first, new Vector3Int(13-x,13-y,0) + o, delta, -delta, ids);
+            Vector3Int offset = new Vector3Int((x-1+6)%12+1,y,0) + o;
             Add(first, offset, delta, delta, ids);
             Add(first, offset, delta, -delta, ids);
         }

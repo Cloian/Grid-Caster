@@ -457,8 +457,9 @@ public static class RunBalanceValidation
             if (changeBishopColor && ((cell.x + cell.y + player.GridPosition.x + player.GridPosition.y) & 1) != 0)
                 value += 6f;
             if (art && (growth.HasRelic("ambush_crest") || growth.MovementArtLevel == 3)) value += 2f;
-            RelicOffer[] desiredAltars = growth.ActiveAltars.Where(altar =>
-                !request.avoidLegendary || altar.Relic.Rarity < RelicRarity.Legendary).ToArray();
+            // 잠긴 위험 제단은 밟아도 얻을 수 없으므로 목표에서 뺀다.
+            RelicOffer[] desiredAltars = growth.ActiveAltars.Where(altar => !altar.IsLocked
+                && (!request.avoidLegendary || altar.Relic.Rarity < RelicRarity.Legendary)).ToArray();
             if (request.allowRelics && desiredAltars.Length > 0)
             {
                 int oldDistance = desiredAltars.Min(altar => Distance(altar.Cell, player.GridPosition));

@@ -567,9 +567,11 @@ public sealed class RunProgressionUiController : MonoBehaviour
     {
         if (index < 0 || index >= progression.ActiveAltars.Count) return NoTooltip;
         RelicOffer offer = progression.ActiveAltars[index];
+        string howTo = offer.IsLocked
+            ? $"\n\n잠김: 이번 웨이브 적을 {offer.KillsRemaining}마리 더 처치하면 풀립니다 ({offer.Kills}/{offer.KillsRequired})."
+            : "\n\n제단 칸으로 이동하면 즉시 획득합니다.";
         return ((offer.IsRisky ? "위험" : "안전") + " 제단 · " + offer.Relic.Name,
-            RarityName(offer.Relic.Rarity) + " 유물\n\n" + offer.Relic.Description
-            + "\n\n제단 칸으로 이동하면 즉시 획득합니다.");
+            RarityName(offer.Relic.Rarity) + " 유물\n\n" + offer.Relic.Description + howTo);
     }
 
     private void OpenDetails(string title, string description)
@@ -1137,7 +1139,9 @@ public sealed class RunProgressionUiController : MonoBehaviour
             altarTexts[i].transform.parent.gameObject.SetActive(visible);
             if (!visible) continue;
             RelicOffer offer = offers[i];
-            string danger = offer.IsRisky ? "위험" : "안전";
+            string danger = offer.IsRisky
+                ? offer.IsLocked ? $"위험 · 잠김 {offer.Kills}/{offer.KillsRequired}" : "위험"
+                : "안전";
             altarTexts[i].text = $"{danger} · {RarityName(offer.Relic.Rarity)}\n{offer.Relic.Name}\n클릭하여 효과 확인";
             altarTexts[i].color = offer.IsRisky ? RiskyColor : SafeColor;
             ApplyIcon(altarIcons[i], offer.Relic.Id, offer.Relic.Name);
